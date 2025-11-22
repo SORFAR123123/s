@@ -157,6 +157,42 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
+// VIDEOS +18 PARA MOMENTOS ÍNTIMOS
+// ============================================================================
+
+const videosIntimos = {
+    beso: "https://assets.mixkit.co/videos/preview/mixkit-couple-kissing-on-the-bed-44463-large.mp4",
+    caricias: "https://assets.mixkit.co/videos/preview/mixkit-hands-caressing-a-woman-s-back-44462-large.mp4",
+    intimidad1: "https://assets.mixkit.co/videos/preview/mixkit-romantic-bedroom-scene-44461-large.mp4",
+    intimidad2: "https://assets.mixkit.co/videos/preview/mixkit-passionate-romantic-scene-44460-large.mp4"
+};
+
+// Función para cambiar las URLs de videos íntimos
+function cambiarVideoIntimo(escenaId, nuevaUrl) {
+    if (videosIntimos[escenaId]) {
+        videosIntimos[escenaId] = nuevaUrl;
+        console.log(`Video de ${escenaId} actualizado a: ${nuevaUrl}`);
+        return true;
+    }
+    return false;
+}
+
+// Funciones globales para cambiar videos desde consola
+window.cambiarVideoIntimo = function(escenaId, nuevaUrl) {
+    return cambiarVideoIntimo(escenaId, nuevaUrl);
+};
+
+window.cambiarTodosVideosIntimos = function(configuraciones) {
+    let exitosas = 0;
+    configuraciones.forEach(config => {
+        if (cambiarVideoIntimo(config.escena, config.url)) {
+            exitosas++;
+        }
+    });
+    return exitosas;
+};
+
+// ============================================================================
 // SISTEMA RPG DE NOVIA
 // ============================================================================
 
@@ -785,46 +821,79 @@ function usarCondon(escenaId) {
 }
 
 function ejecutarEscenaAdulto(escena) {
-    const mensajes = {
-        beso: [
-            "Te acercas lentamente... 💋",
-            "Sientes su respiración acelerarse... 🌬️",
-            "Tus labios se encuentran en un beso apasionado 🔥",
-            "Ella responde con igual intensidad... 💕",
-            "El momento se siente mágico ✨"
-        ],
-        caricias: [
-            "Tus manos comienzan a explorar su cuerpo... ✋",
-            "Ella emite un suave gemido... 😳",
-            "La intimidad crece entre ustedes... 🌹",
-            "Sientes su piel suave bajo tus dedos... 💫",
-            "El ambiente se carga de deseo... 🔥"
-        ],
-        intimidad1: [
-            "La llevas suavemente hacia la cama... 🛏️",
-            "La mirada entre ustedes es intensa... 👁️",
-            "Comienzan a quitarse la ropa lentamente... 👗",
-            "La pasión los consume por completo... 🌋",
-            "Una noche inolvidable comienza... 🌙"
-        ],
-        intimidad2: [
-            "Ya conocen bien los cuerpos del otro... 💞",
-            "Cada movimiento es sincronizado perfectamente... 🎶",
-            "Los gemidos llenan la habitación... 🎵",
-            "Llegan al éxtasis juntos... 🌠",
-            "Una experiencia íntima y profunda... 💖"
-        ]
-    };
-    
     const dialogoElement = document.getElementById('dialogo-novia');
-    let mensajeCompleto = `<div class="escena-adulta">`;
     
-    mensajes[escena.id].forEach((mensaje, index) => {
-        mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
-    });
-    
-    mensajeCompleto += `</div>`;
-    dialogoElement.innerHTML = mensajeCompleto;
+    // Verificar si existe el video para esta escena
+    if (!videosIntimos[escena.id]) {
+        // Fallback a texto si no hay video
+        const mensajes = {
+            beso: [
+                "Te acercas lentamente... 💋",
+                "Sientes su respiración acelerarse... 🌬️",
+                "Tus labios se encuentran en un beso apasionado 🔥",
+                "Ella responde con igual intensidad... 💕",
+                "El momento se siente mágico ✨"
+            ],
+            caricias: [
+                "Tus manos comienzan a explorar su cuerpo... ✋",
+                "Ella emite un suave gemido... 😳",
+                "La intimidad crece entre ustedes... 🌹",
+                "Sientes su piel suave bajo tus dedos... 💫",
+                "El ambiente se carga de deseo... 🔥"
+            ],
+            intimidad1: [
+                "La llevas suavemente hacia la cama... 🛏️",
+                "La mirada entre ustedes es intensa... 👁️",
+                "Comienzan a quitarse la ropa lentamente... 👗",
+                "La pasión los consume por completo... 🌋",
+                "Una noche inolvidable comienza... 🌙"
+            ],
+            intimidad2: [
+                "Ya conocen bien los cuerpos del otro... 💞",
+                "Cada movimiento es sincronizado perfectamente... 🎶",
+                "Los gemidos llenan la habitación... 🎵",
+                "Llegan al éxtasis juntos... 🌠",
+                "Una experiencia íntima y profunda... 💖"
+            ]
+        };
+        
+        let mensajeCompleto = `<div class="escena-adulta">`;
+        mensajes[escena.id].forEach((mensaje, index) => {
+            mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
+        });
+        mensajeCompleto += `</div>`;
+        dialogoElement.innerHTML = mensajeCompleto;
+    } else {
+        // Mostrar video
+        dialogoElement.innerHTML = `
+            <div class="video-escena-adulta">
+                <h4>${escena.nombre}</h4>
+                <video controls autoplay class="video-intimo">
+                    <source src="${videosIntimos[escena.id]}" type="video/mp4">
+                    Tu navegador no soporta el video. 
+                    <div class="fallback-text">
+                        💕 Disfruta este momento especial con ${rpgNovia.estado.nombreNovia}
+                    </div>
+                </video>
+                <div class="leyenda-escena">💖 Momento íntimo especial</div>
+                <div class="controles-video">
+                    <button class="boton-saltar-video" onclick="terminarEscenaIntima()">Finalizar Escena</button>
+                </div>
+            </div>
+        `;
+        
+        // Configurar evento cuando termine el video
+        const videoElement = dialogoElement.querySelector('.video-intimo');
+        videoElement.onended = function() {
+            terminarEscenaIntima();
+        };
+        
+        // Reproducir automáticamente (con mute para evitar restricciones)
+        videoElement.muted = true;
+        videoElement.play().catch(e => {
+            console.log("Auto-play bloqueado, el usuario debe iniciar manualmente");
+        });
+    }
     
     // Aumentar afinidad y experiencia
     aumentarAfinidad(10);
@@ -839,6 +908,12 @@ function ejecutarEscenaAdulto(escena) {
     }
     
     actualizarInterfazRPG();
+}
+
+function terminarEscenaIntima() {
+    // Volver al diálogo normal después de la escena
+    generarDialogoAleatorio();
+    mostrarMensaje("¡Qué momento tan especial! 💕 La afinidad ha aumentado.");
 }
 
 function verificarSubidaNivel() {
