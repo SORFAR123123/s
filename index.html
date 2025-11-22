@@ -13,48 +13,64 @@
             <h1>BIBLIOTECA DE MAZOS</h1>
             <p class="subtitulo">Selecciona un contenedor principal</p>
             
+            <!-- SECCIÓN PARA CAMBIAR IMÁGENES -->
+            <div class="seccion-cambiar-imagenes">
+                <h3>Cambiar Imágenes (Opcional)</h3>
+                <div class="controles-imagenes">
+                    <input type="text" id="url-imagen" placeholder="URL de la imagen" class="input-url">
+                    <select id="tipo-imagen" class="select-tipo">
+                        <option value="contenedor">Contenedor</option>
+                        <option value="subcontenedor">Sub-Contenedor</option>
+                        <option value="mazo">Mazo</option>
+                    </select>
+                    <input type="text" id="id-imagen" placeholder="ID (ej: 1, 1.1)" class="input-id">
+                    <button onclick="aplicarCambioImagen()" class="boton-cambiar">Cambiar Imagen</button>
+                </div>
+                <div id="mensaje-imagen" class="mensaje"></div>
+            </div>
+            
             <div class="menu-principal">
                 <div class="seccion-menu">
                     <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
                     <div class="contenedor-tarjetas">
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
-                            <img src="https://picsum.photos/200/200?random=1" alt="Contenedor 1" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor1.jpg" alt="Contenedor 1" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 1</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
-                            <img src="https://picsum.photos/200/200?random=2" alt="Contenedor 2" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor2.jpg" alt="Contenedor 2" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 2</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
-                            <img src="https://picsum.photos/200/200?random=3" alt="Contenedor 3" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor3.jpg" alt="Contenedor 3" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 3</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
-                            <img src="https://picsum.photos/200/200?random=4" alt="Contenedor 4" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 4</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
-                            <img src="https://picsum.photos/200/200?random=5" alt="Contenedor 5" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 5</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
-                            <img src="https://picsum.photos/200/200?random=6" alt="Contenedor 6" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 6</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
-                            <img src="https://picsum.photos/200/200?random=7" alt="Contenedor 7" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 7</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
-                            <img src="https://picsum.photos/200/200?random=8" alt="Contenedor 8" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 8</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
-                            <img src="https://picsum.photos/200/200?random=9" alt="Contenedor 9" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 9</div>
                         </div>
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
-                            <img src="https://picsum.photos/200/200?random=10" alt="Contenedor 10" class="lastsummer-imagen">
+                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 10</div>
                         </div>
                     </div>
