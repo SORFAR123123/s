@@ -3,134 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Mazos</title>
+    <title>Sabores & Recetas - Tu chef digital</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- PANTALLA DE INICIO -->
-    <div id="pantalla-inicio" class="pantalla activa">
-        <div class="contenedor">
-            <h1>BIBLIOTECA DE MAZOS</h1>
-            <p class="subtitulo">Selecciona un contenedor principal</p>
-            
-            <div class="menu-principal">
-                <div class="seccion-menu">
-                    <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
-                    <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
-                            <img src="imagenes/contenedor1.jpg" alt="Contenedor 1" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 1</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
-                            <img src="imagenes/contenedor2.jpg" alt="Contenedor 2" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 2</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
-                            <img src="imagenes/contenedor3.jpg" alt="Contenedor 3" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 3</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
-                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 4</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
-                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 5</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
-                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 6</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
-                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 7</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
-                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 8</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
-                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 9</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
-                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 10</div>
-                        </div>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Sabores & Recetas</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#recetas">Recetas</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar recetas...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Descubre el placer de cocinar</h1>
+            <p>Más de 1000 recetas caseras, fáciles y deliciosas para todos los gustos</p>
+            <button class="cta-button">Explorar Recetas</button>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Comida deliciosa">
+        </div>
+    </section>
+
+    <!-- Categorías -->
+    <section id="categorias" class="categorias">
+        <h2>Categorías Populares</h2>
+        <div class="categorias-grid">
+            <div class="categoria-card">
+                <i class="fas fa-drumstick-bite"></i>
+                <h3>Carnes</h3>
+                <p>150 recetas</p>
+            </div>
+            <div class="categoria-card">
+                <i class="fas fa-fish"></i>
+                <h3>Pescados</h3>
+                <p>80 recetas</p>
+            </div>
+            <div class="categoria-card">
+                <i class="fas fa-leaf"></i>
+                <h3>Vegetariano</h3>
+                <p>200 recetas</p>
+            </div>
+            <div class="categoria-card">
+                <i class="fas fa-bread-slice"></i>
+                <h3>Postres</h3>
+                <p>120 recetas</p>
+            </div>
+            <div class="categoria-card">
+                <i class="fas fa-egg"></i>
+                <h3>Desayunos</h3>
+                <p>90 recetas</p>
+            </div>
+            <div class="categoria-card">
+                <i class="fas fa-blender"></i>
+                <h3>Bebidas</h3>
+                <p>60 recetas</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recetas Destacadas -->
+    <section id="recetas" class="recetas-destacadas">
+        <h2>Recetas Destacadas</h2>
+        <div class="recetas-grid">
+            <!-- Receta 1 -->
+            <div class="receta-card">
+                <div class="receta-imagen">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pizza casera">
+                    <div class="receta-badge">Popular</div>
+                </div>
+                <div class="receta-info">
+                    <h3>Pizza Margherita Casera</h3>
+                    <div class="receta-meta">
+                        <span><i class="fas fa-clock"></i> 45 min</span>
+                        <span><i class="fas fa-user-friends"></i> 4 personas</span>
+                        <span><i class="fas fa-fire"></i> Medio</span>
+                    </div>
+                    <p>Deliciosa pizza italiana con tomate, mozzarella y albahaca fresca.</p>
+                    <div class="receta-actions">
+                        <button class="btn-ver">Ver Receta</button>
+                        <button class="btn-favorito"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receta 2 -->
+            <div class="receta-card">
+                <div class="receta-imagen">
+                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Salmón a la plancha">
+                    <div class="receta-badge">Saludable</div>
+                </div>
+                <div class="receta-info">
+                    <h3>Salmón con Vegetales</h3>
+                    <div class="receta-meta">
+                        <span><i class="fas fa-clock"></i> 30 min</span>
+                        <span><i class="fas fa-user-friends"></i> 2 personas</span>
+                        <span><i class="fas fa-fire"></i> Fácil</span>
+                    </div>
+                    <p>Salmón a la plancha con vegetales al vapor y salsa de limón.</p>
+                    <div class="receta-actions">
+                        <button class="btn-ver">Ver Receta</button>
+                        <button class="btn-favorito"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receta 3 -->
+            <div class="receta-card">
+                <div class="receta-imagen">
+                    <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tacos mexicanos">
+                    <div class="receta-badge">Picante</div>
+                </div>
+                <div class="receta-info">
+                    <h3>Tacos Mexicanos</h3>
+                    <div class="receta-meta">
+                        <span><i class="fas fa-clock"></i> 25 min</span>
+                        <span><i class="fas fa-user-friends"></i> 3 personas</span>
+                        <span><i class="fas fa-fire"></i> Fácil</span>
+                    </div>
+                    <p>Auténticos tacos mexicanos con carne, cilantro y salsa picante.</p>
+                    <div class="receta-actions">
+                        <button class="btn-ver">Ver Receta</button>
+                        <button class="btn-favorito"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receta 4 -->
+            <div class="receta-card">
+                <div class="receta-imagen">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pastel de chocolate">
+                    <div class="receta-badge">Postre</div>
+                </div>
+                <div class="receta-info">
+                    <h3>Pastel de Chocolate</h3>
+                    <div class="receta-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-user-friends"></i> 8 personas</span>
+                        <span><i class="fas fa-fire"></i> Medio</span>
+                    </div>
+                    <p>Exquisito pastel de chocolate con cobertura de ganache.</p>
+                    <div class="receta-actions">
+                        <button class="btn-ver">Ver Receta</button>
+                        <button class="btn-favorito"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- PANTALLA DE SUBCONTENEDORES -->
-    <div id="pantalla-subcontenedores" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador" id="titulo-contenedor">Contenedor</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-            </div>
-            
-            <h2 id="nombre-contenedor">Sub-Contenedores</h2>
-            
-            <div class="contenedor-subcontenedores" id="contenedor-subcontenedores">
-                <!-- Los sub-contenedores se cargarán dinámicamente -->
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE MAZOS -->
-    <div id="pantalla-mazos" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
-                <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
-            </div>
-            
-            <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
-            
-            <div class="contenedor-mazos" id="contenedor-mazos">
-                <!-- Los mazos se cargarán dinámicamente -->
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DEL QUIZ -->
-    <div id="pantalla-quiz" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
-                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
-            </div>
-            
-            <div class="contenido-quiz">
-                <div class="palabra-japones" id="palabra-japones">言葉</div>
-                <div class="lectura" id="lectura"></div>
-                
-                <div class="contenedor-opciones" id="contenedor-opciones">
-                    <!-- Las opciones se generarán dinámicamente -->
+    <!-- Características -->
+    <section class="caracteristicas">
+        <div class="container">
+            <h2>¿Por qué elegirnos?</h2>
+            <div class="caracteristicas-grid">
+                <div class="caracteristica">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Recetas Probadas</h3>
+                    <p>Todas nuestras recetas han sido testadas y aprobadas por chefs profesionales.</p>
                 </div>
-                
-                <div class="resultado" id="resultado"></div>
-                
-                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Siguiente Pregunta</button>
+                <div class="caracteristica">
+                    <i class="fas fa-clock"></i>
+                    <h3>Tiempos Exactos</h3>
+                    <p>Indicamos tiempos precisos de preparación y cocción.</p>
+                </div>
+                <div class="caracteristica">
+                    <i class="fas fa-users"></i>
+                    <h3>Para Todos</h3>
+                    <p>Recetas para principiantes y chefs experimentados.</p>
+                </div>
+                <div class="caracteristica">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Totalmente Responsive</h3>
+                    <p>Accede desde cualquier dispositivo: móvil, tablet o computadora.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- PANTALLA DE RESULTADOS -->
-    <div id="pantalla-resultados" class="pantalla">
-        <div class="contenedor">
-            <h1>Resultados del Quiz</h1>
-            
-            <div class="resultado-final" id="resultado-final">
-                <!-- Los resultados se mostrarán aquí -->
-            </div>
-            
-            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
-            <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>¡No te pierdas nuevas recetas!</h2>
+            <p>Suscríbete a nuestro newsletter y recibe recetas exclusivas cada semana.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit">Suscribirse</button>
+            </form>
         </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sabores & Recetas</h3>
+                <p>Tu destino culinario para descubrir y compartir las mejores recetas caseras.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#recetas">Recetas</a></li>
+                    <li><a href="#categorias">Categorías</a></li>
+                    <li><a href="#about">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Categorías</h4>
+                <ul>
+                    <li><a href="#">Carnes</a></li>
+                    <li><a href="#">Pescados</a></li>
+                    <li><a href="#">Vegetariano</a></li>
+                    <li><a href="#">Postres</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> info@saboresrecetas.com</p>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-map-marker-alt"></i> Ciudad, País</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sabores & Recetas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
