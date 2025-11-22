@@ -11,73 +11,80 @@
     <div id="pantalla-inicio" class="pantalla activa">
         <div class="contenedor">
             <h1>BIBLIOTECA DE MAZOS</h1>
-            <p class="subtitulo">Selecciona una categoría</p>
+            <p class="subtitulo">Selecciona un contenedor principal</p>
             
             <div class="menu-principal">
                 <div class="seccion-menu">
-                    <h2 class="titulo-seccion">CATEGORÍAS</h2>
+                    <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
                     <div class="contenedor-tarjetas">
-                        <!-- Categoría 1 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria1')">
-                            <img src="imagenes/categoria1.jpg" alt="Anime" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Anime</div>
+                        <!-- Contenedor 1 al 10 -->
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
+                            <img src="imagenes/contenedor1.jpg" alt="Contenedor 1" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 1</div>
                         </div>
                         
-                        <!-- Categoría 2 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria2')">
-                            <img src="imagenes/categoria2.jpg" alt="Videojuegos" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Videojuegos</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
+                            <img src="imagenes/contenedor2.jpg" alt="Contenedor 2" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 2</div>
                         </div>
                         
-                        <!-- Categoría 3 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria3')">
-                            <img src="imagenes/categoria3.jpg" alt="Películas" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Películas</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
+                            <img src="imagenes/contenedor3.jpg" alt="Contenedor 3" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 3</div>
                         </div>
                         
-                        <!-- Categoría 4 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria4')">
-                            <img src="imagenes/categoria4.jpg" alt="Música" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Música</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
+                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 4</div>
                         </div>
                         
-                        <!-- Categoría 5 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria5')">
-                            <img src="imagenes/categoria5.jpg" alt="Ciencia" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Ciencia</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
+                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 5</div>
                         </div>
                         
-                        <!-- Categoría 6 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria6')">
-                            <img src="imagenes/categoria6.jpg" alt="Historia" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Historia</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
+                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 6</div>
                         </div>
                         
-                        <!-- Categoría 7 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria7')">
-                            <img src="imagenes/categoria7.jpg" alt="Arte" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Arte</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
+                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 7</div>
                         </div>
                         
-                        <!-- Categoría 8 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria8')">
-                            <img src="imagenes/categoria8.jpg" alt="Deportes" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Deportes</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
+                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 8</div>
                         </div>
                         
-                        <!-- Categoría 9 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria9')">
-                            <img src="imagenes/categoria9.jpg" alt="Tecnología" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Tecnología</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
+                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 9</div>
                         </div>
                         
-                        <!-- Categoría 10 -->
-                        <div class="lastsummer-card" onclick="cargarCategoria('categoria10')">
-                            <img src="imagenes/categoria10.jpg" alt="Literatura" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Literatura</div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
+                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 10</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE SUBCONTENEDORES -->
+    <div id="pantalla-subcontenedores" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-contenedor">Contenedor</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+            </div>
+            
+            <h2 id="nombre-contenedor">Sub-Contenedores</h2>
+            
+            <div class="contenedor-subcontenedores" id="contenedor-subcontenedores">
+                <!-- Los sub-contenedores se cargarán dinámicamente -->
             </div>
         </div>
     </div>
@@ -86,13 +93,13 @@
     <div id="pantalla-mazos" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador" id="titulo-categoria">Categoría</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
+                <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
             </div>
             
-            <h2 id="nombre-categoria">Mazos Disponibles</h2>
+            <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
             
-            <div class="contenedor-mazos-categoria" id="contenedor-mazos">
+            <div class="contenedor-mazos" id="contenedor-mazos">
                 <!-- Los mazos se cargarán dinámicamente -->
             </div>
         </div>
@@ -103,7 +110,7 @@
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
-                <button class="boton-home" onclick="volverACategoria()">Volver a Mazos</button>
+                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
             </div>
             
             <div class="contenido-quiz">
@@ -130,7 +137,7 @@
                 <!-- Los resultados se mostrarán aquí -->
             </div>
             
-            <button class="boton-principal" onclick="volverACategoria()">Volver a Mazos</button>
+            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
             <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
         </div>
     </div>
