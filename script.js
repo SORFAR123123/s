@@ -1,341 +1,402 @@
-// Estructura de 10 contenedores → 5 sub-contenedores → 10 mazos → 10 palabras
-const estructura = {
-    'contenedor1': {
-        nombre: 'Contenedor 1',
-        subcontenedores: {
-            'sub1_1': { nombre: 'Sub-Contenedor 1.1', mazos: generarMazos(10) },
-            'sub1_2': { nombre: 'Sub-Contenedor 1.2', mazos: generarMazos(10) },
-            'sub1_3': { nombre: 'Sub-Contenedor 1.3', mazos: generarMazos(10) },
-            'sub1_4': { nombre: 'Sub-Contenedor 1.4', mazos: generarMazos(10) },
-            'sub1_5': { nombre: 'Sub-Contenedor 1.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor2': {
-        nombre: 'Contenedor 2',
-        subcontenedores: {
-            'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazos(10) },
-            'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazos(10) },
-            'sub2_3': { nombre: 'Sub-Contenedor 2.3', mazos: generarMazos(10) },
-            'sub2_4': { nombre: 'Sub-Contenedor 2.4', mazos: generarMazos(10) },
-            'sub2_5': { nombre: 'Sub-Contenedor 2.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor3': {
-        nombre: 'Contenedor 3',
-        subcontenedores: {
-            'sub3_1': { nombre: 'Sub-Contenedor 3.1', mazos: generarMazos(10) },
-            'sub3_2': { nombre: 'Sub-Contenedor 3.2', mazos: generarMazos(10) },
-            'sub3_3': { nombre: 'Sub-Contenedor 3.3', mazos: generarMazos(10) },
-            'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(10) },
-            'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor4': {
-        nombre: 'Contenedor 4',
-        subcontenedores: {
-            'sub4_1': { nombre: 'Sub-Contenedor 4.1', mazos: generarMazos(10) },
-            'sub4_2': { nombre: 'Sub-Contenedor 4.2', mazos: generarMazos(10) },
-            'sub4_3': { nombre: 'Sub-Contenedor 4.3', mazos: generarMazos(10) },
-            'sub4_4': { nombre: 'Sub-Contenedor 4.4', mazos: generarMazos(10) },
-            'sub4_5': { nombre: 'Sub-Contenedor 4.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor5': {
-        nombre: 'Contenedor 5',
-        subcontenedores: {
-            'sub5_1': { nombre: 'Sub-Contenedor 5.1', mazos: generarMazos(10) },
-            'sub5_2': { nombre: 'Sub-Contenedor 5.2', mazos: generarMazos(10) },
-            'sub5_3': { nombre: 'Sub-Contenedor 5.3', mazos: generarMazos(10) },
-            'sub5_4': { nombre: 'Sub-Contenedor 5.4', mazos: generarMazos(10) },
-            'sub5_5': { nombre: 'Sub-Contenedor 5.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor6': {
-        nombre: 'Contenedor 6',
-        subcontenedores: {
-            'sub6_1': { nombre: 'Sub-Contenedor 6.1', mazos: generarMazos(10) },
-            'sub6_2': { nombre: 'Sub-Contenedor 6.2', mazos: generarMazos(10) },
-            'sub6_3': { nombre: 'Sub-Contenedor 6.3', mazos: generarMazos(10) },
-            'sub6_4': { nombre: 'Sub-Contenedor 6.4', mazos: generarMazos(10) },
-            'sub6_5': { nombre: 'Sub-Contenedor 6.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor7': {
-        nombre: 'Contenedor 7',
-        subcontenedores: {
-            'sub7_1': { nombre: 'Sub-Contenedor 7.1', mazos: generarMazos(10) },
-            'sub7_2': { nombre: 'Sub-Contenedor 7.2', mazos: generarMazos(10) },
-            'sub7_3': { nombre: 'Sub-Contenedor 7.3', mazos: generarMazos(10) },
-            'sub7_4': { nombre: 'Sub-Contenedor 7.4', mazos: generarMazos(10) },
-            'sub7_5': { nombre: 'Sub-Contenedor 7.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor8': {
-        nombre: 'Contenedor 8',
-        subcontenedores: {
-            'sub8_1': { nombre: 'Sub-Contenedor 8.1', mazos: generarMazos(10) },
-            'sub8_2': { nombre: 'Sub-Contenedor 8.2', mazos: generarMazos(10) },
-            'sub8_3': { nombre: 'Sub-Contenedor 8.3', mazos: generarMazos(10) },
-            'sub8_4': { nombre: 'Sub-Contenedor 8.4', mazos: generarMazos(10) },
-            'sub8_5': { nombre: 'Sub-Contenedor 8.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor9': {
-        nombre: 'Contenedor 9',
-        subcontenedores: {
-            'sub9_1': { nombre: 'Sub-Contenedor 9.1', mazos: generarMazos(10) },
-            'sub9_2': { nombre: 'Sub-Contenedor 9.2', mazos: generarMazos(10) },
-            'sub9_3': { nombre: 'Sub-Contenedor 9.3', mazos: generarMazos(10) },
-            'sub9_4': { nombre: 'Sub-Contenedor 9.4', mazos: generarMazos(10) },
-            'sub9_5': { nombre: 'Sub-Contenedor 9.5', mazos: generarMazos(10) }
-        }
-    },
-    'contenedor10': {
-        nombre: 'Contenedor 10',
-        subcontenedores: {
-            'sub10_1': { nombre: 'Sub-Contenedor 10.1', mazos: generarMazos(10) },
-            'sub10_2': { nombre: 'Sub-Contenedor 10.2', mazos: generarMazos(10) },
-            'sub10_3': { nombre: 'Sub-Contenedor 10.3', mazos: generarMazos(10) },
-            'sub10_4': { nombre: 'Sub-Contenedor 10.4', mazos: generarMazos(10) },
-            'sub10_5': { nombre: 'Sub-Contenedor 10.5', mazos: generarMazos(10) }
-        }
-    }
-};
-
-function generarMazos(cantidadMazos) {
-    const mazos = {};
-    for (let i = 1; i <= cantidadMazos; i++) {
-        mazos[`mazo${i}`] = {
-            nombre: `Mazo ${i}`,
-            palabras: generarPalabras(10)
-        };
-    }
-    return mazos;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-function generarPalabras(cantidad) {
-    const palabras = [];
-    const palabrasBase = [
-        { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
-        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
-        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
-        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
-        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
-        { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
-        { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
-        { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
-        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
-        { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
-    ];
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+.pantalla {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.pantalla.activa {
+    display: block;
+}
+
+.contenedor {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* PANTALLA DE INICIO */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.subtitulo {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #cccccc;
+    margin-bottom: 40px;
+}
+
+.menu-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.seccion-menu {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
+    padding: 25px;
+    border: 2px solid #444444;
+}
+
+.titulo-seccion {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.contenedor-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* THE LAST SUMMER CARDS */
+.lastsummer-card {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+    border: 3px solid #4169e1;
+    max-width: 300px;
+    margin-bottom: 30px;
+}
+
+.lastsummer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
+}
+
+.lastsummer-imagen {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    margin-bottom: 15px;
+}
+
+.lastsummer-texto {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* PANTALLA DE SUBCONTENEDORES */
+.contenedor-subcontenedores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.subcontenedor-card {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+    border: 3px solid #4169e1;
+}
+
+.subcontenedor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
+}
+
+.subcontenedor-imagen {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    margin-bottom: 15px;
+}
+
+.subcontenedor-texto {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.subcontenedor-info {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+/* PANTALLA DE MAZOS */
+.contenedor-mazos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.mazo-card {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+    border: 3px solid #4169e1;
+}
+
+.mazo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
+}
+
+.mazo-imagen {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    margin-bottom: 15px;
+}
+
+.mazo-texto {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.mazo-info {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+/* Pantalla del Quiz */
+.barra-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2d2d2d;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.contador {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.boton-home {
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.boton-home:hover {
+    background-color: #555555;
+}
+
+.contenido-quiz {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.palabra-japones {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.lectura {
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #ffa500;
+    margin-bottom: 40px;
+    min-height: 50px;
+    text-align: center;
+}
+
+.contenedor-opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.opcion {
+    background-color: #333333;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.opcion:hover {
+    background-color: #444444;
+}
+
+.opcion.correcta {
+    background-color: #228B22 !important;
+}
+
+.opcion.incorrecta {
+    background-color: #8B0000 !important;
+}
+
+.opcion:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.resultado {
+    font-size: 1.5rem;
+    font-weight: bold;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.resultado.correcto {
+    color: #00ff88;
+}
+
+.resultado.incorrecto {
+    color: #ff4444;
+}
+
+/* Pantalla de Resultados */
+.resultado-final {
+    background-color: #2d2d2d;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    white-space: pre-line;
+}
+
+.boton-principal {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.boton-principal:hover {
+    background-color: #3d3d3d;
+}
+
+.boton-secundario {
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.boton-secundario:hover {
+    background-color: #555555;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .contenedor-tarjetas {
+        grid-template-columns: 1fr;
+    }
     
-    for (let i = 0; i < cantidad; i++) {
-        palabras.push({...palabrasBase[i % palabrasBase.length]});
-    }
-    return palabras;
-}
-
-let contenedorActual = '';
-let subcontenedorActual = '';
-let mazoActual = [];
-let preguntaActual = 0;
-let respuestasCorrectas = 0;
-let respuestasIncorrectas = 0;
-
-function cargarContenedor(idContenedor) {
-    if (estructura[idContenedor]) {
-        contenedorActual = idContenedor;
-        const contenedor = estructura[idContenedor];
-        
-        document.getElementById('titulo-contenedor').textContent = contenedor.nombre;
-        document.getElementById('nombre-contenedor').textContent = `Sub-Contenedores de ${contenedor.nombre}`;
-        
-        const contenedorSub = document.getElementById('contenedor-subcontenedores');
-        contenedorSub.innerHTML = '';
-        
-        Object.keys(contenedor.subcontenedores).forEach(key => {
-            const sub = contenedor.subcontenedores[key];
-            const subDiv = document.createElement('div');
-            subDiv.className = 'subcontenedor-card';
-            subDiv.onclick = () => cargarSubcontenedor(key);
-            
-            subDiv.innerHTML = `
-                <img src="https://picsum.photos/150/150?random=${key}" alt="${sub.nombre}" class="subcontenedor-imagen">
-                <div class="subcontenedor-texto">${sub.nombre}</div>
-                <div class="subcontenedor-info">10 mazos disponibles</div>
-            `;
-            
-            contenedorSub.appendChild(subDiv);
-        });
-        
-        cambiarPantalla('pantalla-subcontenedores');
-    }
-}
-
-function cargarSubcontenedor(idSubcontenedor) {
-    const contenedor = estructura[contenedorActual];
-    if (contenedor && contenedor.subcontenedores[idSubcontenedor]) {
-        subcontenedorActual = idSubcontenedor;
-        const subcontenedor = contenedor.subcontenedores[idSubcontenedor];
-        
-        document.getElementById('titulo-subcontenedor').textContent = subcontenedor.nombre;
-        document.getElementById('nombre-subcontenedor').textContent = `Mazos de ${subcontenedor.nombre}`;
-        
-        const contenedorMazos = document.getElementById('contenedor-mazos');
-        contenedorMazos.innerHTML = '';
-        
-        Object.keys(subcontenedor.mazos).forEach(key => {
-            const mazo = subcontenedor.mazos[key];
-            const mazoDiv = document.createElement('div');
-            mazoDiv.className = 'mazo-card';
-            mazoDiv.onclick = () => cargarMazo(key);
-            
-            mazoDiv.innerHTML = `
-                <img src="https://picsum.photos/120/120?random=${key}" alt="${mazo.nombre}" class="mazo-imagen">
-                <div class="mazo-texto">${mazo.nombre}</div>
-                <div class="mazo-info">10 palabras</div>
-            `;
-            
-            contenedorMazos.appendChild(mazoDiv);
-        });
-        
-        cambiarPantalla('pantalla-mazos');
-    }
-}
-
-function cargarMazo(idMazo) {
-    const contenedor = estructura[contenedorActual];
-    const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
-    if (subcontenedor && subcontenedor.mazos[idMazo]) {
-        mazoActual = [...subcontenedor.mazos[idMazo].palabras];
-        preguntaActual = 0;
-        respuestasCorrectas = 0;
-        respuestasIncorrectas = 0;
-        
-        mezclarPreguntas();
-        cambiarPantalla('pantalla-quiz');
-        mostrarPregunta();
-    }
-}
-
-function mezclarPreguntas() {
-    for (let i = mazoActual.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [mazoActual[i], mazoActual[j]] = [mazoActual[j], mazoActual[i]];
-    }
-}
-
-function mostrarPregunta() {
-    if (preguntaActual < mazoActual.length) {
-        const pregunta = mazoActual[preguntaActual];
-        
-        document.getElementById('numero-pregunta').textContent = preguntaActual + 1;
-        document.getElementById('total-preguntas').textContent = mazoActual.length;
-        document.getElementById('palabra-japones').textContent = pregunta.japones;
-        document.getElementById('lectura').textContent = '';
-        document.getElementById('resultado').textContent = '';
-        document.getElementById('resultado').className = 'resultado';
-        document.getElementById('boton-siguiente').style.display = 'none';
-        
-        const contenedorOpciones = document.getElementById('contenedor-opciones');
-        contenedorOpciones.innerHTML = '';
-        
-        const opcionesMezcladas = [...pregunta.opciones];
-        for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
-        }
-        
-        opcionesMezcladas.forEach((opcion, index) => {
-            const botonOpcion = document.createElement('button');
-            botonOpcion.className = 'opcion';
-            botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
-            contenedorOpciones.appendChild(botonOpcion);
-        });
-    } else {
-        mostrarResultados();
-    }
-}
-
-function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
-    const opciones = document.querySelectorAll('.opcion');
-    const resultado = document.getElementById('resultado');
-    
-    opciones.forEach(opcion => {
-        opcion.disabled = true;
-    });
-    
-    opciones.forEach(opcion => {
-        if (opcion.textContent === respuestaCorrecta) {
-            opcion.classList.add('correcta');
-        } else if (opcion.textContent === respuestaSeleccionada && respuestaSeleccionada !== respuestaCorrecta) {
-            opcion.classList.add('incorrecta');
-        }
-    });
-    
-    if (respuestaSeleccionada === respuestaCorrecta) {
-        document.getElementById('lectura').textContent = `(${lectura})`;
-        resultado.textContent = '¡Correcto!';
-        resultado.className = 'resultado correcto';
-        respuestasCorrectas++;
-    } else {
-        resultado.textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
-        resultado.className = 'resultado incorrecto';
-        respuestasIncorrectas++;
+    .contenedor-subcontenedores {
+        grid-template-columns: 1fr;
     }
     
-    document.getElementById('boton-siguiente').style.display = 'block';
-}
-
-function siguientePregunta() {
-    preguntaActual++;
-    mostrarPregunta();
-}
-
-function mostrarResultados() {
-    cambiarPantalla('pantalla-resultados');
+    .contenedor-mazos {
+        grid-template-columns: 1fr;
+    }
     
-    const resultadoFinal = document.getElementById('resultado-final');
-    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    .palabra-japones {
+        font-size: 3rem;
+    }
     
-    resultadoFinal.innerHTML = `
-        Resumen del Quiz:
-        
-        Preguntas totales: ${mazoActual.length}
-        Respuestas correctas: ${respuestasCorrectas}
-        Respuestas incorrectas: ${respuestasIncorrectas}
-        Porcentaje de aciertos: ${porcentaje}%
-        
-        ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
-          porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
-          'Sigue practicando, lo harás mejor la próxima vez 💪'}
-    `;
-}
-
-function cambiarPantalla(idPantalla) {
-    document.querySelectorAll('.pantalla').forEach(pantalla => {
-        pantalla.classList.remove('activa');
-    });
-    document.getElementById(idPantalla).classList.add('activa');
-}
-
-function volverAlInicio() {
-    cambiarPantalla('pantalla-inicio');
-}
-
-function volverASubcontenedores() {
-    cambiarPantalla('pantalla-subcontenedores');
-}
-
-function volverAMazos() {
-    cambiarPantalla('pantalla-mazos');
-}
-
-function repetirQuiz() {
-    preguntaActual = 0;
-    respuestasCorrectas = 0;
-    respuestasIncorrectas = 0;
-    mezclarPreguntas();
-    cambiarPantalla('pantalla-quiz');
-    mostrarPregunta();
+    .contenedor-opciones {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .lastsummer-imagen {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .lastsummer-texto {
+        font-size: 1.3rem;
+    }
+    
+    .subcontenedor-imagen {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .mazo-imagen {
+        width: 100px;
+        height: 100px;
+    }
 }
