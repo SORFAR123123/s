@@ -7,7 +7,7 @@ const mazos = {
         { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Luna', 'Estrella', 'Nube'], respuesta: 0 },
         { japones: '休暇', lectura: 'kyuuka', opciones: ['Vacaciones', 'Trabajo', 'Estudio', 'Viaje'], respuesta: 0 }
     ],
-    'toono': [
+    'mazo2': [
         { japones: '友達', lectura: 'tomodachi', opciones: ['Amigo', 'Enemigo', 'Vecino', 'Familiar'], respuesta: 0 },
         { japones: '映画', lectura: 'eiga', opciones: ['Película', 'Libro', 'Música', 'Arte'], respuesta: 0 },
         { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Pintura', 'Danza', 'Teatro'], respuesta: 0 },
@@ -69,20 +69,6 @@ const mazos = {
         { japones: '時代', lectura: 'jidai', opciones: ['Época', 'Era', 'Periodo', 'Tiempo'], respuesta: 0 },
         { japones: '発明', lectura: 'hatsumei', opciones: ['Invención', 'Creación', 'Descubrimiento', 'Innovación'], respuesta: 0 },
         { japones: '工場', lectura: 'koujou', opciones: ['Fábrica', 'Taller', 'Planta', 'Industria'], respuesta: 0 }
-    ],
-    'mazo11': [
-        { japones: '竜', lectura: 'ryuu', opciones: ['Dragón', 'Serpiente', 'Monstruo', 'Bestia'], respuesta: 0 },
-        { japones: '騎士', lectura: 'kishi', opciones: ['Caballero', 'Guerrero', 'Soldado', 'Paladín'], respuesta: 0 },
-        { japones: '王国', lectura: 'oukoku', opciones: ['Reino', 'Imperio', 'Nación', 'Estado'], respuesta: 0 },
-        { japones: '剣', lectura: 'ken', opciones: ['Espada', 'Arma', 'Daga', 'Sable'], respuesta: 0 },
-        { japones: '魔法', lectura: 'mahou', opciones: ['Magia', 'Hechicería', 'Brujería', 'Encantamiento'], respuesta: 0 }
-    ],
-    'mazo12': [
-        { japones: '宇宙', lectura: 'uchuu', opciones: ['Espacio', 'Universo', 'Cosmos', 'Galaxia'], respuesta: 0 },
-        { japones: '探査', lectura: 'tansa', opciones: ['Exploración', 'Investigación', 'Búsqueda', 'Expedición'], respuesta: 0 },
-        { japones: '惑星', lectura: 'wakusei', opciones: ['Planeta', 'Asteroide', 'Satélite', 'Cometa'], respuesta: 0 },
-        { japones: '宇宙船', lectura: 'uchuusen', opciones: ['Nave Espacial', 'Cohete', 'Transbordador', 'Satélite'], respuesta: 0 },
-        { japones: '地球外', lectura: 'chikyuugai', opciones: ['Extraterrestre', 'Alienígena', 'Foráneo', 'Extraño'], respuesta: 0 }
     ]
 };
 
