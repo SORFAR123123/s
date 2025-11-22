@@ -6,76 +6,76 @@ const categorias = {
             'mazo1_1': {
                 nombre: 'Naruto',
                 palabras: [
-                    { japones: '忍', opciones: ['Ninja', 'Samurai', 'Guerrero', 'Mago'], respuesta: 0 },
-                    { japones: '影', opciones: ['Sombra', 'Luz', 'Fuego', 'Agua'], respuesta: 0 },
-                    { japones: '写輪眼', opciones: ['Sharingan', 'Byakugan', 'Rinnegan', 'Jougan'], respuesta: 0 },
-                    { japones: '螺旋丸', opciones: ['Rasengan', 'Chidori', 'Kamehameha', 'Hadouken'], respuesta: 0 },
-                    { japones: '火影', opciones: ['Hokage', 'Kazekage', 'Mizukage', 'Raikage'], respuesta: 0 },
-                    { japones: '查克拉', opciones: ['Chakra', 'Ki', 'Mana', 'Energía'], respuesta: 0 },
-                    { japones: '尾獣', opciones: ['Biju', 'Kaiju', 'Youkai', 'Oni'], respuesta: 0 },
-                    { japones: '木ノ葉', opciones: ['Konoha', 'Suna', 'Kiri', 'Kumo'], respuesta: 0 },
-                    { japones: '忍術', opciones: ['Ninjutsu', 'Genjutsu', 'Taijutsu', 'Doujutsu'], respuesta: 0 },
-                    { japones: '里', opciones: ['Aldea', 'Pueblo', 'Ciudad', 'País'], respuesta: 0 }
+                    { japones: '忍', lectura: 'shinobi', opciones: ['Ninja', 'Samurai', 'Guerrero', 'Mago'], respuesta: 0 },
+                    { japones: '影', lectura: 'kage', opciones: ['Sombra', 'Luz', 'Fuego', 'Agua'], respuesta: 0 },
+                    { japones: '写輪眼', lectura: 'sharingan', opciones: ['Sharingan', 'Byakugan', 'Rinnegan', 'Jougan'], respuesta: 0 },
+                    { japones: '螺旋丸', lectura: 'rasengan', opciones: ['Rasengan', 'Chidori', 'Kamehameha', 'Hadouken'], respuesta: 0 },
+                    { japones: '火影', lectura: 'hokage', opciones: ['Hokage', 'Kazekage', 'Mizukage', 'Raikage'], respuesta: 0 },
+                    { japones: '查克拉', lectura: 'chakra', opciones: ['Chakra', 'Ki', 'Mana', 'Energía'], respuesta: 0 },
+                    { japones: '尾獣', lectura: 'bijuu', opciones: ['Biju', 'Kaiju', 'Youkai', 'Oni'], respuesta: 0 },
+                    { japones: '木ノ葉', lectura: 'konoha', opciones: ['Konoha', 'Suna', 'Kiri', 'Kumo'], respuesta: 0 },
+                    { japones: '忍術', lectura: 'ninjutsu', opciones: ['Ninjutsu', 'Genjutsu', 'Taijutsu', 'Doujutsu'], respuesta: 0 },
+                    { japones: '里', lectura: 'sato', opciones: ['Aldea', 'Pueblo', 'Ciudad', 'País'], respuesta: 0 }
                 ]
             },
             'mazo1_2': {
                 nombre: 'One Piece',
                 palabras: [
-                    { japones: '海賊', opciones: ['Pirata', 'Marinero', 'Explorador', 'Cazador'], respuesta: 0 },
-                    { japones: '悪魔の実', opciones: ['Fruta del Diablo', 'Fruta Mágica', 'Fruta Prohibida', 'Fruta Sagrada'], respuesta: 0 },
-                    { japones: '麦わら', opciones: ['Sombrero de Paja', 'Sombrero Negro', 'Bandana', 'Gorro'], respuesta: 0 },
-                    { japones: '海軍', opciones: ['Marina', 'Piratas', 'Revolucionarios', 'Cazadores'], respuesta: 0 },
-                    { japones: '将軍', opciones: ['Shogun', 'Almirante', 'Yonkou', 'Rey'], respuesta: 0 },
-                    { japones: '覇気', opciones: ['Haki', 'Chakra', 'Nen', 'Ki'], respuesta: 0 },
-                    { japones: '仲間', opciones: ['Compañero', 'Enemigo', 'Rival', 'Maestro'], respuesta: 0 },
-                    { japones: '冒険', opciones: ['Aventura', 'Viaje', 'Expedición', 'Travesía'], respuesta: 0 },
-                    { japones: '宝', opciones: ['Tesoro', 'Riqueza', 'Joyas', 'Oro'], respuesta: 0 },
-                    { japones: '船', opciones: ['Barco', 'Nave', 'Bote', 'Velero'], respuesta: 0 }
+                    { japones: '海賊', lectura: 'kaizoku', opciones: ['Pirata', 'Marinero', 'Explorador', 'Cazador'], respuesta: 0 },
+                    { japones: '悪魔の実', lectura: 'akuma no mi', opciones: ['Fruta del Diablo', 'Fruta Mágica', 'Fruta Prohibida', 'Fruta Sagrada'], respuesta: 0 },
+                    { japones: '麦わら', lectura: 'mugiwara', opciones: ['Sombrero de Paja', 'Sombrero Negro', 'Bandana', 'Gorro'], respuesta: 0 },
+                    { japones: '海軍', lectura: 'kaigun', opciones: ['Marina', 'Piratas', 'Revolucionarios', 'Cazadores'], respuesta: 0 },
+                    { japones: '将軍', lectura: 'shogun', opciones: ['Shogun', 'Almirante', 'Yonkou', 'Rey'], respuesta: 0 },
+                    { japones: '覇気', lectura: 'haki', opciones: ['Haki', 'Chakra', 'Nen', 'Ki'], respuesta: 0 },
+                    { japones: '仲間', lectura: 'nakama', opciones: ['Compañero', 'Enemigo', 'Rival', 'Maestro'], respuesta: 0 },
+                    { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Viaje', 'Expedición', 'Travesía'], respuesta: 0 },
+                    { japones: '宝', lectura: 'takara', opciones: ['Tesoro', 'Riqueza', 'Joyas', 'Oro'], respuesta: 0 },
+                    { japones: '船', lectura: 'fune', opciones: ['Barco', 'Nave', 'Bote', 'Velero'], respuesta: 0 }
                 ]
             },
             'mazo1_3': {
                 nombre: 'Attack on Titan',
                 palabras: [
-                    { japones: '巨人', opciones: ['Titán', 'Gigante', 'Monstruo', 'Cíclope'], respuesta: 0 },
-                    { japones: '立体機動', opciones: ['Equipo de Maniobra', 'Arma Anti-Titán', 'Cuerda de Escape', 'Gancho de Ataque'], respuesta: 0 },
-                    { japones: '壁', opciones: ['Muro', 'Pared', 'Barrera', 'Frontera'], respuesta: 0 },
-                    { japones: '兵団', opciones: ['Cuerpo', 'Ejército', 'Escuadrón', 'División'], respuesta: 0 },
-                    { japones: '自由', opciones: ['Libertad', 'Justicia', 'Igualdad', 'Paz'], respuesta: 0 },
-                    { japones: '進撃', opciones: ['Avance', 'Ataque', 'Carga', 'Asalto'], respuesta: 0 },
-                    { japones: '座標', opciones: ['Coordenada', 'Punto', 'Posición', 'Ubicación'], respuesta: 0 },
-                    { japones: '始祖', opciones: ['Fundador', 'Origen', 'Primero', 'Antepasado'], respuesta: 0 },
-                    { japones: '戦士', opciones: ['Guerrero', 'Soldado', 'Luchador', 'Combatiente'], respuesta: 0 },
-                    { japones: '真実', opciones: ['Verdad', 'Realidad', 'Hecho', 'Certidumbre'], respuesta: 0 }
+                    { japones: '巨人', lectura: 'kyojin', opciones: ['Titán', 'Gigante', 'Monstruo', 'Cíclope'], respuesta: 0 },
+                    { japones: '立体機動', lectura: 'rittai kidou', opciones: ['Equipo de Maniobra', 'Arma Anti-Titán', 'Cuerda de Escape', 'Gancho de Ataque'], respuesta: 0 },
+                    { japones: '壁', lectura: 'kabe', opciones: ['Muro', 'Pared', 'Barrera', 'Frontera'], respuesta: 0 },
+                    { japones: '兵団', lectura: 'heidan', opciones: ['Cuerpo', 'Ejército', 'Escuadrón', 'División'], respuesta: 0 },
+                    { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Justicia', 'Igualdad', 'Paz'], respuesta: 0 },
+                    { japones: '進撃', lectura: 'shingeki', opciones: ['Avance', 'Ataque', 'Carga', 'Asalto'], respuesta: 0 },
+                    { japones: '座標', lectura: 'zahyou', opciones: ['Coordenada', 'Punto', 'Posición', 'Ubicación'], respuesta: 0 },
+                    { japones: '始祖', lectura: 'shiso', opciones: ['Fundador', 'Origen', 'Primero', 'Antepasado'], respuesta: 0 },
+                    { japones: '戦士', lectura: 'senshi', opciones: ['Guerrero', 'Soldado', 'Luchador', 'Combatiente'], respuesta: 0 },
+                    { japones: '真実', lectura: 'shinjitsu', opciones: ['Verdad', 'Realidad', 'Hecho', 'Certidumbre'], respuesta: 0 }
                 ]
             },
             'mazo1_4': {
                 nombre: 'Dragon Ball',
                 palabras: [
-                    { japones: '気', opciones: ['Ki', 'Energía', 'Fuerza', 'Poder'], respuesta: 0 },
-                    { japones: '悟空', opciones: ['Goku', 'Vegeta', 'Gohan', 'Piccolo'], respuesta: 0 },
-                    { japones: '超サイヤ人', opciones: ['Super Saiyajin', 'Saiyajin Dios', 'Ultra Instinto', 'Kaio-ken'], respuesta: 0 },
-                    { japones: '神龍', opciones: ['Shenlong', 'Polunga', 'Porunga', 'Dragón'], respuesta: 0 },
-                    { japones: '界王', opciones: ['Kaio', 'Kami', 'Kaioshin', 'Dios'], respuesta: 0 },
-                    { japones: '元気玉', opciones: ['Genkidama', 'Kamehameha', 'Makankosappo', 'Final Flash'], respuesta: 0 },
-                    { japones: '戦闘力', opciones: ['Poder de Pelea', 'Nivel de Ki', 'Fuerza de Ataque', 'Capacidad de Combate'], respuesta: 0 },
-                    { japones: '武道', opciones: ['Artes Marciales', 'Camino del Guerrero', 'Disciplina', 'Entrenamiento'], respuesta: 0 },
-                    { japones: '天下一', opciones: ['El Más Fuerte', 'Campeón', 'Número Uno', 'Invencible'], respuesta: 0 },
-                    { japones: '修行', opciones: ['Entrenamiento', 'Práctica', 'Ejercicio', 'Disciplina'], respuesta: 0 }
+                    { japones: '気', lectura: 'ki', opciones: ['Ki', 'Energía', 'Fuerza', 'Poder'], respuesta: 0 },
+                    { japones: '悟空', lectura: 'gokuu', opciones: ['Goku', 'Vegeta', 'Gohan', 'Piccolo'], respuesta: 0 },
+                    { japones: '超サイヤ人', lectura: 'sūpā saiyajin', opciones: ['Super Saiyajin', 'Saiyajin Dios', 'Ultra Instinto', 'Kaio-ken'], respuesta: 0 },
+                    { japones: '神龍', lectura: 'shenron', opciones: ['Shenlong', 'Polunga', 'Porunga', 'Dragón'], respuesta: 0 },
+                    { japones: '界王', lectura: 'kaiou', opciones: ['Kaio', 'Kami', 'Kaioshin', 'Dios'], respuesta: 0 },
+                    { japones: '元気玉', lectura: 'genkidama', opciones: ['Genkidama', 'Kamehameha', 'Makankosappo', 'Final Flash'], respuesta: 0 },
+                    { japones: '戦闘力', lectura: 'sentōryoku', opciones: ['Poder de Pelea', 'Nivel de Ki', 'Fuerza de Ataque', 'Capacidad de Combate'], respuesta: 0 },
+                    { japones: '武道', lectura: 'budō', opciones: ['Artes Marciales', 'Camino del Guerrero', 'Disciplina', 'Entrenamiento'], respuesta: 0 },
+                    { japones: '天下一', lectura: 'tenkaichi', opciones: ['El Más Fuerte', 'Campeón', 'Número Uno', 'Invencible'], respuesta: 0 },
+                    { japones: '修行', lectura: 'shugyō', opciones: ['Entrenamiento', 'Práctica', 'Ejercicio', 'Disciplina'], respuesta: 0 }
                 ]
             },
             'mazo1_5': {
                 nombre: 'My Hero Academia',
                 palabras: [
-                    { japones: '個性', opciones: ['Quirk', 'Poder', 'Habilidad', 'Don'], respuesta: 0 },
-                    { japones: '英雄', opciones: ['Héroe', 'Protector', 'Defensor', 'Guardián'], respuesta: 0 },
-                    { japones: '緑谷', opciones: ['Midoriya', 'Bakugo', 'Todoroki', 'All Might'], respuesta: 0 },
-                    { japones: 'ワン・フォー・オール', opciones: ['One For All', 'All For One', 'Full Cowl', 'Delaware Smash'], respuesta: 0 },
-                    { japones: '敵', opciones: ['Villano', 'Enemigo', 'Antagonista', 'Rival'], respuesta: 0 },
-                    { japones: '雄英', opciones: ['U.A.', 'Academia', 'Escuela', 'Instituto'], respuesta: 0 },
-                    { japones: '爆豪', opciones: ['Bakugo', 'Midoriya', 'Kirishima', 'Uraraka'], respuesta: 0 },
-                    { japones: '轟', opciones: ['Todoroki', 'Iida', 'Tokoyami', 'Asui'], respuesta: 0 },
-                    { japones: '無個性', opciones: ['Sin Quirk', 'Normal', 'Débil', 'Común'], respuesta: 0 },
-                    { japones: 'プラスアルトラ', opciones: ['Plus Ultra', 'Más Allá', 'Sin Límites', 'Extremo'], respuesta: 0 }
+                    { japones: '個性', lectura: 'kosei', opciones: ['Quirk', 'Poder', 'Habilidad', 'Don'], respuesta: 0 },
+                    { japones: '英雄', lectura: 'eiyū', opciones: ['Héroe', 'Protector', 'Defensor', 'Guardián'], respuesta: 0 },
+                    { japones: '緑谷', lectura: 'midoriya', opciones: ['Midoriya', 'Bakugo', 'Todoroki', 'All Might'], respuesta: 0 },
+                    { japones: 'ワン・フォー・オール', lectura: 'wan fō ōru', opciones: ['One For All', 'All For One', 'Full Cowl', 'Delaware Smash'], respuesta: 0 },
+                    { japones: '敵', lectura: 'teki', opciones: ['Villano', 'Enemigo', 'Antagonista', 'Rival'], respuesta: 0 },
+                    { japones: '雄英', lectura: 'yūei', opciones: ['U.A.', 'Academia', 'Escuela', 'Instituto'], respuesta: 0 },
+                    { japones: '爆豪', lectura: 'bakugō', opciones: ['Bakugo', 'Midoriya', 'Kirishima', 'Uraraka'], respuesta: 0 },
+                    { japones: '轟', lectura: 'todoroki', opciones: ['Todoroki', 'Iida', 'Tokoyami', 'Asui'], respuesta: 0 },
+                    { japones: '無個性', lectura: 'mukosei', opciones: ['Sin Quirk', 'Normal', 'Débil', 'Común'], respuesta: 0 },
+                    { japones: 'プラスアルトラ', lectura: 'purasu arutora', opciones: ['Plus Ultra', 'Más Allá', 'Sin Límites', 'Extremo'], respuesta: 0 }
                 ]
             }
         }
@@ -86,31 +86,31 @@ const categorias = {
             'mazo2_1': {
                 nombre: 'The Legend of Zelda',
                 palabras: [
-                    { japones: 'ゼルダ', opciones: ['Zelda', 'Link', 'Ganon', 'Impa'], respuesta: 0 },
-                    { japones: 'トライフォース', opciones: ['Trifuerza', 'Triforce', 'Triángulo Dorado', 'Reliquia Sagrada'], respuesta: 0 },
-                    { japones: 'ハイラル', opciones: ['Hyrule', 'Termina', 'Holodrum', 'Labrynna'], respuesta: 0 },
-                    { japones: 'マスターソード', opciones: ['Espada Maestra', 'Espada Legendaria', 'Espada Divina', 'Espada del Héroe'], respuesta: 0 },
-                    { japones: 'ルピー', opciones: ['Rupia', 'Moneda', 'Gema', 'Dinero'], respuesta: 0 },
-                    { japones: '神殿', opciones: ['Templo', 'Santuario', 'Mazmorra', 'Fortaleza'], respuesta: 0 },
-                    { japones: '勇者', opciones: ['Héroe', 'Guerrero', 'Elegido', 'Salvador'], respuesta: 0 },
-                    { japones: '魔王', opciones: ['Rey Demonio', 'Señor Oscuro', 'Antagonista', 'Villano'], respuesta: 0 },
-                    { japones: '妖精', opciones: ['Hada', 'Espíritu', 'Ser Mágico', 'Guía'], respuesta: 0 },
-                    { japones: '冒険', opciones: ['Aventura', 'Viaje', 'Expedición', 'Búsqueda'], respuesta: 0 }
+                    { japones: 'ゼルダ', lectura: 'zeruda', opciones: ['Zelda', 'Link', 'Ganon', 'Impa'], respuesta: 0 },
+                    { japones: 'トライフォース', lectura: 'toraifōsu', opciones: ['Trifuerza', 'Triforce', 'Triángulo Dorado', 'Reliquia Sagrada'], respuesta: 0 },
+                    { japones: 'ハイラル', lectura: 'hairaru', opciones: ['Hyrule', 'Termina', 'Holodrum', 'Labrynna'], respuesta: 0 },
+                    { japones: 'マスターソード', lectura: 'masutāsōdo', opciones: ['Espada Maestra', 'Espada Legendaria', 'Espada Divina', 'Espada del Héroe'], respuesta: 0 },
+                    { japones: 'ルピー', lectura: 'rupī', opciones: ['Rupia', 'Moneda', 'Gema', 'Dinero'], respuesta: 0 },
+                    { japones: '神殿', lectura: 'shinden', opciones: ['Templo', 'Santuario', 'Mazmorra', 'Fortaleza'], respuesta: 0 },
+                    { japones: '勇者', lectura: 'yūsha', opciones: ['Héroe', 'Guerrero', 'Elegido', 'Salvador'], respuesta: 0 },
+                    { japones: '魔王', lectura: 'maō', opciones: ['Rey Demonio', 'Señor Oscuro', 'Antagonista', 'Villano'], respuesta: 0 },
+                    { japones: '妖精', lectura: 'yōsei', opciones: ['Hada', 'Espíritu', 'Ser Mágico', 'Guía'], respuesta: 0 },
+                    { japones: '冒険', lectura: 'bōken', opciones: ['Aventura', 'Viaje', 'Expedición', 'Búsqueda'], respuesta: 0 }
                 ]
             },
             'mazo2_2': {
                 nombre: 'Final Fantasy',
                 palabras: [
-                    { japones: 'ファイナルファンタジー', opciones: ['Final Fantasy', 'Fantasy Final', 'Ultimate Fantasy', 'Last Fantasy'], respuesta: 0 },
-                    { japones: '召喚獣', opciones: ['Invocación', 'Eidolon', 'Esper', 'Guardián'], respuesta: 0 },
-                    { japones: '魔法', opciones: ['Magia', 'Hechizo', 'Conjuro', 'Poder'], respuesta: 0 },
-                    { japones: 'クリスタル', opciones: ['Cristal', 'Gema', 'Piedra', 'Orbe'], respuesta: 0 },
-                    { japones: 'チョコボ', opciones: ['Chocobo', 'Ave Grande', 'Pájaro Montura', 'Animal de Carga'], respuesta: 0 },
-                    { japones: 'モーグリ', opciones: ['Moogle', 'Criatura Mágica', 'Animal Fantástico', 'Ser Alado'], respuesta: 0 },
-                    { japones: 'ジョブ', opciones: ['Clase', 'Oficio', 'Profesión', 'Especialidad'], respuesta: 0 },
-                    { japones: 'エーテル', opciones: ['Éter', 'Mana', 'Puntos Mágicos', 'Energía Espiritual'], respuesta: 0 },
-                    { japones: '飛空艇', opciones: ['Aeronave', 'Nave Voladora', 'Dirigible', 'Transporte Aéreo'], respuesta: 0 },
-                    { japones: '世界', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 }
+                    { japones: 'ファイナルファンタジー', lectura: 'fainaru fantajī', opciones: ['Final Fantasy', 'Fantasy Final', 'Ultimate Fantasy', 'Last Fantasy'], respuesta: 0 },
+                    { japones: '召喚獣', lectura: 'shōkanjū', opciones: ['Invocación', 'Eidolon', 'Esper', 'Guardián'], respuesta: 0 },
+                    { japones: '魔法', lectura: 'mahō', opciones: ['Magia', 'Hechizo', 'Conjuro', 'Poder'], respuesta: 0 },
+                    { japones: 'クリスタル', lectura: 'kurisutaru', opciones: ['Cristal', 'Gema', 'Piedra', 'Orbe'], respuesta: 0 },
+                    { japones: 'チョコボ', lectura: 'chokobo', opciones: ['Chocobo', 'Ave Grande', 'Pájaro Montura', 'Animal de Carga'], respuesta: 0 },
+                    { japones: 'モーグリ', lectura: 'mōguri', opciones: ['Moogle', 'Criatura Mágica', 'Animal Fantástico', 'Ser Alado'], respuesta: 0 },
+                    { japones: 'ジョブ', lectura: 'jobu', opciones: ['Clase', 'Oficio', 'Profesión', 'Especialidad'], respuesta: 0 },
+                    { japones: 'エーテル', lectura: 'ēteru', opciones: ['Éter', 'Mana', 'Puntos Mágicos', 'Energía Espiritual'], respuesta: 0 },
+                    { japones: '飛空艇', lectura: 'hikūtei', opciones: ['Aeronave', 'Nave Voladora', 'Dirigible', 'Transporte Aéreo'], respuesta: 0 },
+                    { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 }
                 ]
             },
             'mazo2_3': { nombre: 'Pokémon', palabras: generarPalabrasAleatorias() },
@@ -203,16 +203,16 @@ const categorias = {
 // Función para generar palabras aleatorias para mazos vacíos
 function generarPalabrasAleatorias() {
     const palabrasComunes = [
-        { japones: '言葉', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
-        { japones: '時間', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
-        { japones: '場所', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
-        { japones: '人', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
-        { japones: '物', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
-        { japones: '事', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
-        { japones: '世界', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
-        { japones: '生活', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
-        { japones: '仕事', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
-        { japones: '家族', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
+        { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
+        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
+        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
+        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
+        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
+        { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
+        { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
+        { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
+        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
+        { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
     ];
     return [...palabrasComunes];
 }
@@ -318,7 +318,7 @@ function mostrarPregunta() {
             const botonOpcion = document.createElement('button');
             botonOpcion.className = 'opcion';
             botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.japones);
+            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
             contenedorOpciones.appendChild(botonOpcion);
         });
     } else {
@@ -327,7 +327,7 @@ function mostrarPregunta() {
 }
 
 // Función para verificar la respuesta
-function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, palabraJapones) {
+function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
     const opciones = document.querySelectorAll('.opcion');
     const resultado = document.getElementById('resultado');
     
@@ -347,7 +347,7 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, palabraJap
     
     // Mostrar resultado
     if (respuestaSeleccionada === respuestaCorrecta) {
-        resultado.textContent = '¡Correcto!';
+        resultado.innerHTML = `¡Correcto!<br><span style="font-size: 1.2rem; color: #ffa500; margin-top: 10px; display: block;">Lectura: ${lectura}</span>`;
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
     } else {
