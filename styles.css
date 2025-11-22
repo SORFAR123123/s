@@ -195,6 +195,15 @@ h1 {
     color: #ffffff;
 }
 
+.lectura {
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #ffa500;
+    margin-bottom: 40px;
+    min-height: 50px;
+    text-align: center;
+}
+
 .contenedor-opciones {
     display: grid;
     grid-template-columns: 1fr 1fr;
