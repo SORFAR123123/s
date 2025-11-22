@@ -1,3 +1,100 @@
+// ============================================================================
+// CONFIGURACIÓN DE URLs DE IMÁGENES
+// ============================================================================
+
+// Aquí puedes cambiar las URLs de todas las imágenes
+const configImagenes = {
+    contenedores: {
+        'contenedor1': 'imagenes/contenedor1.jpg',
+        'contenedor2': 'imagenes/contenedor2.jpg',
+        'contenedor3': 'imagenes/contenedor3.jpg',
+        'contenedor4': 'imagenes/contenedor4.jpg',
+        'contenedor5': 'imagenes/contenedor5.jpg',
+        'contenedor6': 'imagenes/contenedor6.jpg',
+        'contenedor7': 'imagenes/contenedor7.jpg',
+        'contenedor8': 'imagenes/contenedor8.jpg',
+        'contenedor9': 'imagenes/contenedor9.jpg',
+        'contenedor10': 'imagenes/contenedor10.jpg'
+    },
+    subcontenedores: {
+        'sub1_1': 'imagenes/sub1_1.jpg',
+        'sub1_2': 'imagenes/sub1_2.jpg',
+        'sub1_3': 'imagenes/sub1_3.jpg',
+        'sub1_4': 'imagenes/sub1_4.jpg',
+        'sub1_5': 'imagenes/sub1_5.jpg',
+        'sub2_1': 'imagenes/sub2_1.jpg',
+        'sub2_2': 'imagenes/sub2_2.jpg',
+        'sub2_3': 'imagenes/sub2_3.jpg',
+        'sub2_4': 'imagenes/sub2_4.jpg',
+        'sub2_5': 'imagenes/sub2_5.jpg',
+        'sub3_1': 'imagenes/sub3_1.jpg',
+        'sub3_2': 'imagenes/sub3_2.jpg',
+        'sub3_3': 'imagenes/sub3_3.jpg',
+        'sub3_4': 'imagenes/sub3_4.jpg',
+        'sub3_5': 'imagenes/sub3_5.jpg',
+        'sub4_1': 'imagenes/sub4_1.jpg',
+        'sub4_2': 'imagenes/sub4_2.jpg',
+        'sub4_3': 'imagenes/sub4_3.jpg',
+        'sub4_4': 'imagenes/sub4_4.jpg',
+        'sub4_5': 'imagenes/sub4_5.jpg',
+        'sub5_1': 'imagenes/sub5_1.jpg',
+        'sub5_2': 'imagenes/sub5_2.jpg',
+        'sub5_3': 'imagenes/sub5_3.jpg',
+        'sub5_4': 'imagenes/sub5_4.jpg',
+        'sub5_5': 'imagenes/sub5_5.jpg',
+        'sub6_1': 'imagenes/sub6_1.jpg',
+        'sub6_2': 'imagenes/sub6_2.jpg',
+        'sub6_3': 'imagenes/sub6_3.jpg',
+        'sub6_4': 'imagenes/sub6_4.jpg',
+        'sub6_5': 'imagenes/sub6_5.jpg',
+        'sub7_1': 'imagenes/sub7_1.jpg',
+        'sub7_2': 'imagenes/sub7_2.jpg',
+        'sub7_3': 'imagenes/sub7_3.jpg',
+        'sub7_4': 'imagenes/sub7_4.jpg',
+        'sub7_5': 'imagenes/sub7_5.jpg',
+        'sub8_1': 'imagenes/sub8_1.jpg',
+        'sub8_2': 'imagenes/sub8_2.jpg',
+        'sub8_3': 'imagenes/sub8_3.jpg',
+        'sub8_4': 'imagenes/sub8_4.jpg',
+        'sub8_5': 'imagenes/sub8_5.jpg',
+        'sub9_1': 'imagenes/sub9_1.jpg',
+        'sub9_2': 'imagenes/sub9_2.jpg',
+        'sub9_3': 'imagenes/sub9_3.jpg',
+        'sub9_4': 'imagenes/sub9_4.jpg',
+        'sub9_5': 'imagenes/sub9_5.jpg',
+        'sub10_1': 'imagenes/sub10_1.jpg',
+        'sub10_2': 'imagenes/sub10_2.jpg',
+        'sub10_3': 'imagenes/sub10_3.jpg',
+        'sub10_4': 'imagenes/sub10_4.jpg',
+        'sub10_5': 'imagenes/sub10_5.jpg'
+    },
+    mazos: {
+        'mazo1': 'imagenes/mazo1.jpg',
+        'mazo2': 'imagenes/mazo2.jpg',
+        'mazo3': 'imagenes/mazo3.jpg',
+        'mazo4': 'imagenes/mazo4.jpg',
+        'mazo5': 'imagenes/mazo5.jpg',
+        'mazo6': 'imagenes/mazo6.jpg',
+        'mazo7': 'imagenes/mazo7.jpg',
+        'mazo8': 'imagenes/mazo8.jpg',
+        'mazo9': 'imagenes/mazo9.jpg',
+        'mazo10': 'imagenes/mazo10.jpg'
+    }
+};
+
+// Función para obtener la URL de una imagen
+function obtenerUrlImagen(tipo, id) {
+    if (configImagenes[tipo] && configImagenes[tipo][id]) {
+        return configImagenes[tipo][id];
+    }
+    // Imagen por defecto si no se encuentra
+    return 'imagenes/default.jpg';
+}
+
+// ============================================================================
+// ESTRUCTURA PRINCIPAL
+// ============================================================================
+
 // Estructura de 10 contenedores → 5 sub-contenedores → 10 mazos → 10 palabras
 const estructura = {
     'contenedor1': {
@@ -159,7 +256,7 @@ function cargarContenedor(idContenedor) {
             subDiv.onclick = () => cargarSubcontenedor(key);
             
             subDiv.innerHTML = `
-                <img src="imagenes/${key}.jpg" alt="${sub.nombre}" class="subcontenedor-imagen">
+                <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen">
                 <div class="subcontenedor-texto">${sub.nombre}</div>
                 <div class="subcontenedor-info">10 mazos disponibles</div>
             `;
@@ -190,7 +287,7 @@ function cargarSubcontenedor(idSubcontenedor) {
             mazoDiv.onclick = () => cargarMazo(key);
             
             mazoDiv.innerHTML = `
-                <img src="imagenes/${key}.jpg" alt="${mazo.nombre}" class="mazo-imagen">
+                <img src="${obtenerUrlImagen('mazos', key)}" alt="${mazo.nombre}" class="mazo-imagen">
                 <div class="mazo-texto">${mazo.nombre}</div>
                 <div class="mazo-info">10 palabras</div>
             `;
@@ -339,81 +436,3 @@ function repetirQuiz() {
     cambiarPantalla('pantalla-quiz');
     mostrarPregunta();
 }
-
-// ============================================================================
-// FUNCIONES PARA CAMBIAR IMÁGENES CON URLs DIRECTAS
-// ============================================================================
-
-// Función para cambiar imágenes usando URLs directas
-function cambiarImagen(tipo, id, nuevaUrl) {
-    const selectores = {
-        'contenedor': '.lastsummer-card img[alt="Contenedor ' + id + '"]',
-        'subcontenedor': '.subcontenedor-card img[alt*="Sub-Contenedor ' + id + '"]',
-        'mazo': '.mazo-card img[alt*="Mazo ' + id + '"]'
-    };
-    
-    const selector = selectores[tipo];
-    if (selector) {
-        const imagen = document.querySelector(selector);
-        if (imagen) {
-            imagen.src = nuevaUrl;
-            console.log(`Imagen de ${tipo} ${id} actualizada a: ${nuevaUrl}`);
-            return true;
-        } else {
-            console.warn(`No se encontró la imagen para ${tipo} ${id}`);
-            return false;
-        }
-    } else {
-        console.error('Tipo de imagen no válido. Usa: contenedor, subcontenedor o mazo');
-        return false;
-    }
-}
-
-// Función para cambiar múltiples imágenes a la vez
-function cambiarMultiplesImagenes(configuraciones) {
-    let exitosas = 0;
-    configuraciones.forEach(config => {
-        if (cambiarImagen(config.tipo, config.id, config.url)) {
-            exitosas++;
-        }
-    });
-    return exitosas;
-}
-
-// Función para aplicar cambio desde la interfaz
-function aplicarCambioImagen() {
-    const tipo = document.getElementById('tipo-imagen').value;
-    const id = document.getElementById('id-imagen').value;
-    const url = document.getElementById('url-imagen').value;
-    const mensaje = document.getElementById('mensaje-imagen');
-    
-    if (!tipo || !id || !url) {
-        mensaje.textContent = 'Por favor, completa todos los campos';
-        mensaje.className = 'mensaje error';
-        return;
-    }
-    
-    if (cambiarImagen(tipo, id, url)) {
-        mensaje.textContent = `Imagen de ${tipo} ${id} cambiada exitosamente`;
-        mensaje.className = 'mensaje exito';
-        
-        // Limpiar campos
-        document.getElementById('url-imagen').value = '';
-    } else {
-        mensaje.textContent = `No se pudo cambiar la imagen de ${tipo} ${id}`;
-        mensaje.className = 'mensaje error';
-    }
-}
-
-// Funciones globales para usar desde la consola del navegador
-window.cambiarImagen = function(tipo, id, nuevaUrl) {
-    return cambiarImagen(tipo, id, nuevaUrl);
-};
-
-window.cambiarMultiplesImagenes = function(configuraciones) {
-    return cambiarMultiplesImagenes(configuraciones);
-};
-
-// Ejemplo de uso desde la consola:
-// cambiarImagen('contenedor', '1', 'https://ejemplo.com/imagen.jpg')
-// cambiarMultiplesImagenes([{tipo: 'contenedor', id: '1', url: 'https://...'}, ...])
