@@ -26,6 +26,67 @@ body {
     margin: 0 auto;
 }
 
+/* SECCIÓN PARA CAMBIAR IMÁGENES */
+.seccion-cambiar-imagenes {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 2px solid #444444;
+}
+
+.seccion-cambiar-imagenes h3 {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.controles-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-url, .select-tipo, .input-id {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: #333;
+    color: white;
+    min-width: 150px;
+}
+
+.boton-cambiar {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.boton-cambiar:hover {
+    background-color: #7b68ee;
+}
+
+.mensaje {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+.mensaje.exito {
+    color: #00ff88;
+}
+
+.mensaje.error {
+    color: #ff4444;
+}
+
 /* PANTALLA DE INICIO */
 h1 {
     text-align: center;
@@ -398,5 +459,13 @@ h1 {
     .mazo-imagen {
         width: 100px;
         height: 100px;
+    }
+    
+    .controles-imagenes {
+        flex-direction: column;
+    }
+    
+    .input-url, .select-tipo, .input-id {
+        width: 100%;
     }
 }
