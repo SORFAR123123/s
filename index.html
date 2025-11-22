@@ -3,54 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudio de Idiomas con Manga</title>
+    <title>Aplicación de Mazos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Estudio de Idiomas con Manga</h1>
-        <p>Selecciona un manga para comenzar a estudiar</p>
-        <a href="#" id="githubLink" class="github-link">📚 Ver GitHub Pages</a>
-    </header>
-
-    <div class="container">
-        <!-- Pantalla de selección de mangas -->
-        <div id="manga-selection" class="manga-selection">
-            <!-- Las tarjetas de manga se generarán dinámicamente con JavaScript -->
-        </div>
-
-        <!-- Pantalla de selección de mazos -->
-        <div id="decks-screen" class="decks-screen">
-            <button id="back-to-manga" class="back-button">
-                <span>←</span> Volver a Mangas
-            </button>
-            <h2 id="current-manga-title">Mazos de estudio</h2>
-            <div id="deck-selection" class="deck-selection">
-                <!-- Las tarjetas de mazo se generarán dinámicamente con JavaScript -->
+    <!-- PANTALLA DE INICIO -->
+    <div id="pantalla-inicio" class="pantalla activa">
+        <div class="contenedor">
+            <h1>MIS MAZOS</h1>
+            <p class="subtitulo">Selecciona un mazo para comenzar</p>
+            
+            <div class="menu-principal">
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">MAZOS DISPONIBLES</h2>
+                    <div class="contenedor-tarjetas">
+                        <!-- The Last Summer -->
+                        <div class="lastsummer-card" onclick="cargarMazo('lastsummer')">
+                            <img src="imagenes/lastsummer.jpg" alt="The Last Summer" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">The Last Summer</div>
+                        </div>
+                        
+                        <!-- Toono Esuke -->
+                        <div class="toono-card" onclick="cargarMazo('toono')">
+                            <img src="imagenes/toono.jpg" alt="Toono Esuke" class="toono-imagen">
+                            <div class="toono-texto">Toono Esuke</div>
+                        </div>
+                        
+                        <!-- Mazo 3 -->
+                        <div class="fabrizio-card" onclick="cargarMazo('mazo3')">
+                            <img src="imagenes/mazo3.jpg" alt="Mazo 3" class="fabrizio-imagen">
+                            <div class="fabrizio-texto">Aventura Épica</div>
+                        </div>
+                        
+                        <!-- Mazo 4 -->
+                        <div class="tienda-card" onclick="cargarMazo('mazo4')">
+                            <img src="imagenes/mazo4.jpg" alt="Mazo 4" class="tienda-imagen">
+                            <div class="tienda-texto">Fantasía Oscura</div>
+                        </div>
+                        
+                        <!-- Mazo 5 -->
+                        <div class="diarias-card" onclick="cargarMazo('mazo5')">
+                            <img src="imagenes/mazo5.jpg" alt="Mazo 5" class="diarias-imagen">
+                            <div class="diarias-texto">Ciencia Ficción</div>
+                        </div>
+                        
+                        <!-- Mazo 6 -->
+                        <div class="novia-card" onclick="cargarMazo('mazo6')">
+                            <img src="imagenes/mazo6.jpg" alt="Mazo 6" class="novia-imagen">
+                            <div class="novia-texto">Romance Estelar</div>
+                        </div>
+                        
+                        <!-- Mazo 7 -->
+                        <div class="misiones-card" onclick="cargarMazo('mazo7')">
+                            <img src="imagenes/mazo7.jpg" alt="Mazo 7" class="misiones-imagen">
+                            <div class="misiones-texto">Aventura Pirata</div>
+                        </div>
+                        
+                        <!-- Mazo 8 -->
+                        <div class="novia-rpg-card" onclick="cargarMazo('mazo8')">
+                            <img src="imagenes/mazo8.jpg" alt="Mazo 8" class="novia-rpg-imagen">
+                            <div class="novia-rpg-texto">Misterio Ancestral</div>
+                        </div>
+                        
+                        <!-- Mazo 9 -->
+                        <div class="vivienda-card" onclick="cargarMazo('mazo9')">
+                            <img src="imagenes/mazo9.jpg" alt="Mazo 9" class="vivienda-imagen">
+                            <div class="vivienda-texto">Cyberpunk 2077</div>
+                        </div>
+                        
+                        <!-- Mazo 10 -->
+                        <div class="tienda-18-card" onclick="cargarMazo('mazo10')">
+                            <img src="imagenes/mazo10.jpg" alt="Mazo 10" class="tienda-18-imagen">
+                            <div class="tienda-18-texto">Steampunk</div>
+                        </div>
+                        
+                        <!-- Mazo 11 -->
+                        <div class="lastsummer-card" onclick="cargarMazo('mazo11')">
+                            <img src="imagenes/mazo11.jpg" alt="Mazo 11" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Fantasia Épica</div>
+                        </div>
+                        
+                        <!-- Mazo 12 -->
+                        <div class="toono-card" onclick="cargarMazo('mazo12')">
+                            <img src="imagenes/mazo12.jpg" alt="Mazo 12" class="toono-imagen">
+                            <div class="toono-texto">Aventura Espacial</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Pantalla de estudio -->
-        <div id="study-screen" class="study-screen">
-            <div class="progress-bar">
-                <div class="progress" id="progress-bar"></div>
+    <!-- PANTALLA DEL QUIZ -->
+    <div id="pantalla-quiz" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
             </div>
-            <div class="score-display" id="score-display">Puntuación: 0/0</div>
-            <div class="question-container">
-                <div class="question-text" id="question-text"></div>
-                <img class="question-image" id="question-image" src="" alt="Imagen de la pregunta">
-            </div>
-            <div class="options-container" id="options-container">
-                <!-- Las opciones se generarán dinámicamente con JavaScript -->
+            
+            <div class="contenido-quiz">
+                <div class="palabra-japones" id="palabra-japones">言葉</div>
+                <div class="lectura" id="lectura">(kotoba)</div>
+                
+                <div class="contenedor-opciones" id="contenedor-opciones">
+                    <!-- Las opciones se generarán dinámicamente -->
+                </div>
+                
+                <div class="resultado" id="resultado"></div>
+                
+                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Siguiente Pregunta</button>
             </div>
         </div>
+    </div>
 
-        <!-- Pantalla de resultados -->
-        <div id="result-screen" class="result-screen">
-            <h2>¡Estudio completado!</h2>
-            <p id="final-score">Tu puntuación final: 0/0</p>
-            <button id="restart-button" class="restart-button">Estudiar otro mazo</button>
-            <button id="back-to-decks" class="restart-button" style="background-color: #95a5a6; margin-left: 10px;">Volver a mazos</button>
+    <!-- PANTALLA DE RESULTADOS -->
+    <div id="pantalla-resultados" class="pantalla">
+        <div class="contenedor">
+            <h1>Resultados del Quiz</h1>
+            
+            <div class="resultado-final" id="resultado-final">
+                <!-- Los resultados se mostrarán aquí -->
+            </div>
+            
+            <button class="boton-principal" onclick="volverAlInicio()">Volver al Inicio</button>
+            <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
         </div>
     </div>
 
