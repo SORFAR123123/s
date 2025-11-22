@@ -292,8 +292,9 @@ function mostrarPregunta() {
         document.getElementById('numero-pregunta').textContent = preguntaActual + 1;
         document.getElementById('total-preguntas').textContent = mazoActual.length;
         
-        // Mostrar palabra japonesa
+        // Mostrar palabra japonesa y limpiar lectura
         document.getElementById('palabra-japones').textContent = pregunta.japones;
+        document.getElementById('lectura').textContent = ''; // Limpiar lectura
         
         // Limpiar resultado anterior
         document.getElementById('resultado').textContent = '';
@@ -347,7 +348,9 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
     
     // Mostrar resultado
     if (respuestaSeleccionada === respuestaCorrecta) {
-        resultado.innerHTML = `¡Correcto!<br><span style="font-size: 1.2rem; color: #ffa500; margin-top: 10px; display: block;">Lectura: ${lectura}</span>`;
+        // Mostrar la lectura debajo de la palabra japonesa
+        document.getElementById('lectura').textContent = `(${lectura})`;
+        resultado.textContent = '¡Correcto!';
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
     } else {
