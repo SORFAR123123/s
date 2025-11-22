@@ -592,6 +592,70 @@ h1 {
     text-align: center;
 }
 
+/* ============================================================================
+   ESTILOS PARA VIDEOS ÍNTIMOS
+   ============================================================================ */
+
+.video-escena-adulta {
+    background: linear-gradient(135deg, #8b0000, #b22222);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.video-escena-adulta h4 {
+    color: #ff6b9d;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.video-intimo {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
+    background: #000;
+}
+
+.leyenda-escena {
+    color: #ffd700;
+    font-style: italic;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.controles-video {
+    margin-top: 15px;
+}
+
+.boton-saltar-video {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.boton-saltar-video:hover {
+    background: linear-gradient(135deg, #7b68ee, #4a90e2);
+}
+
+.fallback-text {
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Efectos para cuando se reproduce video */
+.video-escena-adulta.reproduciendo {
+    border: 3px solid #ff6b9d;
+    box-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
+}
+
 /* BOTONES */
 .acciones-basicas {
     display: flex;
@@ -789,5 +853,9 @@ h1 {
     .economia-rpg {
         flex-direction: column;
         gap: 10px;
+    }
+    
+    .video-intimo {
+        max-width: 100%;
     }
 }
