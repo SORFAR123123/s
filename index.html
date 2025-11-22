@@ -7,11 +7,61 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- PANTALLA DE EVENTO DIARIO -->
+    <div id="pantalla-evento-diario" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-evento">
+                <h1 id="titulo-evento">🎯 Evento Diario</h1>
+                <p class="subtitulo-evento" id="subtitulo-evento">Completa el desafío de hoy</p>
+                
+                <div class="evento-card">
+                    <img id="imagen-evento" src="imagenes/evento1.jpg" alt="Evento Diario" class="imagen-evento">
+                    <div class="info-evento">
+                        <h2 id="nombre-evento">Desafío del Día</h2>
+                        <p id="descripcion-evento" class="descripcion-evento"></p>
+                        <div class="progreso-evento">
+                            <div class="barra-progreso">
+                                <div id="barra-progreso-evento" class="barra-progreso-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="texto-progreso-evento" class="texto-progreso">0/0 completados</span>
+                        </div>
+                        <div class="recompensa-evento">
+                            <span class="recompensa-label">Recompensa:</span>
+                            <span id="recompensa-evento" class="recompensa-valor">0 S/.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="botones-evento">
+                    <button class="boton-principal" onclick="aceptarEventoDiario()">Aceptar Desafío</button>
+                    <button class="boton-secundario" onclick="saltarEventoDiario()">Saltar por Hoy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- PANTALLA DE INICIO -->
-    <div id="pantalla-inicio" class="pantalla activa">
+    <div id="pantalla-inicio" class="pantalla">
         <div class="contenedor">
             <h1>BIBLIOTECA DE MAZOS</h1>
             <p class="subtitulo">Selecciona un contenedor principal</p>
+            
+            <!-- PANEL DE PROGRESO -->
+            <div class="panel-progreso">
+                <div class="progreso-item">
+                    <span class="progreso-label">Evento Diario:</span>
+                    <span id="estado-evento-diario" class="progreso-estado">No completado</span>
+                </div>
+                <div class="progreso-item">
+                    <span class="progreso-label">Misiones Diarias:</span>
+                    <span id="progreso-misiones-diarias" class="progreso-estado">0/3</span>
+                </div>
+                <div class="progreso-item">
+                    <span class="progreso-label">Misiones Semanales:</span>
+                    <span id="progreso-misiones-semanales" class="progreso-estado">0/2</span>
+                </div>
+                <button class="boton-ver-misiones" onclick="verMisiones()">📋 Ver Mis Misiones</button>
+            </div>
             
             <div class="menu-principal">
                 <div class="seccion-menu">
@@ -69,6 +119,60 @@
                             <div class="lastsummer-texto">💕 Mi Novia RPG</div>
                             <div class="lastsummer-info">Sistema de relación +18</div>
                         </div>
+                        <div class="lastsummer-card" onclick="verMisiones()">
+                            <img src="imagenes/misiones.jpg" alt="Misiones" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">🎯 Mis Misiones</div>
+                            <div class="lastsummer-info">Diarias y semanales</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE MISIONES -->
+    <div id="pantalla-misiones" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🎯 Mis Misiones</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+            </div>
+            
+            <div class="misiones-container">
+                <!-- EVENTO DIARIO -->
+                <div class="mision-seccion">
+                    <h3>📅 Evento Diario</h3>
+                    <div id="mision-evento-diario" class="mision-card">
+                        <!-- Contenido dinámico -->
+                    </div>
+                </div>
+                
+                <!-- MISIONES DIARIAS -->
+                <div class="mision-seccion">
+                    <h3>⭐ Misiones Diarias</h3>
+                    <div id="lista-misiones-diarias" class="lista-misiones">
+                        <!-- Misiones diarias dinámicas -->
+                    </div>
+                </div>
+                
+                <!-- MISIONES SEMANALES -->
+                <div class="mision-seccion">
+                    <h3>🏆 Misiones Semanales</h3>
+                    <div id="lista-misiones-semanales" class="lista-misiones">
+                        <!-- Misiones semanales dinámicas -->
+                    </div>
+                </div>
+                
+                <!-- RECOMPENSAS ACUMULADAS -->
+                <div class="recompensas-totales">
+                    <h3>💰 Recompensas Totales</h3>
+                    <div class="recompensa-info">
+                        <span>Ganancias del día: </span>
+                        <span id="ganancias-dia" class="recompensa-valor">0 S/.</span>
+                    </div>
+                    <div class="recompensa-info">
+                        <span>Ganancias de la semana: </span>
+                        <span id="ganancias-semana" class="recompensa-valor">0 S/.</span>
                     </div>
                 </div>
             </div>
@@ -149,6 +253,51 @@
                 </div>
                 
                 <button class="boton-saltar" onclick="saltarVideo()">Saltar Video</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO EVENTO COMPLETADO -->
+    <div id="pantalla-video-evento-completado" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1>¡Evento Completado! 🎊</h1>
+                <p class="subtitulo-video">Has ganado una recompensa especial</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-completado" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p id="recompensa-ganada" class="duracion-video">Recompensa: 0 S/.</p>
+                    <p class="mensaje-video">¡Excelente trabajo!</p>
+                </div>
+                
+                <button class="boton-saltar" onclick="volverAlInicio()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO EVENTO FALLIDO -->
+    <div id="pantalla-video-evento-fallido" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1>¡No te rindas! 💪</h1>
+                <p class="subtitulo-video">Puedes intentarlo mañana</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-fallido" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">Sigue practicando</p>
+                </div>
+                
+                <button class="boton-saltar" onclick="volverAlInicio()">Continuar</button>
             </div>
         </div>
     </div>
