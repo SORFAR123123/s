@@ -79,6 +79,13 @@ const configImagenes = {
         'mazo8': 'imagenes/mazo8.jpg',
         'mazo9': 'imagenes/mazo9.jpg',
         'mazo10': 'imagenes/mazo10.jpg'
+    },
+    rpg: {
+        novia: 'imagenes/novia.jpg',
+        fondo: 'imagenes/fondo-rpg.jpg',
+        iconoFlores: 'imagenes/flores.png',
+        iconoChocolates: 'imagenes/chocolates.png',
+        iconoJoyas: 'imagenes/joyas.png'
     }
 };
 
@@ -149,20 +156,68 @@ const videosRecompensa = [
     }
 ];
 
-// Función para obtener un video aleatorio
-function obtenerVideoAleatorio() {
-    const indiceAleatorio = Math.floor(Math.random() * videosRecompensa.length);
-    return videosRecompensa[indiceAleatorio];
-}
+// ============================================================================
+// SISTEMA RPG DE NOVIA
+// ============================================================================
 
-// Función para obtener la URL de una imagen
-function obtenerUrlImagen(tipo, id) {
-    if (configImagenes[tipo] && configImagenes[tipo][id]) {
-        return configImagenes[tipo][id];
+const rpgNovia = {
+    // Estado de la relación
+    estado: {
+        nombreNovia: "Sakura",
+        nivelRelacion: 1,
+        experiencia: 0,
+        afinidad: 50, // 0-100
+        estadoAnimo: "feliz",
+        energia: 100,
+        ultimaVisita: null,
+        conversacionesDesbloqueadas: [],
+        escenasDesbloqueadas: []
+    },
+    
+    // Economía del RPG
+    economia: {
+        moneda: "S/.",
+        nombre: "Soles",
+        saldo: 0,
+        inventario: {
+            condones: 0,
+            flores: 0,
+            chocolates: 0,
+            joyas: 0
+        }
+    },
+    
+    // Sistema +18
+    contenidoAdulto: {
+        desbloqueado: false,
+        escenasDisponibles: [
+            { id: "beso", nombre: "Beso Apasionado", costoCondones: 1, afinidadRequerida: 30 },
+            { id: "caricias", nombre: "Carícias Íntimas", costoCondones: 1, afinidadRequerida: 50 },
+            { id: "intimidad1", nombre: "Primera Noche", costoCondones: 1, afinidadRequerida: 70 },
+            { id: "intimidad2", nombre: "Noche de Pasión", costoCondones: 2, afinidadRequerida: 85 }
+        ],
+        escenasCompletadas: []
+    },
+    
+    // Conversaciones y diálogos
+    conversaciones: {
+        saludos: [
+            "¡Hola mi amor! 💕 ¿Cómo estás?",
+            "¡Qué alegría verte! 😊",
+            "Te extrañaba tanto... 🥰",
+            "¡Mi vida ha llegado! 💖"
+        ],
+        conversacionesNormales: [
+            { pregunta: "¿Qué has hecho hoy?", respuestas: ["Estudié mucho para ti 💪", "Pensé en ti todo el día 😘", "Practiqué japonés para impresionarte 📚"] },
+            { pregunta: "¿Te gustaría salir?", respuestas: ["¡Claro! Donde tú quieras 💃", "Solo contigo iría a cualquier lugar 🌸", "Me encanta pasar tiempo contigo 🎮"] },
+            { pregunta: "¿Qué te parece mi progreso?", respuestas: ["Estoy muy orgullosa de ti 🏆", "Eres mi campeón favorito ⭐", "Cada día te superas más 💫"] }
+        ],
+        conversacionesIntimas: [
+            { pregunta: "¿Qué sientes por mí?", respuestas: ["Eres el amor de mi vida 💞", "Nunca había sentido esto por nadie 🌹", "Quiero estar contigo para siempre 💍"] },
+            { pregunta: "¿Te gusta cuando estamos cerca?", respuestas: ["Tu cercania me vuelve loca 🔥", "Siento mariposas en el estómago 🦋", "Es lo que más espero del día 🌙"] }
+        ]
     }
-    // Imagen por defecto si no se encuentra
-    return 'imagenes/default.jpg';
-}
+};
 
 // ============================================================================
 // ESTRUCTURA PRINCIPAL
@@ -304,12 +359,35 @@ function generarPalabras(cantidad) {
     return palabras;
 }
 
+// ============================================================================
+// FUNCIONES GLOBALES
+// ============================================================================
+
 let contenedorActual = '';
 let subcontenedorActual = '';
 let mazoActual = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
+
+// Función para obtener la URL de una imagen
+function obtenerUrlImagen(tipo, id) {
+    if (configImagenes[tipo] && configImagenes[tipo][id]) {
+        return configImagenes[tipo][id];
+    }
+    // Imagen por defecto si no se encuentra
+    return 'imagenes/default.jpg';
+}
+
+// Función para obtener un video aleatorio
+function obtenerVideoAleatorio() {
+    const indiceAleatorio = Math.floor(Math.random() * videosRecompensa.length);
+    return videosRecompensa[indiceAleatorio];
+}
+
+// ============================================================================
+// FUNCIONES DEL SISTEMA PRINCIPAL
+// ============================================================================
 
 function cargarContenedor(idContenedor) {
     if (estructura[idContenedor]) {
@@ -465,9 +543,18 @@ function siguientePregunta() {
 function mostrarResultados() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
-    // Verificar si es 100% para mostrar video de recompensa
+    // AGREGAR RECOMPENSA ECONÓMICA AL RPG
     if (porcentaje === 100) {
+        // Dar 1 Sol por mazo completado al 100%
+        rpgNovia.economia.saldo += 1;
         mostrarVideoRecompensa();
+        
+        // Mostrar mensaje de recompensa
+        setTimeout(() => {
+            mostrarMensaje("¡Ganaste 1 Sol por completar el mazo al 100%! 💰");
+        }, 1000);
+    } else if (porcentaje >= 80) {
+        mostrarPantallaResultados(porcentaje);
     } else {
         mostrarPantallaResultados(porcentaje);
     }
@@ -544,4 +631,231 @@ function repetirQuiz() {
     mezclarPreguntas();
     cambiarPantalla('pantalla-quiz');
     mostrarPregunta();
+}
+
+// ============================================================================
+// FUNCIONES DEL RPG DE NOVIA
+// ============================================================================
+
+function iniciarRPGNovia() {
+    cambiarPantalla('pantalla-rpg-novia');
+    actualizarInterfazRPG();
+}
+
+function actualizarInterfazRPG() {
+    // Actualizar información básica
+    document.getElementById('nombre-novia').textContent = rpgNovia.estado.nombreNovia;
+    document.getElementById('nivel-relacion').textContent = `Nivel ${rpgNovia.estado.nivelRelacion}`;
+    document.getElementById('afinidad').textContent = `${rpgNovia.estado.afinidad}%`;
+    document.getElementById('saldo-rpg').textContent = `${rpgNovia.economia.saldo} ${rpgNovia.economia.moneda}`;
+    document.getElementById('condones-inventario').textContent = rpgNovia.economia.inventario.condones;
+    
+    // Actualizar barra de afinidad
+    const barraAfinidad = document.getElementById('barra-afinidad');
+    barraAfinidad.style.width = `${rpgNovia.estado.afinidad}%`;
+    
+    // Actualizar estado de ánimo
+    document.getElementById('estado-animo').textContent = obtenerEmojiEstadoAnimo(rpgNovia.estado.estadoAnimo);
+    
+    // Mostrar/Ocultar sección +18
+    const seccionAdulto = document.getElementById('seccion-adulto');
+    seccionAdulto.style.display = rpgNovia.contenidoAdulto.desbloqueado ? 'block' : 'none';
+    
+    // Generar diálogo aleatorio
+    generarDialogoAleatorio();
+}
+
+function obtenerEmojiEstadoAnimo(estado) {
+    const emojis = {
+        feliz: "😊",
+        enamorada: "🥰",
+        excitada: "😳",
+        juguetona: "😏",
+        timida: "😊",
+        pasional: "🔥"
+    };
+    return emojis[estado] || "😊";
+}
+
+function generarDialogoAleatorio() {
+    const dialogoElement = document.getElementById('dialogo-novia');
+    const saludos = rpgNovia.conversaciones.saludos;
+    const saludoAleatorio = saludos[Math.floor(Math.random() * saludos.length)];
+    
+    dialogoElement.innerHTML = `
+        <div class="dialogo-burbuja">
+            <div class="texto-dialogo">${saludoAleatorio}</div>
+            <div class="tiempo-dialogo">Ahora</div>
+        </div>
+    `;
+}
+
+function hablarConNovia() {
+    const conversaciones = rpgNovia.estado.afinidad >= 60 ? 
+        rpgNovia.conversaciones.conversacionesIntimas : 
+        rpgNovia.conversaciones.conversacionesNormales;
+    
+    const conversacion = conversaciones[Math.floor(Math.random() * conversaciones.length)];
+    const respuesta = conversacion.respuestas[Math.floor(Math.random() * conversacion.respuestas.length)];
+    
+    const dialogoElement = document.getElementById('dialogo-novia');
+    dialogoElement.innerHTML = `
+        <div class="dialogo-burbuja">
+            <div class="pregunta-dialogo">${conversacion.pregunta}</div>
+            <div class="texto-dialogo">${respuesta}</div>
+            <div class="tiempo-dialogo">Ahora</div>
+        </div>
+    `;
+    
+    // Aumentar afinidad por conversación
+    aumentarAfinidad(2);
+}
+
+function aumentarAfinidad(cantidad) {
+    rpgNovia.estado.afinidad = Math.min(100, rpgNovia.estado.afinidad + cantidad);
+    actualizarInterfazRPG();
+    
+    // Verificar si se desbloquea contenido +18
+    if (rpgNovia.estado.afinidad >= 30 && !rpgNovia.contenidoAdulto.desbloqueado) {
+        rpgNovia.contenidoAdulto.desbloqueado = true;
+        mostrarMensaje("¡Nueva sección desbloqueada! 💕");
+    }
+}
+
+function regalarItem(tipo) {
+    const costos = {
+        flores: 5,
+        chocolates: 10,
+        joyas: 20
+    };
+    
+    if (rpgNovia.economia.saldo >= costos[tipo]) {
+        rpgNovia.economia.saldo -= costos[tipo];
+        rpgNovia.economia.inventario[tipo]++;
+        
+        // Aumentar afinidad según el regalo
+        const afinidadGanada = {
+            flores: 5,
+            chocolates: 8,
+            joyas: 15
+        };
+        
+        aumentarAfinidad(afinidadGanada[tipo]);
+        mostrarMensaje(`Le regalaste ${tipo} a ${rpgNovia.estado.nombreNovia} 💝`);
+    } else {
+        mostrarMensaje("No tienes suficiente dinero 💸");
+    }
+}
+
+function comprarCondones() {
+    const costo = 15;
+    if (rpgNovia.economia.saldo >= costo) {
+        rpgNovia.economia.saldo -= costo;
+        rpgNovia.economia.inventario.condones++;
+        actualizarInterfazRPG();
+        mostrarMensaje("¡Condones comprados! 💕");
+    } else {
+        mostrarMensaje("No tienes suficiente dinero para comprar condones 💸");
+    }
+}
+
+function usarCondon(escenaId) {
+    if (rpgNovia.economia.inventario.condones <= 0) {
+        mostrarMensaje("No tienes condones disponibles 💔");
+        return;
+    }
+    
+    const escena = rpgNovia.contenidoAdulto.escenasDisponibles.find(e => e.id === escenaId);
+    
+    if (!escena) {
+        mostrarMensaje("Escena no encontrada");
+        return;
+    }
+    
+    if (rpgNovia.estado.afinidad < escena.afinidadRequerida) {
+        mostrarMensaje(`Necesitas ${escena.afinidadRequerida}% de afinidad para esta escena 💝`);
+        return;
+    }
+    
+    // Usar condón
+    rpgNovia.economia.inventario.condones -= escena.costoCondones;
+    
+    // Ejecutar escena
+    ejecutarEscenaAdulto(escena);
+}
+
+function ejecutarEscenaAdulto(escena) {
+    const mensajes = {
+        beso: [
+            "Te acercas lentamente... 💋",
+            "Sientes su respiración acelerarse... 🌬️",
+            "Tus labios se encuentran en un beso apasionado 🔥",
+            "Ella responde con igual intensidad... 💕",
+            "El momento se siente mágico ✨"
+        ],
+        caricias: [
+            "Tus manos comienzan a explorar su cuerpo... ✋",
+            "Ella emite un suave gemido... 😳",
+            "La intimidad crece entre ustedes... 🌹",
+            "Sientes su piel suave bajo tus dedos... 💫",
+            "El ambiente se carga de deseo... 🔥"
+        ],
+        intimidad1: [
+            "La llevas suavemente hacia la cama... 🛏️",
+            "La mirada entre ustedes es intensa... 👁️",
+            "Comienzan a quitarse la ropa lentamente... 👗",
+            "La pasión los consume por completo... 🌋",
+            "Una noche inolvidable comienza... 🌙"
+        ],
+        intimidad2: [
+            "Ya conocen bien los cuerpos del otro... 💞",
+            "Cada movimiento es sincronizado perfectamente... 🎶",
+            "Los gemidos llenan la habitación... 🎵",
+            "Llegan al éxtasis juntos... 🌠",
+            "Una experiencia íntima y profunda... 💖"
+        ]
+    };
+    
+    const dialogoElement = document.getElementById('dialogo-novia');
+    let mensajeCompleto = `<div class="escena-adulta">`;
+    
+    mensajes[escena.id].forEach((mensaje, index) => {
+        mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
+    });
+    
+    mensajeCompleto += `</div>`;
+    dialogoElement.innerHTML = mensajeCompleto;
+    
+    // Aumentar afinidad y experiencia
+    aumentarAfinidad(10);
+    rpgNovia.estado.experiencia += 25;
+    
+    // Verificar subida de nivel
+    verificarSubidaNivel();
+    
+    // Agregar a escenas completadas
+    if (!rpgNovia.contenidoAdulto.escenasCompletadas.includes(escena.id)) {
+        rpgNovia.contenidoAdulto.escenasCompletadas.push(escena.id);
+    }
+    
+    actualizarInterfazRPG();
+}
+
+function verificarSubidaNivel() {
+    const expNecesaria = rpgNovia.estado.nivelRelacion * 100;
+    if (rpgNovia.estado.experiencia >= expNecesaria) {
+        rpgNovia.estado.nivelRelacion++;
+        rpgNovia.estado.experiencia = 0;
+        mostrarMensaje(`¡Subiste al nivel ${rpgNovia.estado.nivelRelacion} de relación! 💕`);
+    }
+}
+
+function mostrarMensaje(mensaje) {
+    const mensajeElement = document.getElementById('mensaje-rpg');
+    mensajeElement.textContent = mensaje;
+    mensajeElement.style.display = 'block';
+    
+    setTimeout(() => {
+        mensajeElement.style.display = 'none';
+    }, 3000);
 }
