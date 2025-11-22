@@ -82,6 +82,79 @@ const configImagenes = {
     }
 };
 
+// ============================================================================
+// VIDEOS DE RECOMPENSA
+// ============================================================================
+
+const videosRecompensa = [
+    {
+        id: 1,
+        titulo: "¡Felicidades! Logro Desbloqueado 🎉",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubblegum-balloon-47846-large.mp4",
+        duracion: "10s"
+    },
+    {
+        id: 2,
+        titulo: "¡Excelente Trabajo! ⭐",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-3057-large.mp4",
+        duracion: "15s"
+    },
+    {
+        id: 3,
+        titulo: "¡Eres Increíble! 💪",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-audience-clapping-and-cheering-478-large.mp4",
+        duracion: "12s"
+    },
+    {
+        id: 4,
+        titulo: "¡Perfecto! 🏆",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-gold-trophy-for-the-winner-47845-large.mp4",
+        duracion: "8s"
+    },
+    {
+        id: 5,
+        titulo: "¡Misión Cumplida! 🚀",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-a-rocket-flying-into-the-sky-43809-large.mp4",
+        duracion: "11s"
+    },
+    {
+        id: 6,
+        titulo: "¡100% Completado! ✅",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-geometric-particles-whirling-in-space-43812-large.mp4",
+        duracion: "14s"
+    },
+    {
+        id: 7,
+        titulo: "¡Eres un Genio! 🧠",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-light-effects-on-a-dark-background-3128-large.mp4",
+        duracion: "9s"
+    },
+    {
+        id: 8,
+        titulo: "¡Impresionante! 🌟",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-shooting-stars-in-the-night-sky-3115-large.mp4",
+        duracion: "13s"
+    },
+    {
+        id: 9,
+        titulo: "¡Lo Lograste! 🎯",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-confetti-falling-on-the-ground-4650-large.mp4",
+        duracion: "10s"
+    },
+    {
+        id: 10,
+        titulo: "¡Campeón! 🥇",
+        url: "https://assets.mixkit.co/videos/preview/mixkit-man-holding-neon-lights-while-dancing-3450-large.mp4",
+        duracion: "16s"
+    }
+];
+
+// Función para obtener un video aleatorio
+function obtenerVideoAleatorio() {
+    const indiceAleatorio = Math.floor(Math.random() * videosRecompensa.length);
+    return videosRecompensa[indiceAleatorio];
+}
+
 // Función para obtener la URL de una imagen
 function obtenerUrlImagen(tipo, id) {
     if (configImagenes[tipo] && configImagenes[tipo][id]) {
@@ -390,10 +463,20 @@ function siguientePregunta() {
 }
 
 function mostrarResultados() {
+    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    
+    // Verificar si es 100% para mostrar video de recompensa
+    if (porcentaje === 100) {
+        mostrarVideoRecompensa();
+    } else {
+        mostrarPantallaResultados(porcentaje);
+    }
+}
+
+function mostrarPantallaResultados(porcentaje) {
     cambiarPantalla('pantalla-resultados');
     
     const resultadoFinal = document.getElementById('resultado-final');
-    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
     resultadoFinal.innerHTML = `
         Resumen del Quiz:
@@ -407,6 +490,32 @@ function mostrarResultados() {
           porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
           'Sigue practicando, lo harás mejor la próxima vez 💪'}
     `;
+}
+
+function mostrarVideoRecompensa() {
+    const video = obtenerVideoAleatorio();
+    
+    // Actualizar la pantalla de video con la información del video seleccionado
+    document.getElementById('titulo-video').textContent = video.titulo;
+    document.getElementById('video-recompensa').src = video.url;
+    document.getElementById('duracion-video').textContent = `Duración: ${video.duracion}`;
+    
+    cambiarPantalla('pantalla-video-recompensa');
+    
+    // Reproducir el video automáticamente
+    const videoElement = document.getElementById('video-recompensa');
+    videoElement.play();
+    
+    // Cuando el video termine, mostrar los resultados
+    videoElement.onended = function() {
+        const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+        mostrarPantallaResultados(porcentaje);
+    };
+}
+
+function saltarVideo() {
+    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    mostrarPantallaResultados(porcentaje);
 }
 
 function cambiarPantalla(idPantalla) {
