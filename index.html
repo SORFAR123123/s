@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Mazos</title>
+    <title>Aplicación de Mazos + RPG</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -56,6 +56,18 @@
                         <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
                             <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
                             <div class="lastsummer-texto">Contenedor 10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN RPG DE NOVIA -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="iniciarRPGNovia()">
+                            <img src="imagenes/novia.jpg" alt="RPG de Novia" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">💕 Mi Novia RPG</div>
+                            <div class="lastsummer-info">Sistema de relación +18</div>
                         </div>
                     </div>
                 </div>
@@ -152,6 +164,111 @@
             
             <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
             <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA RPG DE NOVIA -->
+    <div id="pantalla-rpg-novia" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">💕 RPG de Novia</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+            </div>
+            
+            <div class="rpg-container">
+                <!-- PERFIL DE LA NOVIA -->
+                <div class="perfil-novia">
+                    <img src="imagenes/novia.jpg" alt="Novia" class="imagen-novia">
+                    <div class="info-novia">
+                        <h2 id="nombre-novia">Sakura</h2>
+                        <div class="estadisticas">
+                            <div class="stat">
+                                <span class="stat-label">Nivel:</span>
+                                <span id="nivel-relacion" class="stat-value">1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Afinidad:</span>
+                                <span id="afinidad" class="stat-value">50%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Ánimo:</span>
+                                <span id="estado-animo" class="stat-value">😊</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BARRA DE AFINIDAD -->
+                <div class="barra-progreso-container">
+                    <div class="barra-progreso-label">Afinidad</div>
+                    <div class="barra-progreso">
+                        <div id="barra-afinidad" class="barra-progreso-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                
+                <!-- ECONOMÍA -->
+                <div class="economia-rpg">
+                    <div class="saldo">
+                        <span class="saldo-label">Dinero:</span>
+                        <span id="saldo-rpg" class="saldo-valor">0 S/.</span>
+                    </div>
+                    <div class="inventario">
+                        <span class="inventario-label">Condones:</span>
+                        <span id="condones-inventario" class="inventario-valor">0</span>
+                    </div>
+                </div>
+                
+                <!-- DIÁLOGO -->
+                <div class="dialogo-container">
+                    <div id="dialogo-novia" class="dialogo-novia">
+                        <!-- Diálogo generado automáticamente -->
+                    </div>
+                </div>
+                
+                <!-- ACCIONES BÁSICAS -->
+                <div class="acciones-basicas">
+                    <button class="boton-accion" onclick="hablarConNovia()">💬 Conversar</button>
+                    <button class="boton-accion" onclick="comprarCondones()">🛒 Comprar Condones (S/.15)</button>
+                </div>
+                
+                <!-- TIENDA DE REGALOS -->
+                <div class="tienda-regalos">
+                    <h3>🎁 Tienda de Regalos</h3>
+                    <div class="regalos-grid">
+                        <button class="boton-regalo" onclick="regalarItem('flores')">
+                            💐 Flores (S/.5)
+                        </button>
+                        <button class="boton-regalo" onclick="regalarItem('chocolates')">
+                            🍫 Chocolates (S/.10)
+                        </button>
+                        <button class="boton-regalo" onclick="regalarItem('joyas')">
+                            💎 Joyas (S/.20)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SECCIÓN +18 -->
+                <div id="seccion-adulto" class="seccion-adulto" style="display: none;">
+                    <h3>💖 Momentos Íntimos</h3>
+                    <div class="acciones-adulto">
+                        <button class="boton-adulto" onclick="usarCondon('beso')">
+                            💋 Beso Apasionado (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('caricias')">
+                            ✋ Carícias Íntimas (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('intimidad1')">
+                            🌙 Primera Noche (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('intimidad2')">
+                            🔥 Noche de Pasión (2 condones)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- MENSAJES DEL SISTEMA -->
+                <div id="mensaje-rpg" class="mensaje-sistema"></div>
+            </div>
         </div>
     </div>
 
