@@ -309,6 +309,65 @@ h1 {
     color: #ff4444;
 }
 
+/* PANTALLA DE VIDEO RECOMPENSA */
+.contenido-video {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.subtitulo-video {
+    font-size: 1.5rem;
+    color: #ffa500;
+    margin-bottom: 30px;
+}
+
+.video-container {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 3px solid #4a90e2;
+}
+
+.video-recompensa {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.info-video {
+    margin-bottom: 30px;
+}
+
+.duracion-video {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin-bottom: 10px;
+}
+
+.mensaje-video {
+    font-size: 1.2rem;
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.boton-saltar {
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-saltar:hover {
+    background-color: #555555;
+}
+
 /* Pantalla de Resultados */
 .resultado-final {
     background-color: #2d2d2d;
@@ -398,5 +457,13 @@ h1 {
     .mazo-imagen {
         width: 100px;
         height: 100px;
+    }
+    
+    .video-recompensa {
+        max-width: 100%;
+    }
+    
+    .subtitulo-video {
+        font-size: 1.2rem;
     }
 }
