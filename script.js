@@ -17,9 +17,9 @@ const configImagenes = {
         'contenedor10': 'imagenes/contenedor10.jpg'
     },
     subcontenedores: {
-        'sub1_1': 'imagenes/sub1_1.jpg',
-        'sub1_2': 'imagenes/sub1_2.jpg',
-        'sub1_3': 'imagenes/sub1_3.jpg',
+        'sub1_1': 'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=large',
+        'sub1_2': 'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=large',
+        'sub1_3': 'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
         'sub1_4': 'imagenes/sub1_4.jpg',
         'sub1_5': 'imagenes/sub1_5.jpg',
         'sub2_1': 'imagenes/sub2_1.jpg',
