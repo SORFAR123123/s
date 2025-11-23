@@ -81,7 +81,7 @@ const configImagenes = {
         'mazo10': 'imagenes/mazo10.jpg'
     },
     rpg: {
-        novia: 'imagenes/novia.jpg',
+        novia: 'https://pbs.twimg.com/media/G6PD1HqXEAARPnr?format=jpg&name=medium',
         fondo: 'imagenes/fondo-rpg.jpg',
         iconoFlores: 'imagenes/flores.png',
         iconoChocolates: 'imagenes/chocolates.png',
