@@ -96,31 +96,31 @@ const videosRecompensa = [
     {
         id: 1,
         titulo: "¡Felicidades! Logro Desbloqueado 🎉",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubblegum-balloon-47846-large.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "10s"
     },
     {
         id: 2,
         titulo: "¡Excelente Trabajo! ⭐",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-3057-large.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "15s"
     },
     {
         id: 3,
         titulo: "¡Eres Increíble! 💪",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-audience-clapping-and-cheering-478-large.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "12s"
     },
     {
         id: 4,
         titulo: "¡Perfecto! 🏆",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-gold-trophy-for-the-winner-47845-large.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "8s"
     },
     {
         id: 5,
         titulo: "¡Misión Cumplida! 🚀",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-a-rocket-flying-into-the-sky-43809-large.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "11s"
     }
 ];
@@ -130,10 +130,10 @@ const videosRecompensa = [
 // ============================================================================
 
 const videosIntimos = {
-    beso: "https://assets.mixkit.co/videos/preview/mixkit-couple-kissing-on-the-bed-44463-large.mp4",
-    caricias: "https://assets.mixkit.co/videos/preview/mixkit-hands-caressing-a-woman-s-back-44462-large.mp4",
-    intimidad1: "https://assets.mixkit.co/videos/preview/mixkit-romantic-bedroom-scene-44461-large.mp4",
-    intimidad2: "https://assets.mixkit.co/videos/preview/mixkit-passionate-romantic-scene-44460-large.mp4"
+    beso: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+    caricias: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+    intimidad1: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+    intimidad2: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4"
 };
 
 // ============================================================================
