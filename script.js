@@ -122,7 +122,7 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
-// SISTEMA DE EVENTOS DIARIOS - CORREGIDO
+// SISTEMA DE EVENTOS DIARIOS - MODIFICADO CON VIDEO
 // ============================================================================
 
 const eventosDiarios = {
@@ -145,7 +145,7 @@ const eventosDiarios = {
                 mensaje: "Mañana será otro día para mejorar",
                 video: "videos/practica.mp4"
             },
-            imagen: "NinoIchika.mp4"
+            video: "NinoIchika.mp4"
         },
         {
             id: 2,
@@ -164,7 +164,7 @@ const eventosDiarios = {
                 mensaje: "Sigue practicando para mejorar",
                 video: "videos/calma.mp4"
             },
-            imagen: "NinoIchika.mp4"
+            video: "videos/velocidad.mp4"
         },
         {
             id: 3,
@@ -183,7 +183,7 @@ const eventosDiarios = {
                 mensaje: "No te rindas, sigue intentándolo",
                 video: "videos/ejercicio.mp4"
             },
-            imagen: "NinoIchika.mp4"
+            video: "videos/memoria.mp4"
         },
         {
             id: 4,
@@ -202,7 +202,7 @@ const eventosDiarios = {
                 mensaje: "Descansa y vuelve con más energía",
                 video: "videos/descanso.mp4"
             },
-            imagen: "NinoIchika.mp4"
+            video: "videos/estrella.mp4"
         },
         {
             id: 5,
@@ -221,7 +221,7 @@ const eventosDiarios = {
                 mensaje: "Prepárate para el próximo reto",
                 video: "videos/continuara.mp4"
             },
-            imagen: "NinoIchika.mp4"
+            video: "videos/combo.mp4"
         }
     ],
     
@@ -235,7 +235,7 @@ const eventosDiarios = {
         ultimaFecha: null
     },
     
-    // Inicializar sistema de eventos - CORREGIDO
+    // Inicializar sistema de eventos
     inicializar: function() {
         console.log("🔧 Inicializando sistema de eventos diarios...");
         const hoy = this.obtenerFechaHoy();
@@ -319,19 +319,19 @@ const eventosDiarios = {
         this.guardarDatos();
     },
     
-    // Mostrar pantalla de evento diario - CORREGIDO
+    // Mostrar pantalla de evento diario - MODIFICADO CON VIDEO
     mostrarEventoDiario: function() {
         if (!this.estado.eventoActual) {
             console.log("❌ No hay evento actual para mostrar");
             return;
         }
         
-        console.log("📱 Creando pantalla de evento diario");
+        console.log("📱 Creando pantalla de evento diario con video");
         
         // Ocultar pantalla de inicio primero
         document.getElementById('pantalla-inicio').classList.remove('activa');
         
-        // Crear y mostrar la pantalla de evento diario
+        // Crear y mostrar la pantalla de evento diario con video
         const eventoHTML = `
             <div id="pantalla-evento-diario" class="pantalla activa">
                 <div class="contenedor">
@@ -342,7 +342,13 @@ const eventosDiarios = {
                         </div>
                         
                         <div class="evento-content">
-                            <img src="${this.estado.eventoActual.imagen}" alt="${this.estado.eventoActual.nombre}" class="evento-imagen" onerror="this.src='imagenes/default-event.jpg'">
+                            <div class="video-container-evento">
+                                <video id="video-evento-presentacion" autoplay muted loop class="video-evento">
+                                    <source src="${this.estado.eventoActual.video}" type="video/mp4">
+                                    Tu navegador no soporta el elemento video.
+                                </video>
+                                <div class="video-overlay"></div>
+                            </div>
                             
                             <div class="evento-info">
                                 <h2 class="evento-nombre">${this.estado.eventoActual.nombre}</h2>
@@ -381,11 +387,20 @@ const eventosDiarios = {
         // Agregar la pantalla al DOM si no existe
         if (!document.getElementById('pantalla-evento-diario')) {
             document.body.insertAdjacentHTML('afterbegin', eventoHTML);
-            console.log("✅ Pantalla de evento diario creada");
+            console.log("✅ Pantalla de evento diario con video creada");
+            
+            // Configurar el video de presentación
+            const videoElement = document.getElementById('video-evento-presentacion');
+            if (videoElement) {
+                videoElement.muted = true; // Mute para autoplay
+                videoElement.play().catch(e => {
+                    console.log("Autoplay bloqueado para video de evento");
+                });
+            }
         } else {
             // Si ya existe, actualizarla
             document.getElementById('pantalla-evento-diario').outerHTML = eventoHTML;
-            console.log("✅ Pantalla de evento diario actualizada");
+            console.log("✅ Pantalla de evento diario con video actualizada");
         }
     },
     
@@ -1268,7 +1283,7 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
     ],
     2: [
         { japones: '教育', lectura: 'kyouiku', opciones: ['Educación', 'Ignorancia', 'Analfabetismo', 'Incultura'], respuesta: 0 },
-        { japones: '学習', lectura: 'gakushuu', opciones: ['Aprendizaje', 'Enseñanza', 'Estudio', 'Práctica'], respuesta: 0 },
+        { japones: '学習', lectura: 'gakshuu', opciones: ['Aprendizaje', 'Enseñanza', 'Estudio', 'Práctica'], respuesta: 0 },
         { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
         { japones: '技能', lectura: 'ginou', opciones: ['Habilidad', 'Incapacidad', 'Ineptitud', 'Torpeza'], respuesta: 0 },
         { japones: '資格', lectura: 'shikaku', opciones: ['Certificación', 'Experiencia', 'Práctica', 'Teoría'], respuesta: 0 },
@@ -2020,7 +2035,7 @@ function mostrarMensaje(mensaje) {
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA - CORREGIDO
+// INICIALIZACIÓN DEL SISTEMA - MODIFICADO
 // ============================================================================
 
 // Inicializar la aplicación cuando se carga la página
