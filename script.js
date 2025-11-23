@@ -80,8 +80,8 @@ const configImagenes = {
         'mazo10': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=150&h=150&fit=crop'
     },
     rpg: {
-        novia: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop',
-        fondo: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
+        novia: 'https://pbs.twimg.com/media/G5Q_4LPWIAEiC9X?format=png&name=small',
+        fondo: 'https://pbs.twimg.com/media/G5PcNzjXIAAxlsw?format=jpg&name=medium',
         iconoFlores: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=80&h=80&fit=crop',
         iconoChocolates: 'https://images.unsplash.com/photo-1575377427642-087cf684f29d?w=80&h=80&fit=crop',
         iconoJoyas: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=80&h=80&fit=crop'
