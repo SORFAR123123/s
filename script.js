@@ -6,7 +6,7 @@
 const configImagenes = {
     contenedores: {
         'contenedor1': 'https://pbs.twimg.com/media/G6PD1HqXEAARPnr?format=jpg&name=360x360',
-        'contenedor2': 'https://pbs.twimg.com/media/G6EARd6XIAEYjvU?format=jpg&name=medium',
+        'contenedor2': 'https://pbs.twimg.com/media/G6PD1HqXEAARPnr?format=jpg&name=small',
         'contenedor3': 'https://pbs.twimg.com/media/G6EARd6XIAEYjvU?format=jpg&name=medium',
         'contenedor4': 'imagenes/contenedor4.jpg',
         'contenedor5': 'imagenes/contenedor5.jpg',
