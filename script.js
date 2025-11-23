@@ -16,9 +16,9 @@ const configImagenes = {
         'contenedor10': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop'
     },
     subcontenedores: {
-        'sub1_1': 'https://images.unsplash.com/photo-1555099962-79c4f3c5c8f1?w=200&h=200&fit=crop',
-        'sub1_2': 'https://images.unsplash.com/photo-1555099962-7a9c4f3c5c8f2?w=200&h=200&fit=crop',
-        'sub1_3': 'https://images.unsplash.com/photo-1555099962-7b9c4f3c5c8f3?w=200&h=200&fit=crop',
+        'sub1_1': 'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=360x360',
+        'sub1_2': 'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=360x360',
+        'sub1_3': 'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=360x360',
         'sub1_4': 'https://images.unsplash.com/photo-1555099962-7c9c4f3c5c8f4?w=200&h=200&fit=crop',
         'sub1_5': 'https://images.unsplash.com/photo-1555099962-7d9c4f3c5c8f5?w=200&h=200&fit=crop',
         'sub2_1': 'https://images.unsplash.com/photo-1555099962-7e9c4f3c5c8f6?w=200&h=200&fit=crop',
