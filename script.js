@@ -201,17 +201,17 @@ const rpgNovia = {
 
 const estructura = {
     'contenedor1': {
-        nombre: 'Contenedor 1',
+        nombre: 'Last summer',
         subcontenedores: {
-            'sub1_1': { nombre: 'Sub-Contenedor 1.1', mazos: generarMazos(10) },
-            'sub1_2': { nombre: 'Sub-Contenedor 1.2', mazos: generarMazos(10) },
-            'sub1_3': { nombre: 'Sub-Contenedor 1.3', mazos: generarMazos(10) },
-            'sub1_4': { nombre: 'Sub-Contenedor 1.4', mazos: generarMazos(10) },
-            'sub1_5': { nombre: 'Sub-Contenedor 1.5', mazos: generarMazos(10) }
+            'sub1_1': { nombre: 'Last summer 1', mazos: generarMazos(10) },
+            'sub1_2': { nombre: 'Last summer 2', mazos: generarMazos(10) },
+            'sub1_3': { nombre: 'Last summer 3', mazos: generarMazos(10) },
+            'sub1_4': { nombre: 'Last summer 4', mazos: generarMazos(10) },
+            'sub1_5': { nombre: 'Last summer 5', mazos: generarMazos(10) }
         }
     },
     'contenedor2': {
-        nombre: 'Contenedor 2',
+        nombre: 'Toono esuke',
         subcontenedores: {
             'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazos(10) },
             'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazos(10) },
@@ -223,9 +223,9 @@ const estructura = {
     'contenedor3': {
         nombre: 'Contenedor 3',
         subcontenedores: {
-            'sub3_1': { nombre: 'Sub-Contenedor 3.1', mazos: generarMazos(10) },
-            'sub3_2': { nombre: 'Sub-Contenedor 3.2', mazos: generarMazos(10) },
-            'sub3_3': { nombre: 'Sub-Contenedor 3.3', mazos: generarMazos(10) },
+            'sub3_1': { nombre: 'Hermana rusa putona', mazos: generarMazos(10) },
+            'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazos(10) },
+            'sub3_3': { nombre: 'Putona de la escuela', mazos: generarMazos(10) },
             'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(10) },
             'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(10) }
         }
