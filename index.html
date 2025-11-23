@@ -7,6 +7,57 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- PANTALLA DE EVENTO DIARIO - ELIMINADA LA ESTRUCTURA ESTÁTICA -->
+    <!-- La pantalla de evento diario se creará dinámicamente en JavaScript -->
+
+    <!-- PANTALLA DE VIDEO RECOMPENSA EVENTO -->
+    <div id="pantalla-video-evento" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1 id="titulo-video-evento">¡Felicidades! 🎉</h1>
+                <p class="subtitulo-video" id="mensaje-video-evento">Has completado el evento diario</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-recompensa" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡Excelente trabajo completando el evento diario! 🎉</p>
+                </div>
+                
+                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO FALLO EVENTO -->
+    <div id="pantalla-video-fallo" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1 id="titulo-video-fallo">Sigue Intentando 💪</h1>
+                <p class="subtitulo-video" id="mensaje-video-fallo">Mañana será otro día</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-fallo" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡Hoy es un nuevo día para intentarlo! 💪</p>
+                </div>
+                
+                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoFallo()">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio" class="pantalla activa">
         <div class="contenedor">
