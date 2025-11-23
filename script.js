@@ -319,7 +319,7 @@ const eventosDiarios = {
         this.guardarDatos();
     },
     
-    // Mostrar pantalla de evento diario - CORREGIDO
+    // Mostrar pantalla de evento diario - CORREGIDO CON VIDEO FUNCIONAL
     mostrarEventoDiario: function() {
         if (!this.estado.eventoActual) {
             console.log("❌ No hay evento actual para mostrar");
@@ -343,11 +343,15 @@ const eventosDiarios = {
                         
                         <div class="evento-content">
                             <div class="video-container-evento">
-                                <video id="video-evento-presentacion" autoplay muted loop class="video-evento">
+                                <video id="video-evento-presentacion" controls muted loop playsinline class="video-evento">
                                     <source src="${this.estado.eventoActual.video}" type="video/mp4">
                                     Tu navegador no soporta el elemento video.
                                 </video>
                                 <div class="video-overlay"></div>
+                                <div class="video-play-indicator">
+                                    <div class="play-icon">▶️</div>
+                                    <p>Haz clic para reproducir</p>
+                                </div>
                             </div>
                             
                             <div class="evento-info">
@@ -390,13 +394,38 @@ const eventosDiarios = {
         
         // Configurar el video de presentación
         const videoElement = document.getElementById('video-evento-presentacion');
+        const playIndicator = document.querySelector('.video-play-indicator');
+        
         if (videoElement) {
-            videoElement.muted = true; // Mute para autoplay
-            videoElement.play().catch(e => {
-                console.log("Autoplay bloqueado para video de evento:", e);
-                // Mostrar botón de play manual si falla autoplay
-                videoElement.controls = true;
+            // Configurar eventos del video
+            videoElement.addEventListener('play', function() {
+                if (playIndicator) {
+                    playIndicator.style.display = 'none';
+                }
             });
+            
+            videoElement.addEventListener('pause', function() {
+                if (playIndicator) {
+                    playIndicator.style.display = 'flex';
+                }
+            });
+            
+            // Intentar reproducción automática silenciada
+            videoElement.muted = true;
+            const playPromise = videoElement.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay bloqueado, el usuario debe iniciar manualmente:", error);
+                    // Mostrar indicador de reproducción
+                    if (playIndicator) {
+                        playIndicator.style.display = 'flex';
+                    }
+                });
+            }
+            
+            // Configurar para que se repita
+            videoElement.loop = true;
         }
     },
     
@@ -424,6 +453,12 @@ const eventosDiarios = {
     ocultarPantallaEvento: function() {
         const pantallaEvento = document.getElementById('pantalla-evento-diario');
         if (pantallaEvento) {
+            // Detener cualquier video antes de remover
+            const videoElement = pantallaEvento.querySelector('video');
+            if (videoElement) {
+                videoElement.pause();
+                videoElement.src = '';
+            }
             pantallaEvento.remove();
         }
         // Mostrar pantalla de inicio
@@ -474,7 +509,7 @@ const eventosDiarios = {
         this.mostrarVideoRecompensa();
     },
     
-    // Mostrar video de recompensa
+    // Mostrar video de recompensa - CORREGIDO
     mostrarVideoRecompensa: function() {
         const evento = this.estado.eventoActual;
         console.log("🎬 Mostrando video de recompensa:", evento.recompensa.titulo);
@@ -487,23 +522,29 @@ const eventosDiarios = {
         // Actualizar contenido de la pantalla de video existente
         document.getElementById('titulo-video-evento').textContent = evento.recompensa.titulo;
         document.getElementById('mensaje-video-evento').textContent = evento.recompensa.mensaje;
-        document.getElementById('video-evento-recompensa').src = evento.recompensa.video;
+        
+        const videoElement = document.getElementById('video-evento-recompensa');
+        videoElement.src = evento.recompensa.video;
+        videoElement.controls = true;
+        videoElement.muted = false; // Permitir sonido en recompensa
         
         // Mostrar pantalla de video
         document.getElementById('pantalla-video-evento').classList.add('activa');
         
-        // Intentar reproducir video automáticamente
-        const videoElement = document.getElementById('video-evento-recompensa');
-        if (videoElement) {
-            videoElement.muted = true; // Mute para evitar restricciones de autoplay
-            videoElement.play().catch(e => {
-                console.log("Autoplay bloqueado, el usuario debe iniciar manualmente:", e);
+        // Configurar evento cuando termine el video
+        videoElement.onended = function() {
+            console.log("Video de recompensa terminado");
+            eventosDiarios.cerrarVideoRecompensa();
+        };
+        
+        // Intentar reproducir automáticamente
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(e => {
+                console.log("Autoplay bloqueado para video de recompensa:", e);
+                // Mostrar mensaje para que el usuario inicie manualmente
                 videoElement.controls = true;
             });
-            
-            videoElement.onended = function() {
-                console.log("Video de recompensa terminado");
-            };
         }
     },
     
@@ -520,32 +561,49 @@ const eventosDiarios = {
         // Actualizar contenido de la pantalla de video de fallo existente
         document.getElementById('titulo-video-fallo').textContent = evento.fallo.titulo;
         document.getElementById('mensaje-video-fallo').textContent = evento.fallo.mensaje;
-        document.getElementById('video-evento-fallo').src = evento.fallo.video;
+        
+        const videoElement = document.getElementById('video-evento-fallo');
+        videoElement.src = evento.fallo.video;
+        videoElement.controls = true;
+        videoElement.muted = false;
         
         // Mostrar pantalla de video de fallo
         document.getElementById('pantalla-video-fallo').classList.add('activa');
         
-        const videoElement = document.getElementById('video-evento-fallo');
-        if (videoElement) {
-            videoElement.muted = true;
-            videoElement.play().catch(e => {
+        // Configurar evento cuando termine el video
+        videoElement.onended = function() {
+            console.log("Video de fallo terminado");
+            eventosDiarios.cerrarVideoFallo();
+        };
+        
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(e => {
                 console.log("Autoplay bloqueado:", e);
                 videoElement.controls = true;
             });
-            
-            videoElement.onended = function() {
-                console.log("Video de fallo terminado");
-            };
         }
     },
     
     // Cerrar video de recompensa
     cerrarVideoRecompensa: function() {
+        // Detener el video antes de cambiar de pantalla
+        const videoElement = document.getElementById('video-evento-recompensa');
+        if (videoElement) {
+            videoElement.pause();
+            videoElement.currentTime = 0;
+        }
         cambiarPantalla('pantalla-inicio');
     },
     
     // Cerrar video de fallo
     cerrarVideoFallo: function() {
+        // Detener el video antes de cambiar de pantalla
+        const videoElement = document.getElementById('video-evento-fallo');
+        if (videoElement) {
+            videoElement.pause();
+            videoElement.currentTime = 0;
+        }
         cambiarPantalla('pantalla-inicio');
     }
 };
