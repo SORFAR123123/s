@@ -122,6 +122,401 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
+// SISTEMA DE EVENTOS DIARIOS
+// ============================================================================
+
+const eventosDiarios = {
+    // Pool de 5 eventos diarios diferentes
+    poolEventos: [
+        {
+            id: 1,
+            nombre: "🎯 Reto de Maestría",
+            descripcion: "Completa 3 mazos al 100% hoy",
+            objetivo: 3,
+            recompensa: {
+                tipo: "video",
+                titulo: "¡Dominio Total! 🏆",
+                mensaje: "Has demostrado tu maestría en japonés",
+                video: "videos/maestria.mp4"
+            },
+            fallo: {
+                tipo: "video", 
+                titulo: "Necesitas más práctica 📚",
+                mensaje: "Mañana será otro día para mejorar",
+                video: "videos/practica.mp4"
+            },
+            imagen: "imagenes/evento1.jpg"
+        },
+        {
+            id: 2,
+            nombre: "⚡ Velocidad Relámpago",
+            descripcion: "Completa 2 mazos consecutivos sin errores",
+            objetivo: 2,
+            recompensa: {
+                tipo: "video",
+                titulo: "¡Velocidad Asombrosa! ⚡",
+                mensaje: "Tu rapidez mental es impresionante",
+                video: "videos/velocidad.mp4"
+            },
+            fallo: {
+                tipo: "video",
+                titulo: "La velocidad lleva tiempo 🕒",
+                mensaje: "Sigue practicando para mejorar",
+                video: "videos/calma.mp4"
+            },
+            imagen: "imagenes/evento2.jpg"
+        },
+        {
+            id: 3,
+            nombre: "🧠 Memoria Fotográfica", 
+            descripcion: "Completa 4 mazos diferentes hoy",
+            objetivo: 4,
+            recompensa: {
+                tipo: "video",
+                titulo: "¡Memoria de Elefante! 🐘",
+                mensaje: "Tu capacidad de retención es increíble",
+                video: "videos/memoria.mp4"
+            },
+            fallo: {
+                tipo: "video",
+                titulo: "La memoria se ejercita 🧩",
+                mensaje: "No te rindas, sigue intentándolo",
+                video: "videos/ejercicio.mp4"
+            },
+            imagen: "imagenes/evento3.jpg"
+        },
+        {
+            id: 4,
+            nombre: "🌟 Estrella Naciente",
+            descripcion: "Completa 1 mazo con 100% de aciertos",
+            objetivo: 1,
+            recompensa: {
+                tipo: "video", 
+                titulo: "¡Brillas como una estrella! 🌟",
+                mensaje: "Tu dedicación está dando frutos",
+                video: "videos/estrella.mp4"
+            },
+            fallo: {
+                tipo: "video",
+                titulo: "Las estrellas también descansan ✨",
+                mensaje: "Descansa y vuelve con más energía",
+                video: "videos/descanso.mp4"
+            },
+            imagen: "imagenes/evento4.jpg"
+        },
+        {
+            id: 5,
+            nombre: "🎮 Combo Perfecto",
+            descripcion: "Completa 5 mazos en total hoy",
+            objetivo: 5,
+            recompensa: {
+                tipo: "video",
+                titulo: "¡Combo Legendario! 🎯",
+                mensaje: "Has alcanzado la perfección hoy",
+                video: "videos/combo.mp4"
+            },
+            fallo: {
+                tipo: "video",
+                titulo: "El combo continúa mañana 🔄",
+                mensaje: "Prepárate para el próximo reto",
+                video: "videos/continuara.mp4"
+            },
+            imagen: "imagenes/evento5.jpg"
+        }
+    ],
+    
+    // Estado del evento diario actual
+    estado: {
+        eventoActual: null,
+        completado: false,
+        fallado: false,
+        progreso: 0,
+        mazosCompletadosHoy: 0,
+        ultimaFecha: null
+    },
+    
+    // Inicializar sistema de eventos
+    inicializar: function() {
+        const hoy = this.obtenerFechaHoy();
+        const datosGuardados = this.cargarDatos();
+        
+        // Verificar si es un nuevo día
+        if (!datosGuardados || datosGuardados.ultimaFecha !== hoy) {
+            this.reiniciarEventoDiario();
+        } else {
+            this.estado = datosGuardados;
+        }
+        
+        // Mostrar evento diario si no se ha completado ni fallado
+        if (!this.estado.completado && !this.estado.fallado && this.estado.eventoActual) {
+            setTimeout(() => {
+                this.mostrarEventoDiario();
+            }, 1000);
+        }
+    },
+    
+    // Obtener fecha actual en formato YYYY-MM-DD
+    obtenerFechaHoy: function() {
+        const ahora = new Date();
+        // Ajustar a hora de reinicio (3 AM)
+        if (ahora.getHours() < 3) {
+            ahora.setDate(ahora.getDate() - 1);
+        }
+        return ahora.toISOString().split('T')[0];
+    },
+    
+    // Cargar datos guardados
+    cargarDatos: function() {
+        const datos = localStorage.getItem('eventosDiarios');
+        return datos ? JSON.parse(datos) : null;
+    },
+    
+    // Guardar datos
+    guardarDatos: function() {
+        localStorage.setItem('eventosDiarios', JSON.stringify(this.estado));
+    },
+    
+    // Reiniciar evento diario
+    reiniciarEventoDiario: function() {
+        // Seleccionar evento aleatorio del pool
+        const eventoAleatorio = this.poolEventos[Math.floor(Math.random() * this.poolEventos.length)];
+        
+        this.estado = {
+            eventoActual: eventoAleatorio,
+            completado: false,
+            fallado: false,
+            progreso: 0,
+            mazosCompletadosHoy: 0,
+            ultimaFecha: this.obtenerFechaHoy()
+        };
+        
+        this.guardarDatos();
+    },
+    
+    // Mostrar pantalla de evento diario
+    mostrarEventoDiario: function() {
+        if (!this.estado.eventoActual) return;
+        
+        // Crear y mostrar la pantalla de evento diario
+        const eventoHTML = `
+            <div id="pantalla-evento-diario" class="pantalla activa">
+                <div class="contenedor">
+                    <div class="evento-diario-container">
+                        <div class="evento-header">
+                            <h1>🎁 Evento Diario</h1>
+                            <p class="evento-fecha">${new Date().toLocaleDateString()}</p>
+                        </div>
+                        
+                        <div class="evento-content">
+                            <img src="${this.estado.eventoActual.imagen}" alt="${this.estado.eventoActual.nombre}" class="evento-imagen">
+                            
+                            <div class="evento-info">
+                                <h2 class="evento-nombre">${this.estado.eventoActual.nombre}</h2>
+                                <p class="evento-descripcion">${this.estado.eventoActual.descripcion}</p>
+                                
+                                <div class="evento-progreso">
+                                    <div class="progreso-texto">
+                                        Progreso: <span id="contador-progreso">${this.estado.progreso}</span>/${this.estado.eventoActual.objetivo}
+                                    </div>
+                                    <div class="barra-progreso-evento">
+                                        <div id="barra-progreso-fill" class="barra-progreso-fill-evento" 
+                                             style="width: ${(this.estado.progreso / this.estado.eventoActual.objetivo) * 100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="evento-recompensa">
+                                    <h3>🎯 Recompensa:</h3>
+                                    <p>${this.estado.eventoActual.recompensa.mensaje}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="evento-actions">
+                            <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
+                                ¡Aceptar Reto! 🚀
+                            </button>
+                            <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
+                                Omitir por hoy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Agregar la pantalla al DOM si no existe
+        if (!document.getElementById('pantalla-evento-diario')) {
+            document.body.insertAdjacentHTML('beforeend', eventoHTML);
+        }
+    },
+    
+    // Aceptar el evento diario
+    aceptarEvento: function() {
+        this.ocultarPantallaEvento();
+        // El evento continúa en segundo plano
+    },
+    
+    // Omitir el evento diario (considerado como fallo)
+    omitirEvento: function() {
+        this.estado.fallado = true;
+        this.guardarDatos();
+        this.ocultarPantallaEvento();
+        
+        // Mostrar video de fallo al día siguiente
+        this.programarVideoFallo();
+    },
+    
+    // Ocultar pantalla de evento
+    ocultarPantallaEvento: function() {
+        const pantallaEvento = document.getElementById('pantalla-evento-diario');
+        if (pantallaEvento) {
+            pantallaEvento.remove();
+        }
+        cambiarPantalla('pantalla-inicio');
+    },
+    
+    // Registrar mazo completado
+    registrarMazoCompletado: function() {
+        if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado) return;
+        
+        this.estado.mazosCompletadosHoy++;
+        this.estado.progreso++;
+        
+        // Actualizar contador visual si está visible
+        const contadorProgreso = document.getElementById('contador-progreso');
+        const barraProgreso = document.getElementById('barra-progreso-fill');
+        
+        if (contadorProgreso) {
+            contadorProgreso.textContent = this.estado.progreso;
+        }
+        if (barraProgreso) {
+            barraProgreso.style.width = `${(this.estado.progreso / this.estado.eventoActual.objetivo) * 100}%`;
+        }
+        
+        // Verificar si se completó el evento
+        if (this.estado.progreso >= this.estado.eventoActual.objetivo) {
+            this.completarEvento();
+        }
+        
+        this.guardarDatos();
+    },
+    
+    // Completar evento exitosamente
+    completarEvento: function() {
+        this.estado.completado = true;
+        this.guardarDatos();
+        
+        // Mostrar video de recompensa inmediatamente
+        this.mostrarVideoRecompensa();
+    },
+    
+    // Mostrar video de recompensa
+    mostrarVideoRecompensa: function() {
+        const evento = this.estado.eventoActual;
+        
+        // Crear pantalla de video de recompensa
+        const videoHTML = `
+            <div id="pantalla-video-evento" class="pantalla activa">
+                <div class="contenedor">
+                    <div class="contenido-video">
+                        <h1>${evento.recompensa.titulo}</h1>
+                        <p class="subtitulo-video">${evento.recompensa.mensaje}</p>
+                        
+                        <div class="video-container">
+                            <video id="video-evento-recompensa" controls autoplay class="video-recompensa">
+                                <source src="${evento.recompensa.video}" type="video/mp4">
+                                Tu navegador no soporta el elemento video.
+                            </video>
+                        </div>
+                        
+                        <div class="info-video">
+                            <p class="mensaje-video">¡Felicidades por completar el evento diario! 🎉</p>
+                        </div>
+                        
+                        <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', videoHTML);
+        
+        // Reproducir video automáticamente
+        const videoElement = document.getElementById('video-evento-recompensa');
+        videoElement.play();
+        
+        videoElement.onended = function() {
+            document.querySelector('.boton-principal').style.display = 'block';
+        };
+    },
+    
+    // Programar video de fallo para el día siguiente
+    programarVideoFallo: function() {
+        // Esto se manejará automáticamente al inicializar el próximo día
+    },
+    
+    // Mostrar video de fallo (se llama al día siguiente si falló)
+    mostrarVideoFallo: function() {
+        const evento = this.estado.eventoActual;
+        
+        const videoHTML = `
+            <div id="pantalla-video-fallo" class="pantalla activa">
+                <div class="contenedor">
+                    <div class="contenido-video">
+                        <h1>${evento.fallo.titulo}</h1>
+                        <p class="subtitulo-video">${evento.fallo.mensaje}</p>
+                        
+                        <div class="video-container">
+                            <video id="video-evento-fallo" controls autoplay class="video-recompensa">
+                                <source src="${evento.fallo.video}" type="video/mp4">
+                                Tu navegador no soporta el elemento video.
+                            </video>
+                        </div>
+                        
+                        <div class="info-video">
+                            <p class="mensaje-video">¡Hoy es un nuevo día para intentarlo! 💪</p>
+                        </div>
+                        
+                        <button class="boton-principal" onclick="eventosDiarios.cerrarVideoFallo()">
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', videoHTML);
+        
+        const videoElement = document.getElementById('video-evento-fallo');
+        videoElement.play();
+        
+        videoElement.onended = function() {
+            document.querySelector('.boton-principal').style.display = 'block';
+        };
+    },
+    
+    // Cerrar video de recompensa
+    cerrarVideoRecompensa: function() {
+        const pantallaVideo = document.getElementById('pantalla-video-evento');
+        if (pantallaVideo) {
+            pantallaVideo.remove();
+        }
+        cambiarPantalla('pantalla-inicio');
+    },
+    
+    // Cerrar video de fallo
+    cerrarVideoFallo: function() {
+        const pantallaVideo = document.getElementById('pantalla-video-fallo');
+        if (pantallaVideo) {
+            pantallaVideo.remove();
+        }
+        cambiarPantalla('pantalla-inicio');
+    }
+};
+
+// ============================================================================
 // VIDEOS +18 PARA MOMENTOS ÍNTIMOS
 // ============================================================================
 
@@ -1202,8 +1597,14 @@ function mostrarResultados() {
         setTimeout(() => {
             mostrarMensaje("¡Ganaste 1 Sol por completar el mazo al 100%! 💰");
         }, 1000);
+        
+        // REGISTRAR MAZO COMPLETADO PARA EVENTO DIARIO
+        eventosDiarios.registrarMazoCompletado();
     } else if (porcentaje >= 80) {
         mostrarPantallaResultados(porcentaje);
+        
+        // REGISTRAR MAZO COMPLETADO PARA EVENTO DIARIO (aunque no sea 100%)
+        eventosDiarios.registrarMazoCompletado();
     } else {
         mostrarPantallaResultados(porcentaje);
     }
@@ -1547,3 +1948,22 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     }, 3000);
 }
+
+// ============================================================================
+// INICIALIZACIÓN DEL SISTEMA
+// ============================================================================
+
+// Inicializar la aplicación cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar sistema de eventos diarios
+    eventosDiarios.inicializar();
+    
+    // Verificar si hay un evento fallado del día anterior para mostrar video
+    const datosEventos = eventosDiarios.cargarDatos();
+    if (datosEventos && datosEventos.fallado && datosEventos.ultimaFecha !== eventosDiarios.obtenerFechaHoy()) {
+        eventosDiarios.mostrarVideoFallo();
+        // Reiniciar estado de fallo
+        datosEventos.fallado = false;
+        eventosDiarios.guardarDatos();
+    }
+});
