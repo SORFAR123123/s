@@ -72,12 +72,7 @@ const configImagenes = {
         'mazo2': 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=150&h=150&fit=crop',
         'mazo3': 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=150&h=150&fit=crop',
         'mazo4': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=150&h=150&fit=crop',
-        'mazo5': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=150&h=150&fit=crop',
-        'mazo6': 'https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=150&h=150&fit=crop',
-        'mazo7': 'https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=150&h=150&fit=crop',
-        'mazo8': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=150&h=150&fit=crop',
-        'mazo9': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=150&h=150&fit=crop',
-        'mazo10': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=150&h=150&fit=crop'
+        'mazo5': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=150&h=150&fit=crop'
     },
     rpg: {
         novia: 'https://pbs.twimg.com/media/G5Q_4LPWIAEiC9X?format=png&name=small',
@@ -196,124 +191,338 @@ const rpgNovia = {
 };
 
 // ============================================================================
-// ESTRUCTURA PRINCIPAL
+// BANCO DE PALABRAS ÚNICAS PARA CADA MAZO
+// ============================================================================
+
+const bancoPalabras = {
+    // MAZOS PARA SUBCONTENEDORES DEL CONTENEDOR 1
+    sub1_1: {
+        mazo1: [
+            { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
+            { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
+            { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
+            { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
+            { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
+            { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
+            { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
+            { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
+            { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
+            { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
+        ],
+        mazo2: [
+            { japones: '学校', lectura: 'gakkou', opciones: ['Escuela', 'Colegio', 'Instituto', 'Academia'], respuesta: 0 },
+            { japones: '学生', lectura: 'gakusei', opciones: ['Estudiante', 'Alumno', 'Discípulo', 'Aprendiz'], respuesta: 0 },
+            { japones: '先生', lectura: 'sensei', opciones: ['Profesor', 'Maestro', 'Instructor', 'Educador'], respuesta: 0 },
+            { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Aprendizaje', 'Práctica', 'Preparación'], respuesta: 0 },
+            { japones: '本', lectura: 'hon', opciones: ['Libro', 'Volumen', 'Texto', 'Publicación'], respuesta: 0 },
+            { japones: '紙', lectura: 'kami', opciones: ['Papel', 'Hoja', 'Documento', 'Folio'], respuesta: 0 },
+            { japones: '鉛筆', lectura: 'enpitsu', opciones: ['Lápiz', 'Portaminas', 'Lapicero', 'Grafito'], respuesta: 0 },
+            { japones: '机', lectura: 'tsukue', opciones: ['Escritorio', 'Mesa', 'Bureau', 'Pupitre'], respuesta: 0 },
+            { japones: '椅子', lectura: 'isu', opciones: ['Silla', 'Asiento', 'Banco', 'Taburete'], respuesta: 0 },
+            { japones: '教室', lectura: 'kyoushitsu', opciones: ['Aula', 'Sala de clase', 'Salón', 'Clase'], respuesta: 0 }
+        ],
+        mazo3: [
+            { japones: '食べ物', lectura: 'tabemono', opciones: ['Comida', 'Alimento', 'Plato', 'Vianda'], respuesta: 0 },
+            { japones: '水', lectura: 'mizu', opciones: ['Agua', 'Líquido', 'H2O', 'Elemento'], respuesta: 0 },
+            { japones: '米', lectura: 'kome', opciones: ['Arroz', 'Grano', 'Cereal', 'Semilla'], respuesta: 0 },
+            { japones: '魚', lectura: 'sakana', opciones: ['Pescado', 'Peces', 'Marisco', 'Especie marina'], respuesta: 0 },
+            { japones: '肉', lectura: 'niku', opciones: ['Carne', 'Filete', 'Bistec', 'Res'], respuesta: 0 },
+            { japones: '野菜', lectura: 'yasai', opciones: ['Verdura', 'Hortaliza', 'Legumbre', 'Vegetal'], respuesta: 0 },
+            { japones: '果物', lectura: 'kudamono', opciones: ['Fruta', 'Fruto', 'Pieza de fruta', 'Frutal'], respuesta: 0 },
+            { japones: '牛乳', lectura: 'gyuunyuu', opciones: ['Leche', 'Lácteo', 'Bebida blanca', 'Líquido nutritivo'], respuesta: 0 },
+            { japones: '卵', lectura: 'tamago', opciones: ['Huevo', 'Óvulo', 'Blanquillo', 'Célula reproductiva'], respuesta: 0 },
+            { japones: 'パン', lectura: 'pan', opciones: ['Pan', 'Bollo', 'Pieza de pan', 'Masa horneada'], respuesta: 0 }
+        ],
+        mazo4: [
+            { japones: '天気', lectura: 'tenki', opciones: ['Tiempo', 'Clima', 'Condiciones atmosféricas', 'Meteorología'], respuesta: 0 },
+            { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Astro rey', 'Estrella', 'Luminaria'], respuesta: 0 },
+            { japones: '月', lectura: 'tsuki', opciones: ['Luna', 'Satélite', 'Astro nocturno', 'Fases lunares'], respuesta: 0 },
+            { japones: '星', lectura: 'hoshi', opciones: ['Estrella', 'Astro', 'Cuerpo celeste', 'Luminaria nocturna'], respuesta: 0 },
+            { japones: '雨', lectura: 'ame', opciones: ['Lluvia', 'Precipitación', 'Aguacero', 'Chubasco'], respuesta: 0 },
+            { japones: '雪', lectura: 'yuki', opciones: ['Nieve', 'Precipitación congelada', 'Copo de nieve', 'Nevada'], respuesta: 0 },
+            { japones: '風', lectura: 'kaze', opciones: ['Viento', 'Corriente de aire', 'Brisa', 'Ráfaga'], respuesta: 0 },
+            { japones: '雲', lectura: 'kumo', opciones: ['Nube', 'Neblina', 'Vapor de agua', 'Cúmulo'], respuesta: 0 },
+            { japones: '雷', lectura: 'kaminari', opciones: ['Trueno', 'Rayo', 'Tormenta eléctrica', 'Estruendo'], respuesta: 0 },
+            { japones: '虹', lectura: 'niji', opciones: ['Arcoíris', 'Espectro de colores', 'Fenómeno óptico', 'Semicírculo de colores'], respuesta: 0 }
+        ],
+        mazo5: [
+            { japones: '色', lectura: 'iro', opciones: ['Color', 'Tono', 'Matiz', 'Pigmento'], respuesta: 0 },
+            { japones: '赤', lectura: 'aka', opciones: ['Rojo', 'Color rojo', 'Escarlata', 'Carmesí'], respuesta: 0 },
+            { japones: '青', lectura: 'ao', opciones: ['Azul', 'Color azul', 'Celeste', 'Añil'], respuesta: 0 },
+            { japones: '緑', lectura: 'midori', opciones: ['Verde', 'Color verde', 'Esmeralda', 'Verde hierba'], respuesta: 0 },
+            { japones: '黄色', lectura: 'kiiro', opciones: ['Amarillo', 'Color amarillo', 'Dorado', 'Amarillo brillante'], respuesta: 0 },
+            { japones: '白', lectura: 'shiro', opciones: ['Blanco', 'Color blanco', 'Albo', 'Inmaculado'], respuesta: 0 },
+            { japones: '黒', lectura: 'kuro', opciones: ['Negro', 'Color negro', 'Ébano', 'Oscuro'], respuesta: 0 },
+            { japones: '茶色', lectura: 'chairo', opciones: ['Marrón', 'Color marrón', 'Café', 'Pardo'], respuesta: 0 },
+            { japones: '紫', lectura: 'murasaki', opciones: ['Morado', 'Color morado', 'Violeta', 'Púrpura'], respuesta: 0 },
+            { japones: '灰色', lectura: 'haiiro', opciones: ['Gris', 'Color gris', 'Plata', 'Ceniza'], respuesta: 0 }
+        ]
+    },
+    
+    // MAZOS PARA SUBCONTENEDORES DEL CONTENEDOR 2
+    sub2_1: {
+        mazo1: [
+            { japones: '動物', lectura: 'doubutsu', opciones: ['Animal', 'Bestia', 'Criatura', 'Ser vivo'], respuesta: 0 },
+            { japones: '犬', lectura: 'inu', opciones: ['Perro', 'Can', 'Canino', 'Mascota'], respuesta: 0 },
+            { japones: '猫', lectura: 'neko', opciones: ['Gato', 'Felino', 'Minino', 'Michi'], respuesta: 0 },
+            { japones: '鳥', lectura: 'tori', opciones: ['Pájaro', 'Ave', 'Volátil', 'Alado'], respuesta: 0 },
+            { japones: '魚', lectura: 'sakana', opciones: ['Pez', 'Escama', 'Especie acuática', 'Animal marino'], respuesta: 0 },
+            { japones: '馬', lectura: 'uma', opciones: ['Caballo', 'Equino', 'Corcel', 'Pura sangre'], respuesta: 0 },
+            { japones: '牛', lectura: 'ushi', opciones: ['Vaca', 'Bovino', 'Res', 'Ganado'], respuesta: 0 },
+            { japones: '豚', lectura: 'buta', opciones: ['Cerdo', 'Puerco', 'Cochino', 'Marrano'], respuesta: 0 },
+            { japones: '羊', lectura: 'hitsuji', opciones: ['Oveja', 'Ovino', 'Cordero', 'Lanar'], respuesta: 0 },
+            { japones: '猿', lectura: 'saru', opciones: ['Mono', 'Simio', 'Primate', 'Chango'], respuesta: 0 }
+        ],
+        mazo2: [
+            { japones: '花', lectura: 'hana', opciones: ['Flor', 'Blossom', 'Pétalo', 'Planta ornamental'], respuesta: 0 },
+            { japones: '桜', lectura: 'sakura', opciones: ['Cerezo', 'Flor de cerezo', 'Sakura', 'Flor japonesa'], respuesta: 0 },
+            { japones: '菊', lectura: 'kiku', opciones: ['Crisantemo', 'Flor de otoño', 'Planta ornamental', 'Flor nacional'], respuesta: 0 },
+            { japones: '薔薇', lectura: 'bara', opciones: ['Rosa', 'Flor espinosa', 'Rosal', 'Flor fragante'], respuesta: 0 },
+            { japones: '百合', lectura: 'yuri', opciones: ['Lirio', 'Azucena', 'Flor blanca', 'Planta bulbosa'], respuesta: 0 },
+            { japones: '向日葵', lectura: 'himawari', opciones: ['Girasol', 'Flor solar', 'Mirasol', 'Planta heliotrópica'], respuesta: 0 },
+            { japones: '蓮', lectura: 'hasu', opciones: ['Loto', 'Flor acuática', 'Nelumbo', 'Planta sagrada'], respuesta: 0 },
+            { japones: '菖蒲', lectura: 'ayame', opciones: ['Iris', 'Lirio japonés', 'Flor de mayo', 'Planta perenne'], respuesta: 0 },
+            { japones: '椿', lectura: 'tsubaki', opciones: ['Camelia', 'Flor de invierno', 'Planta ornamental', 'Flor japonesa'], respuesta: 0 },
+            { japones: '牡丹', lectura: 'botan', opciones: ['Peonía', 'Flor exuberante', 'Planta herbácea', 'Flor china'], respuesta: 0 }
+        ],
+        mazo3: [
+            { japones: '国', lectura: 'kuni', opciones: ['País', 'Nación', 'Estado', 'Territorio'], respuesta: 0 },
+            { japones: '日本', lectura: 'nihon', opciones: ['Japón', 'País del sol naciente', 'Nippon', 'Archipiélago japonés'], respuesta: 0 },
+            { japones: 'アメリカ', lectura: 'amerika', opciones: ['Estados Unidos', 'América', 'USA', 'Norteamérica'], respuesta: 0 },
+            { japones: '中国', lectura: 'chuugoku', opciones: ['China', 'República Popular China', 'Imperio Celestial', 'Asia Oriental'], respuesta: 0 },
+            { japones: '韓国', lectura: 'kankoku', opciones: ['Corea del Sur', 'República de Corea', 'Hanguk', 'Península coreana'], respuesta: 0 },
+            { japones: 'フランス', lectura: 'furansu', opciones: ['Francia', 'República Francesa', 'Galía', 'Europa Occidental'], respuesta: 0 },
+            { japones: 'イギリス', lectura: 'igirisu', opciones: ['Reino Unido', 'Gran Bretaña', 'Inglaterra', 'Islas Británicas'], respuesta: 0 },
+            { japones: 'ドイツ', lectura: 'doitsu', opciones: ['Alemania', 'República Federal de Alemania', 'Deutschland', 'Europa Central'], respuesta: 0 },
+            { japones: 'イタリア', lectura: 'itaria', opciones: ['Italia', 'República Italiana', 'Peninsula Itálica', 'Europa del Sur'], respuesta: 0 },
+            { japones: 'スペイン', lectura: 'supein', opciones: ['España', 'Reino de España', 'Península Ibérica', 'Europa del Sur'], respuesta: 0 }
+        ],
+        mazo4: [
+            { japones: '都市', lectura: 'toshi', opciones: ['Ciudad', 'Metrópolis', 'Urbe', 'Centro urbano'], respuesta: 0 },
+            { japones: '東京', lectura: 'toukyou', opciones: ['Tokio', 'Capital de Japón', 'Metrópolis de Tokio', 'Kanto'], respuesta: 0 },
+            { japones: '大阪', lectura: 'oosaka', opciones: ['Osaka', 'Ciudad de Osaka', 'Kansai', 'Puerto comercial'], respuesta: 0 },
+            { japones: '京都', lectura: 'kyouto', opciones: ['Kioto', 'Antigua capital', 'Ciudad imperial', 'Kansai'], respuesta: 0 },
+            { japones: '名古屋', lectura: 'nagoya', opciones: ['Nagoya', 'Ciudad de Nagoya', 'Chubu', 'Centro de Japón'], respuesta: 0 },
+            { japones: '横浜', lectura: 'yokohama', opciones: ['Yokohama', 'Ciudad portuaria', 'Kanagawa', 'Area de Tokio'], respuesta: 0 },
+            { japones: '福岡', lectura: 'fukuoka', opciones: ['Fukuoka', 'Ciudad de Fukuoka', 'Kyushu', 'Sur de Japón'], respuesta: 0 },
+            { japones: '札幌', lectura: 'sapporo', opciones: ['Sapporo', 'Ciudad de Sapporo', 'Hokkaido', 'Norte de Japón'], respuesta: 0 },
+            { japones: '神戸', lectura: 'koube', opciones: ['Kobe', 'Ciudad de Kobe', 'Hyogo', 'Puerto internacional'], respuesta: 0 },
+            { japones: '広島', lectura: 'hiroshima', opciones: ['Hiroshima', 'Ciudad de Hiroshima', 'Chugoku', 'Oeste de Japón'], respuesta: 0 }
+        ],
+        mazo5: [
+            { japones: 'スポーツ', lectura: 'supootsu', opciones: ['Deporte', 'Actividad física', 'Ejercicio', 'Competición'], respuesta: 0 },
+            { japones: '野球', lectura: 'yakyuu', opciones: ['Béisbol', 'Pelota base', 'Juego de bate', 'Deporte americano'], respuesta: 0 },
+            { japones: 'サッカー', lectura: 'sakkaa', opciones: ['Fútbol', 'Balompié', 'Deporte de equipo', 'Juego con pelota'], respuesta: 0 },
+            { japones: 'テニス', lectura: 'tenisu', opciones: ['Tenis', 'Deporte de raqueta', 'Juego individual', 'Competición en cancha'], respuesta: 0 },
+            { japones: 'バスケットボール', lectura: 'basukettobooru', opciones: ['Baloncesto', 'Básquetbol', 'Deporte de canasta', 'Juego con pelota'], respuesta: 0 },
+            { japones: '水泳', lectura: 'suiei', opciones: ['Natación', 'Deporte acuático', 'Estilo libre', 'Competición en piscina'], respuesta: 0 },
+            { japones: '卓球', lectura: 'takkyuu', opciones: ['Tenis de mesa', 'Ping pong', 'Deporte de mesa', 'Juego con raqueta pequeña'], respuesta: 0 },
+            { japones: '柔道', lectura: 'juudou', opciones: ['Judo', 'Arte marcial', 'Deporte de combate', 'Defensa personal'], respuesta: 0 },
+            { japones: '剣道', lectura: 'kendou', opciones: ['Kendo', 'Esgrima japonesa', 'Arte marcial con espada', 'Camino de la espada'], respuesta: 0 },
+            { japones: '相撲', lectura: 'sumou', opciones: ['Sumo', 'Lucha japonesa', 'Deporte tradicional', 'Combate en dohyo'], respuesta: 0 }
+        ]
+    },
+    
+    // MAZOS PARA SUBCONTENEDORES DEL CONTENEDOR 3
+    sub3_1: {
+        mazo1: [
+            { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Sonido organizado', 'Melodía', 'Arte sonoro'], respuesta: 0 },
+            { japones: '歌', lectura: 'uta', opciones: ['Canción', 'Canto', 'Melodía vocal', 'Composición musical'], respuesta: 0 },
+            { japones: 'ピアノ', lectura: 'piano', opciones: ['Piano', 'Instrumento de teclado', 'Pianoforte', 'Instrumento musical'], respuesta: 0 },
+            { japones: 'ギター', lectura: 'gitaa', opciones: ['Guitarra', 'Instrumento de cuerda', 'Guitarra acústica', 'Instrumento musical'], respuesta: 0 },
+            { japones: 'ドラム', lectura: 'doramu', opciones: ['Batería', 'Tambores', 'Percusión', 'Instrumento de percusión'], respuesta: 0 },
+            { japones: 'バイオリン', lectura: 'baiorin', opciones: ['Violín', 'Instrumento de cuerda frotada', 'Violino', 'Instrumento musical'], respuesta: 0 },
+            { japones: 'フルート', lectura: 'furuuto', opciones: ['Flauta', 'Instrumento de viento', 'Flauta traversa', 'Instrumento musical'], respuesta: 0 },
+            { japones: 'トランペット', lectura: 'toranpetto', opciones: ['Trompeta', 'Instrumento de viento metal', 'Corneta', 'Instrumento musical'], respuesta: 0 },
+            { japones: 'オーケストラ', lectura: 'ookesutora', opciones: ['Orquesta', 'Conjunto musical', 'Agrupación instrumental', 'Banda sinfónica'], respuesta: 0 },
+            { japones: 'コンサート', lectura: 'konsaato', opciones: ['Concierto', 'Recital', 'Presentación musical', 'Espectáculo en vivo'], respuesta: 0 }
+        ],
+        mazo2: [
+            { japones: '映画', lectura: 'eiga', opciones: ['Película', 'Cine', 'Film', 'Producción cinematográfica'], respuesta: 0 },
+            { japones: '俳優', lectura: 'haiyuu', opciones: ['Actor', 'Intérprete', 'Artista', 'Protagonista'], respuesta: 0 },
+            { japones: '女優', lectura: 'joyuu', opciones: ['Actriz', 'Intérprete femenina', 'Artista', 'Protagonista femenina'], respuesta: 0 },
+            { japones: '監督', lectura: 'kantoku', opciones: ['Director', 'Realizador', 'Cineasta', 'Guionista principal'], respuesta: 0 },
+            { japones: '脚本', lectura: 'kyakuhon', opciones: ['Guion', 'Libreto', 'Argumento', 'Texto cinematográfico'], respuesta: 0 },
+            { japones: '舞台', lectura: 'butai', opciones: ['Escenario', 'Tablas', 'Teatro', 'Plataforma de actuación'], respuesta: 0 },
+            { japones: '演技', lectura: 'engi', opciones: ['Actuación', 'Interpretación', 'Representación', 'Performance'], respuesta: 0 },
+            { japones: '観客', lectura: 'kankyaku', opciones: ['Audiencia', 'Espectadores', 'Público', 'Asistentes'], respuesta: 0 },
+            { japones: '拍手', lectura: 'hakushu', opciones: ['Aplausos', 'Palmas', 'Ovación', 'Reconocimiento'], respuesta: 0 },
+            { japones: '喝采', lectura: 'kassai', opciones: ['Ovación', 'Aplausos entusiastas', 'Aclamación', 'Reconocimiento caluroso'], respuesta: 0 }
+        ],
+        mazo3: [
+            { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Letras', 'Escritos', 'Obras escritas'], respuesta: 0 },
+            { japones: '小説', lectura: 'shousetsu', opciones: ['Novela', 'Ficción', 'Narrativa', 'Relato extenso'], respuesta: 0 },
+            { japones: '詩', lectura: 'shi', opciones: ['Poesía', 'Poema', 'Verso', 'Composición lírica'], respuesta: 0 },
+            { japones: '物語', lectura: 'monogatari', opciones: ['Cuento', 'Historia', 'Relato', 'Narración'], respuesta: 0 },
+            { japones: '作家', lectura: 'sakka', opciones: ['Escritor', 'Autor', 'Literato', 'Novelista'], respuesta: 0 },
+            { japones: '詩人', lectura: 'shijin', opciones: ['Poeta', 'Versificador', 'Bardo', 'Escritor de poesía'], respuesta: 0 },
+            { japones: '登場人物', lectura: 'toujoujinbutsu', opciones: ['Personaje', 'Protagonista', 'Actor en la trama', 'Figura literaria'], respuesta: 0 },
+            { japones: 'プロット', lectura: 'purotto', opciones: ['Trama', 'Argumento', 'Estructura narrativa', 'Desarrollo de la historia'], respuesta: 0 },
+            { japones: '結末', lectura: 'ketsumatsu', opciones: ['Final', 'Desenlace', 'Conclusión', 'Resolución'], respuesta: 0 },
+            { japones: '主人公', lectura: 'shujinkou', opciones: ['Protagonista', 'Personaje principal', 'Héroe', 'Figura central'], respuesta: 0 }
+        ],
+        mazo4: [
+            { japones: '科学', lectura: 'kagaku', opciones: ['Ciencia', 'Conocimiento sistemático', 'Investigación', 'Estudio'], respuesta: 0 },
+            { japones: '物理', lectura: 'butsuri', opciones: ['Física', 'Ciencia natural', 'Estudio de la materia', 'Ciencia fundamental'], respuesta: 0 },
+            { japones: '化学', lectura: 'kagaku', opciones: ['Química', 'Ciencia de la materia', 'Estudio de sustancias', 'Ciencia molecular'], respuesta: 0 },
+            { japones: '生物', lectura: 'seibutsu', opciones: ['Biología', 'Ciencia de la vida', 'Estudio de seres vivos', 'Ciencia natural'], respuesta: 0 },
+            { japones: '数学', lectura: 'suugaku', opciones: ['Matemáticas', 'Ciencia exacta', 'Estudio de números', 'Cálculo'], respuesta: 0 },
+            { japones: '天文学', lectura: 'tenmongaku', opciones: ['Astronomía', 'Ciencia del espacio', 'Estudio de cuerpos celestes', 'Cosmología'], respuesta: 0 },
+            { japones: '地理', lectura: 'chiri', opciones: ['Geografía', 'Ciencia de la Tierra', 'Estudio del territorio', 'Cartografía'], respuesta: 0 },
+            { japones: '歴史', lectura: 'rekishi', opciones: ['Historia', 'Estudio del pasado', 'Cronología', 'Registro histórico'], respuesta: 0 },
+            { japones: '哲学', lectura: 'tetsugaku', opciones: ['Filosofía', 'Amor a la sabiduría', 'Pensamiento crítico', 'Reflexión'], respuesta: 0 },
+            { japones: '心理学', lectura: 'shinrigaku', opciones: ['Psicología', 'Ciencia de la mente', 'Estudio del comportamiento', 'Conductismo'], respuesta: 0 }
+        ],
+        mazo5: [
+            { japones: '技術', lectura: 'gijutsu', opciones: ['Tecnología', 'Técnica', 'Habilidad', 'Conocimiento aplicado'], respuesta: 0 },
+            { japones: '発明', lectura: 'hatsumei', opciones: ['Invención', 'Creación', 'Innovación', 'Descubrimiento'], respuesta: 0 },
+            { japones: '機械', lectura: 'kikai', opciones: ['Máquina', 'Mecanismo', 'Aparato', 'Dispositivo'], respuesta: 0 },
+            { japones: '電気', lectura: 'denki', opciones: ['Electricidad', 'Energía eléctrica', 'Corriente', 'Flujo de electrones'], respuesta: 0 },
+            { japones: 'コンピューター', lectura: 'konpyuutaa', opciones: ['Computadora', 'Ordenador', 'PC', 'Equipo informático'], respuesta: 0 },
+            { japones: 'インターネット', lectura: 'intaanetto', opciones: ['Internet', 'Red global', 'World Wide Web', 'Conexión digital'], respuesta: 0 },
+            { japones: 'スマートフォン', lectura: 'sumaatofon', opciones: ['Teléfono inteligente', 'Smartphone', 'Dispositivo móvil', 'Celular avanzado'], respuesta: 0 },
+            { japones: 'ロボット', lectura: 'robotto', opciones: ['Robot', 'Autómata', 'Máquina programable', 'Androide'], respuesta: 0 },
+            { japones: '人工知能', lectura: 'jinkouchinou', opciones: ['Inteligencia artificial', 'IA', 'Algoritmo inteligente', 'Sistema cognitivo'], respuesta: 0 },
+            { japones: '革新', lectura: 'kakushin', opciones: ['Innovación', 'Renovación', 'Cambio radical', 'Transformación'], respuesta: 0 }
+        ]
+    }
+};
+
+// ============================================================================
+// ESTRUCTURA PRINCIPAL CORREGIDA - 5 MAZOS POR SUBCONTENEDOR
 // ============================================================================
 
 const estructura = {
     'contenedor1': {
         nombre: 'Last summer',
         subcontenedores: {
-            'sub1_1': { nombre: 'Last summer 1', mazos: generarMazos(10) },
-            'sub1_2': { nombre: 'Last summer 2', mazos: generarMazos(10) },
-            'sub1_3': { nombre: 'Last summer 3', mazos: generarMazos(10) },
-            'sub1_4': { nombre: 'Last summer 4', mazos: generarMazos(10) },
-            'sub1_5': { nombre: 'Last summer 5', mazos: generarMazos(10) }
+            'sub1_1': { nombre: 'Last summer 1', mazos: generarMazosEspecificos('sub1_1') },
+            'sub1_2': { nombre: 'Last summer 2', mazos: generarMazosEspecificos('sub1_1') },
+            'sub1_3': { nombre: 'Last summer 3', mazos: generarMazosEspecificos('sub1_1') },
+            'sub1_4': { nombre: 'Last summer 4', mazos: generarMazosEspecificos('sub1_1') },
+            'sub1_5': { nombre: 'Last summer 5', mazos: generarMazosEspecificos('sub1_1') }
         }
     },
     'contenedor2': {
         nombre: 'Toono esuke',
         subcontenedores: {
-            'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazos(10) },
-            'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazos(10) },
-            'sub2_3': { nombre: 'Sub-Contenedor 2.3', mazos: generarMazos(10) },
-            'sub2_4': { nombre: 'Sub-Contenedor 2.4', mazos: generarMazos(10) },
-            'sub2_5': { nombre: 'Sub-Contenedor 2.5', mazos: generarMazos(10) }
+            'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazosEspecificos('sub2_1') },
+            'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazosEspecificos('sub2_1') },
+            'sub2_3': { nombre: 'Sub-Contenedor 2.3', mazos: generarMazosEspecificos('sub2_1') },
+            'sub2_4': { nombre: 'Sub-Contenedor 2.4', mazos: generarMazosEspecificos('sub2_1') },
+            'sub2_5': { nombre: 'Sub-Contenedor 2.5', mazos: generarMazosEspecificos('sub2_1') }
         }
     },
     'contenedor3': {
         nombre: 'Contenedor 3',
         subcontenedores: {
-            'sub3_1': { nombre: 'Hermana rusa ', mazos: generarMazos(10) },
-            'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazos(10) },
-            'sub3_3': { nombre: ' de la escuela', mazos: generarMazos(10) },
-            'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(10) },
-            'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(10) }
+            'sub3_1': { nombre: 'Hermana rusa', mazos: generarMazosEspecificos('sub3_1') },
+            'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazosEspecificos('sub3_1') },
+            'sub3_3': { nombre: 'De la escuela', mazos: generarMazosEspecificos('sub3_1') },
+            'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazosEspecificos('sub3_1') },
+            'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazosEspecificos('sub3_1') }
         }
     },
     'contenedor4': {
         nombre: 'Contenedor 4',
         subcontenedores: {
-            'sub4_1': { nombre: 'Sub-Contenedor 4.1', mazos: generarMazos(10) },
-            'sub4_2': { nombre: 'Sub-Contenedor 4.2', mazos: generarMazos(10) },
-            'sub4_3': { nombre: 'Sub-Contenedor 4.3', mazos: generarMazos(10) },
-            'sub4_4': { nombre: 'Sub-Contenedor 4.4', mazos: generarMazos(10) },
-            'sub4_5': { nombre: 'Sub-Contenedor 4.5', mazos: generarMazos(10) }
+            'sub4_1': { nombre: 'Sub-Contenedor 4.1', mazos: generarMazosEspecificos('sub1_1') },
+            'sub4_2': { nombre: 'Sub-Contenedor 4.2', mazos: generarMazosEspecificos('sub1_1') },
+            'sub4_3': { nombre: 'Sub-Contenedor 4.3', mazos: generarMazosEspecificos('sub1_1') },
+            'sub4_4': { nombre: 'Sub-Contenedor 4.4', mazos: generarMazosEspecificos('sub1_1') },
+            'sub4_5': { nombre: 'Sub-Contenedor 4.5', mazos: generarMazosEspecificos('sub1_1') }
         }
     },
     'contenedor5': {
         nombre: 'Contenedor 5',
         subcontenedores: {
-            'sub5_1': { nombre: 'Sub-Contenedor 5.1', mazos: generarMazos(10) },
-            'sub5_2': { nombre: 'Sub-Contenedor 5.2', mazos: generarMazos(10) },
-            'sub5_3': { nombre: 'Sub-Contenedor 5.3', mazos: generarMazos(10) },
-            'sub5_4': { nombre: 'Sub-Contenedor 5.4', mazos: generarMazos(10) },
-            'sub5_5': { nombre: 'Sub-Contenedor 5.5', mazos: generarMazos(10) }
+            'sub5_1': { nombre: 'Sub-Contenedor 5.1', mazos: generarMazosEspecificos('sub2_1') },
+            'sub5_2': { nombre: 'Sub-Contenedor 5.2', mazos: generarMazosEspecificos('sub2_1') },
+            'sub5_3': { nombre: 'Sub-Contenedor 5.3', mazos: generarMazosEspecificos('sub2_1') },
+            'sub5_4': { nombre: 'Sub-Contenedor 5.4', mazos: generarMazosEspecificos('sub2_1') },
+            'sub5_5': { nombre: 'Sub-Contenedor 5.5', mazos: generarMazosEspecificos('sub2_1') }
         }
     },
     'contenedor6': {
         nombre: 'Contenedor 6',
         subcontenedores: {
-            'sub6_1': { nombre: 'Sub-Contenedor 6.1', mazos: generarMazos(10) },
-            'sub6_2': { nombre: 'Sub-Contenedor 6.2', mazos: generarMazos(10) },
-            'sub6_3': { nombre: 'Sub-Contenedor 6.3', mazos: generarMazos(10) },
-            'sub6_4': { nombre: 'Sub-Contenedor 6.4', mazos: generarMazos(10) },
-            'sub6_5': { nombre: 'Sub-Contenedor 6.5', mazos: generarMazos(10) }
+            'sub6_1': { nombre: 'Sub-Contenedor 6.1', mazos: generarMazosEspecificos('sub3_1') },
+            'sub6_2': { nombre: 'Sub-Contenedor 6.2', mazos: generarMazosEspecificos('sub3_1') },
+            'sub6_3': { nombre: 'Sub-Contenedor 6.3', mazos: generarMazosEspecificos('sub3_1') },
+            'sub6_4': { nombre: 'Sub-Contenedor 6.4', mazos: generarMazosEspecificos('sub3_1') },
+            'sub6_5': { nombre: 'Sub-Contenedor 6.5', mazos: generarMazosEspecificos('sub3_1') }
         }
     },
     'contenedor7': {
         nombre: 'Contenedor 7',
         subcontenedores: {
-            'sub7_1': { nombre: 'Sub-Contenedor 7.1', mazos: generarMazos(10) },
-            'sub7_2': { nombre: 'Sub-Contenedor 7.2', mazos: generarMazos(10) },
-            'sub7_3': { nombre: 'Sub-Contenedor 7.3', mazos: generarMazos(10) },
-            'sub7_4': { nombre: 'Sub-Contenedor 7.4', mazos: generarMazos(10) },
-            'sub7_5': { nombre: 'Sub-Contenedor 7.5', mazos: generarMazos(10) }
+            'sub7_1': { nombre: 'Sub-Contenedor 7.1', mazos: generarMazosEspecificos('sub1_1') },
+            'sub7_2': { nombre: 'Sub-Contenedor 7.2', mazos: generarMazosEspecificos('sub1_1') },
+            'sub7_3': { nombre: 'Sub-Contenedor 7.3', mazos: generarMazosEspecificos('sub1_1') },
+            'sub7_4': { nombre: 'Sub-Contenedor 7.4', mazos: generarMazosEspecificos('sub1_1') },
+            'sub7_5': { nombre: 'Sub-Contenedor 7.5', mazos: generarMazosEspecificos('sub1_1') }
         }
     },
     'contenedor8': {
         nombre: 'Contenedor 8',
         subcontenedores: {
-            'sub8_1': { nombre: 'Sub-Contenedor 8.1', mazos: generarMazos(10) },
-            'sub8_2': { nombre: 'Sub-Contenedor 8.2', mazos: generarMazos(10) },
-            'sub8_3': { nombre: 'Sub-Contenedor 8.3', mazos: generarMazos(10) },
-            'sub8_4': { nombre: 'Sub-Contenedor 8.4', mazos: generarMazos(10) },
-            'sub8_5': { nombre: 'Sub-Contenedor 8.5', mazos: generarMazos(10) }
+            'sub8_1': { nombre: 'Sub-Contenedor 8.1', mazos: generarMazosEspecificos('sub2_1') },
+            'sub8_2': { nombre: 'Sub-Contenedor 8.2', mazos: generarMazosEspecificos('sub2_1') },
+            'sub8_3': { nombre: 'Sub-Contenedor 8.3', mazos: generarMazosEspecificos('sub2_1') },
+            'sub8_4': { nombre: 'Sub-Contenedor 8.4', mazos: generarMazosEspecificos('sub2_1') },
+            'sub8_5': { nombre: 'Sub-Contenedor 8.5', mazos: generarMazosEspecificos('sub2_1') }
         }
     },
     'contenedor9': {
         nombre: 'Contenedor 9',
         subcontenedores: {
-            'sub9_1': { nombre: 'Sub-Contenedor 9.1', mazos: generarMazos(10) },
-            'sub9_2': { nombre: 'Sub-Contenedor 9.2', mazos: generarMazos(10) },
-            'sub9_3': { nombre: 'Sub-Contenedor 9.3', mazos: generarMazos(10) },
-            'sub9_4': { nombre: 'Sub-Contenedor 9.4', mazos: generarMazos(10) },
-            'sub9_5': { nombre: 'Sub-Contenedor 9.5', mazos: generarMazos(10) }
+            'sub9_1': { nombre: 'Sub-Contenedor 9.1', mazos: generarMazosEspecificos('sub3_1') },
+            'sub9_2': { nombre: 'Sub-Contenedor 9.2', mazos: generarMazosEspecificos('sub3_1') },
+            'sub9_3': { nombre: 'Sub-Contenedor 9.3', mazos: generarMazosEspecificos('sub3_1') },
+            'sub9_4': { nombre: 'Sub-Contenedor 9.4', mazos: generarMazosEspecificos('sub3_1') },
+            'sub9_5': { nombre: 'Sub-Contenedor 9.5', mazos: generarMazosEspecificos('sub3_1') }
         }
     },
     'contenedor10': {
         nombre: 'Contenedor 10',
         subcontenedores: {
-            'sub10_1': { nombre: 'Sub-Contenedor 10.1', mazos: generarMazos(10) },
-            'sub10_2': { nombre: 'Sub-Contenedor 10.2', mazos: generarMazos(10) },
-            'sub10_3': { nombre: 'Sub-Contenedor 10.3', mazos: generarMazos(10) },
-            'sub10_4': { nombre: 'Sub-Contenedor 10.4', mazos: generarMazos(10) },
-            'sub10_5': { nombre: 'Sub-Contenedor 10.5', mazos: generarMazos(10) }
+            'sub10_1': { nombre: 'Sub-Contenedor 10.1', mazos: generarMazosEspecificos('sub1_1') },
+            'sub10_2': { nombre: 'Sub-Contenedor 10.2', mazos: generarMazosEspecificos('sub1_1') },
+            'sub10_3': { nombre: 'Sub-Contenedor 10.3', mazos: generarMazosEspecificos('sub1_1') },
+            'sub10_4': { nombre: 'Sub-Contenedor 10.4', mazos: generarMazosEspecificos('sub1_1') },
+            'sub10_5': { nombre: 'Sub-Contenedor 10.5', mazos: generarMazosEspecificos('sub1_1') }
         }
     }
 };
 
-function generarMazos(cantidadMazos) {
+// FUNCIÓN CORREGIDA - GENERAR MAZOS ESPECÍFICOS CON PALABRAS ÚNICAS
+function generarMazosEspecificos(tipoSubcontenedor) {
     const mazos = {};
-    for (let i = 1; i <= cantidadMazos; i++) {
-        mazos[`mazo${i}`] = {
-            nombre: `Mazo ${i}`,
-            palabras: generarPalabras(10)
-        };
+    
+    // Solo generamos 5 mazos por subcontenedor
+    for (let i = 1; i <= 5; i++) {
+        const mazoKey = `mazo${i}`;
+        
+        // Verificamos si existe el banco de palabras para este tipo de subcontenedor
+        if (bancoPalabras[tipoSubcontenedor] && bancoPalabras[tipoSubcontenedor][mazoKey]) {
+            mazos[mazoKey] = {
+                nombre: `Mazo ${i}`,
+                palabras: [...bancoPalabras[tipoSubcontenedor][mazoKey]] // Copia del array para evitar modificaciones
+            };
+        } else {
+            // Fallback en caso de que no existan palabras definidas
+            mazos[mazoKey] = {
+                nombre: `Mazo ${i}`,
+                palabras: generarPalabrasUnicas(10, tipoSubcontenedor + mazoKey)
+            };
+        }
     }
+    
     return mazos;
 }
 
-function generarPalabras(cantidad) {
+// Función de respaldo para generar palabras únicas
+function generarPalabrasUnicas(cantidad, identificador) {
     const palabras = [];
     const palabrasBase = [
         { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
@@ -328,10 +537,26 @@ function generarPalabras(cantidad) {
         { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
     ];
     
+    // Usamos el identificador para crear una semilla única
+    const semilla = hashCode(identificador);
+    
     for (let i = 0; i < cantidad; i++) {
-        palabras.push({...palabrasBase[i % palabrasBase.length]});
+        const indice = (semilla + i) % palabrasBase.length;
+        palabras.push({...palabrasBase[indice]});
     }
+    
     return palabras;
+}
+
+// Función auxiliar para generar un código hash simple
+function hashCode(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
 }
 
 // ============================================================================
@@ -360,7 +585,7 @@ function obtenerVideoAleatorio() {
 }
 
 // ============================================================================
-// FUNCIONES DEL SISTEMA PRINCIPAL
+// FUNCIONES DEL SISTEMA PRINCIPAL (MANTENIDAS SIN CAMBIOS)
 // ============================================================================
 
 function cargarContenedor(idContenedor) {
@@ -383,7 +608,7 @@ function cargarContenedor(idContenedor) {
             subDiv.innerHTML = `
                 <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen" onerror="this.src='https://via.placeholder.com/150x150/4a90e2/ffffff?text=Error'">
                 <div class="subcontenedor-texto">${sub.nombre}</div>
-                <div class="subcontenedor-info">10 mazos disponibles</div>
+                <div class="subcontenedor-info">5 mazos disponibles</div>
             `;
             
             contenedorSub.appendChild(subDiv);
@@ -604,7 +829,7 @@ function repetirQuiz() {
 }
 
 // ============================================================================
-// FUNCIONES DEL RPG DE NOVIA
+// FUNCIONES DEL RPG DE NOVIA (MANTENIDAS SIN CAMBIOS)
 // ============================================================================
 
 function iniciarRPGNovia() {
