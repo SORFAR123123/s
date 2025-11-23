@@ -196,68 +196,63 @@ const rpgNovia = {
 
 const bancoPalabras = {
     // MAZOS PARA SUBCONTENEDORES DEL CONTENEDOR 1
-    sub1_1: {
-        mazo1: [
-            { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
-            { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
-            { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
-            { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
-            { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
-            { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
-            { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
-            { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
-            { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
-            { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
-        ],
-        mazo2: [
-            { japones: '学校', lectura: 'gakkou', opciones: ['Escuela', 'Colegio', 'Instituto', 'Academia'], respuesta: 0 },
-            { japones: '学生', lectura: 'gakusei', opciones: ['Estudiante', 'Alumno', 'Discípulo', 'Aprendiz'], respuesta: 0 },
-            { japones: '先生', lectura: 'sensei', opciones: ['Profesor', 'Maestro', 'Instructor', 'Educador'], respuesta: 0 },
-            { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Aprendizaje', 'Práctica', 'Preparación'], respuesta: 0 },
-            { japones: '本', lectura: 'hon', opciones: ['Libro', 'Volumen', 'Texto', 'Publicación'], respuesta: 0 },
-            { japones: '紙', lectura: 'kami', opciones: ['Papel', 'Hoja', 'Documento', 'Folio'], respuesta: 0 },
-            { japones: '鉛筆', lectura: 'enpitsu', opciones: ['Lápiz', 'Portaminas', 'Lapicero', 'Grafito'], respuesta: 0 },
-            { japones: '机', lectura: 'tsukue', opciones: ['Escritorio', 'Mesa', 'Bureau', 'Pupitre'], respuesta: 0 },
-            { japones: '椅子', lectura: 'isu', opciones: ['Silla', 'Asiento', 'Banco', 'Taburete'], respuesta: 0 },
-            { japones: '教室', lectura: 'kyoushitsu', opciones: ['Aula', 'Sala de clase', 'Salón', 'Clase'], respuesta: 0 }
-        ],
-        mazo3: [
-            { japones: '食べ物', lectura: 'tabemono', opciones: ['Comida', 'Alimento', 'Plato', 'Vianda'], respuesta: 0 },
-            { japones: '水', lectura: 'mizu', opciones: ['Agua', 'Líquido', 'H2O', 'Elemento'], respuesta: 0 },
-            { japones: '米', lectura: 'kome', opciones: ['Arroz', 'Grano', 'Cereal', 'Semilla'], respuesta: 0 },
-            { japones: '魚', lectura: 'sakana', opciones: ['Pescado', 'Peces', 'Marisco', 'Especie marina'], respuesta: 0 },
-            { japones: '肉', lectura: 'niku', opciones: ['Carne', 'Filete', 'Bistec', 'Res'], respuesta: 0 },
-            { japones: '野菜', lectura: 'yasai', opciones: ['Verdura', 'Hortaliza', 'Legumbre', 'Vegetal'], respuesta: 0 },
-            { japones: '果物', lectura: 'kudamono', opciones: ['Fruta', 'Fruto', 'Pieza de fruta', 'Frutal'], respuesta: 0 },
-            { japones: '牛乳', lectura: 'gyuunyuu', opciones: ['Leche', 'Lácteo', 'Bebida blanca', 'Líquido nutritivo'], respuesta: 0 },
-            { japones: '卵', lectura: 'tamago', opciones: ['Huevo', 'Óvulo', 'Blanquillo', 'Célula reproductiva'], respuesta: 0 },
-            { japones: 'パン', lectura: 'pan', opciones: ['Pan', 'Bollo', 'Pieza de pan', 'Masa horneada'], respuesta: 0 }
-        ],
-        mazo4: [
-            { japones: '天気', lectura: 'tenki', opciones: ['Tiempo', 'Clima', 'Condiciones atmosféricas', 'Meteorología'], respuesta: 0 },
-            { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Astro rey', 'Estrella', 'Luminaria'], respuesta: 0 },
-            { japones: '月', lectura: 'tsuki', opciones: ['Luna', 'Satélite', 'Astro nocturno', 'Fases lunares'], respuesta: 0 },
-            { japones: '星', lectura: 'hoshi', opciones: ['Estrella', 'Astro', 'Cuerpo celeste', 'Luminaria nocturna'], respuesta: 0 },
-            { japones: '雨', lectura: 'ame', opciones: ['Lluvia', 'Precipitación', 'Aguacero', 'Chubasco'], respuesta: 0 },
-            { japones: '雪', lectura: 'yuki', opciones: ['Nieve', 'Precipitación congelada', 'Copo de nieve', 'Nevada'], respuesta: 0 },
-            { japones: '風', lectura: 'kaze', opciones: ['Viento', 'Corriente de aire', 'Brisa', 'Ráfaga'], respuesta: 0 },
-            { japones: '雲', lectura: 'kumo', opciones: ['Nube', 'Neblina', 'Vapor de agua', 'Cúmulo'], respuesta: 0 },
-            { japones: '雷', lectura: 'kaminari', opciones: ['Trueno', 'Rayo', 'Tormenta eléctrica', 'Estruendo'], respuesta: 0 },
-            { japones: '虹', lectura: 'niji', opciones: ['Arcoíris', 'Espectro de colores', 'Fenómeno óptico', 'Semicírculo de colores'], respuesta: 0 }
-        ],
-        mazo5: [
-            { japones: '色', lectura: 'iro', opciones: ['Color', 'Tono', 'Matiz', 'Pigmento'], respuesta: 0 },
-            { japones: '赤', lectura: 'aka', opciones: ['Rojo', 'Color rojo', 'Escarlata', 'Carmesí'], respuesta: 0 },
-            { japones: '青', lectura: 'ao', opciones: ['Azul', 'Color azul', 'Celeste', 'Añil'], respuesta: 0 },
-            { japones: '緑', lectura: 'midori', opciones: ['Verde', 'Color verde', 'Esmeralda', 'Verde hierba'], respuesta: 0 },
-            { japones: '黄色', lectura: 'kiiro', opciones: ['Amarillo', 'Color amarillo', 'Dorado', 'Amarillo brillante'], respuesta: 0 },
-            { japones: '白', lectura: 'shiro', opciones: ['Blanco', 'Color blanco', 'Albo', 'Inmaculado'], respuesta: 0 },
-            { japones: '黒', lectura: 'kuro', opciones: ['Negro', 'Color negro', 'Ébano', 'Oscuro'], respuesta: 0 },
-            { japones: '茶色', lectura: 'chairo', opciones: ['Marrón', 'Color marrón', 'Café', 'Pardo'], respuesta: 0 },
-            { japones: '紫', lectura: 'murasaki', opciones: ['Morado', 'Color morado', 'Violeta', 'Púrpura'], respuesta: 0 },
-            { japones: '灰色', lectura: 'haiiro', opciones: ['Gris', 'Color gris', 'Plata', 'Ceniza'], respuesta: 0 }
-        ]
-    },
+   // En la sección del bancoPalabras, dentro de sub1_1 (Last Summer 1), actualizamos:
+
+sub1_1: {
+    mazo1: [
+        { japones: '今朝', lectura: 'kesa', opciones: ['Esta mañana', 'Mañana', 'Amanecer', 'Desayuno'], respuesta: 0 },
+        { japones: '処', lectura: 'koro', opciones: ['Lugar', 'Momento', 'Tiempo', 'Situación'], respuesta: 0 },
+        { japones: '出掛け', lectura: 'dekake', opciones: ['Salir', 'Partida', 'Excursión', 'Paseo'], respuesta: 0 },
+        { japones: '女将', lectura: 'okami', opciones: ['Dueña', 'Ama de casa', 'Señora', 'Propietaria'], respuesta: 0 },
+        { japones: '寂しい', lectura: 'sabishii', opciones: ['Solitario', 'Triste', 'Vacío', 'Melancólico'], respuesta: 0 },
+        { japones: '憩い', lectura: 'ikoi', opciones: ['Descanso', 'Relajación', 'Reposo', 'Alivio'], respuesta: 0 },
+        { japones: '手伝い', lectura: 'tetsudai', opciones: ['Ayuda', 'Asistencia', 'Soporte', 'Cooperación'], respuesta: 0 },
+        { japones: '撮る', lectura: 'toru', opciones: ['Tomar foto', 'Grabar', 'Filmar', 'Capturar'], respuesta: 0 },
+        { japones: '見送る', lectura: 'miokuru', opciones: ['Despedir', 'Acompañar', 'Ver partir', 'Decir adiós'], respuesta: 0 },
+        { japones: '限る', lectura: 'kagiru', opciones: ['Limitar', 'Restringir', 'Confinar', 'Acotar'], respuesta: 0 }
+    ],
+    mazo2: [
+        { japones: '吐息', lectura: 'toiki', opciones: ['Suspiro', 'Respiro', 'Aliento', 'Exhalación'], respuesta: 0 },
+        { japones: '応援', lectura: 'ouen', opciones: ['Apoyo', 'Aliento', 'Animo', 'Soporte'], respuesta: 0 },
+        { japones: '文句', lectura: 'monku', opciones: ['Queja', 'Protesta', 'Reclamo', 'Objeción'], respuesta: 0 },
+        { japones: '構う', lectura: 'kamau', opciones: ['Importar', 'Preocupar', 'Molestar', 'Incomodar'], respuesta: 0 },
+        { japones: '残り香', lectura: 'nokorika', opciones: ['Aroma residual', 'Fragancia restante', 'Olor que perdura', 'Perfume persistente'], respuesta: 0 },
+        { japones: '減る', lectura: 'heru', opciones: ['Disminuir', 'Reducir', 'Menguar', 'Bajar'], respuesta: 0 },
+        { japones: '誰彼', lectura: 'dareka', opciones: ['Alguien', 'Cualquiera', 'Una persona', 'Alguno'], respuesta: 0 },
+        { japones: '過激', lectura: 'kageki', opciones: ['Extremo', 'Radical', 'Intenso', 'Violento'], respuesta: 0 },
+        { japones: '開き直る', lectura: 'hirakinarou', opciones: ['Cambiar de actitud', 'Volverse desafiante', 'Actuar con descaro', 'Mostrar arrogancia'], respuesta: 0 },
+        { japones: '関係ない', lectura: 'kankeinai', opciones: ['No importa', 'Sin relación', 'Irrelevante', 'No tiene que ver'], respuesta: 0 }
+    ],
+    mazo3: [
+        { japones: '刺激', lectura: 'shigeki', opciones: ['Estímulo', 'Incentivo', 'Excitación', 'Impulso'], respuesta: 0 },
+        { japones: '否定', lectura: 'hitei', opciones: ['Negación', 'Rechazo', 'Refutación', 'Contradicción'], respuesta: 0 },
+        { japones: '宝の持ち腐れ', lectura: 'takara no mochiguse', opciones: ['Talento desperdiciado', 'Recurso sin usar', 'Potencial oculto', 'Habilidad no aprovechada'], respuesta: 0 },
+        { japones: '心配', lectura: 'shinpai', opciones: ['Preocupación', 'Inquietud', 'Ansiedad', 'Nerviosismo'], respuesta: 0 },
+        { japones: '性欲', lectura: 'seiyoku', opciones: ['Deseo sexual', 'Libido', 'Impulso sexual', 'Lujuria'], respuesta: 0 },
+        { japones: '機会', lectura: 'kikai', opciones: ['Oportunidad', 'Ocasion', 'Chance', 'Momento propicio'], respuesta: 0 },
+        { japones: '活かす', lectura: 'ikasu', opciones: ['Aprovechar', 'Utilizar', 'Sacar provecho', 'Aplicar'], respuesta: 0 },
+        { japones: '経験不足', lectura: 'keiken busoku', opciones: ['Falta de experiencia', 'Inexperiencia', 'Poca práctica', 'Escasa vivencia'], respuesta: 0 },
+        { japones: '言い寄る', lectura: 'iiyoru', opciones: ['Acercarse a hablar', 'Dirigirse a alguien', 'Intentar conquistar', 'Cortejar'], respuesta: 0 },
+        { japones: '飽きる', lectura: 'akiru', opciones: ['Cansarse', 'Aburrirse', 'Hartarse', 'Perder interés'], respuesta: 0 }
+    ],
+    mazo4: [
+        { japones: '合格', lectura: 'goukaku', opciones: ['Aprobación', 'Éxito', 'Pasar un examen', 'Logro'], respuesta: 0 },
+        { japones: '圧し潰す', lectura: 'asshitsubusu', opciones: ['Aplastar', 'Comprimir', 'Destruir', 'Machacar'], respuesta: 0 },
+        { japones: '密着', lectura: 'micchaku', opciones: ['Contacto cercano', 'Pegado', 'Adhesión', 'Unión íntima'], respuesta: 0 },
+        { japones: '届く', lectura: 'todoku', opciones: ['Llegar', 'Alcanzar', 'Ser entregado', 'Recibir'], respuesta: 0 },
+        { japones: '巻きつく', lectura: 'makitsuku', opciones: ['Enrollarse', 'Envolver', 'Rodear', 'Abrazar'], respuesta: 0 },
+        { japones: '惜しい', lectura: 'oshii', opciones: ['Lamentable', 'Qué pena', 'Lastimoso', 'Desafortunado'], respuesta: 0 },
+        { japones: '拒否権', lectura: 'kyohiken', opciones: ['Derecho de veto', 'Poder de rechazo', 'Autoridad para negar', 'Facultad de oposición'], respuesta: 0 },
+        { japones: '経験', lectura: 'keiken', opciones: ['Experiencia', 'Vivencia', 'Práctica', 'Conocimiento'], respuesta: 0 },
+        { japones: '膣', lectura: 'chitsu', opciones: ['Vagina', 'Canal vaginal', 'Órgano femenino', 'Conducto reproductivo'], respuesta: 0 },
+        { japones: '蒸す', lectura: 'musu', opciones: ['Cocinar al vapor', 'Vaporizar', 'Humedecer', 'Hacer vapor'], respuesta: 0 }
+    ],
+    mazo5: [
+        { japones: '大体', lectura: 'daitai', opciones: ['Aproximadamente', 'Generalmente', 'En general', 'Más o menos'], respuesta: 0 },
+        { japones: '起きる', lectura: 'okiru', opciones: ['Despertar', 'Levantarse', 'Ocurrir', 'Suceder'], respuesta: 0 }
+        // Agrega 8 palabras más aquí si quieres completar las 10
+    ]
+},
     
     // MAZOS PARA SUBCONTENEDORES DEL CONTENEDOR 2
     sub2_1: {
