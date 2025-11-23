@@ -7,11 +7,73 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- PANTALLA DE EVENTO DIARIO -->
+    <div id="pantalla-evento-diario" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-evento">
+                <h1>🎯 EVENTO DIARIO</h1>
+                
+                <!-- Información del evento -->
+                <div class="info-evento">
+                    <div class="contador-evento" id="contador-evento">
+                        Tiempo restante: <span id="tiempo-restante">24:00:00</span>
+                    </div>
+                    <div class="progreso-evento" id="progreso-evento">
+                        Progreso: <span id="progreso-actual">0</span>/<span id="progreso-total">5</span> mazos
+                    </div>
+                </div>
+                
+                <!-- Evento actual -->
+                <div class="evento-actual" id="evento-actual">
+                    <div class="imagen-evento">
+                        <img id="imagen-evento" src="" alt="Evento Diario">
+                    </div>
+                    <div class="descripcion-evento">
+                        <h2 id="titulo-evento">Título del Evento</h2>
+                        <p id="descripcion-evento">Descripción del evento diario...</p>
+                        <div class="recompensa-evento">
+                            <span class="recompensa-texto">🎁 Recompensa: </span>
+                            <span id="recompensa-evento">Video especial + 5 Soles</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barra de progreso -->
+                <div class="barra-progreso-evento">
+                    <div class="barra-progreso-fondo">
+                        <div id="barra-progreso-evento" class="barra-progreso-avance" style="width: 0%"></div>
+                    </div>
+                    <div class="porcentaje-progreso" id="porcentaje-progreso">0%</div>
+                </div>
+                
+                <!-- Botones -->
+                <div class="botones-evento">
+                    <button class="boton-principal" onclick="aceptarEventoDiario()">✨ Aceptar Desafío</button>
+                    <button class="boton-secundario" onclick="saltarEventoDiario()">⏭️ Saltar por Hoy</button>
+                </div>
+                
+                <!-- Nota informativa -->
+                <div class="nota-evento">
+                    <p>💡 <strong>Nota:</strong> El evento se reinicia cada día a las 3:00 AM</p>
+                    <p>✅ Completa mazos al 100% para avanzar en el evento</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio" class="pantalla activa">
         <div class="contenedor">
             <h1>BIBLIOTECA DE MAZOS</h1>
             <p class="subtitulo">Selecciona un contenedor principal</p>
+            
+            <!-- Indicador de evento diario -->
+            <div class="indicador-evento" id="indicador-evento" style="display: none;">
+                <div class="badge-evento" onclick="mostrarEventoDiario()">
+                    🎯 Evento Diario Disponible
+                    <span class="contador-badge" id="contador-badge">24h</span>
+                </div>
+            </div>
             
             <div class="menu-principal">
                 <div class="seccion-menu">
@@ -153,6 +215,50 @@
         </div>
     </div>
 
+    <!-- PANTALLA DE VIDEO EVENTO COMPLETADO -->
+    <div id="pantalla-video-evento-completado" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1>🎉 ¡Evento Diario Completado!</h1>
+                <p class="subtitulo-video">Has superado el desafío de hoy</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-completado" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡Excelente trabajo! Recompensa obtenida</p>
+                </div>
+                
+                <button class="boton-saltar" onclick="volverAlInicio()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO EVENTO FALLADO -->
+    <div id="pantalla-video-evento-fallado" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1>💔 Evento Diario Fallado</h1>
+                <p class="subtitulo-video">No completaste el desafío a tiempo</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-fallado" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡No te rindas! Mañana tendrás otra oportunidad</p>
+                </div>
+                
+                <button class="boton-saltar" onclick="volverAlInicio()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- PANTALLA DE RESULTADOS -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
@@ -269,37 +375,6 @@
                 <!-- MENSAJES DEL SISTEMA -->
                 <div id="mensaje-rpg" class="mensaje-sistema"></div>
             </div>
-        </div>
-    </div>
-
-    <!-- ============================================ -->
-    <!-- NUEVO: MODALES PARA EVENTOS DIARIOS -->
-    <!-- ============================================ -->
-
-    <!-- Modal para Evento Diario -->
-    <div id="dailyEventModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="eventTitle">Evento Diario</h2>
-            <div class="event-image-container">
-                <img id="eventImage" src="" alt="Evento Diario">
-            </div>
-            <div class="event-buttons">
-                <button id="completeBtn" class="btn btn-success">✅ Completar Evento</button>
-                <button id="failBtn" class="btn btn-danger">❌ Fallar Evento</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para Videos de Eventos -->
-    <div id="videoEventModal" class="modal">
-        <div class="modal-content video-content">
-            <span class="close-btn video-close">&times;</span>
-            <h3 id="videoEventTitle">Resultado del Evento</h3>
-            <video id="eventVideoPlayer" controls>
-                Tu navegador no soporta el elemento video.
-            </video>
-            <p id="videoEventMessage"></p>
         </div>
     </div>
 
