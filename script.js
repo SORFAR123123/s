@@ -137,13 +137,13 @@ const eventosDiarios = {
                 tipo: "video",
                 titulo: "¡Dominio Total! 🏆",
                 mensaje: "Has demostrado tu maestría en japonés",
-                video: "NinoIchika.mp4"
+                video: "NinoIchikaCompletado.mp4"
             },
             fallo: {
                 tipo: "video", 
                 titulo: "Necesitas más práctica 📚",
                 mensaje: "Mañana será otro día para mejorar",
-                video: "videos/practica.mp4"
+                video: "NinoIchikaFallado.mp4"
             },
             video: "NinoIchika.mp4"
         },
@@ -156,15 +156,15 @@ const eventosDiarios = {
                 tipo: "video",
                 titulo: "¡Velocidad Asombrosa! ⚡",
                 mensaje: "Tu rapidez mental es impresionante",
-                video: "videos/velocidad.mp4"
+                video: "profesorcompletado.mp4"
             },
             fallo: {
                 tipo: "video",
                 titulo: "La velocidad lleva tiempo 🕒",
                 mensaje: "Sigue practicando para mejorar",
-                video: "videos/calma.mp4"
+                video: "profesorfallo.mp4"
             },
-            video: "videos/velocidad.mp4"
+            video: "profesor.mp4"
         },
         {
             id: 3,
