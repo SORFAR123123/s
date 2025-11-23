@@ -1548,3 +1548,222 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     }, 3000);
 }
+// ==================== PEGA AQUÍ ABAJO ====================
+
+class DailyEventSystem {
+    constructor() {
+        this.events = [
+            {
+                id: 1,
+                name: "Cocina Maestra",
+                image: "cocina_maestra.jpg",
+                successVideo: "video_exito_cocina.mp4",
+                failVideo: "video_fracaso_cocina.mp4",
+                completed: false,
+                failed: false
+            },
+            {
+                id: 2, 
+                name: "Jardinería Mágica",
+                image: "jardineria_magica.jpg",
+                successVideo: "video_exito_jardineria.mp4", 
+                failVideo: "video_fracaso_jardineria.mp4",
+                completed: false,
+                failed: false
+            },
+            {
+                id: 3,
+                name: "Misión de Exploración", 
+                image: "mision_exploracion.jpg",
+                successVideo: "video_exito_exploracion.mp4",
+                failVideo: "video_fracaso_exploracion.mp4", 
+                completed: false,
+                failed: false
+            },
+            {
+                id: 4,
+                name: "Taller de Inventos",
+                image: "taller_inventos.jpg", 
+                successVideo: "video_exito_inventos.mp4",
+                failVideo: "video_fracaso_inventos.mp4",
+                completed: false, 
+                failed: false
+            },
+            {
+                id: 5,
+                name: "Entrenamiento Épico",
+                image: "entrenamiento_epico.jpg",
+                successVideo: "video_exito_entrenamiento.mp4",
+                failVideo: "video_fracaso_entrenamiento.mp4",
+                completed: false,
+                failed: false
+            }
+        ];
+        this.init();
+    }
+
+    init() {
+        this.checkDailyReset();
+        this.loadProgress();
+        this.showDailyEvent();
+    }
+
+    getCurrentEvent() {
+        const today = new Date();
+        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        return this.events[dayOfYear % this.events.length];
+    }
+
+    showDailyEvent() {
+        const currentEvent = this.getCurrentEvent();
+        const lastEventShown = localStorage.getItem('lastEventShown');
+        const today = this.getTodayString();
+
+        if (lastEventShown !== today) {
+            this.displayEventImage(currentEvent);
+            localStorage.setItem('lastEventShown', today);
+        }
+
+        this.showPendingVideo();
+    }
+
+    displayEventImage(event) {
+        console.log(`🎮 EVENTO DIARIO: ${event.name}`);
+        console.log(`🖼️ Mostrando imagen: ${event.image}`);
+        this.showModalWithImage(event.image, event.name);
+    }
+
+    completeEvent() {
+        const currentEvent = this.getCurrentEvent();
+        currentEvent.completed = true;
+        
+        console.log(`✅ ${this.getSuccessMessage(currentEvent.id)}`);
+        this.playVideo(currentEvent.successVideo);
+        
+        this.saveProgress();
+    }
+
+    failEvent() {
+        const currentEvent = this.getCurrentEvent();
+        currentEvent.failed = true;
+        
+        console.log(`❌ ${this.getFailMessage(currentEvent.id)}`);
+        localStorage.setItem('pendingFailVideo', currentEvent.failVideo);
+        
+        this.saveProgress();
+    }
+
+    showPendingVideo() {
+        const pendingVideo = localStorage.getItem('pendingFailVideo');
+        const videoShownDate = localStorage.getItem('failVideoShownDate');
+        const today = this.getTodayString();
+
+        if (pendingVideo && videoShownDate !== today) {
+            console.log("📺 Reproduciendo video pendiente del fallo de ayer");
+            this.playVideo(pendingVideo);
+            
+            localStorage.removeItem('pendingFailVideo');
+            localStorage.setItem('failVideoShownDate', today);
+        }
+    }
+
+    playVideo(videoPath) {
+        console.log(`🎥 Reproduciendo video: ${videoPath}`);
+    }
+
+    showModalWithImage(imagePath, eventName) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                <h2>Evento Diario: ${eventName}</h2>
+                <img src="${imagePath}" alt="${eventName}" style="max-width: 400px; max-height: 300px;">
+                <div style="margin-top: 20px;">
+                    <button onclick="window.dailySystem.completeEvent()" style="margin: 5px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px;">Completar</button>
+                    <button onclick="window.dailySystem.failEvent()" style="margin: 5px; padding: 10px 20px; background: #f44336; color: white; border: none; border-radius: 5px;">Fallar</button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="margin: 5px; padding: 10px 20px; background: #777; color: white; border: none; border-radius: 5px;">Cerrar</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+    }
+
+    getSuccessMessage(eventId) {
+        const messages = {
+            1: "¡Perfecto! Has creado el platillo gourmet del día",
+            2: "¡Increíble! Tu jardín floreció con plantas mágicas", 
+            3: "¡Éxito! Descubriste un tesoro oculto en la selva",
+            4: "¡Brillante! Tu invento funciona perfectamente",
+            5: "¡Impresionante! Dominaste la técnica secreta"
+        };
+        return messages[eventId] || "¡Evento completado con éxito!";
+    }
+
+    getFailMessage(eventId) {
+        const messages = {
+            1: "¡Oh no! Se te quemó la receta especial",
+            2: "Las plantas se marchitaron por falta de cuidado",
+            3: "Te perdiste en el camino y no llegaste al destino",
+            4: "El invento explotó... mejor suerte mañana", 
+            5: "Necesitas más práctica para dominar este movimiento"
+        };
+        return messages[eventId] || "Fallaste en el evento...";
+    }
+
+    checkDailyReset() {
+        const lastReset = localStorage.getItem('lastReset');
+        const now = new Date();
+        const resetTime = new Date();
+        resetTime.setHours(3, 0, 0, 0);
+
+        if (now >= resetTime && lastReset !== this.getTodayString()) {
+            this.resetDailyEvents();
+            localStorage.setItem('lastReset', this.getTodayString());
+        }
+    }
+
+    resetDailyEvents() {
+        this.events.forEach(event => {
+            event.completed = false;
+            event.failed = false;
+        });
+        console.log("🔄 Eventos diarios reiniciados (3 AM)");
+    }
+
+    getTodayString() {
+        return new Date().toDateString();
+    }
+
+    saveProgress() {
+        localStorage.setItem('dailyEventsProgress', JSON.stringify(this.events));
+    }
+
+    loadProgress() {
+        const saved = localStorage.getItem('dailyEventsProgress');
+        if (saved) {
+            const savedEvents = JSON.parse(saved);
+            this.events.forEach((event, index) => {
+                if (savedEvents[index]) {
+                    event.completed = savedEvents[index].completed;
+                    event.failed = savedEvents[index].failed;
+                }
+            });
+        }
+    }
+}
+
+// INICIALIZACIÓN - ESTO VA AL FINAL DE TODO
+window.dailySystem = new DailyEventSystem();
