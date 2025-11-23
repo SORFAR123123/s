@@ -597,7 +597,8 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
                 { japones: 'こどもの日', lectura: 'kodomonohi', opciones: ['Día del niño', 'Día de la madre', 'Día del padre', 'Navidad'], respuesta: 0 },
                 { japones: '成人式', lectura: 'seijinshiki', opciones: ['Ceremonia de la mayoría de edad', 'Graduación', 'Boda', 'Funeral'], respuesta: 0 },
                 { japones: '敬老の日', lectura: 'keirounohi', opciones: ['Día del respeto a los ancianos', 'Día del niño', 'Día de la madre', 'Navidad'], respuesta: 0 }
-// Agrega esto a la sección de palabrasDatabase en script.js
+ ]
+                },
 
 // THE LAST SUMMER 2
 'sub2_1': {
