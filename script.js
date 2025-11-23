@@ -96,31 +96,31 @@ const videosRecompensa = [
     {
         id: 1,
         titulo: "¡Felicidades! Logro Desbloqueado 🎉",
-        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+        url: "Belinda.mp4",
         duracion: "10s"
     },
     {
         id: 2,
         titulo: "¡Excelente Trabajo! ⭐",
-        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+        url: "Belinda.mp4",
         duracion: "15s"
     },
     {
         id: 3,
         titulo: "¡Eres Increíble! 💪",
-        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+        url: "Belinda.mp4",
         duracion: "12s"
     },
     {
         id: 4,
         titulo: "¡Perfecto! 🏆",
-        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+        url: "Belinda.mp4",
         duracion: "8s"
     },
     {
         id: 5,
         titulo: "¡Misión Cumplida! 🚀",
-        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
+        url: "Belinda.mp4",
         duracion: "11s"
     }
 ];
