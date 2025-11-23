@@ -142,7 +142,7 @@ const videosIntimos = {
 
 const rpgNovia = {
     estado: {
-        nombreNovia: "Sakura",
+        nombreNovia: "Nino",
         nivelRelacion: 1,
         experiencia: 0,
         afinidad: 50,
