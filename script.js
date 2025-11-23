@@ -223,9 +223,9 @@ const estructura = {
     'contenedor3': {
         nombre: 'Contenedor 3',
         subcontenedores: {
-            'sub3_1': { nombre: 'Hermana rusa putona', mazos: generarMazos(10) },
+            'sub3_1': { nombre: 'Hermana rusa ', mazos: generarMazos(10) },
             'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazos(10) },
-            'sub3_3': { nombre: 'Putona de la escuela', mazos: generarMazos(10) },
+            'sub3_3': { nombre: ' de la escuela', mazos: generarMazos(10) },
             'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(10) },
             'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(10) }
         }
