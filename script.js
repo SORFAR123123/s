@@ -91,7 +91,7 @@ const configImagenes = {
 const videosRecompensa = [
     {
         id: 1,
-        titulo: "¡Felicidades! Logro Desbloqueado 🎉",
+        titulo: "Belinda te ayuda a relajarte despues de estudiar",
         url: "Belinda.mp4",
         duracion: "10s"
     },
