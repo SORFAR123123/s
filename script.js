@@ -1,91 +1,90 @@
 // ============================================================================
-// CONFIGURACIÓN DE URLs DE IMÁGENES
+// CONFIGURACIÓN DE URLs DE IMÁGENES (SOLO INTERNET)
 // ============================================================================
 
-// Aquí puedes cambiar las URLs de todas las imágenes
 const configImagenes = {
     contenedores: {
-        'contenedor1': 'imagenes/contenedor1.jpg',
-        'contenedor2': 'imagenes/contenedor2.jpg',
-        'contenedor3': 'imagenes/contenedor3.jpg',
-        'contenedor4': 'imagenes/contenedor4.jpg',
-        'contenedor5': 'imagenes/contenedor5.jpg',
-        'contenedor6': 'imagenes/contenedor6.jpg',
-        'contenedor7': 'imagenes/contenedor7.jpg',
-        'contenedor8': 'imagenes/contenedor8.jpg',
-        'contenedor9': 'imagenes/contenedor9.jpg',
-        'contenedor10': 'imagenes/contenedor10.jpg'
+        'contenedor1': 'https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=300&h=300&fit=crop',
+        'contenedor2': 'https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=300&h=300&fit=crop',
+        'contenedor3': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=300&h=300&fit=crop',
+        'contenedor4': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&h=300&fit=crop',
+        'contenedor5': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=300&h=300&fit=crop',
+        'contenedor6': 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=300&h=300&fit=crop',
+        'contenedor7': 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=300&h=300&fit=crop',
+        'contenedor8': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=300&h=300&fit=crop',
+        'contenedor9': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=300&h=300&fit=crop',
+        'contenedor10': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop'
     },
     subcontenedores: {
-        'sub1_1': 'imagenes/sub1_1.jpg',
-        'sub1_2': 'imagenes/sub1_2.jpg',
-        'sub1_3': 'imagenes/sub1_3.jpg',
-        'sub1_4': 'imagenes/sub1_4.jpg',
-        'sub1_5': 'imagenes/sub1_5.jpg',
-        'sub2_1': 'imagenes/sub2_1.jpg',
-        'sub2_2': 'imagenes/sub2_2.jpg',
-        'sub2_3': 'imagenes/sub2_3.jpg',
-        'sub2_4': 'imagenes/sub2_4.jpg',
-        'sub2_5': 'imagenes/sub2_5.jpg',
-        'sub3_1': 'imagenes/sub3_1.jpg',
-        'sub3_2': 'imagenes/sub3_2.jpg',
-        'sub3_3': 'imagenes/sub3_3.jpg',
-        'sub3_4': 'imagenes/sub3_4.jpg',
-        'sub3_5': 'imagenes/sub3_5.jpg',
-        'sub4_1': 'imagenes/sub4_1.jpg',
-        'sub4_2': 'imagenes/sub4_2.jpg',
-        'sub4_3': 'imagenes/sub4_3.jpg',
-        'sub4_4': 'imagenes/sub4_4.jpg',
-        'sub4_5': 'imagenes/sub4_5.jpg',
-        'sub5_1': 'imagenes/sub5_1.jpg',
-        'sub5_2': 'imagenes/sub5_2.jpg',
-        'sub5_3': 'imagenes/sub5_3.jpg',
-        'sub5_4': 'imagenes/sub5_4.jpg',
-        'sub5_5': 'imagenes/sub5_5.jpg',
-        'sub6_1': 'imagenes/sub6_1.jpg',
-        'sub6_2': 'imagenes/sub6_2.jpg',
-        'sub6_3': 'imagenes/sub6_3.jpg',
-        'sub6_4': 'imagenes/sub6_4.jpg',
-        'sub6_5': 'imagenes/sub6_5.jpg',
-        'sub7_1': 'imagenes/sub7_1.jpg',
-        'sub7_2': 'imagenes/sub7_2.jpg',
-        'sub7_3': 'imagenes/sub7_3.jpg',
-        'sub7_4': 'imagenes/sub7_4.jpg',
-        'sub7_5': 'imagenes/sub7_5.jpg',
-        'sub8_1': 'imagenes/sub8_1.jpg',
-        'sub8_2': 'imagenes/sub8_2.jpg',
-        'sub8_3': 'imagenes/sub8_3.jpg',
-        'sub8_4': 'imagenes/sub8_4.jpg',
-        'sub8_5': 'imagenes/sub8_5.jpg',
-        'sub9_1': 'imagenes/sub9_1.jpg',
-        'sub9_2': 'imagenes/sub9_2.jpg',
-        'sub9_3': 'imagenes/sub9_3.jpg',
-        'sub9_4': 'imagenes/sub9_4.jpg',
-        'sub9_5': 'imagenes/sub9_5.jpg',
-        'sub10_1': 'imagenes/sub10_1.jpg',
-        'sub10_2': 'imagenes/sub10_2.jpg',
-        'sub10_3': 'imagenes/sub10_3.jpg',
-        'sub10_4': 'imagenes/sub10_4.jpg',
-        'sub10_5': 'imagenes/sub10_5.jpg'
+        'sub1_1': 'https://images.unsplash.com/photo-1555099962-79c4f3c5c8f1?w=200&h=200&fit=crop',
+        'sub1_2': 'https://images.unsplash.com/photo-1555099962-7a9c4f3c5c8f2?w=200&h=200&fit=crop',
+        'sub1_3': 'https://images.unsplash.com/photo-1555099962-7b9c4f3c5c8f3?w=200&h=200&fit=crop',
+        'sub1_4': 'https://images.unsplash.com/photo-1555099962-7c9c4f3c5c8f4?w=200&h=200&fit=crop',
+        'sub1_5': 'https://images.unsplash.com/photo-1555099962-7d9c4f3c5c8f5?w=200&h=200&fit=crop',
+        'sub2_1': 'https://images.unsplash.com/photo-1555099962-7e9c4f3c5c8f6?w=200&h=200&fit=crop',
+        'sub2_2': 'https://images.unsplash.com/photo-1555099962-7f9c4f3c5c8f7?w=200&h=200&fit=crop',
+        'sub2_3': 'https://images.unsplash.com/photo-1555099962-7g9c4f3c5c8f8?w=200&h=200&fit=crop',
+        'sub2_4': 'https://images.unsplash.com/photo-1555099962-7h9c4f3c5c8f9?w=200&h=200&fit=crop',
+        'sub2_5': 'https://images.unsplash.com/photo-1555099962-7i9c4f3c5c8g0?w=200&h=200&fit=crop',
+        'sub3_1': 'https://images.unsplash.com/photo-1555099962-7j9c4f3c5c8g1?w=200&h=200&fit=crop',
+        'sub3_2': 'https://images.unsplash.com/photo-1555099962-7k9c4f3c5c8g2?w=200&h=200&fit=crop',
+        'sub3_3': 'https://images.unsplash.com/photo-1555099962-7l9c4f3c5c8g3?w=200&h=200&fit=crop',
+        'sub3_4': 'https://images.unsplash.com/photo-1555099962-7m9c4f3c5c8g4?w=200&h=200&fit=crop',
+        'sub3_5': 'https://images.unsplash.com/photo-1555099962-7n9c4f3c5c8g5?w=200&h=200&fit=crop',
+        'sub4_1': 'https://images.unsplash.com/photo-1555099962-7o9c4f3c5c8g6?w=200&h=200&fit=crop',
+        'sub4_2': 'https://images.unsplash.com/photo-1555099962-7p9c4f3c5c8g7?w=200&h=200&fit=crop',
+        'sub4_3': 'https://images.unsplash.com/photo-1555099962-7q9c4f3c5c8g8?w=200&h=200&fit=crop',
+        'sub4_4': 'https://images.unsplash.com/photo-1555099962-7r9c4f3c5c8g9?w=200&h=200&fit=crop',
+        'sub4_5': 'https://images.unsplash.com/photo-1555099962-7s9c4f3c5c8h0?w=200&h=200&fit=crop',
+        'sub5_1': 'https://images.unsplash.com/photo-1555099962-7t9c4f3c5c8h1?w=200&h=200&fit=crop',
+        'sub5_2': 'https://images.unsplash.com/photo-1555099962-7u9c4f3c5c8h2?w=200&h=200&fit=crop',
+        'sub5_3': 'https://images.unsplash.com/photo-1555099962-7v9c4f3c5c8h3?w=200&h=200&fit=crop',
+        'sub5_4': 'https://images.unsplash.com/photo-1555099962-7w9c4f3c5c8h4?w=200&h=200&fit=crop',
+        'sub5_5': 'https://images.unsplash.com/photo-1555099962-7x9c4f3c5c8h5?w=200&h=200&fit=crop',
+        'sub6_1': 'https://images.unsplash.com/photo-1555099962-7y9c4f3c5c8h6?w=200&h=200&fit=crop',
+        'sub6_2': 'https://images.unsplash.com/photo-1555099962-7z9c4f3c5c8h7?w=200&h=200&fit=crop',
+        'sub6_3': 'https://images.unsplash.com/photo-1555099962-8a9c4f3c5c8h8?w=200&h=200&fit=crop',
+        'sub6_4': 'https://images.unsplash.com/photo-1555099962-8b9c4f3c5c8h9?w=200&h=200&fit=crop',
+        'sub6_5': 'https://images.unsplash.com/photo-1555099962-8c9c4f3c5c8i0?w=200&h=200&fit=crop',
+        'sub7_1': 'https://images.unsplash.com/photo-1555099962-8d9c4f3c5c8i1?w=200&h=200&fit=crop',
+        'sub7_2': 'https://images.unsplash.com/photo-1555099962-8e9c4f3c5c8i2?w=200&h=200&fit=crop',
+        'sub7_3': 'https://images.unsplash.com/photo-1555099962-8f9c4f3c5c8i3?w=200&h=200&fit=crop',
+        'sub7_4': 'https://images.unsplash.com/photo-1555099962-8g9c4f3c5c8i4?w=200&h=200&fit=crop',
+        'sub7_5': 'https://images.unsplash.com/photo-1555099962-8h9c4f3c5c8i5?w=200&h=200&fit=crop',
+        'sub8_1': 'https://images.unsplash.com/photo-1555099962-8i9c4f3c5c8i6?w=200&h=200&fit=crop',
+        'sub8_2': 'https://images.unsplash.com/photo-1555099962-8j9c4f3c5c8i7?w=200&h=200&fit=crop',
+        'sub8_3': 'https://images.unsplash.com/photo-1555099962-8k9c4f3c5c8i8?w=200&h=200&fit=crop',
+        'sub8_4': 'https://images.unsplash.com/photo-1555099962-8l9c4f3c5c8i9?w=200&h=200&fit=crop',
+        'sub8_5': 'https://images.unsplash.com/photo-1555099962-8m9c4f3c5c8j0?w=200&h=200&fit=crop',
+        'sub9_1': 'https://images.unsplash.com/photo-1555099962-8n9c4f3c5c8j1?w=200&h=200&fit=crop',
+        'sub9_2': 'https://images.unsplash.com/photo-1555099962-8o9c4f3c5c8j2?w=200&h=200&fit=crop',
+        'sub9_3': 'https://images.unsplash.com/photo-1555099962-8p9c4f3c5c8j3?w=200&h=200&fit=crop',
+        'sub9_4': 'https://images.unsplash.com/photo-1555099962-8q9c4f3c5c8j4?w=200&h=200&fit=crop',
+        'sub9_5': 'https://images.unsplash.com/photo-1555099962-8r9c4f3c5c8j5?w=200&h=200&fit=crop',
+        'sub10_1': 'https://images.unsplash.com/photo-1555099962-8s9c4f3c5c8j6?w=200&h=200&fit=crop',
+        'sub10_2': 'https://images.unsplash.com/photo-1555099962-8t9c4f3c5c8j7?w=200&h=200&fit=crop',
+        'sub10_3': 'https://images.unsplash.com/photo-1555099962-8u9c4f3c5c8j8?w=200&h=200&fit=crop',
+        'sub10_4': 'https://images.unsplash.com/photo-1555099962-8v9c4f3c5c8j9?w=200&h=200&fit=crop',
+        'sub10_5': 'https://images.unsplash.com/photo-1555099962-8w9c4f3c5c8k0?w=200&h=200&fit=crop'
     },
     mazos: {
-        'mazo1': 'imagenes/mazo1.jpg',
-        'mazo2': 'imagenes/mazo2.jpg',
-        'mazo3': 'imagenes/mazo3.jpg',
-        'mazo4': 'imagenes/mazo4.jpg',
-        'mazo5': 'imagenes/mazo5.jpg',
-        'mazo6': 'imagenes/mazo6.jpg',
-        'mazo7': 'imagenes/mazo7.jpg',
-        'mazo8': 'imagenes/mazo8.jpg',
-        'mazo9': 'imagenes/mazo9.jpg',
-        'mazo10': 'imagenes/mazo10.jpg'
+        'mazo1': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=150&h=150&fit=crop',
+        'mazo2': 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=150&h=150&fit=crop',
+        'mazo3': 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=150&h=150&fit=crop',
+        'mazo4': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=150&h=150&fit=crop',
+        'mazo5': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=150&h=150&fit=crop',
+        'mazo6': 'https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=150&h=150&fit=crop',
+        'mazo7': 'https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=150&h=150&fit=crop',
+        'mazo8': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=150&h=150&fit=crop',
+        'mazo9': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=150&h=150&fit=crop',
+        'mazo10': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=150&h=150&fit=crop'
     },
     rpg: {
-        novia: 'imagenes/novia.jpg',
-        fondo: 'imagenes/fondo-rpg.jpg',
-        iconoFlores: 'imagenes/flores.png',
-        iconoChocolates: 'imagenes/chocolates.png',
-        iconoJoyas: 'imagenes/joyas.png'
+        novia: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop',
+        fondo: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
+        iconoFlores: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=80&h=80&fit=crop',
+        iconoChocolates: 'https://images.unsplash.com/photo-1575377427642-087cf684f29d?w=80&h=80&fit=crop',
+        iconoJoyas: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=80&h=80&fit=crop'
     }
 };
 
@@ -123,36 +122,6 @@ const videosRecompensa = [
         titulo: "¡Misión Cumplida! 🚀",
         url: "https://assets.mixkit.co/videos/preview/mixkit-a-rocket-flying-into-the-sky-43809-large.mp4",
         duracion: "11s"
-    },
-    {
-        id: 6,
-        titulo: "¡100% Completado! ✅",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-geometric-particles-whirling-in-space-43812-large.mp4",
-        duracion: "14s"
-    },
-    {
-        id: 7,
-        titulo: "¡Eres un Genio! 🧠",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-light-effects-on-a-dark-background-3128-large.mp4",
-        duracion: "9s"
-    },
-    {
-        id: 8,
-        titulo: "¡Impresionante! 🌟",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-shooting-stars-in-the-night-sky-3115-large.mp4",
-        duracion: "13s"
-    },
-    {
-        id: 9,
-        titulo: "¡Lo Lograste! 🎯",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-confetti-falling-on-the-ground-4650-large.mp4",
-        duracion: "10s"
-    },
-    {
-        id: 10,
-        titulo: "¡Campeón! 🥇",
-        url: "https://assets.mixkit.co/videos/preview/mixkit-man-holding-neon-lights-while-dancing-3450-large.mp4",
-        duracion: "16s"
     }
 ];
 
@@ -167,42 +136,16 @@ const videosIntimos = {
     intimidad2: "https://assets.mixkit.co/videos/preview/mixkit-passionate-romantic-scene-44460-large.mp4"
 };
 
-// Función para cambiar las URLs de videos íntimos
-function cambiarVideoIntimo(escenaId, nuevaUrl) {
-    if (videosIntimos[escenaId]) {
-        videosIntimos[escenaId] = nuevaUrl;
-        console.log(`Video de ${escenaId} actualizado a: ${nuevaUrl}`);
-        return true;
-    }
-    return false;
-}
-
-// Funciones globales para cambiar videos desde consola
-window.cambiarVideoIntimo = function(escenaId, nuevaUrl) {
-    return cambiarVideoIntimo(escenaId, nuevaUrl);
-};
-
-window.cambiarTodosVideosIntimos = function(configuraciones) {
-    let exitosas = 0;
-    configuraciones.forEach(config => {
-        if (cambiarVideoIntimo(config.escena, config.url)) {
-            exitosas++;
-        }
-    });
-    return exitosas;
-};
-
 // ============================================================================
 // SISTEMA RPG DE NOVIA
 // ============================================================================
 
 const rpgNovia = {
-    // Estado de la relación
     estado: {
         nombreNovia: "Sakura",
         nivelRelacion: 1,
         experiencia: 0,
-        afinidad: 50, // 0-100
+        afinidad: 50,
         estadoAnimo: "feliz",
         energia: 100,
         ultimaVisita: null,
@@ -210,7 +153,6 @@ const rpgNovia = {
         escenasDesbloqueadas: []
     },
     
-    // Economía del RPG
     economia: {
         moneda: "S/.",
         nombre: "Soles",
@@ -223,7 +165,6 @@ const rpgNovia = {
         }
     },
     
-    // Sistema +18
     contenidoAdulto: {
         desbloqueado: false,
         escenasDisponibles: [
@@ -235,7 +176,6 @@ const rpgNovia = {
         escenasCompletadas: []
     },
     
-    // Conversaciones y diálogos
     conversaciones: {
         saludos: [
             "¡Hola mi amor! 💕 ¿Cómo estás?",
@@ -259,7 +199,6 @@ const rpgNovia = {
 // ESTRUCTURA PRINCIPAL
 // ============================================================================
 
-// Estructura de 10 contenedores → 5 sub-contenedores → 10 mazos → 10 palabras
 const estructura = {
     'contenedor1': {
         nombre: 'Contenedor 1',
@@ -406,16 +345,15 @@ let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
 
-// Función para obtener la URL de una imagen
+// FUNCIÓN CORREGIDA - SOLO URLs DE INTERNET
 function obtenerUrlImagen(tipo, id) {
     if (configImagenes[tipo] && configImagenes[tipo][id]) {
         return configImagenes[tipo][id];
     }
-    // Imagen por defecto si no se encuentra
-    return 'imagenes/default.jpg';
+    // Fallback a placeholder de internet
+    return 'https://via.placeholder.com/200x200/4a90e2/ffffff?text=Imagen+No+Encontrada';
 }
 
-// Función para obtener un video aleatorio
 function obtenerVideoAleatorio() {
     const indiceAleatorio = Math.floor(Math.random() * videosRecompensa.length);
     return videosRecompensa[indiceAleatorio];
@@ -443,7 +381,7 @@ function cargarContenedor(idContenedor) {
             subDiv.onclick = () => cargarSubcontenedor(key);
             
             subDiv.innerHTML = `
-                <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen">
+                <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen" onerror="this.src='https://via.placeholder.com/150x150/4a90e2/ffffff?text=Error'">
                 <div class="subcontenedor-texto">${sub.nombre}</div>
                 <div class="subcontenedor-info">10 mazos disponibles</div>
             `;
@@ -474,7 +412,7 @@ function cargarSubcontenedor(idSubcontenedor) {
             mazoDiv.onclick = () => cargarMazo(key);
             
             mazoDiv.innerHTML = `
-                <img src="${obtenerUrlImagen('mazos', key)}" alt="${mazo.nombre}" class="mazo-imagen">
+                <img src="${obtenerUrlImagen('mazos', key)}" alt="${mazo.nombre}" class="mazo-imagen" onerror="this.src='https://via.placeholder.com/120x120/4a90e2/ffffff?text=Error'">
                 <div class="mazo-texto">${mazo.nombre}</div>
                 <div class="mazo-info">10 palabras</div>
             `;
@@ -562,6 +500,9 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         resultado.textContent = '¡Correcto!';
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
+        
+        // Recompensa económica por respuesta correcta
+        rpgNovia.economia.saldo += 0.1; // 0.1 sol por respuesta correcta
     } else {
         resultado.textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
         resultado.className = 'resultado incorrecto';
@@ -579,17 +520,12 @@ function siguientePregunta() {
 function mostrarResultados() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
-    // AGREGAR RECOMPENSA ECONÓMICA AL RPG
+    // RECOMPENSA ECONÓMICA MEJORADA
     if (porcentaje === 100) {
-        // Dar 1 Sol por mazo completado al 100%
-        rpgNovia.economia.saldo += 1;
+        rpgNovia.economia.saldo += 2; // 2 soles por 100%
         mostrarVideoRecompensa();
-        
-        // Mostrar mensaje de recompensa
-        setTimeout(() => {
-            mostrarMensaje("¡Ganaste 1 Sol por completar el mazo al 100%! 💰");
-        }, 1000);
     } else if (porcentaje >= 80) {
+        rpgNovia.economia.saldo += 1; // 1 sol por 80%+
         mostrarPantallaResultados(porcentaje);
     } else {
         mostrarPantallaResultados(porcentaje);
@@ -608,6 +544,7 @@ function mostrarPantallaResultados(porcentaje) {
         Respuestas correctas: ${respuestasCorrectas}
         Respuestas incorrectas: ${respuestasIncorrectas}
         Porcentaje de aciertos: ${porcentaje}%
+        Dinero ganado: ${porcentaje === 100 ? '2' : porcentaje >= 80 ? '1' : '0'} ${rpgNovia.economia.moneda}
         
         ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
           porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
@@ -618,18 +555,15 @@ function mostrarPantallaResultados(porcentaje) {
 function mostrarVideoRecompensa() {
     const video = obtenerVideoAleatorio();
     
-    // Actualizar la pantalla de video con la información del video seleccionado
     document.getElementById('titulo-video').textContent = video.titulo;
     document.getElementById('video-recompensa').src = video.url;
     document.getElementById('duracion-video').textContent = `Duración: ${video.duracion}`;
     
     cambiarPantalla('pantalla-video-recompensa');
     
-    // Reproducir el video automáticamente
     const videoElement = document.getElementById('video-recompensa');
     videoElement.play();
     
-    // Cuando el video termine, mostrar los resultados
     videoElement.onended = function() {
         const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
         mostrarPantallaResultados(porcentaje);
@@ -679,25 +613,20 @@ function iniciarRPGNovia() {
 }
 
 function actualizarInterfazRPG() {
-    // Actualizar información básica
     document.getElementById('nombre-novia').textContent = rpgNovia.estado.nombreNovia;
     document.getElementById('nivel-relacion').textContent = `Nivel ${rpgNovia.estado.nivelRelacion}`;
     document.getElementById('afinidad').textContent = `${rpgNovia.estado.afinidad}%`;
     document.getElementById('saldo-rpg').textContent = `${rpgNovia.economia.saldo} ${rpgNovia.economia.moneda}`;
     document.getElementById('condones-inventario').textContent = rpgNovia.economia.inventario.condones;
     
-    // Actualizar barra de afinidad
     const barraAfinidad = document.getElementById('barra-afinidad');
     barraAfinidad.style.width = `${rpgNovia.estado.afinidad}%`;
     
-    // Actualizar estado de ánimo
     document.getElementById('estado-animo').textContent = obtenerEmojiEstadoAnimo(rpgNovia.estado.estadoAnimo);
     
-    // Mostrar/Ocultar sección +18
     const seccionAdulto = document.getElementById('seccion-adulto');
     seccionAdulto.style.display = rpgNovia.contenidoAdulto.desbloqueado ? 'block' : 'none';
     
-    // Generar diálogo aleatorio
     generarDialogoAleatorio();
 }
 
@@ -743,7 +672,6 @@ function hablarConNovia() {
         </div>
     `;
     
-    // Aumentar afinidad por conversación
     aumentarAfinidad(2);
 }
 
@@ -751,7 +679,6 @@ function aumentarAfinidad(cantidad) {
     rpgNovia.estado.afinidad = Math.min(100, rpgNovia.estado.afinidad + cantidad);
     actualizarInterfazRPG();
     
-    // Verificar si se desbloquea contenido +18
     if (rpgNovia.estado.afinidad >= 30 && !rpgNovia.contenidoAdulto.desbloqueado) {
         rpgNovia.contenidoAdulto.desbloqueado = true;
         mostrarMensaje("¡Nueva sección desbloqueada! 💕");
@@ -769,7 +696,6 @@ function regalarItem(tipo) {
         rpgNovia.economia.saldo -= costos[tipo];
         rpgNovia.economia.inventario[tipo]++;
         
-        // Aumentar afinidad según el regalo
         const afinidadGanada = {
             flores: 5,
             chocolates: 8,
@@ -813,19 +739,14 @@ function usarCondon(escenaId) {
         return;
     }
     
-    // Usar condón
     rpgNovia.economia.inventario.condones -= escena.costoCondones;
-    
-    // Ejecutar escena
     ejecutarEscenaAdulto(escena);
 }
 
 function ejecutarEscenaAdulto(escena) {
     const dialogoElement = document.getElementById('dialogo-novia');
     
-    // Verificar si existe el video para esta escena
     if (!videosIntimos[escena.id]) {
-        // Fallback a texto si no hay video
         const mensajes = {
             beso: [
                 "Te acercas lentamente... 💋",
@@ -864,7 +785,6 @@ function ejecutarEscenaAdulto(escena) {
         mensajeCompleto += `</div>`;
         dialogoElement.innerHTML = mensajeCompleto;
     } else {
-        // Mostrar video
         dialogoElement.innerHTML = `
             <div class="video-escena-adulta">
                 <h4>${escena.nombre}</h4>
@@ -882,27 +802,21 @@ function ejecutarEscenaAdulto(escena) {
             </div>
         `;
         
-        // Configurar evento cuando termine el video
         const videoElement = dialogoElement.querySelector('.video-intimo');
         videoElement.onended = function() {
             terminarEscenaIntima();
         };
         
-        // Reproducir automáticamente (con mute para evitar restricciones)
         videoElement.muted = true;
         videoElement.play().catch(e => {
             console.log("Auto-play bloqueado, el usuario debe iniciar manualmente");
         });
     }
     
-    // Aumentar afinidad y experiencia
     aumentarAfinidad(10);
     rpgNovia.estado.experiencia += 25;
-    
-    // Verificar subida de nivel
     verificarSubidaNivel();
     
-    // Agregar a escenas completadas
     if (!rpgNovia.contenidoAdulto.escenasCompletadas.includes(escena.id)) {
         rpgNovia.contenidoAdulto.escenasCompletadas.push(escena.id);
     }
@@ -911,7 +825,6 @@ function ejecutarEscenaAdulto(escena) {
 }
 
 function terminarEscenaIntima() {
-    // Volver al diálogo normal después de la escena
     generarDialogoAleatorio();
     mostrarMensaje("¡Qué momento tan especial! 💕 La afinidad ha aumentado.");
 }
