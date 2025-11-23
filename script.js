@@ -5,7 +5,7 @@
 // Aquí puedes cambiar las URLs de todas las imágenes
 const configImagenes = {
     contenedores: {
-        'contenedor1': 'imagenes/contenedor1.jpg',
+        'contenedor1': 'https://pbs.twimg.com/media/G6E4i2TWQAA5Eib?format=jpg&name=medium',
         'contenedor2': 'imagenes/contenedor2.jpg',
         'contenedor3': 'imagenes/contenedor3.jpg',
         'contenedor4': 'imagenes/contenedor4.jpg',
