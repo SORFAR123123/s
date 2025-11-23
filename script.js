@@ -137,7 +137,7 @@ const eventosDiarios = {
                 tipo: "video",
                 titulo: "¡Dominio Total! 🏆",
                 mensaje: "Has demostrado tu maestría en japonés",
-                video: "videos/maestria.mp4"
+                video: "NinoIchika.mp4"
             },
             fallo: {
                 tipo: "video", 
@@ -145,7 +145,7 @@ const eventosDiarios = {
                 mensaje: "Mañana será otro día para mejorar",
                 video: "videos/practica.mp4"
             },
-            imagen: "imagenes/evento1.jpg"
+            imagen: "NinoIchika.mp4"
         },
         {
             id: 2,
@@ -164,7 +164,7 @@ const eventosDiarios = {
                 mensaje: "Sigue practicando para mejorar",
                 video: "videos/calma.mp4"
             },
-            imagen: "imagenes/evento2.jpg"
+            imagen: "NinoIchika.mp4"
         },
         {
             id: 3,
@@ -183,7 +183,7 @@ const eventosDiarios = {
                 mensaje: "No te rindas, sigue intentándolo",
                 video: "videos/ejercicio.mp4"
             },
-            imagen: "imagenes/evento3.jpg"
+            imagen: "NinoIchika.mp4"
         },
         {
             id: 4,
@@ -202,7 +202,7 @@ const eventosDiarios = {
                 mensaje: "Descansa y vuelve con más energía",
                 video: "videos/descanso.mp4"
             },
-            imagen: "imagenes/evento4.jpg"
+            imagen: "NinoIchika.mp4"
         },
         {
             id: 5,
@@ -221,7 +221,7 @@ const eventosDiarios = {
                 mensaje: "Prepárate para el próximo reto",
                 video: "videos/continuara.mp4"
             },
-            imagen: "imagenes/evento5.jpg"
+            imagen: "NinoIchika.mp4"
         }
     ],
     
