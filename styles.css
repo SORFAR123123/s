@@ -67,13 +67,34 @@ body {
     border: 2px solid #4a90e2;
 }
 
-.evento-imagen {
-    width: 180px;
-    height: 180px;
+/* CONTENEDOR DE VIDEO PARA EVENTOS DIARIOS */
+.video-container-evento {
+    position: relative;
+    width: 300px;
+    height: 300px;
     border-radius: 20px;
-    object-fit: cover;
+    overflow: hidden;
     border: 4px solid #ff6b9d;
     box-shadow: 0 8px 25px rgba(255, 107, 157, 0.5);
+    flex-shrink: 0;
+    background: #000;
+}
+
+.video-evento {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 107, 157, 0.2), rgba(74, 144, 226, 0.2));
+    pointer-events: none;
 }
 
 .evento-info {
@@ -500,6 +521,7 @@ h1 {
     max-width: 600px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #000;
 }
 
 .info-video {
@@ -972,9 +994,9 @@ h1 {
         text-align: center;
     }
     
-    .evento-imagen {
-        width: 150px;
-        height: 150px;
+    .video-container-evento {
+        width: 250px;
+        height: 250px;
     }
     
     .evento-info {
@@ -1093,6 +1115,11 @@ h1 {
     .evento-actions .boton-secundario {
         padding: 15px 25px;
         font-size: 1.1rem;
+    }
+    
+    .video-container-evento {
+        width: 200px;
+        height: 200px;
     }
     
     .pantalla {
