@@ -465,7 +465,6 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
         { japones: '惜しい', lectura: 'oshii', opciones: ['Lamentable', 'Afortunado', 'Normal', 'Extraño'], respuesta: 0 },
         { japones: '拒否権', lectura: 'kyohiken', opciones: ['Derecho a veto', 'Permiso', 'Aprobación', 'Acuerdo'], respuesta: 0 },
         { japones: '経験', lectura: 'keiken', opciones: ['Experiencia', 'Ignorancia', 'Teoría', 'Estudio'], respuesta: 0 },
-        { japones: '膣', lectura: 'chitsu', opciones: ['Vagina', 'Pene', 'Ano', 'Pecho'], respuesta: 0 },
         { japones: '蒸す', lectura: 'musu', opciones: ['Humedecer', 'Secar', 'Calentar', 'Enfriar'], respuesta: 0 }
     ],
     5: [
