@@ -597,8 +597,383 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
                 { japones: 'こどもの日', lectura: 'kodomonohi', opciones: ['Día del niño', 'Día de la madre', 'Día del padre', 'Navidad'], respuesta: 0 },
                 { japones: '成人式', lectura: 'seijinshiki', opciones: ['Ceremonia de la mayoría de edad', 'Graduación', 'Boda', 'Funeral'], respuesta: 0 },
                 { japones: '敬老の日', lectura: 'keirounohi', opciones: ['Día del respeto a los ancianos', 'Día del niño', 'Día de la madre', 'Navidad'], respuesta: 0 }
-            ]
-        }
+// Agrega esto a la sección de palabrasDatabase en script.js
+
+// THE LAST SUMMER 2
+'sub2_1': {
+    1: [
+        { japones: '会話', lectura: 'kaiwa', opciones: ['Conversación', 'Discusión', 'Debate', 'Charla'], respuesta: 0 },
+        { japones: '質問', lectura: 'shitsumon', opciones: ['Pregunta', 'Respuesta', 'Explicación', 'Afirmación'], respuesta: 0 },
+        { japones: '返事', lectura: 'henji', opciones: ['Respuesta', 'Pregunta', 'Solicitud', 'Propuesta'], respuesta: 0 },
+        { japones: '説明', lectura: 'setsumei', opciones: ['Explicación', 'Descripción', 'Interpretación', 'Traducción'], respuesta: 0 },
+        { japones: '意見', lectura: 'iken', opciones: ['Opinión', 'Hecho', 'Teoría', 'Hipótesis'], respuesta: 0 },
+        { japones: '賛成', lectura: 'sansei', opciones: ['Aprobación', 'Desaprobación', 'Neutralidad', 'Indiferencia'], respuesta: 0 },
+        { japones: '反対', lectura: 'hantai', opciones: ['Oposición', 'Apoyo', 'Aceptación', 'Acuerdo'], respuesta: 0 },
+        { japones: '同意', lectura: 'doui', opciones: ['Consentimiento', 'Rechazo', 'Duda', 'Indecisión'], respuesta: 0 },
+        { japones: '議論', lectura: 'giron', opciones: ['Discusión', 'Conversación', 'Monólogo', 'Diálogo'], respuesta: 0 },
+        { japones: '話題', lectura: 'wadai', opciones: ['Tema', 'Subtema', 'Asunto', 'Problema'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '感情', lectura: 'kanjou', opciones: ['Emoción', 'Razón', 'Lógica', 'Pensamiento'], respuesta: 0 },
+        { japones: '愛情', lectura: 'aijou', opciones: ['Afecto', 'Odio', 'Indiferencia', 'Respeto'], respuesta: 0 },
+        { japones: '喜び', lectura: 'yorokobi', opciones: ['Alegría', 'Tristeza', 'Enojo', 'Miedo'], respuesta: 0 },
+        { japones: '悲しみ', lectura: 'kanashimi', opciones: ['Tristeza', 'Alegría', 'Sorpresa', 'Expectativa'], respuesta: 0 },
+        { japones: '怒り', lectura: 'ikari', opciones: ['Enojo', 'Calma', 'Paz', 'Serenidad'], respuesta: 0 },
+        { japones: '驚き', lectura: 'odoroki', opciones: ['Sorpresa', 'Expectativa', 'Rutina', 'Normalidad'], respuesta: 0 },
+        { japones: '期待', lectura: 'kitai', opciones: ['Expectativa', 'Decepción', 'Realidad', 'Presente'], respuesta: 0 },
+        { japones: '安心', lectura: 'anshin', opciones: ['Tranquilidad', 'Ansiedad', 'Preocupación', 'Estrés'], respuesta: 0 },
+        { japones: '不安', lectura: 'fuan', opciones: ['Inseguridad', 'Confianza', 'Seguridad', 'Certeza'], respuesta: 0 },
+        { japones: '興奮', lectura: 'koufun', opciones: ['Excitación', 'Calma', 'Aburrimiento', 'Indiferencia'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '行動', lectura: 'koudou', opciones: ['Acción', 'Pensamiento', 'Palabra', 'Intención'], respuesta: 0 },
+        { japones: '選択', lectura: 'sentaku', opciones: ['Elección', 'Obligación', 'Azar', 'Destino'], respuesta: 0 },
+        { japones: '決断', lectura: 'ketsudan', opciones: ['Decisión', 'Duda', 'Indecisión', 'Vacilación'], respuesta: 0 },
+        { japones: '努力', lectura: 'doryoku', opciones: ['Esfuerzo', 'Flojera', 'Suerte', 'Talento'], respuesta: 0 },
+        { japones: '成功', lectura: 'seikou', opciones: ['Éxito', 'Fracaso', 'Intento', 'Esfuerzo'], respuesta: 0 },
+        { japones: '失敗', lectura: 'shippai', opciones: ['Fallo', 'Logro', 'Victoria', 'Triunfo'], respuesta: 0 },
+        { japones: '挑戦', lectura: 'chousen', opciones: ['Desafío', 'Rendición', 'Evitación', 'Rechazo'], respuesta: 0 },
+        { japones: '成長', lectura: 'seichou', opciones: ['Desarrollo', 'Estancamiento', 'Retroceso', 'Decadencia'], respuesta: 0 },
+        { japones: '変化', lectura: 'henka', opciones: ['Cambio', 'Permanencia', 'Estabilidad', 'Constancia'], respuesta: 0 },
+        { japones: '進歩', lectura: 'shinpo', opciones: ['Progreso', 'Regresión', 'Estancamiento', 'Inmovilidad'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '社会', lectura: 'shakai', opciones: ['Sociedad', 'Individuo', 'Familia', 'Comunidad'], respuesta: 0 },
+        { japones: '文化', lectura: 'bunka', opciones: ['Cultura', 'Naturaleza', 'Tecnología', 'Ciencia'], respuesta: 0 },
+        { japones: '伝統', lectura: 'dentou', opciones: ['Tradición', 'Innovación', 'Moda', 'Modernidad'], respuesta: 0 },
+        { japones: '習慣', lectura: 'shuukan', opciones: ['Costumbre', 'Excepción', 'Rareza', 'Anomalía'], respuesta: 0 },
+        { japones: '価値観', lectura: 'kachikan', opciones: ['Valores', 'Precio', 'Costo', 'Gasto'], respuesta: 0 },
+        { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Neutralidad', 'Indiferencia'], respuesta: 0 },
+        { japones: '法律', lectura: 'houritsu', opciones: ['Ley', 'Sugerencia', 'Recomendación', 'Consejo'], respuesta: 0 },
+        { japones: '権利', lectura: 'kenri', opciones: ['Derecho', 'Obligación', 'Prohibición', 'Restricción'], respuesta: 0 },
+        { japones: '義務', lectura: 'gimu', opciones: ['Deber', 'Derecho', 'Privilegio', 'Beneficio'], respuesta: 0 },
+        { japones: '責任', lectura: 'sekinin', opciones: ['Responsabilidad', 'Irresponsabilidad', 'Libertad', 'Despreocupación'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '自然', lectura: 'shizen', opciones: ['Naturaleza', 'Artificial', 'Urbano', 'Industrial'], respuesta: 0 },
+        { japones: '環境', lectura: 'kankyou', opciones: ['Medio ambiente', 'Contaminación', 'Tecnología', 'Civilización'], respuesta: 0 },
+        { japones: '資源', lectura: 'shigen', opciones: ['Recurso', 'Desperdicio', 'Contaminante', 'Residuo'], respuesta: 0 },
+        { japones: '汚染', lectura: 'osen', opciones: ['Contaminación', 'Limpieza', 'Pureza', 'Conservación'], respuesta: 0 },
+        { japones: '保護', lectura: 'hogo', opciones: ['Protección', 'Destrucción', 'Abandono', 'Negligencia'], respuesta: 0 },
+        { japones: '生態系', lectura: 'seitaikei', opciones: ['Ecosistema', 'Sistema artificial', 'Máquina', 'Tecnología'], respuesta: 0 },
+        { japones: '再生', lectura: 'saisei', opciones: ['Reciclaje', 'Desperdicio', 'Contaminación', 'Destrucción'], respuesta: 0 },
+        { japones: '持続可能', lectura: 'jizokukanou', opciones: ['Sostenible', 'Insostenible', 'Temporal', 'Limitado'], respuesta: 0 },
+        { japones: '地球温暖化', lectura: 'chikyuondanka', opciones: ['Calentamiento global', 'Enfriamiento', 'Estabilidad', 'Equilibrio'], respuesta: 0 },
+        { japones: '生物多様性', lectura: 'seibututayousei', opciones: ['Biodiversidad', 'Uniformidad', 'Simplicidad', 'Homogeneidad'], respuesta: 0 }
+    ]
+},
+'sub2_2': {
+    1: [
+        { japones: '技術', lectura: 'gijutsu', opciones: ['Tecnología', 'Arte', 'Ciencia', 'Filosofía'], respuesta: 0 },
+        { japones: '科学', lectura: 'kagaku', opciones: ['Ciencia', 'Arte', 'Literatura', 'Historia'], respuesta: 0 },
+        { japones: '研究', lectura: 'kenkyuu', opciones: ['Investigación', 'Improvisación', 'Suposición', 'Adivinanza'], respuesta: 0 },
+        { japones: '開発', lectura: 'kaihatsu', opciones: ['Desarrollo', 'Destrucción', 'Abandono', 'Estancamiento'], respuesta: 0 },
+        { japones: '発明', lectura: 'hatsumei', opciones: ['Invención', 'Descubrimiento', 'Copia', 'Imitación'], respuesta: 0 },
+        { japones: '革新', lectura: 'kakushin', opciones: ['Innovación', 'Tradición', 'Conservación', 'Preservación'], respuesta: 0 },
+        { japones: '実験', lectura: 'jikken', opciones: ['Experimento', 'Teoría', 'Hipótesis', 'Conclusión'], respuesta: 0 },
+        { japones: '分析', lectura: 'bunseki', opciones: ['Análisis', 'Síntesis', 'Resumen', 'Conclusión'], respuesta: 0 },
+        { japones: '理論', lectura: 'riron', opciones: ['Teoría', 'Práctica', 'Evidencia', 'Hecho'], respuesta: 0 },
+        { japones: '応用', lectura: 'ouyou', opciones: ['Aplicación', 'Teoría', 'Abstracción', 'Concepto'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '経済', lectura: 'keizai', opciones: ['Economía', 'Política', 'Cultura', 'Sociedad'], respuesta: 0 },
+        { japones: '市場', lectura: 'shijou', opciones: ['Mercado', 'Tienda', 'Almacén', 'Fábrica'], respuesta: 0 },
+        { japones: '企業', lectura: 'kigyou', opciones: ['Empresa', 'Gobierno', 'Individuo', 'Familia'], respuesta: 0 },
+        { japones: '投資', lectura: 'toushi', opciones: ['Inversión', 'Gasto', 'Pérdida', 'Ahorro'], respuesta: 0 },
+        { japones: '消費', lectura: 'shouhi', opciones: ['Consumo', 'Producción', 'Distribución', 'Venta'], respuesta: 0 },
+        { japones: '生産', lectura: 'seisan', opciones: ['Producción', 'Consumo', 'Destrucción', 'Desperdicio'], respuesta: 0 },
+        { japones: '貿易', lectura: 'boueki', opciones: ['Comercio', 'Aislamiento', 'Proteccionismo', 'Autarquía'], respuesta: 0 },
+        { japones: '競争', lectura: 'kyousou', opciones: ['Competencia', 'Cooperación', 'Colaboración', 'Asociación'], respuesta: 0 },
+        { japones: '需要', lectura: 'juyou', opciones: ['Demanda', 'Oferta', 'Excedente', 'Escasez'], respuesta: 0 },
+        { japones: '供給', lectura: 'kyoukyuu', opciones: ['Oferta', 'Demanda', 'Necesidad', 'Deseo'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '政治', lectura: 'seiji', opciones: ['Política', 'Economía', 'Cultura', 'Religión'], respuesta: 0 },
+        { japones: '政府', lectura: 'seifu', opciones: ['Gobierno', 'Oposición', 'Sociedad', 'Comunidad'], respuesta: 0 },
+        { japones: '選挙', lectura: 'senkyo', opciones: ['Elección', 'Designación', 'Nombramiento', 'Herencia'], respuesta: 0 },
+        { japones: '民主主義', lectura: 'minshushugi', opciones: ['Democracia', 'Dictadura', 'Monarquía', 'Oligarquía'], respuesta: 0 },
+        { japones: '権力', lectura: 'kenryoku', opciones: ['Poder', 'Debilidad', 'Sumisión', 'Obedeiencia'], respuesta: 0 },
+        { japones: '政策', lectura: 'seisaku', opciones: ['Política pública', 'Interés privado', 'Beneficio personal', 'Ventaja individual'], respuesta: 0 },
+        { japones: '国際関係', lectura: 'kokusaikankei', opciones: ['Relaciones internacionales', 'Asuntos internos', 'Política local', 'Administración municipal'], respuesta: 0 },
+        { japones: '外交', lectura: 'gaikou', opciones: ['Diplomacia', 'Guerra', 'Aislamiento', 'Neutralidad'], respuesta: 0 },
+        { japones: '平和', lectura: 'heiwa', opciones: ['Paz', 'Guerra', 'Conflicto', 'Violencia'], respuesta: 0 },
+        { japones: '安全保障', lectura: 'anzenhoshou', opciones: ['Seguridad', 'Peligro', 'Riesgo', 'Amenaza'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '芸術', lectura: 'geijutsu', opciones: ['Arte', 'Ciencia', 'Tecnología', 'Deporte'], respuesta: 0 },
+        { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Pintura', 'Escultura', 'Danza'], respuesta: 0 },
+        { japones: '絵画', lectura: 'kaiga', opciones: ['Pintura', 'Música', 'Literatura', 'Teatro'], respuesta: 0 },
+        { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Filosofía', 'Historia'], respuesta: 0 },
+        { japones: '演劇', lectura: 'engeki', opciones: ['Teatro', 'Cine', 'Televisión', 'Radio'], respuesta: 0 },
+        { japones: '映画', lectura: 'eiga', opciones: ['Cine', 'Teatro', 'Televisión', 'Radio'], respuesta: 0 },
+        { japones: '写真', lectura: 'shashin', opciones: ['Fotografía', 'Pintura', 'Dibujo', 'Escultura'], respuesta: 0 },
+        { japones: '建築', lectura: 'kenchiku', opciones: ['Arquitectura', 'Ingeniería', 'Diseño', 'Construcción'], respuesta: 0 },
+        { japones: 'デザイン', lectura: 'dezain', opciones: ['Diseño', 'Accidente', 'Improvisación', 'Casualidad'], respuesta: 0 },
+        { japones: '創造性', lectura: 'souzousei', opciones: ['Creatividad', 'Imitación', 'Copia', 'Repetición'], respuesta: 0 }
+    ],
+    5: [
+        { japones: 'スポーツ', lectura: 'supootsu', opciones: ['Deporte', 'Arte', 'Ciencia', 'Tecnología'], respuesta: 0 },
+        { japones: '競技', lectura: 'kyougi', opciones: ['Competición', 'Práctica', 'Entrenamiento', 'Ejercicio'], respuesta: 0 },
+        { japones: '選手', lectura: 'senshu', opciones: ['Atleta', 'Entrenador', 'Árbitro', 'Espectador'], respuesta: 0 },
+        { japones: '試合', lectura: 'shiai', opciones: ['Partido', 'Entrenamiento', 'Práctica', 'Calentamiento'], respuesta: 0 },
+        { japones: '勝利', lectura: 'shouri', opciones: ['Victoria', 'Derrota', 'Empate', 'Abandono'], respuesta: 0 },
+        { japones: '敗北', lectura: 'haiboku', opciones: ['Derrota', 'Victoria', 'Empate', 'Triunfo'], respuesta: 0 },
+        { japones: '記録', lectura: 'kiroku', opciones: ['Récord', 'Fracaso', 'Intentó', 'Esfuerzo'], respuesta: 0 },
+        { japones: '練習', lectura: 'renshuu', opciones: ['Práctica', 'Teoría', 'Improvisación', 'Talento natural'], respuesta: 0 },
+        { japones: 'チームワーク', lectura: 'chiimuwaaku', opciones: ['Trabajo en equipo', 'Individualismo', 'Egoísmo', 'Aislamiento'], respuesta: 0 },
+        { japones: 'フェアプレー', lectura: 'feapuree', opciones: ['Juego limpio', 'Trampa', 'Engaño', 'Ventaja injusta'], respuesta: 0 }
+    ]
+},
+'sub2_3': {
+    1: [
+        { japones: '旅行', lectura: 'ryokou', opciones: ['Viaje', 'Estancia', 'Residencia', 'Hogar'], respuesta: 0 },
+        { japones: '観光', lectura: 'kankou', opciones: ['Turismo', 'Trabajo', 'Estudio', 'Residencia'], respuesta: 0 },
+        { japones: '目的地', lectura: 'mokutekichi', opciones: ['Destino', 'Origen', 'Partida', 'Llegada'], respuesta: 0 },
+        { japones: '出発', lectura: 'shuppatsu', opciones: ['Salida', 'Llegada', 'Estancia', 'Permanencia'], respuesta: 0 },
+        { japones: '到着', lectura: 'touchaku', opciones: ['Llegada', 'Salida', 'Partida', 'Inicio'], respuesta: 0 },
+        { japones: '宿泊', lectura: 'shukuhaku', opciones: ['Alojamiento', 'Comida', 'Transporte', 'Entretenimiento'], respuesta: 0 },
+        { japones: '旅程', lectura: 'ryotei', opciones: ['Itinerario', 'Destino', 'Origen', 'Medio'], respuesta: 0 },
+        { japones: '観光地', lectura: 'kankouchi', opciones: ['Atracción turística', 'Zona residencial', 'Área industrial', 'Barrio comercial'], respuesta: 0 },
+        { japones: '土産', lectura: 'miyage', opciones: ['Souvenir', 'Recuerdo', 'Regalo', 'Compra'], respuesta: 0 },
+        { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '交通', lectura: 'koutsuu', opciones: ['Transporte', 'Comunicación', 'Información', 'Entretenimiento'], respuesta: 0 },
+        { japones: '手段', lectura: 'shudan', opciones: ['Medio', 'Fin', 'Objetivo', 'Propósito'], respuesta: 0 },
+        { japones: '電車', lectura: 'densha', opciones: ['Tren', 'Autobús', 'Avión', 'Barco'], respuesta: 0 },
+        { japones: 'バス', lectura: 'basu', opciones: ['Autobús', 'Tren', 'Taxi', 'Avión'], respuesta: 0 },
+        { japones: '飛行機', lectura: 'hikouki', opciones: ['Avión', 'Barco', 'Tren', 'Automóvil'], respuesta: 0 },
+        { japones: '船', lectura: 'fune', opciones: ['Barco', 'Avión', 'Tren', 'Autobús'], respuesta: 0 },
+        { japones: '地下鉄', lectura: 'chikatetsu', opciones: ['Metro', 'Tren superficial', 'Autobús', 'Taxi'], respuesta: 0 },
+        { japones: 'タクシー', lectura: 'takushii', opciones: ['Taxi', 'Autobús', 'Tren', 'Avión'], respuesta: 0 },
+        { japones: '自転車', lectura: 'jitensha', opciones: ['Bicicleta', 'Automóvil', 'Motocicleta', 'Patineta'], respuesta: 0 },
+        { japones: '歩行', lectura: 'hokou', opciones: ['Caminar', 'Correr', 'Nadar', 'Volar'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '食事', lectura: 'shokuji', opciones: ['Comida', 'Bebida', 'Postre', 'Aperitivo'], respuesta: 0 },
+        { japones: '料理', lectura: 'ryouri', opciones: ['Cocina', 'Comida', 'Bebida', 'Postre'], respuesta: 0 },
+        { japones: 'レストラン', lectura: 'resutoran', opciones: ['Restaurante', 'Cafetería', 'Bar', 'Pub'], respuesta: 0 },
+        { japones: 'メニュー', lectura: 'menyuu', opciones: ['Menú', 'Receta', 'Ingrediente', 'Utensilio'], respuesta: 0 },
+        { japones: '注文', lectura: 'chuumon', opciones: ['Pedido', 'Entrega', 'Preparación', 'Cocción'], respuesta: 0 },
+        { japones: 'サービス', lectura: 'saabisu', opciones: ['Servicio', 'Producto', 'Mercancía', 'Artículo'], respuesta: 0 },
+        { japones: '会計', lectura: 'kaikei', opciones: ['Cuenta', 'Pedido', 'Menú', 'Reserva'], respuesta: 0 },
+        { japones: 'チップ', lectura: 'chippu', opciones: ['Propina', 'Precio', 'Costo', 'Gasto'], respuesta: 0 },
+        { japones: '食材', lectura: 'shokuzai', opciones: ['Ingredientes', 'Utensilios', 'Recetas', 'Platos'], respuesta: 0 },
+        { japones: '調理', lectura: 'chouri', opciones: ['Cocción', 'Comer', 'Servir', 'Ordenar'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '買い物', lectura: 'kaimono', opciones: ['Compras', 'Ventas', 'Intercambio', 'Regalo'], respuesta: 0 },
+        { japones: '商店', lectura: 'shouten', opciones: ['Tienda', 'Almacén', 'Mercado', 'Centro comercial'], respuesta: 0 },
+        { japones: '市場', lectura: 'ichiba', opciones: ['Mercado', 'Tienda', 'Almacén', 'Fábrica'], respuesta: 0 },
+        { japones: 'デパート', lectura: 'depaato', opciones: ['Grandes almacenes', 'Mercado', 'Tienda', 'Boutique'], respuesta: 0 },
+        { japones: 'スーパー', lectura: 'suupaa', opciones: ['Supermercado', 'Tienda', 'Mercado', 'Almacén'], respuesta: 0 },
+        { japones: '価格', lectura: 'kakaku', opciones: ['Precio', 'Calidad', 'Cantidad', 'Valor'], respuesta: 0 },
+        { japones: '割引', lectura: 'waribiki', opciones: ['Descuento', 'Aumento', 'Mantenimiento', 'Estabilidad'], respuesta: 0 },
+        { japones: '品質', lectura: 'hinshitsu', opciones: ['Calidad', 'Cantidad', 'Precio', 'Valor'], respuesta: 0 },
+        { japones: 'ブランド', lectura: 'burando', opciones: ['Marca', 'Producto', 'Servicio', 'Artículo'], respuesta: 0 },
+        { japones: '消費税', lectura: 'shouhizei', opciones: ['Impuesto al consumo', 'Impuesto a la renta', 'Impuesto corporativo', 'Impuesto patrimonial'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '娯楽', lectura: 'goraku', opciones: ['Entretenimiento', 'Trabajo', 'Estudio', 'Obligación'], respuesta: 0 },
+        { japones: '趣味', lectura: 'shumi', opciones: ['Pasatiempo', 'Trabajo', 'Obligación', 'Deber'], respuesta: 0 },
+        { japones: '映画館', lectura: 'eigakan', opciones: ['Cine', 'Teatro', 'Museo', 'Galería'], respuesta: 0 },
+        { japones: 'コンサート', lectura: 'konsaato', opciones: ['Concierto', 'Obra de teatro', 'Exposición', 'Feria'], respuesta: 0 },
+        { japones: '博物館', lectura: 'hakubutsukan', opciones: ['Museo', 'Biblioteca', 'Archivo', 'Galería'], respuesta: 0 },
+        { japones: '公園', lectura: 'kouen', opciones: ['Parque', 'Jardín', 'Bosque', 'Montaña'], respuesta: 0 },
+        { japones: '遊園地', lectura: 'yuuenchi', opciones: ['Parque de atracciones', 'Parque natural', 'Jardín botánico', 'Zoológico'], respuesta: 0 },
+        { japones: '温泉', lectura: 'onsen', opciones: ['Aguas termales', 'Piscina', 'Playa', 'Río'], respuesta: 0 },
+        { japones: 'リラックス', lectura: 'rirakkusu', opciones: ['Relajación', 'Estrés', 'Tensión', 'Ansiedad'], respuesta: 0 },
+        { japones: 'レジャー', lectura: 'rejaa', opciones: ['Ocio', 'Trabajo', 'Estudio', 'Responsabilidad'], respuesta: 0 }
+    ]
+},
+
+// THE LAST SUMMER 3
+'sub3_1': {
+    1: [
+        { japones: '健康', lectura: 'kenkou', opciones: ['Salud', 'Enfermedad', 'Debilidad', 'Malestar'], respuesta: 0 },
+        { japones: '病気', lectura: 'byouki', opciones: ['Enfermedad', 'Salud', 'Bienestar', 'Vitalidad'], respuesta: 0 },
+        { japones: '治療', lectura: 'chiryou', opciones: ['Tratamiento', 'Prevención', 'Diagnóstico', 'Síntoma'], respuesta: 0 },
+        { japones: '予防', lectura: 'yobou', opciones: ['Prevención', 'Tratamiento', 'Cura', 'Recuperación'], respuesta: 0 },
+        { japones: '症状', lectura: 'shoujou', opciones: ['Síntoma', 'Causa', 'Efecto', 'Consecuencia'], respuesta: 0 },
+        { japones: '医者', lectura: 'isha', opciones: ['Médico', 'Paciente', 'Enfermera', 'Farmacéutico'], respuesta: 0 },
+        { japones: '病院', lectura: 'byouin', opciones: ['Hospital', 'Clínica', 'Consultorio', 'Farmacia'], respuesta: 0 },
+        { japones: '薬', lectura: 'kusuri', opciones: ['Medicamento', 'Veneno', 'Suplemento', 'Vitaminas'], respuesta: 0 },
+        { japones: '検査', lectura: 'kensa', opciones: ['Examen', 'Diagnóstico', 'Tratamiento', 'Prevención'], respuesta: 0 },
+        { japones: '手術', lectura: 'shujutsu', opciones: ['Cirugía', 'Medicamento', 'Terapia', 'Rehabilitación'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '教育', lectura: 'kyouiku', opciones: ['Educación', 'Ignorancia', 'Analfabetismo', 'Incultura'], respuesta: 0 },
+        { japones: '学習', lectura: 'gakushuu', opciones: ['Aprendizaje', 'Enseñanza', 'Estudio', 'Práctica'], respuesta: 0 },
+        { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
+        { japones: '技能', lectura: 'ginou', opciones: ['Habilidad', 'Incapacidad', 'Ineptitud', 'Torpeza'], respuesta: 0 },
+        { japones: '資格', lectura: 'shikaku', opciones: ['Certificación', 'Experiencia', 'Práctica', 'Teoría'], respuesta: 0 },
+        { japones: '訓練', lectura: 'kunren', opciones: ['Entrenamiento', 'Improvisación', 'Talento natural', 'Suerte'], respuesta: 0 },
+        { japones: '指導', lectura: 'shidou', opciones: ['Instrucción', 'Aprendizaje', 'Práctica', 'Ejecución'], respuesta: 0 },
+        { japones: '評価', lectura: 'hyouka', opciones: ['Evaluación', 'Ignorancia', 'Desprecio', 'Rechazo'], respuesta: 0 },
+        { japones: '成長', lectura: 'seichou', opciones: ['Desarrollo', 'Estancamiento', 'Regresión', 'Decadencia'], respuesta: 0 },
+        { japones: '潜在能力', lectura: 'senzainouryoku', opciones: ['Potencial', 'Realidad', 'Actualidad', 'Presente'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '職業', lectura: 'shokugyou', opciones: ['Profesión', 'Pasatiempo', 'Voluntariado', 'Ocio'], respuesta: 0 },
+        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Descanso', 'Vacaciones', 'Jubilación'], respuesta: 0 },
+        { japones: '雇用', lectura: 'koyou', opciones: ['Empleo', 'Desempleo', 'Subempleo', 'Trabajo informal'], respuesta: 0 },
+        { japones: '給料', lectura: 'kyuuryou', opciones: ['Salario', 'Gasto', 'Inversión', 'Ahorro'], respuesta: 0 },
+        { japones: 'キャリア', lectura: 'kyaria', opciones: ['Carrera', 'Trabajo temporal', 'Empleo informal', 'Pasatiempo'], respuesta: 0 },
+        { japones: 'スキル', lectura: 'sukiru', opciones: ['Habilidad', 'Deficiencia', 'Limitación', 'Restricción'], respuesta: 0 },
+        { japones: '経験', lectura: 'keiken', opciones: ['Experiencia', 'Inexperiencia', 'Teoría', 'Conocimiento'], respuesta: 0 },
+        { japones: '専門', lectura: 'senmon', opciones: ['Especialidad', 'Generalidad', 'Universalidad', 'Totalidad'], respuesta: 0 },
+        { japones: '責任', lectura: 'sekinin', opciones: ['Responsabilidad', 'Irresponsabilidad', 'Libertad', 'Despreocupación'], respuesta: 0 },
+        { japones: '成果', lectura: 'seika', opciones: ['Resultado', 'Proceso', 'Método', 'Enfoque'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '人間関係', lectura: 'ningenkankei', opciones: ['Relaciones humanas', 'Aislamiento', 'Soledad', 'Individualismo'], respuesta: 0 },
+        { japones: '友情', lectura: 'yuujou', opciones: ['Amistad', 'Enemistad', 'Rivalidad', 'Competencia'], respuesta: 0 },
+        { japones: '信頼', lectura: 'shinrai', opciones: ['Confianza', 'Desconfianza', 'Sospecha', 'Duda'], respuesta: 0 },
+        { japones: '協力', lectura: 'kyouryoku', opciones: ['Cooperación', 'Competencia', 'Oposición', 'Obstrucción'], respuesta: 0 },
+        { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Silencio'], respuesta: 0 },
+        { japones: '理解', lectura: 'rikai', opciones: ['Comprensión', 'Incomprensión', 'Confusión', 'Malentendido'], respuesta: 0 },
+        { japones: '共感', lectura: 'kyoukan', opciones: ['Empatía', 'Apatía', 'Indiferencia', 'Insensibilidad'], respuesta: 0 },
+        { japones: '尊敬', lectura: 'sonkei', opciones: ['Respeto', 'Desprecio', 'Menosprecio', 'Irrespeto'], respuesta: 0 },
+        { japones: '愛情', lectura: 'aijou', opciones: ['Afecto', 'Odio', 'Indiferencia', 'Rechazo'], respuesta: 0 },
+        { japones: '絆', lectura: 'kizuna', opciones: ['Vínculo', 'Separación', 'División', 'Ruptura'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '人生', lectura: 'jinsei', opciones: ['Vida', 'Muerte', 'Existencia', 'Esencia'], respuesta: 0 },
+        { japones: '目的', lectura: 'mokuteki', opciones: ['Propósito', 'Azar', 'Casualidad', 'Accidente'], respuesta: 0 },
+        { japones: '夢', lectura: 'yume', opciones: ['Sueño', 'Realidad', 'Presente', 'Actualidad'], respuesta: 0 },
+        { japones: '目標', lectura: 'mokuhyou', opciones: ['Meta', 'Punto de partida', 'Origen', 'Inicio'], respuesta: 0 },
+        { japones: '成功', lectura: 'seikou', opciones: ['Éxito', 'Fracaso', 'Intento', 'Esfuerzo'], respuesta: 0 },
+        { japones: '失敗', lectura: 'shippai', opciones: ['Fallo', 'Logro', 'Victoria', 'Triunfo'], respuesta: 0 },
+        { japones: '挑戦', lectura: 'chousen', opciones: ['Desafío', 'Rendición', 'Evitación', 'Rechazo'], respuesta: 0 },
+        { japones: '成長', lectura: 'seichou', opciones: ['Desarrollo', 'Estancamiento', 'Retroceso', 'Decadencia'], respuesta: 0 },
+        { japones: '幸福', lectura: 'koufuku', opciones: ['Felicidad', 'Infelicidad', 'Tristeza', 'Desdicha'], respuesta: 0 },
+        { japones: '充実', lectura: 'juujitsu', opciones: ['Plenitud', 'Vacío', 'Insatisfacción', 'Carencia'], respuesta: 0 }
+    ]
+},
+'sub3_2': {
+    1: [
+        { japones: '自然', lectura: 'shizen', opciones: ['Naturaleza', 'Artificial', 'Urbano', 'Industrial'], respuesta: 0 },
+        { japones: '環境', lectura: 'kankyou', opciones: ['Medio ambiente', 'Contaminación', 'Tecnología', 'Civilización'], respuesta: 0 },
+        { japones: '動物', lectura: 'doubutsu', opciones: ['Animal', 'Planta', 'Mineral', 'Objeto'], respuesta: 0 },
+        { japones: '植物', lectura: 'shokubutsu', opciones: ['Planta', 'Animal', 'Mineral', 'Ser humano'], respuesta: 0 },
+        { japones: '風景', lectura: 'fuukei', opciones: ['Paisaje', 'Ciudad', 'Edificio', 'Construcción'], respuesta: 0 },
+        { japones: '気候', lectura: 'kikou', opciones: ['Clima', 'Tiempo', 'Estación', 'Temperatura'], respuesta: 0 },
+        { japones: '季節', lectura: 'kisetsu', opciones: ['Estación', 'Mes', 'Semana', 'Día'], respuesta: 0 },
+        { japones: '天気', lectura: 'tenki', opciones: ['Tiempo atmosférico', 'Clima', 'Estación', 'Temperatura'], respuesta: 0 },
+        { japones: '資源', lectura: 'shigen', opciones: ['Recurso', 'Desperdicio', 'Contaminante', 'Residuo'], respuesta: 0 },
+        { japones: '保護', lectura: 'hogo', opciones: ['Protección', 'Destrucción', 'Abandono', 'Negligencia'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '宇宙', lectura: 'uchuu', opciones: ['Universo', 'Tierra', 'Planeta', 'Galaxia'], respuesta: 0 },
+        { japones: '地球', lectura: 'chikyuu', opciones: ['Planeta Tierra', 'Luna', 'Sol', 'Marte'], respuesta: 0 },
+        { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Luna', 'Estrella', 'Planeta'], respuesta: 0 },
+        { japones: '月', lectura: 'tsuki', opciones: ['Luna', 'Sol', 'Estrella', 'Planeta'], respuesta: 0 },
+        { japones: '星', lectura: 'hoshi', opciones: ['Estrella', 'Planeta', 'Satélite', 'Asteroide'], respuesta: 0 },
+        { japones: '銀河', lectura: 'ginga', opciones: ['Galaxia', 'Sistema solar', 'Constelación', 'Nebulosa'], respuesta: 0 },
+        { japones: '惑星', lectura: 'wakusei', opciones: ['Planeta', 'Estrella', 'Satélite', 'Asteroide'], respuesta: 0 },
+        { japones: '衛星', lectura: 'eisei', opciones: ['Satélite', 'Planeta', 'Estrella', 'Cometa'], respuesta: 0 },
+        { japones: '天文', lectura: 'tenmon', opciones: ['Astronomía', 'Astrología', 'Geología', 'Meteorología'], respuesta: 0 },
+        { japones: '探査', lectura: 'tansa', opciones: ['Exploración', 'Abandono', 'Ignorancia', 'Desinterés'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Espacio', 'Materia', 'Energía'], respuesta: 0 },
+        { japones: '過去', lectura: 'kako', opciones: ['Pasado', 'Presente', 'Futuro', 'Eterno'], respuesta: 0 },
+        { japones: '現在', lectura: 'genzai', opciones: ['Presente', 'Pasado', 'Futuro', 'Eterno'], respuesta: 0 },
+        { japones: '未来', lectura: 'mirai', opciones: ['Futuro', 'Pasado', 'Presente', 'Eterno'], respuesta: 0 },
+        { japones: '瞬間', lectura: 'shunkan', opciones: ['Instante', 'Eternidad', 'Periodo', 'Duración'], respuesta: 0 },
+        { japones: '永遠', lectura: 'eien', opciones: ['Eternidad', 'Momentáneo', 'Temporal', 'Pasajero'], respuesta: 0 },
+        { japones: '歴史', lectura: 'rekishi', opciones: ['Historia', 'Futuro', 'Presente', 'Actualidad'], respuesta: 0 },
+        { japones: '時代', lectura: 'jidai', opciones: ['Época', 'Momento', 'Instante', 'Segundo'], respuesta: 0 },
+        { japones: '周期', lectura: 'shuuki', opciones: ['Ciclo', 'Línea recta', 'Dirección única', 'Camino único'], respuesta: 0 },
+        { japones: '速度', lectura: 'sokudo', opciones: ['Velocidad', 'Lentitud', 'Inmovilidad', 'Estancamiento'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '物質', lectura: 'busshitsu', opciones: ['Materia', 'Energía', 'Espíritu', 'Pensamiento'], respuesta: 0 },
+        { japones: '元素', lectura: 'genso', opciones: ['Elemento', 'Compuesto', 'Mezcla', 'Sustancia'], respuesta: 0 },
+        { japones: '原子', lectura: 'genshi', opciones: ['Átomo', 'Molécula', 'Partícula', 'Elemento'], respuesta: 0 },
+        { japones: '分子', lectura: 'bunshi', opciones: ['Molécula', 'Átomo', 'Partícula', 'Elemento'], respuesta: 0 },
+        { japones: 'エネルギー', lectura: 'enerugii', opciones: ['Energía', 'Materia', 'Espacio', 'Tiempo'], respuesta: 0 },
+        { japones: '力', lectura: 'chikara', opciones: ['Fuerza', 'Debilidad', 'Fragilidad', 'Vulnerabilidad'], respuesta: 0 },
+        { japones: '運動', lectura: 'undou', opciones: ['Movimiento', 'Reposo', 'Inmovilidad', 'Estaticidad'], respuesta: 0 },
+        { japones: '変化', lectura: 'henka', opciones: ['Cambio', 'Permanencia', 'Estabilidad', 'Constancia'], respuesta: 0 },
+        { japones: '状態', lectura: 'joutai', opciones: ['Estado', 'Proceso', 'Transformación', 'Evolución'], respuesta: 0 },
+        { japones: '性質', lectura: 'seishitsu', opciones: ['Propiedad', 'Accidente', 'Coincidencia', 'Casualidad'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '生命', lectura: 'seimei', opciones: ['Vida', 'Muerte', 'Existencia', 'Esencia'], respuesta: 0 },
+        { japones: '生物', lectura: 'seibutsu', opciones: ['Ser vivo', 'Objeto inanimado', 'Mineral', 'Elemento'], respuesta: 0 },
+        { japones: '細胞', lectura: 'saibou', opciones: ['Célula', 'Tejido', 'Órgano', 'Sistema'], respuesta: 0 },
+        { japones: '遺伝', lectura: 'iden', opciones: ['Herencia', 'Adquisición', 'Aprendizaje', 'Experiencia'], respuesta: 0 },
+        { japones: '進化', lectura: 'shinka', opciones: ['Evolución', 'Involución', 'Estancamiento', 'Regresión'], respuesta: 0 },
+        { japones: '生態', lectura: 'seitai', opciones: ['Ecología', 'Anatomía', 'Fisiología', 'Biología'], respuesta: 0 },
+        { japones: '繁殖', lectura: 'hanshoku', opciones: ['Reproducción', 'Muerte', 'Extinción', 'Desaparición'], respuesta: 0 },
+        { japones: '適応', lectura: 'tekiou', opciones: ['Adaptación', 'Rigidez', 'Inflexibilidad', 'Inadaptación'], respuesta: 0 },
+        { japones: '多様性', lectura: 'tayousei', opciones: ['Diversidad', 'Uniformidad', 'Homogeneidad', 'Similitud'], respuesta: 0 },
+        { japones: '絶滅', lectura: 'zetsumetsu', opciones: ['Extinción', 'Supervivencia', 'Conservación', 'Preservación'], respuesta: 0 }
+    ]
+},
+'sub3_3': {
+    1: [
+        { japones: '哲学', lectura: 'tetsugaku', opciones: ['Filosofía', 'Ciencia', 'Arte', 'Religión'], respuesta: 0 },
+        { japones: '思想', lectura: 'shisou', opciones: ['Pensamiento', 'Acción', 'Palabra', 'Emoción'], respuesta: 0 },
+        { japones: '真理', lectura: 'shinri', opciones: ['Verdad', 'Mentira', 'Error', 'Engaño'], respuesta: 0 },
+        { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
+        { japones: '理性', lectura: 'risei', opciones: ['Razón', 'Emoción', 'Instinto', 'Intuición'], respuesta: 0 },
+        { japones: '存在', lectura: 'sonzai', opciones: ['Existencia', 'Inexistencia', 'Nada', 'Vacío'], respuesta: 0 },
+        { japones: '意識', lectura: 'ishiki', opciones: ['Conciencia', 'Inconsciencia', 'Sueño', 'Desmayo'], respuesta: 0 },
+        { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 },
+        { japones: '正義', lectura: 'seigi', opciones: ['Justicia', 'Injusticia', 'Corrupción', 'Abuso'], respuesta: 0 },
+        { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Amoralidad', 'Corrupción'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '宗教', lectura: 'shuukyou', opciones: ['Religión', 'Ciencia', 'Filosofía', 'Arte'], respuesta: 0 },
+        { japones: '信仰', lectura: 'shinkou', opciones: ['Creencia', 'Duda', 'Escepticismo', 'Agnosticismo'], respuesta: 0 },
+        { japones: '神', lectura: 'kami', opciones: ['Dios', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
+        { japones: '祈り', lectura: 'inori', opciones: ['Oración', 'Maldición', 'Bendición', 'Profecía'], respuesta: 0 },
+        { japones: '儀式', lectura: 'gishiki', opciones: ['Ceremonia', 'Informalidad', 'Espontaneidad', 'Improvisación'], respuesta: 0 },
+        { japones: '寺院', lectura: 'jiin', opciones: ['Templo', 'Casa', 'Escuela', 'Oficina'], respuesta: 0 },
+        { japones: '聖書', lectura: 'seisho', opciones: ['Biblia', 'Novela', 'Poesía', 'Ensayo'], respuesta: 0 },
+        { japones: '信仰心', lectura: 'shinkoushin', opciones: ['Devoción', 'Ateísmo', 'Agnosticismo', 'Indiferencia'], respuesta: 0 },
+        { japones: '来世', lectura: 'raise', opciones: ['Vida después de la muerte', 'Vida presente', 'Reencarnación', 'Nirvana'], respuesta: 0 },
+        { japones: '奇跡', lectura: 'kiseki', opciones: ['Milagro', 'Normalidad', 'Rutina', 'Cotidianidad'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '言語', lectura: 'gengo', opciones: ['Lenguaje', 'Silencio', 'Gesto', 'Expresión'], respuesta: 0 },
+        { japones: '文法', lectura: 'bunpou', opciones: ['Gramática', 'Vocabulario', 'Pronunciación', 'Escritura'], respuesta: 0 },
+        { japones: '語彙', lectura: 'goi', opciones: ['Vocabulario', 'Gramática', 'Pronunciación', 'Escritura'], respuesta: 0 },
+        { japones: '発音', lectura: 'hatsuon', opciones: ['Pronunciación', 'Escritura', 'Lectura', 'Comprensión'], respuesta: 0 },
+        { japones: '意味', lectura: 'imi', opciones: ['Significado', 'Significante', 'Símbolo', 'Representación'], respuesta: 0 },
+        { japones: '翻訳', lectura: 'honyaku', opciones: ['Traducción', 'Interpretación', 'Adaptación', 'Modificación'], respuesta: 0 },
+        { japones: '通訳', lectura: 'tsuuyaku', opciones: ['Interpretación', 'Traducción', 'Explicación', 'Aclaración'], respuesta: 0 },
+        { japones: '方言', lectura: 'hougen', opciones: ['Dialecto', 'Lengua estándar', 'Idioma', 'Jerga'], respuesta: 0 },
+        { japones: '表現', lectura: 'hyougen', opciones: ['Expresión', 'Represión', 'Ocultamiento', 'Silencio'], respuesta: 0 },
+        { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Soledad'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Arte', 'Filosofía'], respuesta: 0 },
+        { japones: '詩', lectura: 'shi', opciones: ['Poesía', 'Prosa', 'Ensayo', 'Novela'], respuesta: 0 },
+        { japones: '小説', lectura: 'shousetsu', opciones: ['Novela', 'Poesía', 'Ensayo', 'Teatro'], respuesta: 0 },
+        { japones: '物語', lectura: 'monogatari', opciones: ['Historia', 'Hecho', 'Realidad', 'Verdad'], respuesta: 0 },
+        { japones: '作者', lectura: 'sakusha', opciones: ['Autor', 'Lector', 'Crítico', 'Editor'], respuesta: 0 },
+        { japones: '主人公', lectura: 'shujinkou', opciones: ['Protagonista', 'Antagonista', 'Personaje secundario', 'Narrador'], respuesta: 0 },
+        { japones: '文体', lectura: 'buntai', opciones: ['Estilo', 'Contenido', 'Tema', 'Argumento'], respuesta: 0 },
+        { japones: '比喩', lectura: 'hiyu', opciones: ['Metáfora', 'Literalidad', 'Realismo', 'Naturalismo'], respuesta: 0 },
+        { japones: '象徴', lectura: 'shouchou', opciones: ['Símbolo', 'Realidad', 'Hecho', 'Verdad'], respuesta: 0 },
+        { japones: '感動', lectura: 'kandou', opciones: ['Emoción', 'Indiferencia', 'Frialdad', 'Desapego'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '神話', lectura: 'shinwa', opciones: ['Mito', 'Historia', 'Ciencia', 'Filosofía'], respuesta: 0 },
+        { japones: '伝説', lectura: 'densetsu', opciones: ['Leyenda', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
+        { japones: '民話', lectura: 'minwa', opciones: ['Cuento popular', 'Historia oficial', 'Ciencia', 'Filosofía'], respuesta: 0 },
+        { japones: '寓話', lectura: 'guuwa', opciones: ['Fábula', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
+        { japones: '昔話', lectura: 'mukashibanashi', opciones: ['Cuento antiguo', 'Historia contemporánea', 'Noticia', 'Reportaje'], respuesta: 0 },
+        { japones: '英雄', lectura: 'eiyuu', opciones: ['Héroe', 'Villano', 'Personaje común', 'Antihéroe'], respuesta: 0 },
+        { japones: '怪物', lectura: 'kaibutsu', opciones: ['Monstruo', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
+        { japones: '魔法', lectura: 'mahou', opciones: ['Magia', 'Ciencia', 'Tecnología', 'Realidad'], respuesta: 0 },
+        { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 },
+        { japones: '運命', lectura: 'unmei', opciones: ['Destino', 'Azar', 'Elección', 'Libre albedrío'], respuesta: 0 }
+    ]
+}
         // ... continuar para los otros subcontenedores (sub2_1, sub2_2, etc.)
     };
 
