@@ -122,7 +122,7 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
-// SISTEMA DE EVENTOS DIARIOS
+// SISTEMA DE EVENTOS DIARIOS - CORREGIDO
 // ============================================================================
 
 const eventosDiarios = {
@@ -235,23 +235,36 @@ const eventosDiarios = {
         ultimaFecha: null
     },
     
-    // Inicializar sistema de eventos
+    // Inicializar sistema de eventos - CORREGIDO
     inicializar: function() {
+        console.log("🔧 Inicializando sistema de eventos diarios...");
         const hoy = this.obtenerFechaHoy();
         const datosGuardados = this.cargarDatos();
         
-        // Verificar si es un nuevo día
+        console.log("📅 Fecha hoy:", hoy);
+        console.log("💾 Datos guardados:", datosGuardados);
+        
+        // Verificar si es un nuevo día o no hay datos
         if (!datosGuardados || datosGuardados.ultimaFecha !== hoy) {
+            console.log("🆕 Nuevo día - Reiniciando evento diario");
             this.reiniciarEventoDiario();
         } else {
+            console.log("📋 Cargando evento existente");
             this.estado = datosGuardados;
         }
         
         // Mostrar evento diario si no se ha completado ni fallado
         if (!this.estado.completado && !this.estado.fallado && this.estado.eventoActual) {
+            console.log("🎁 Mostrando evento diario");
             setTimeout(() => {
                 this.mostrarEventoDiario();
-            }, 1000);
+            }, 500);
+        } else {
+            console.log("❌ Evento no mostrado - Razón:", {
+                completado: this.estado.completado,
+                fallado: this.estado.fallado,
+                tieneEvento: !!this.estado.eventoActual
+            });
         }
     },
     
@@ -267,17 +280,29 @@ const eventosDiarios = {
     
     // Cargar datos guardados
     cargarDatos: function() {
-        const datos = localStorage.getItem('eventosDiarios');
-        return datos ? JSON.parse(datos) : null;
+        try {
+            const datos = localStorage.getItem('eventosDiarios');
+            return datos ? JSON.parse(datos) : null;
+        } catch (e) {
+            console.error("Error cargando datos:", e);
+            return null;
+        }
     },
     
     // Guardar datos
     guardarDatos: function() {
-        localStorage.setItem('eventosDiarios', JSON.stringify(this.estado));
+        try {
+            localStorage.setItem('eventosDiarios', JSON.stringify(this.estado));
+            return true;
+        } catch (e) {
+            console.error("Error guardando datos:", e);
+            return false;
+        }
     },
     
     // Reiniciar evento diario
     reiniciarEventoDiario: function() {
+        console.log("🔄 Reiniciando evento diario...");
         // Seleccionar evento aleatorio del pool
         const eventoAleatorio = this.poolEventos[Math.floor(Math.random() * this.poolEventos.length)];
         
@@ -290,12 +315,21 @@ const eventosDiarios = {
             ultimaFecha: this.obtenerFechaHoy()
         };
         
+        console.log("🎯 Nuevo evento:", eventoAleatorio.nombre);
         this.guardarDatos();
     },
     
-    // Mostrar pantalla de evento diario
+    // Mostrar pantalla de evento diario - CORREGIDO
     mostrarEventoDiario: function() {
-        if (!this.estado.eventoActual) return;
+        if (!this.estado.eventoActual) {
+            console.log("❌ No hay evento actual para mostrar");
+            return;
+        }
+        
+        console.log("📱 Creando pantalla de evento diario");
+        
+        // Ocultar pantalla de inicio primero
+        document.getElementById('pantalla-inicio').classList.remove('activa');
         
         // Crear y mostrar la pantalla de evento diario
         const eventoHTML = `
@@ -304,11 +338,11 @@ const eventosDiarios = {
                     <div class="evento-diario-container">
                         <div class="evento-header">
                             <h1>🎁 Evento Diario</h1>
-                            <p class="evento-fecha">${new Date().toLocaleDateString()}</p>
+                            <p class="evento-fecha">${new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         </div>
                         
                         <div class="evento-content">
-                            <img src="${this.estado.eventoActual.imagen}" alt="${this.estado.eventoActual.nombre}" class="evento-imagen">
+                            <img src="${this.estado.eventoActual.imagen}" alt="${this.estado.eventoActual.nombre}" class="evento-imagen" onerror="this.src='imagenes/default-event.jpg'">
                             
                             <div class="evento-info">
                                 <h2 class="evento-nombre">${this.estado.eventoActual.nombre}</h2>
@@ -346,24 +380,33 @@ const eventosDiarios = {
         
         // Agregar la pantalla al DOM si no existe
         if (!document.getElementById('pantalla-evento-diario')) {
-            document.body.insertAdjacentHTML('beforeend', eventoHTML);
+            document.body.insertAdjacentHTML('afterbegin', eventoHTML);
+            console.log("✅ Pantalla de evento diario creada");
+        } else {
+            // Si ya existe, actualizarla
+            document.getElementById('pantalla-evento-diario').outerHTML = eventoHTML;
+            console.log("✅ Pantalla de evento diario actualizada");
         }
     },
     
     // Aceptar el evento diario
     aceptarEvento: function() {
+        console.log("✅ Evento diario aceptado");
         this.ocultarPantallaEvento();
         // El evento continúa en segundo plano
     },
     
     // Omitir el evento diario (considerado como fallo)
     omitirEvento: function() {
+        console.log("❌ Evento diario omitido");
         this.estado.fallado = true;
         this.guardarDatos();
         this.ocultarPantallaEvento();
         
-        // Mostrar video de fallo al día siguiente
-        this.programarVideoFallo();
+        // Mostrar mensaje de confirmación
+        setTimeout(() => {
+            alert("Evento omitido para hoy. ¡Vuelve mañana para un nuevo reto! 📅");
+        }, 300);
     },
     
     // Ocultar pantalla de evento
@@ -372,15 +415,23 @@ const eventosDiarios = {
         if (pantallaEvento) {
             pantallaEvento.remove();
         }
-        cambiarPantalla('pantalla-inicio');
+        // Mostrar pantalla de inicio
+        document.getElementById('pantalla-inicio').classList.add('activa');
     },
     
     // Registrar mazo completado
     registrarMazoCompletado: function() {
-        if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado) return;
+        if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado) {
+            console.log("📝 Mazo completado pero evento no activo");
+            return;
+        }
+        
+        console.log("📝 Registrando mazo completado para evento diario");
         
         this.estado.mazosCompletadosHoy++;
         this.estado.progreso++;
+        
+        console.log("📊 Progreso actual:", this.estado.progreso, "/", this.estado.eventoActual.objetivo);
         
         // Actualizar contador visual si está visible
         const contadorProgreso = document.getElementById('contador-progreso');
@@ -403,6 +454,7 @@ const eventosDiarios = {
     
     // Completar evento exitosamente
     completarEvento: function() {
+        console.log("🎉 Evento diario completado!");
         this.estado.completado = true;
         this.guardarDatos();
         
@@ -413,6 +465,7 @@ const eventosDiarios = {
     // Mostrar video de recompensa
     mostrarVideoRecompensa: function() {
         const evento = this.estado.eventoActual;
+        console.log("🎬 Mostrando video de recompensa:", evento.recompensa.titulo);
         
         // Crear pantalla de video de recompensa
         const videoHTML = `
@@ -441,26 +494,32 @@ const eventosDiarios = {
             </div>
         `;
         
+        // Ocultar todas las pantallas
+        document.querySelectorAll('.pantalla').forEach(pantalla => {
+            pantalla.classList.remove('activa');
+        });
+        
         document.body.insertAdjacentHTML('beforeend', videoHTML);
         
-        // Reproducir video automáticamente
+        // Intentar reproducir video automáticamente
         const videoElement = document.getElementById('video-evento-recompensa');
-        videoElement.play();
-        
-        videoElement.onended = function() {
-            document.querySelector('.boton-principal').style.display = 'block';
-        };
-    },
-    
-    // Programar video de fallo para el día siguiente
-    programarVideoFallo: function() {
-        // Esto se manejará automáticamente al inicializar el próximo día
+        if (videoElement) {
+            videoElement.muted = true; // Mute para evitar restricciones de autoplay
+            videoElement.play().catch(e => {
+                console.log("Autoplay bloqueado, el usuario debe iniciar manualmente");
+            });
+            
+            videoElement.onended = function() {
+                document.querySelector('#pantalla-video-evento .boton-principal').style.display = 'block';
+            };
+        }
     },
     
     // Mostrar video de fallo (se llama al día siguiente si falló)
     mostrarVideoFallo: function() {
         const evento = this.estado.eventoActual;
-        
+        console.log("📉 Mostrando video de fallo");
+
         const videoHTML = `
             <div id="pantalla-video-fallo" class="pantalla activa">
                 <div class="contenedor">
@@ -487,14 +546,24 @@ const eventosDiarios = {
             </div>
         `;
         
+        // Ocultar todas las pantallas
+        document.querySelectorAll('.pantalla').forEach(pantalla => {
+            pantalla.classList.remove('activa');
+        });
+        
         document.body.insertAdjacentHTML('beforeend', videoHTML);
         
         const videoElement = document.getElementById('video-evento-fallo');
-        videoElement.play();
-        
-        videoElement.onended = function() {
-            document.querySelector('.boton-principal').style.display = 'block';
-        };
+        if (videoElement) {
+            videoElement.muted = true;
+            videoElement.play().catch(e => {
+                console.log("Autoplay bloqueado");
+            });
+            
+            videoElement.onended = function() {
+                document.querySelector('#pantalla-video-fallo .boton-principal').style.display = 'block';
+            };
+        }
     },
     
     // Cerrar video de recompensa
@@ -655,6 +724,7 @@ const estructura = {
             }
         }
     },
+    // ... (el resto de la estructura se mantiene igual)
     'contenedor3': {
         nombre: 'The Last Summer 3',
         subcontenedores: {
@@ -1950,20 +2020,38 @@ function mostrarMensaje(mensaje) {
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA
+// INICIALIZACIÓN DEL SISTEMA - CORREGIDO
 // ============================================================================
 
 // Inicializar la aplicación cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("🚀 Aplicación cargada - Inicializando sistemas...");
+    
     // Inicializar sistema de eventos diarios
     eventosDiarios.inicializar();
     
     // Verificar si hay un evento fallado del día anterior para mostrar video
     const datosEventos = eventosDiarios.cargarDatos();
     if (datosEventos && datosEventos.fallado && datosEventos.ultimaFecha !== eventosDiarios.obtenerFechaHoy()) {
+        console.log("📅 Mostrando video de fallo del día anterior");
         eventosDiarios.mostrarVideoFallo();
         // Reiniciar estado de fallo
         datosEventos.fallado = false;
         eventosDiarios.guardarDatos();
     }
+    
+    console.log("✅ Sistemas inicializados correctamente");
 });
+
+// Función para forzar la aparición del evento diario (para testing)
+window.mostrarEventoDiarioForzado = function() {
+    eventosDiarios.reiniciarEventoDiario();
+    eventosDiarios.mostrarEventoDiario();
+};
+
+// Función para reiniciar el sistema de eventos (para testing)
+window.reiniciarSistemaEventos = function() {
+    localStorage.removeItem('eventosDiarios');
+    eventosDiarios.reiniciarEventoDiario();
+    location.reload();
+};
