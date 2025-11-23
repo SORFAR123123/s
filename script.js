@@ -420,67 +420,59 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
     const palabrasDatabase = {
         // THE LAST SUMMER 1
         'sub1_1': {
-            1: [
-                { japones: '夏', lectura: 'natsu', opciones: ['Verano', 'Invierno', 'Primavera', 'Otoño'], respuesta: 0 },
-                { japones: '海', lectura: 'umi', opciones: ['Mar', 'Montaña', 'Río', 'Lago'], respuesta: 0 },
-                { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Luna', 'Estrella', 'Nube'], respuesta: 0 },
-                { japones: '泳ぐ', lectura: 'oyogu', opciones: ['Nadar', 'Correr', 'Saltar', 'Bailar'], respuesta: 0 },
-                { japones: '暑い', lectura: 'atsui', opciones: ['Caliente', 'Frío', 'Templado', 'Húmedo'], respuesta: 0 },
-                { japones: '休み', lectura: 'yasumi', opciones: ['Descanso', 'Trabajo', 'Estudio', 'Juego'], respuesta: 0 },
-                { japones: '旅行', lectura: 'ryokou', opciones: ['Viaje', 'Casa', 'Escuela', 'Trabajo'], respuesta: 0 },
-                { japones: '楽しい', lectura: 'tanoshii', opciones: ['Divertido', 'Aburrido', 'Triste', 'Serio'], respuesta: 0 },
-                { japones: '思い出', lectura: 'omoide', opciones: ['Recuerdo', 'Sueño', 'Plan', 'Meta'], respuesta: 0 },
-                { japones: '青春', lectura: 'seishun', opciones: ['Juventud', 'Vejez', 'Niñez', 'Adultez'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '花火', lectura: 'hanabi', opciones: ['Fuegos artificiales', 'Flor', 'Fuego', 'Agua'], respuesta: 0 },
-                { japones: '祭り', lectura: 'matsuri', opciones: ['Festival', 'Ceremonia', 'Reunión', 'Fiesta'], respuesta: 0 },
-                { japones: '浴衣', lectura: 'yukata', opciones: ['Yukata', 'Kimono', 'Uniforme', 'Vestido'], respuesta: 0 },
-                { japones: '風鈴', lectura: 'fuurin', opciones: ['Campana de viento', 'Reloj', 'Teléfono', 'Radio'], respuesta: 0 },
-                { japones: '夕立', lectura: 'yuudachi', opciones: ['Chubasco vespertino', 'Amanecer', 'Atardecer', 'Mediodía'], respuesta: 0 },
-                { japones: '蝉', lectura: 'semi', opciones: ['Cigarra', 'Mariposa', 'Abeja', 'Hormiga'], respuesta: 0 },
-                { japones: '向日葵', lectura: 'himawari', opciones: ['Girasol', 'Rosa', 'Lirio', 'Tulipán'], respuesta: 0 },
-                { japones: '氷', lectura: 'koori', opciones: ['Hielo', 'Agua', 'Fuego', 'Aire'], respuesta: 0 },
-                { japones: '扇子', lectura: 'sensu', opciones: ['Abanico', 'Sombrilla', 'Sombrero', 'Bufanda'], respuesta: 0 },
-                { japones: '風', lectura: 'kaze', opciones: ['Viento', 'Lluvia', 'Nieve', 'Granizo'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '初恋', lectura: 'hatsukoi', opciones: ['Primer amor', 'Amigo', 'Conocido', 'Extraño'], respuesta: 0 },
-                { japones: '片思い', lectura: 'kataomoi', opciones: ['Amor no correspondido', 'Amor mutuo', 'Odio', 'Amistad'], respuesta: 0 },
-                { japones: '告白', lectura: 'kokuhaku', opciones: ['Confesión', 'Secreto', 'Mentira', 'Verdad'], respuesta: 0 },
-                { japones: '手をつなぐ', lectura: 'tewotsunagu', opciones: ['Tomar de la mano', 'Abrazar', 'Besar', 'Mirar'], respuesta: 0 },
-                { japones: 'デート', lectura: 'deeto', opciones: ['Cita', 'Trabajo', 'Estudio', 'Descanso'], respuesta: 0 },
-                { japones: 'キス', lectura: 'kisu', opciones: ['Beso', 'Abrazo', 'Saludo', 'Despedida'], respuesta: 0 },
-                { japones: '恋人', lectura: 'koibito', opciones: ['Novio/Novia', 'Amigo', 'Familiar', 'Conocido'], respuesta: 0 },
-                { japones: '永遠', lectura: 'eien', opciones: ['Eternidad', 'Momento', 'Día', 'Año'], respuesta: 0 },
-                { japones: '運命', lectura: 'unmei', opciones: ['Destino', 'Suerte', 'Casualidad', 'Elección'], respuesta: 0 },
-                { japones: '幸せ', lectura: 'shiawase', opciones: ['Felicidad', 'Tristeza', 'Enojo', 'Sorpresa'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '友情', lectura: 'yuujou', opciones: ['Amistad', 'Amor', 'Odio', 'Indiferencia'], respuesta: 0 },
-                { japones: '信頼', lectura: 'shinrai', opciones: ['Confianza', 'Duda', 'Miedo', 'Sospecha'], respuesta: 0 },
-                { japones: '約束', lectura: 'yakusoku', opciones: ['Promesa', 'Mentira', 'Broma', 'Chiste'], respuesta: 0 },
-                { japones: '秘密', lectura: 'himitsu', opciones: ['Secreto', 'Verdad', 'Noticia', 'Información'], respuesta: 0 },
-                { japones: '喧嘩', lectura: 'kenka', opciones: ['Pelea', 'Paz', 'Acuerdo', 'Conversación'], respuesta: 0 },
-                { japones: '仲直り', lectura: 'nakanaori', opciones: ['Reconciliación', 'Separación', 'Distancia', 'Olvido'], respuesta: 0 },
-                { japones: '思いやり', lectura: 'omoiyari', opciones: ['Consideración', 'Egoísmo', 'Indiferencia', 'Desinterés'], respuesta: 0 },
-                { japones: '支え合う', lectura: 'sasaeau', opciones: ['Apoyarse mutuamente', 'Discutir', 'Ignorar', 'Competir'], respuesta: 0 },
-                { japones: '絆', lectura: 'kizuna', opciones: ['Lazo', 'Distancia', 'Separación', 'Ruptura'], respuesta: 0 },
-                { japones: '大切', lectura: 'taisetsu', opciones: ['Importante', 'Trivial', 'Común', 'Normal'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '成長', lectura: 'seichou', opciones: ['Crecimiento', 'Decadencia', 'Estancamiento', 'Regresión'], respuesta: 0 },
-                { japones: '挑戦', lectura: 'chousen', opciones: ['Desafío', 'Rendición', 'Evitación', 'Postergación'], respuesta: 0 },
-                { japones: '努力', lectura: 'doryoku', opciones: ['Esfuerzo', 'Pereza', 'Suerte', 'Casualidad'], respuesta: 0 },
-                { japones: '成功', lectura: 'seikou', opciones: ['Éxito', 'Fracaso', 'Intento', 'Prueba'], respuesta: 0 },
-                { japones: '失敗', lectura: 'shippai', opciones: ['Fallo', 'Logro', 'Victoria', 'Triunfo'], respuesta: 0 },
-                { japones: '夢', lectura: 'yume', opciones: ['Sueño', 'Pesadilla', 'Realidad', 'Fantasía'], respuesta: 0 },
-                { japones: '目標', lectura: 'mokuhyou', opciones: ['Objetivo', 'Obstáculo', 'Distracción', 'Confusión'], respuesta: 0 },
-                { japones: '未来', lectura: 'mirai', opciones: ['Futuro', 'Pasado', 'Presente', 'Eternidad'], respuesta: 0 },
-                { japones: '希望', lectura: 'kibou', opciones: ['Esperanza', 'Desesperación', 'Duda', 'Miedo'], respuesta: 0 },
-                { japones: '勇気', lectura: 'yuuki', opciones: ['Valentía', 'Cobardía', 'Indiferencia', 'Neutralidad'], respuesta: 0 }
-            ]
-        },
+    1: [
+        { japones: '今朝', lectura: 'kesa', opciones: ['Esta mañana', 'Esta tarde', 'Anoche', 'Ayer'], respuesta: 0 },
+        { japones: '処', lectura: 'tokoro', opciones: ['Lugar', 'Tiempo', 'Persona', 'Cosa'], respuesta: 0 },
+        { japones: '出掛け', lectura: 'dekake', opciones: ['Salir', 'Entrar', 'Quedarse', 'Volver'], respuesta: 0 },
+        { japones: '女将', lectura: 'okami', opciones: ['Dueña', 'Mesera', 'Cliente', 'Cocinera'], respuesta: 0 },
+        { japones: '寂しい', lectura: 'sabishii', opciones: ['Solitario', 'Alegre', 'Ocupado', 'Ruidoso'], respuesta: 0 },
+        { japones: '憩い', lectura: 'ikoi', opciones: ['Descanso', 'Trabajo', 'Ejercicio', 'Estudio'], respuesta: 0 },
+        { japones: '手伝い', lectura: 'tetsudai', opciones: ['Ayuda', 'Obstáculo', 'Problema', 'Solución'], respuesta: 0 },
+        { japones: '撮る', lectura: 'toru', opciones: ['Tomar foto', 'Escribir', 'Leer', 'Escuchar'], respuesta: 0 },
+        { japones: '見送る', lectura: 'miokuru', opciones: ['Despedir', 'Recibir', 'Ignorar', 'Saludar'], respuesta: 0 },
+        { japones: '限る', lectura: 'kagiru', opciones: ['Limitar', 'Ampliar', 'Permitir', 'Prohibir'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '吐息', lectura: 'toiki', opciones: ['Suspiro', 'Risa', 'Grito', 'Llanto'], respuesta: 0 },
+        { japones: '応援', lectura: 'ouen', opciones: ['Apoyo', 'Crítica', 'Indiferencia', 'Oposición'], respuesta: 0 },
+        { japones: '文句', lectura: 'monku', opciones: ['Queja', 'Elogio', 'Sugerencia', 'Pregunta'], respuesta: 0 },
+        { japones: '構う', lectura: 'kamau', opciones: ['Preocuparse', 'Ignorar', 'Aceptar', 'Rechazar'], respuesta: 0 },
+        { japones: '残り香', lectura: 'nokorika', opciones: ['Aroma residual', 'Sonido', 'Imagen', 'Sabor'], respuesta: 0 },
+        { japones: '減る', lectura: 'heru', opciones: ['Disminuir', 'Aumentar', 'Mantener', 'Cambiar'], respuesta: 0 },
+        { japones: '誰彼', lectura: 'dareka', opciones: ['Alguien', 'Nadie', 'Todos', 'Algo'], respuesta: 0 },
+        { japones: '過激', lectura: 'kageki', opciones: ['Extremo', 'Moderado', 'Suave', 'Normal'], respuesta: 0 },
+        { japones: '開き直る', lectura: 'hirakinarou', opciones: ['Cambiar de actitud', 'Mantenerse', 'Rendirse', 'Avanzar'], respuesta: 0 },
+        { japones: '関係ない', lectura: 'kankeinai', opciones: ['No relacionado', 'Importante', 'Relevante', 'Conectado'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '刺激', lectura: 'shigeki', opciones: ['Estímulo', 'Calma', 'Aburrimiento', 'Paz'], respuesta: 0 },
+        { japones: '否定', lectura: 'hitei', opciones: ['Negación', 'Afirmación', 'Duda', 'Aceptación'], respuesta: 0 },
+        { japones: '宝の持ち腐れ', lectura: 'takarano mochiguse', opciones: ['Talento desperdiciado', 'Tesoro', 'Pobreza', 'Generosidad'], respuesta: 0 },
+        { japones: '心配', lectura: 'shinpai', opciones: ['Preocupación', 'Tranquilidad', 'Confianza', 'Seguridad'], respuesta: 0 },
+        { japones: '性欲', lectura: 'seiyoku', opciones: ['Deseo sexual', 'Hambre', 'Sed', 'Cansancio'], respuesta: 0 },
+        { japones: '機会', lectura: 'kikai', opciones: ['Oportunidad', 'Peligro', 'Problema', 'Obstáculo'], respuesta: 0 },
+        { japones: '活かす', lectura: 'ikasu', opciones: ['Aprovechar', 'Desperdiciar', 'Ignorar', 'Rechazar'], respuesta: 0 },
+        { japones: '経験不足', lectura: 'keiken busoku', opciones: ['Falta de experiencia', 'Mucha experiencia', 'Talento', 'Habilidad'], respuesta: 0 },
+        { japones: '言い寄る', lectura: 'iiyoru', opciones: ['Acercarse a alguien', 'Alejarse', 'Ignorar', 'Evitar'], respuesta: 0 },
+        { japones: '飽きる', lectura: 'akiru', opciones: ['Cansarse', 'Entusiasmarse', 'Continuar', 'Empezar'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '合格', lectura: 'goukaku', opciones: ['Aprobar', 'Reprobar', 'Intentar', 'Estudiar'], respuesta: 0 },
+        { japones: '圧し潰す', lectura: 'asshitsubusu', opciones: ['Aplastar', 'Levantar', 'Construir', 'Reparar'], respuesta: 0 },
+        { japones: '密着', lectura: 'micchaku', opciones: ['Pegado', 'Separado', 'Distante', 'Aislado'], respuesta: 0 },
+        { japones: '届く', lectura: 'todoku', opciones: ['Llegar', 'Partir', 'Perderse', 'Desaparecer'], respuesta: 0 },
+        { japones: '巻きつく', lectura: 'makitsuku', opciones: ['Enrollarse', 'Desenrollar', 'Cortar', 'Pegar'], respuesta: 0 },
+        { japones: '惜しい', lectura: 'oshii', opciones: ['Lamentable', 'Afortunado', 'Normal', 'Extraño'], respuesta: 0 },
+        { japones: '拒否権', lectura: 'kyohiken', opciones: ['Derecho a veto', 'Permiso', 'Aprobación', 'Acuerdo'], respuesta: 0 },
+        { japones: '経験', lectura: 'keiken', opciones: ['Experiencia', 'Ignorancia', 'Teoría', 'Estudio'], respuesta: 0 },
+        { japones: '膣', lectura: 'chitsu', opciones: ['Vagina', 'Pene', 'Ano', 'Pecho'], respuesta: 0 },
+        { japones: '蒸す', lectura: 'musu', opciones: ['Humedecer', 'Secar', 'Calentar', 'Enfriar'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '大体', lectura: 'daitai', opciones: ['Aproximadamente', 'Exactamente', 'Completamente', 'Parcialmente'], respuesta: 0 },
+        { japones: '起きる', lectura: 'okiru', opciones: ['Despertar', 'Dormir', 'Soñar', 'Descansar'], respuesta: 0 },
+    ]
+},
         'sub1_2': {
             1: [
                 { japones: '学校', lectura: 'gakkou', opciones: ['Escuela', 'Casa', 'Trabajo', 'Parque'], respuesta: 0 },
