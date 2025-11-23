@@ -1,3 +1,5 @@
+[file name]: script.js
+[file content begin]
 // ============================================================================
 // CONFIGURACIÓN DE URLs DE IMÁGENES (SOLO INTERNET)
 // ============================================================================
@@ -72,12 +74,7 @@ const configImagenes = {
         'mazo2': 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=150&h=150&fit=crop',
         'mazo3': 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=150&h=150&fit=crop',
         'mazo4': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=150&h=150&fit=crop',
-        'mazo5': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=150&h=150&fit=crop',
-        'mazo6': 'https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=150&h=150&fit=crop',
-        'mazo7': 'https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=150&h=150&fit=crop',
-        'mazo8': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=150&h=150&fit=crop',
-        'mazo9': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=150&h=150&fit=crop',
-        'mazo10': 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=150&h=150&fit=crop'
+        'mazo5': 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=150&h=150&fit=crop'
     },
     rpg: {
         novia: 'https://pbs.twimg.com/media/G5Q_4LPWIAEiC9X?format=png&name=small',
@@ -96,31 +93,31 @@ const videosRecompensa = [
     {
         id: 1,
         titulo: "¡Felicidades! Logro Desbloqueado 🎉",
-        url: "Belinda.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "10s"
     },
     {
         id: 2,
         titulo: "¡Excelente Trabajo! ⭐",
-        url: "Belinda.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "15s"
     },
     {
         id: 3,
         titulo: "¡Eres Increíble! 💪",
-        url: "Belinda.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "12s"
     },
     {
         id: 4,
         titulo: "¡Perfecto! 🏆",
-        url: "Belinda.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "8s"
     },
     {
         id: 5,
         titulo: "¡Misión Cumplida! 🚀",
-        url: "Belinda.mp4",
+        url: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
         duracion: "11s"
     }
 ];
@@ -134,6 +131,73 @@ const videosIntimos = {
     caricias: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
     intimidad1: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4",
     intimidad2: "https://github.com/SORFAR123123/s/blob/main/Belinda.mp4"
+};
+
+// ============================================================================
+// BANCO DE PALABRAS ÚNICAS PARA CADA MAZO
+// ============================================================================
+
+const bancoPalabras = {
+    mazo1: [
+        { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
+        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
+        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
+        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
+        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
+        { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
+        { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
+        { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
+        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
+        { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
+    ],
+    mazo2: [
+        { japones: '学校', lectura: 'gakkou', opciones: ['Escuela', 'Colegio', 'Instituto', 'Academia'], respuesta: 0 },
+        { japones: '学生', lectura: 'gakusei', opciones: ['Estudiante', 'Alumno', 'Escolar', 'Universitario'], respuesta: 0 },
+        { japones: '先生', lectura: 'sensei', opciones: ['Profesor', 'Maestro', 'Instructor', 'Educador'], respuesta: 0 },
+        { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Aprendizaje', 'Educación', 'Preparación'], respuesta: 0 },
+        { japones: '本', lectura: 'hon', opciones: ['Libro', 'Volumen', 'Texto', 'Publicación'], respuesta: 0 },
+        { japones: '紙', lectura: 'kami', opciones: ['Papel', 'Hoja', 'Documento', 'Folio'], respuesta: 0 },
+        { japones: '鉛筆', lectura: 'enpitsu', opciones: ['Lápiz', 'Portaminas', 'Carboncillo', 'Grafito'], respuesta: 0 },
+        { japones: '机', lectura: 'tsukue', opciones: ['Escritorio', 'Mesa', 'Buro', 'Pupitre'], respuesta: 0 },
+        { japones: '椅子', lectura: 'isu', opciones: ['Silla', 'Asiento', 'Butaca', 'Taburete'], respuesta: 0 },
+        { japones: '教室', lectura: 'kyoushitsu', opciones: ['Aula', 'Salón', 'Clase', 'Sala'], respuesta: 0 }
+    ],
+    mazo3: [
+        { japones: '食べ物', lectura: 'tabemono', opciones: ['Comida', 'Alimento', 'Plato', 'Vianda'], respuesta: 0 },
+        { japones: '水', lectura: 'mizu', opciones: ['Agua', 'Líquido', 'H2O', 'Límpido'], respuesta: 0 },
+        { japones: '米', lectura: 'kome', opciones: ['Arroz', 'Grano', 'Cereal', 'Oryza'], respuesta: 0 },
+        { japones: '魚', lectura: 'sakana', opciones: ['Pescado', 'Peces', 'Marisco', 'Especie marina'], respuesta: 0 },
+        { japones: '肉', lectura: 'niku', opciones: ['Carne', 'Filete', 'Bistec', 'Res'], respuesta: 0 },
+        { japones: '野菜', lectura: 'yasai', opciones: ['Verdura', 'Hortaliza', 'Legumbre', 'Vegetal'], respuesta: 0 },
+        { japones: '果物', lectura: 'kudamono', opciones: ['Fruta', 'Fruto', 'Pomo', 'Baya'], respuesta: 0 },
+        { japones: '牛乳', lectura: 'gyuunyuu', opciones: ['Leche', 'Lácteo', 'Bebida blanca', 'Calcio'], respuesta: 0 },
+        { japones: 'パン', lectura: 'pan', opciones: ['Pan', 'Bollo', 'Barra', 'Masa horneada'], respuesta: 0 },
+        { japones: '卵', lectura: 'tamago', opciones: ['Huevo', 'Óvulo', 'Cascarón', 'Yema'], respuesta: 0 }
+    ],
+    mazo4: [
+        { japones: '家', lectura: 'ie', opciones: ['Casa', 'Hogar', 'Vivienda', 'Residencia'], respuesta: 0 },
+        { japones: '部屋', lectura: 'heya', opciones: ['Habitación', 'Cuarto', 'Estancia', 'Dormitorio'], respuesta: 0 },
+        { japones: '台所', lectura: 'daidokoro', opciones: ['Cocina', 'Lugar de cocinar', 'Área de comida', 'Fogón'], respuesta: 0 },
+        { japones: '風呂', lectura: 'furo', opciones: ['Baño', 'Ducha', 'Tina', 'Aseo'], respuesta: 0 },
+        { japones: '寝る', lectura: 'neru', opciones: ['Dormir', 'Descansar', 'Reposar', 'Siestear'], respuesta: 0 },
+        { japones: '起きる', lectura: 'okiru', opciones: ['Despertar', 'Levantarse', 'Amanecer', 'Abrir ojos'], respuesta: 0 },
+        { japones: '食べる', lectura: 'taberu', opciones: ['Comer', 'Alimentarse', 'Ingerir', 'Cenar'], respuesta: 0 },
+        { japones: '飲む', lectura: 'nomu', opciones: ['Beber', 'Tomar', 'Ingerir líquido', 'Hidratarse'], respuesta: 0 },
+        { japones: '見る', lectura: 'miru', opciones: ['Ver', 'Observar', 'Mirar', 'Contemplar'], respuesta: 0 },
+        { japones: '聞く', lectura: 'kiku', opciones: ['Escuchar', 'Oír', 'Prestar atención', 'Audición'], respuesta: 0 }
+    ],
+    mazo5: [
+        { japones: '行く', lectura: 'iku', opciones: ['Ir', 'Marchar', 'Dirigirse', 'Partir'], respuesta: 0 },
+        { japones: '来る', lectura: 'kuru', opciones: ['Venir', 'Llegar', 'Arribar', 'Aproximarse'], respuesta: 0 },
+        { japones: '帰る', lectura: 'kaeru', opciones: ['Regresar', 'Volver', 'Retornar', 'Devolverse'], respuesta: 0 },
+        { japones: '買う', lectura: 'kau', opciones: ['Comprar', 'Adquirir', 'Consumir', 'Mercar'], respuesta: 0 },
+        { japones: '売る', lectura: 'uru', opciones: ['Vender', 'Comerciar', 'Negociar', 'Mercadear'], respuesta: 0 },
+        { japones: '作る', lectura: 'tsukuru', opciones: ['Hacer', 'Crear', 'Fabricar', 'Producir'], respuesta: 0 },
+        { japones: '使う', lectura: 'tsukau', opciones: ['Usar', 'Utilizar', 'Emplear', 'Manejar'], respuesta: 0 },
+        { japones: '話す', lectura: 'hanasu', opciones: ['Hablar', 'Conversar', 'Charlar', 'Dialogar'], respuesta: 0 },
+        { japones: '読む', lectura: 'yomu', opciones: ['Leer', 'Estudiar', 'Repasar', 'Ojear'], respuesta: 0 },
+        { japones: '書く', lectura: 'kaku', opciones: ['Escribir', 'Redactar', 'Anotar', 'Plasmar'], respuesta: 0 }
+    ]
 };
 
 // ============================================================================
@@ -196,108 +260,108 @@ const rpgNovia = {
 };
 
 // ============================================================================
-// ESTRUCTURA PRINCIPAL
+// ESTRUCTURA PRINCIPAL MODIFICADA (5 MAZOS POR SUBCONTENEDOR)
 // ============================================================================
 
 const estructura = {
     'contenedor1': {
         nombre: 'Last summer',
         subcontenedores: {
-            'sub1_1': { nombre: 'Last summer 1', mazos: generarMazos(10) },
-            'sub1_2': { nombre: 'Last summer 2', mazos: generarMazos(10) },
-            'sub1_3': { nombre: 'Last summer 3', mazos: generarMazos(10) },
-            'sub1_4': { nombre: 'Last summer 4', mazos: generarMazos(10) },
-            'sub1_5': { nombre: 'Last summer 5', mazos: generarMazos(10) }
+            'sub1_1': { nombre: 'Last summer 1', mazos: generarMazos(5) },
+            'sub1_2': { nombre: 'Last summer 2', mazos: generarMazos(5) },
+            'sub1_3': { nombre: 'Last summer 3', mazos: generarMazos(5) },
+            'sub1_4': { nombre: 'Last summer 4', mazos: generarMazos(5) },
+            'sub1_5': { nombre: 'Last summer 5', mazos: generarMazos(5) }
         }
     },
     'contenedor2': {
         nombre: 'Toono esuke',
         subcontenedores: {
-            'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazos(10) },
-            'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazos(10) },
-            'sub2_3': { nombre: 'Sub-Contenedor 2.3', mazos: generarMazos(10) },
-            'sub2_4': { nombre: 'Sub-Contenedor 2.4', mazos: generarMazos(10) },
-            'sub2_5': { nombre: 'Sub-Contenedor 2.5', mazos: generarMazos(10) }
+            'sub2_1': { nombre: 'Sub-Contenedor 2.1', mazos: generarMazos(5) },
+            'sub2_2': { nombre: 'Sub-Contenedor 2.2', mazos: generarMazos(5) },
+            'sub2_3': { nombre: 'Sub-Contenedor 2.3', mazos: generarMazos(5) },
+            'sub2_4': { nombre: 'Sub-Contenedor 2.4', mazos: generarMazos(5) },
+            'sub2_5': { nombre: 'Sub-Contenedor 2.5', mazos: generarMazos(5) }
         }
     },
     'contenedor3': {
         nombre: 'Contenedor 3',
         subcontenedores: {
-            'sub3_1': { nombre: 'Hermana rusa putona', mazos: generarMazos(10) },
-            'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazos(10) },
-            'sub3_3': { nombre: 'Putona de la escuela', mazos: generarMazos(10) },
-            'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(10) },
-            'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(10) }
+            'sub3_1': { nombre: 'Hermana rusa putona', mazos: generarMazos(5) },
+            'sub3_2': { nombre: 'Madre hija oyakodon', mazos: generarMazos(5) },
+            'sub3_3': { nombre: 'Putona de la escuela', mazos: generarMazos(5) },
+            'sub3_4': { nombre: 'Sub-Contenedor 3.4', mazos: generarMazos(5) },
+            'sub3_5': { nombre: 'Sub-Contenedor 3.5', mazos: generarMazos(5) }
         }
     },
     'contenedor4': {
         nombre: 'Contenedor 4',
         subcontenedores: {
-            'sub4_1': { nombre: 'Sub-Contenedor 4.1', mazos: generarMazos(10) },
-            'sub4_2': { nombre: 'Sub-Contenedor 4.2', mazos: generarMazos(10) },
-            'sub4_3': { nombre: 'Sub-Contenedor 4.3', mazos: generarMazos(10) },
-            'sub4_4': { nombre: 'Sub-Contenedor 4.4', mazos: generarMazos(10) },
-            'sub4_5': { nombre: 'Sub-Contenedor 4.5', mazos: generarMazos(10) }
+            'sub4_1': { nombre: 'Sub-Contenedor 4.1', mazos: generarMazos(5) },
+            'sub4_2': { nombre: 'Sub-Contenedor 4.2', mazos: generarMazos(5) },
+            'sub4_3': { nombre: 'Sub-Contenedor 4.3', mazos: generarMazos(5) },
+            'sub4_4': { nombre: 'Sub-Contenedor 4.4', mazos: generarMazos(5) },
+            'sub4_5': { nombre: 'Sub-Contenedor 4.5', mazos: generarMazos(5) }
         }
     },
     'contenedor5': {
         nombre: 'Contenedor 5',
         subcontenedores: {
-            'sub5_1': { nombre: 'Sub-Contenedor 5.1', mazos: generarMazos(10) },
-            'sub5_2': { nombre: 'Sub-Contenedor 5.2', mazos: generarMazos(10) },
-            'sub5_3': { nombre: 'Sub-Contenedor 5.3', mazos: generarMazos(10) },
-            'sub5_4': { nombre: 'Sub-Contenedor 5.4', mazos: generarMazos(10) },
-            'sub5_5': { nombre: 'Sub-Contenedor 5.5', mazos: generarMazos(10) }
+            'sub5_1': { nombre: 'Sub-Contenedor 5.1', mazos: generarMazos(5) },
+            'sub5_2': { nombre: 'Sub-Contenedor 5.2', mazos: generarMazos(5) },
+            'sub5_3': { nombre: 'Sub-Contenedor 5.3', mazos: generarMazos(5) },
+            'sub5_4': { nombre: 'Sub-Contenedor 5.4', mazos: generarMazos(5) },
+            'sub5_5': { nombre: 'Sub-Contenedor 5.5', mazos: generarMazos(5) }
         }
     },
     'contenedor6': {
         nombre: 'Contenedor 6',
         subcontenedores: {
-            'sub6_1': { nombre: 'Sub-Contenedor 6.1', mazos: generarMazos(10) },
-            'sub6_2': { nombre: 'Sub-Contenedor 6.2', mazos: generarMazos(10) },
-            'sub6_3': { nombre: 'Sub-Contenedor 6.3', mazos: generarMazos(10) },
-            'sub6_4': { nombre: 'Sub-Contenedor 6.4', mazos: generarMazos(10) },
-            'sub6_5': { nombre: 'Sub-Contenedor 6.5', mazos: generarMazos(10) }
+            'sub6_1': { nombre: 'Sub-Contenedor 6.1', mazos: generarMazos(5) },
+            'sub6_2': { nombre: 'Sub-Contenedor 6.2', mazos: generarMazos(5) },
+            'sub6_3': { nombre: 'Sub-Contenedor 6.3', mazos: generarMazos(5) },
+            'sub6_4': { nombre: 'Sub-Contenedor 6.4', mazos: generarMazos(5) },
+            'sub6_5': { nombre: 'Sub-Contenedor 6.5', mazos: generarMazos(5) }
         }
     },
     'contenedor7': {
         nombre: 'Contenedor 7',
         subcontenedores: {
-            'sub7_1': { nombre: 'Sub-Contenedor 7.1', mazos: generarMazos(10) },
-            'sub7_2': { nombre: 'Sub-Contenedor 7.2', mazos: generarMazos(10) },
-            'sub7_3': { nombre: 'Sub-Contenedor 7.3', mazos: generarMazos(10) },
-            'sub7_4': { nombre: 'Sub-Contenedor 7.4', mazos: generarMazos(10) },
-            'sub7_5': { nombre: 'Sub-Contenedor 7.5', mazos: generarMazos(10) }
+            'sub7_1': { nombre: 'Sub-Contenedor 7.1', mazos: generarMazos(5) },
+            'sub7_2': { nombre: 'Sub-Contenedor 7.2', mazos: generarMazos(5) },
+            'sub7_3': { nombre: 'Sub-Contenedor 7.3', mazos: generarMazos(5) },
+            'sub7_4': { nombre: 'Sub-Contenedor 7.4', mazos: generarMazos(5) },
+            'sub7_5': { nombre: 'Sub-Contenedor 7.5', mazos: generarMazos(5) }
         }
     },
     'contenedor8': {
         nombre: 'Contenedor 8',
         subcontenedores: {
-            'sub8_1': { nombre: 'Sub-Contenedor 8.1', mazos: generarMazos(10) },
-            'sub8_2': { nombre: 'Sub-Contenedor 8.2', mazos: generarMazos(10) },
-            'sub8_3': { nombre: 'Sub-Contenedor 8.3', mazos: generarMazos(10) },
-            'sub8_4': { nombre: 'Sub-Contenedor 8.4', mazos: generarMazos(10) },
-            'sub8_5': { nombre: 'Sub-Contenedor 8.5', mazos: generarMazos(10) }
+            'sub8_1': { nombre: 'Sub-Contenedor 8.1', mazos: generarMazos(5) },
+            'sub8_2': { nombre: 'Sub-Contenedor 8.2', mazos: generarMazos(5) },
+            'sub8_3': { nombre: 'Sub-Contenedor 8.3', mazos: generarMazos(5) },
+            'sub8_4': { nombre: 'Sub-Contenedor 8.4', mazos: generarMazos(5) },
+            'sub8_5': { nombre: 'Sub-Contenedor 8.5', mazos: generarMazos(5) }
         }
     },
     'contenedor9': {
         nombre: 'Contenedor 9',
         subcontenedores: {
-            'sub9_1': { nombre: 'Sub-Contenedor 9.1', mazos: generarMazos(10) },
-            'sub9_2': { nombre: 'Sub-Contenedor 9.2', mazos: generarMazos(10) },
-            'sub9_3': { nombre: 'Sub-Contenedor 9.3', mazos: generarMazos(10) },
-            'sub9_4': { nombre: 'Sub-Contenedor 9.4', mazos: generarMazos(10) },
-            'sub9_5': { nombre: 'Sub-Contenedor 9.5', mazos: generarMazos(10) }
+            'sub9_1': { nombre: 'Sub-Contenedor 9.1', mazos: generarMazos(5) },
+            'sub9_2': { nombre: 'Sub-Contenedor 9.2', mazos: generarMazos(5) },
+            'sub9_3': { nombre: 'Sub-Contenedor 9.3', mazos: generarMazos(5) },
+            'sub9_4': { nombre: 'Sub-Contenedor 9.4', mazos: generarMazos(5) },
+            'sub9_5': { nombre: 'Sub-Contenedor 9.5', mazos: generarMazos(5) }
         }
     },
     'contenedor10': {
         nombre: 'Contenedor 10',
         subcontenedores: {
-            'sub10_1': { nombre: 'Sub-Contenedor 10.1', mazos: generarMazos(10) },
-            'sub10_2': { nombre: 'Sub-Contenedor 10.2', mazos: generarMazos(10) },
-            'sub10_3': { nombre: 'Sub-Contenedor 10.3', mazos: generarMazos(10) },
-            'sub10_4': { nombre: 'Sub-Contenedor 10.4', mazos: generarMazos(10) },
-            'sub10_5': { nombre: 'Sub-Contenedor 10.5', mazos: generarMazos(10) }
+            'sub10_1': { nombre: 'Sub-Contenedor 10.1', mazos: generarMazos(5) },
+            'sub10_2': { nombre: 'Sub-Contenedor 10.2', mazos: generarMazos(5) },
+            'sub10_3': { nombre: 'Sub-Contenedor 10.3', mazos: generarMazos(5) },
+            'sub10_4': { nombre: 'Sub-Contenedor 10.4', mazos: generarMazos(5) },
+            'sub10_5': { nombre: 'Sub-Contenedor 10.5', mazos: generarMazos(5) }
         }
     }
 };
@@ -305,17 +369,18 @@ const estructura = {
 function generarMazos(cantidadMazos) {
     const mazos = {};
     for (let i = 1; i <= cantidadMazos; i++) {
-        mazos[`mazo${i}`] = {
+        const mazoKey = `mazo${i}`;
+        mazos[mazoKey] = {
             nombre: `Mazo ${i}`,
-            palabras: generarPalabras(10)
+            palabras: bancoPalabras[mazoKey] || generarPalabrasPorDefecto()
         };
     }
     return mazos;
 }
 
-function generarPalabras(cantidad) {
-    const palabras = [];
-    const palabrasBase = [
+function generarPalabrasPorDefecto() {
+    // Palabras por defecto en caso de que no haya definición específica
+    return [
         { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
         { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
         { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
@@ -327,11 +392,6 @@ function generarPalabras(cantidad) {
         { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
         { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
     ];
-    
-    for (let i = 0; i < cantidad; i++) {
-        palabras.push({...palabrasBase[i % palabrasBase.length]});
-    }
-    return palabras;
 }
 
 // ============================================================================
@@ -383,7 +443,7 @@ function cargarContenedor(idContenedor) {
             subDiv.innerHTML = `
                 <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen" onerror="this.src='https://via.placeholder.com/150x150/4a90e2/ffffff?text=Error'">
                 <div class="subcontenedor-texto">${sub.nombre}</div>
-                <div class="subcontenedor-info">10 mazos disponibles</div>
+                <div class="subcontenedor-info">5 mazos disponibles</div>
             `;
             
             contenedorSub.appendChild(subDiv);
@@ -847,3 +907,4 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     }, 3000);
 }
+[file content end]
