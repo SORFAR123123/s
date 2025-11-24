@@ -509,7 +509,7 @@ const eventosDiarios = {
         this.mostrarVideoRecompensa();
     },
     
-    // Mostrar video de recompensa - CORREGIDO
+    // Mostrar video de recompensa - CORREGIDO CON BUCLE Y BOTÓN
     mostrarVideoRecompensa: function() {
         const evento = this.estado.eventoActual;
         console.log("🎬 Mostrando video de recompensa:", evento.recompensa.titulo);
@@ -527,28 +527,25 @@ const eventosDiarios = {
         videoElement.src = evento.recompensa.video;
         videoElement.controls = true;
         videoElement.muted = false; // Permitir sonido en recompensa
+        videoElement.loop = true; // PONER EN BUCLE
+        
+        // QUITAR el evento onended para que no se cierre automáticamente
+        videoElement.onended = null;
         
         // Mostrar pantalla de video
         document.getElementById('pantalla-video-evento').classList.add('activa');
-        
-        // Configurar evento cuando termine el video
-        videoElement.onended = function() {
-            console.log("Video de recompensa terminado");
-            eventosDiarios.cerrarVideoRecompensa();
-        };
         
         // Intentar reproducir automáticamente
         const playPromise = videoElement.play();
         if (playPromise !== undefined) {
             playPromise.catch(e => {
                 console.log("Autoplay bloqueado para video de recompensa:", e);
-                // Mostrar mensaje para que el usuario inicie manualmente
                 videoElement.controls = true;
             });
         }
     },
     
-    // Mostrar video de fallo (se llama al día siguiente si falló)
+    // Mostrar video de fallo (se llama al día siguiente si falló) - CORREGIDO CON BUCLE Y BOTÓN
     mostrarVideoFallo: function() {
         const evento = this.estado.eventoActual;
         console.log("📉 Mostrando video de fallo");
@@ -566,15 +563,13 @@ const eventosDiarios = {
         videoElement.src = evento.fallo.video;
         videoElement.controls = true;
         videoElement.muted = false;
+        videoElement.loop = true; // PONER EN BUCLE
+        
+        // QUITAR el evento onended para que no se cierre automáticamente
+        videoElement.onended = null;
         
         // Mostrar pantalla de video de fallo
         document.getElementById('pantalla-video-fallo').classList.add('activa');
-        
-        // Configurar evento cuando termine el video
-        videoElement.onended = function() {
-            console.log("Video de fallo terminado");
-            eventosDiarios.cerrarVideoFallo();
-        };
         
         const playPromise = videoElement.play();
         if (playPromise !== undefined) {
@@ -1677,30 +1672,43 @@ function siguientePregunta() {
     mostrarPregunta();
 }
 
+// FUNCIÓN CORREGIDA - AHORA SÍ DA DINERO AL 100%
 function mostrarResultados() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
-    // AGREGAR RECOMPENSA ECONÓMICA AL RPG
+    // AGREGAR RECOMPENSA ECONÓMICA AL RPG - CORREGIDO
     if (porcentaje === 100) {
         // Dar 1 Sol por mazo completado al 100%
         rpgNovia.economia.saldo += 1;
-        mostrarVideoRecompensa();
         
         // Mostrar mensaje de recompensa
         setTimeout(() => {
             mostrarMensaje("¡Ganaste 1 Sol por completar el mazo al 100%! 💰");
         }, 1000);
         
+        // Mostrar video de recompensa
+        mostrarVideoRecompensa();
+        
         // REGISTRAR MAZO COMPLETADO PARA EVENTO DIARIO
         eventosDiarios.registrarMazoCompletado();
     } else if (porcentaje >= 80) {
+        // También dar recompensa por 80% o más (media recompensa)
+        rpgNovia.economia.saldo += 0.5;
+        
+        setTimeout(() => {
+            mostrarMensaje("¡Ganaste 0.5 Soles por completar el mazo al 80%! 💰");
+        }, 1000);
+        
         mostrarPantallaResultados(porcentaje);
         
-        // REGISTRAR MAZO COMPLETADO PARA EVENTO DIARIO (aunque no sea 100%)
+        // REGISTRAR MAZO COMPLETADO PARA EVENTO DIARIO
         eventosDiarios.registrarMazoCompletado();
     } else {
         mostrarPantallaResultados(porcentaje);
     }
+    
+    // Actualizar la interfaz del RPG para mostrar el nuevo saldo
+    actualizarInterfazRPG();
 }
 
 function mostrarPantallaResultados(porcentaje) {
@@ -1722,6 +1730,7 @@ function mostrarPantallaResultados(porcentaje) {
     `;
 }
 
+// FUNCIÓN CORREGIDA - VIDEO EN BUCLE CON BOTÓN DE CERRAR
 function mostrarVideoRecompensa() {
     const video = obtenerVideoAleatorio();
     
@@ -1734,13 +1743,30 @@ function mostrarVideoRecompensa() {
     
     // Reproducir el video automáticamente
     const videoElement = document.getElementById('video-recompensa');
-    videoElement.play();
     
-    // Cuando el video termine, mostrar los resultados
-    videoElement.onended = function() {
-        const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
-        mostrarPantallaResultados(porcentaje);
-    };
+    // Configurar para que se repita en bucle
+    videoElement.loop = true;
+    
+    // QUITAR el evento onended para que no se cierre automáticamente
+    videoElement.onended = null;
+    
+    videoElement.play().catch(e => {
+        console.log("Autoplay bloqueado, el usuario debe iniciar manualmente");
+    });
+}
+
+// NUEVA FUNCIÓN PARA CERRAR VIDEO DE RECOMPENSA DE MAZO
+function cerrarVideoRecompensaMazo() {
+    // Detener el video
+    const videoElement = document.getElementById('video-recompensa');
+    if (videoElement) {
+        videoElement.pause();
+        videoElement.currentTime = 0;
+    }
+    
+    // Mostrar resultados
+    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    mostrarPantallaResultados(porcentaje);
 }
 
 function saltarVideo() {
