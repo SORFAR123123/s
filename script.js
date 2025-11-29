@@ -1119,8 +1119,21 @@ const estructura = {
 function generarMazosEspecificos(subcontenedorId) {
     const mazos = {};
     
-    // Generar 5 mazos específicos para cada subcontenedor
-    for (let i = 1; i <= 5; i++) {
+    // Detectar automáticamente cuántos mazos hay definidos para este subcontenedor
+    let numeroMazos = 0;
+    
+    // Buscar en palabrasDatabase cuántos mazos existen para este subcontenedor
+    if (palabrasDatabase[subcontenedorId]) {
+        numeroMazos = Object.keys(palabrasDatabase[subcontenedorId]).length;
+    }
+    
+    // Si no se encontraron mazos, usar 5 como valor por defecto
+    if (numeroMazos === 0) {
+        numeroMazos = 5;
+    }
+    
+    // Generar mazos específicos para cada subcontenedor
+    for (let i = 1; i <= numeroMazos; i++) {
         const mazoId = `mazo${i}`;
         mazos[mazoId] = {
             nombre: `Mazo ${i}`,
@@ -1130,7 +1143,6 @@ function generarMazosEspecificos(subcontenedorId) {
     
     return mazos;
 }
-
 // Función para generar palabras específicas para cada mazo
 function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
     // Base de datos de palabras organizadas por subcontenedor y mazo
