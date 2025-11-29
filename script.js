@@ -1119,15 +1119,27 @@ const estructura = {
 function generarMazosEspecificos(subcontenedorId) {
     const mazos = {};
     
-    // Detectar automáticamente cuántos mazos hay definidos para este subcontenedor
+    // Detectar automáticamente cuántos mazos hay definidos
+    // Buscando hasta encontrar el límite
     let numeroMazos = 0;
+    let i = 1;
     
-    // Buscar en palabrasDatabase cuántos mazos existen para este subcontenedor
-    if (palabrasDatabase[subcontenedorId]) {
-        numeroMazos = Object.keys(palabrasDatabase[subcontenedorId]).length;
+    // Seguir buscando mazos mientras existan en generarPalabrasEspecificas
+    while (true) {
+        const palabras = generarPalabrasEspecificas(subcontenedorId, i);
+        // Si no hay palabras o son las genéricas, detenerse
+        if (!palabras || palabras.length === 0 || 
+            (palabras[0] && palabras[0].japones === '言葉')) { // Palabra genérica por defecto
+            break;
+        }
+        numeroMazos = i;
+        i++;
+        
+        // Límite máximo por seguridad
+        if (i > 20) break;
     }
     
-    // Si no se encontraron mazos, usar 5 como valor por defecto
+    // Si no se encontraron mazos específicos, usar 5 como valor por defecto
     if (numeroMazos === 0) {
         numeroMazos = 5;
     }
