@@ -1376,7 +1376,7 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
         { japones: '再生', lectura: 'saisei', opciones: ['Reciclaje', 'Desperdicio', 'Contaminación', 'Destrucción'], respuesta: 0 },
         { japones: '持続可能', lectura: 'jizokukanou', opciones: ['Sostenible', 'Insostenible', 'Temporal', 'Limitado'], respuesta: 0 },
         { japones: '地球温暖化', lectura: 'chikyuondanka', opciones: ['Calentamiento global', 'Enfriamiento', 'Estabilidad', 'Equilibrio'], respuesta: 0 },
-        { japones: '生物多様性', lectura: 'seibututayousei', opciones: ['Biodiversidad', 'Uniformidad', 'Simplicidad', 'Homogeneidad'], respuesta: 0 }
+        { japones: '生物多様性', lectura: 'seibututayousei', opciones: ['Biodiversidad', 'Uniformidad', 'Homogeneidad', 'Similitud'], respuesta: 0 }
     ]
 },
 'sub2_2': {
@@ -1547,7 +1547,7 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
         { japones: '友情', lectura: 'yuujou', opciones: ['Amistad', 'Enemistad', 'Rivalidad', 'Competencia'], respuesta: 0 },
         { japones: '信頼', lectura: 'shinrai', opciones: ['Confianza', 'Desconfianza', 'Sospecha', 'Duda'], respuesta: 0 },
         { japones: '協力', lectura: 'kyouryoku', opciones: ['Cooperación', 'Competencia', 'Oposición', 'Obstrucción'], respuesta: 0 },
-        { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Silencio'], respuesta: 0 },
+        { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Soledad'], respuesta: 0 },
         { japones: '理解', lectura: 'rikai', opciones: ['Comprensión', 'Incomprensión', 'Confusión', 'Malentendido'], respuesta: 0 },
         { japones: '共感', lectura: 'kyoukan', opciones: ['Empatía', 'Apatía', 'Indiferencia', 'Insensibilidad'], respuesta: 0 },
         { japones: '尊敬', lectura: 'sonkei', opciones: ['Respeto', 'Desprecio', 'Menosprecio', 'Irrespeto'], respuesta: 0 },
@@ -1962,23 +1962,7 @@ function mostrarResultados() {
     } else {
         mostrarPantallaResultados(porcentaje);
     }
-        
-    } else if (porcentaje >= 80) {
-        // Registrar mazo completado para misiones diarias (80% cuenta como completado)
-        misionesDiarias.registrarMazoCompletado();
-        
-        // Registrar para evento diario también
-        eventosDiarios.registrarMazoCompletado();
-        
-        // Media recompensa por 80%
-        sistemaEconomia.agregarDinero(0.5, "Mazo completado al 80%");
-        
-        mostrarPantallaResultados(porcentaje);
-        
-    } else {
-        mostrarPantallaResultados(porcentaje);
-    }
-
+}
 
 function mostrarPantallaResultados(porcentaje) {
     cambiarPantalla('pantalla-resultados');
