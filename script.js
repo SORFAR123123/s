@@ -1504,19 +1504,19 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
     ]
 },
 
-// THE LAST SUMMER 3
+// Yamada
 'sub3_1': {
     1: [
-        { japones: '健康', lectura: 'kenkou', opciones: ['Salud', 'Enfermedad', 'Debilidad', 'Malestar'], respuesta: 0 },
-        { japones: '病気', lectura: 'byouki', opciones: ['Enfermedad', 'Salud', 'Bienestar', 'Vitalidad'], respuesta: 0 },
-        { japones: '治療', lectura: 'chiryou', opciones: ['Tratamiento', 'Prevención', 'Diagnóstico', 'Síntoma'], respuesta: 0 },
-        { japones: '予防', lectura: 'yobou', opciones: ['Prevención', 'Tratamiento', 'Cura', 'Recuperación'], respuesta: 0 },
-        { japones: '症状', lectura: 'shoujou', opciones: ['Síntoma', 'Causa', 'Efecto', 'Consecuencia'], respuesta: 0 },
-        { japones: '医者', lectura: 'isha', opciones: ['Médico', 'Paciente', 'Enfermera', 'Farmacéutico'], respuesta: 0 },
-        { japones: '病院', lectura: 'byouin', opciones: ['Hospital', 'Clínica', 'Consultorio', 'Farmacia'], respuesta: 0 },
-        { japones: '薬', lectura: 'kusuri', opciones: ['Medicamento', 'Veneno', 'Suplemento', 'Vitaminas'], respuesta: 0 },
-        { japones: '検査', lectura: 'kensa', opciones: ['Examen', 'Diagnóstico', 'Tratamiento', 'Prevención'], respuesta: 0 },
-        { japones: '手術', lectura: 'shujutsu', opciones: ['Cirugía', 'Medicamento', 'Terapia', 'Rehabilitación'], respuesta: 0 }
+        { japones: 'こんなこと', lectura: 'konna koto', opciones: ['algo así', 'nada', 'todo', 'alguien'], respuesta: 0 },
+        { japones: '俺達', lectura: 'oretachi', opciones: ['nosotros', 'ellos', 'ustedes', 'vosotros'], respuesta: 0 },
+        { japones: '伝える', lectura: 'tsutaeru', opciones: ['comunicar', 'escuchar', 'escribir', 'leer'], respuesta: 0 },
+        { japones: '無事', lectura: 'buji', opciones: ['sin problemas', 'con problemas', 'peligroso', 'difícil'], respuesta: 0 },
+        { japones: '順調', lectura: 'junchou', opciones: ['ir bien', 'ir mal', 'empeorar', 'estancarse'], respuesta: 0 },
+        { japones: '続', lectura: 'tsuzuku', opciones: ['continuar', 'parar', 'empezar', 'terminar'], respuesta: 0 },
+        { japones: '実際', lectura: 'jissai', opciones: ['en realidad', 'en teoría', 'aparentemente', 'posiblemente'], respuesta: 0 },
+        { japones: '周', lectura: 'mawari', opciones: ['alrededor', 'dentro', 'fuera', 'lejos'], respuesta: 0 },
+        { japones: 'ちょっかい', lectura: 'chokkai', opciones: ['molestias', 'ayuda', 'silencio', 'apoyo'], respuesta: 0 },
+        { japones: '厄介', lectura: 'yakkai', opciones: ['problemas', 'soluciones', 'facilidades', 'ventajas'], respuesta: 0 }
     ],
     2: [
         { japones: '教育', lectura: 'kyouiku', opciones: ['Educación', 'Ignorancia', 'Analfabetismo', 'Incultura'], respuesta: 0 },
