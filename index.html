@@ -7,8 +7,58 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- PANTALLA DE EVENTO DIARIO - ELIMINADA LA ESTRUCTURA ESTÁTICA -->
-    <!-- La pantalla de evento diario se creará dinámicamente en JavaScript -->
+    <!-- PANTALLA DE EVENTO DIARIO -->
+    <div id="pantalla-evento-diario" class="pantalla">
+        <div class="contenedor">
+            <div class="evento-diario-container">
+                <div class="evento-header">
+                    <h1>🎁 Evento Diario</h1>
+                    <p class="evento-fecha" id="fecha-evento">Hoy</p>
+                </div>
+                
+                <div class="evento-content">
+                    <div class="video-container-evento">
+                        <video id="video-evento-presentacion" controls muted loop playsinline class="video-evento">
+                            Tu navegador no soporta el elemento video.
+                        </video>
+                        <div class="video-overlay"></div>
+                        <div class="video-play-indicator">
+                            <div class="play-icon">▶️</div>
+                            <p>Haz clic para reproducir</p>
+                        </div>
+                    </div>
+                    
+                    <div class="evento-info">
+                        <h2 class="evento-nombre" id="nombre-evento">Reto Diario</h2>
+                        <p class="evento-descripcion" id="descripcion-evento">Completa el desafío de hoy</p>
+                        
+                        <div class="evento-progreso">
+                            <div class="progreso-texto">
+                                Progreso: <span id="contador-progreso">0</span>/<span id="objetivo-evento">3</span>
+                            </div>
+                            <div class="barra-progreso-evento">
+                                <div id="barra-progreso-fill" class="barra-progreso-fill-evento" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="evento-recompensa">
+                            <h3>🎯 Recompensa:</h3>
+                            <p id="recompensa-evento">+5 S/. 💰</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="evento-actions">
+                    <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
+                        ¡Aceptar Reto! 🚀
+                    </button>
+                    <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
+                        Omitir por hoy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- PANTALLA DE VIDEO RECOMPENSA EVENTO -->
     <div id="pantalla-video-evento" class="pantalla">
@@ -25,6 +75,7 @@
                 
                 <div class="info-video">
                     <p class="mensaje-video">¡Excelente trabajo completando el evento diario! 🎉</p>
+                    <p class="recompensa-dinero" id="recompensa-dinero-evento">+5 S/. 💰</p>
                 </div>
                 
                 <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
@@ -63,6 +114,37 @@
         <div class="contenedor">
             <h1>BIBLIOTECA DE MAZOS</h1>
             <p class="subtitulo">Selecciona un contenedor principal</p>
+            
+            <!-- PANEL DE MISIONES DIARIAS -->
+            <div class="misiones-diarias-panel">
+                <h3>🎯 Misiones Diarias</h3>
+                <div class="misiones-lista">
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 1 mazo al 100%</span>
+                        <span class="mision-recompensa">+1 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision1-progreso">0/1</span>
+                        </div>
+                    </div>
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 3 mazos al 100%</span>
+                        <span class="mision-recompensa">+3 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision2-progreso">0/3</span>
+                        </div>
+                    </div>
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 5 mazos al 100%</span>
+                        <span class="mision-recompensa">+5 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision3-progreso">0/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="economia-panel">
+                    <span class="saldo-total">Saldo: <span id="saldo-total">0</span> S/.</span>
+                </div>
+            </div>
             
             <div class="menu-principal">
                 <div class="seccion-menu">
@@ -176,7 +258,8 @@
                 
                 <div class="resultado" id="resultado"></div>
                 
-                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Siguiente Pregunta</button>
+                <!-- EL BOTÓN SIGUIENTE SE MUESTRA SOLO PARA RESPUESTAS INCORRECTAS -->
+                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Continuar</button>
             </div>
         </div>
     </div>
@@ -197,6 +280,7 @@
                 <div class="info-video">
                     <p id="duracion-video" class="duracion-video">Duración: 10s</p>
                     <p class="mensaje-video">¡Disfruta tu recompensa!</p>
+                    <p class="recompensa-dinero" id="recompensa-mazo">+1 S/. 💰</p>
                 </div>
                 
                 <button class="boton-principal" onclick="cerrarVideoRecompensaMazo()">
