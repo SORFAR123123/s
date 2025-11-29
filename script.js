@@ -1978,7 +1978,7 @@ function mostrarResultados() {
     } else {
         mostrarPantallaResultados(porcentaje);
     }
-}
+
 
 function mostrarPantallaResultados(porcentaje) {
     cambiarPantalla('pantalla-resultados');
