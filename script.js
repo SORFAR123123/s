@@ -1518,17 +1518,17 @@ function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
         { japones: 'ちょっかい', lectura: 'chokkai', opciones: ['molestias', 'ayuda', 'silencio', 'apoyo'], respuesta: 0 },
         { japones: '厄介', lectura: 'yakkai', opciones: ['problemas', 'soluciones', 'facilidades', 'ventajas'], respuesta: 0 }
     ],
-    2: [
-        { japones: '教育', lectura: 'kyouiku', opciones: ['Educación', 'Ignorancia', 'Analfabetismo', 'Incultura'], respuesta: 0 },
-        { japones: '学習', lectura: 'gakshuu', opciones: ['Aprendizaje', 'Enseñanza', 'Estudio', 'Práctica'], respuesta: 0 },
-        { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
-        { japones: '技能', lectura: 'ginou', opciones: ['Habilidad', 'Incapacidad', 'Ineptitud', 'Torpeza'], respuesta: 0 },
-        { japones: '資格', lectura: 'shikaku', opciones: ['Certificación', 'Experiencia', 'Práctica', 'Teoría'], respuesta: 0 },
-        { japones: '訓練', lectura: 'kunren', opciones: ['Entrenamiento', 'Improvisación', 'Talento natural', 'Suerte'], respuesta: 0 },
-        { japones: '指導', lectura: 'shidou', opciones: ['Instrucción', 'Aprendizaje', 'Práctica', 'Ejecución'], respuesta: 0 },
-        { japones: '評価', lectura: 'hyouka', opciones: ['Evaluación', 'Ignorancia', 'Desprecio', 'Rechazo'], respuesta: 0 },
-        { japones: '成長', lectura: 'seichou', opciones: ['Desarrollo', 'Estancamiento', 'Regresión', 'Decadencia'], respuesta: 0 },
-        { japones: '潜在能力', lectura: 'senzainouryoku', opciones: ['Potencial', 'Realidad', 'Actualidad', 'Presente'], respuesta: 0 }
+        2: [
+        { japones: '大変', lectura: 'taihen', opciones: ['duro', 'fácil', 'simple', 'sencillo'], respuesta: 0 },
+        { japones: '男女', lectura: 'danjo', opciones: ['hombre y mujer', 'amigos', 'familia', 'compañeros'], respuesta: 0 },
+        { japones: '流', lectura: 'nagare', opciones: ['fluir', 'estancar', 'parar', 'bloquear'], respuesta: 0 },
+        { japones: '初体験', lectura: 'hatsu taiken', opciones: ['primera experiencia íntima', 'última vez', 'experiencia común', 'práctica'], respuesta: 0 },
+        { japones: '成功', lectura: 'seikou', opciones: ['fue un éxito', 'fue un fracaso', 'fue normal', 'fue mediocre'], respuesta: 0 },
+        { japones: '更に', lectura: 'sara ni', opciones: ['todavía más', 'menos', 'igual', 'diferente'], respuesta: 0 },
+        { japones: '深まる', lectura: 'fukamaru', opciones: ['profundizar', 'superficial', 'disminuir', 'reducir'], respuesta: 0 },
+        { japones: 'タガ', lectura: 'taga', opciones: ['limitación', 'libertad', 'expansión', 'apertura'], respuesta: 0 },
+        { japones: '外れる', lectura: 'hazureru', opciones: ['salirse', 'quedarse', 'entrar', 'fijarse'], respuesta: 0 },
+        { japones: '初々しい', lectura: 'ui ui shii', opciones: ['primero', 'experimentado', 'viejo', 'usado'], respuesta: 0 }
     ],
     3: [
         { japones: '職業', lectura: 'shokugyou', opciones: ['Profesión', 'Pasatiempo', 'Voluntariado', 'Ocio'], respuesta: 0 },
