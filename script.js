@@ -345,7 +345,7 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
-// SISTEMA DE EVENTOS DIARIOS - MEJORADO
+// SISTEMA DE EVENTOS DIARIOS - CORREGIDO
 // ============================================================================
 
 const eventosDiarios = {
@@ -456,11 +456,13 @@ const eventosDiarios = {
     // Estado del evento diario actual
     estado: {
         eventoActual: null,
+        aceptado: false,
         completado: false,
         fallado: false,
         progreso: 0,
         mazosCompletadosHoy: 0,
-        ultimaFecha: null
+        ultimaFecha: null,
+        debeMostrarFallo: false // NUEVO: Para mostrar fallo al día siguiente
     },
     
     // Inicializar sistema de eventos
@@ -472,26 +474,63 @@ const eventosDiarios = {
         console.log("📅 Fecha hoy:", hoy);
         console.log("💾 Datos guardados:", datosGuardados);
         
-        // Verificar si es un nuevo día o no hay datos
+        // Verificar si es un nuevo día
         if (!datosGuardados || datosGuardados.ultimaFecha !== hoy) {
-            console.log("🆕 Nuevo día - Reiniciando evento diario");
-            this.reiniciarEventoDiario();
+            console.log("🆕 Nuevo día - Verificando evento anterior");
+            
+            // Si hay evento del día anterior que no se completó, marcar para mostrar fallo
+            if (datosGuardados && datosGuardados.aceptado && !datosGuardados.completado) {
+                console.log("📉 Evento anterior no completado - Mostrar fallo mañana");
+                // Guardar que debe mostrar fallo al día siguiente
+                datosGuardados.debeMostrarFallo = true;
+                datosGuardados.ultimaFecha = hoy; // Actualizar fecha
+                this.estado = datosGuardados;
+                this.guardarDatos();
+                
+                // Mostrar video de fallo inmediatamente
+                setTimeout(() => {
+                    this.mostrarVideoFallo();
+                    // Reiniciar evento para el nuevo día
+                    this.reiniciarEventoDiario();
+                }, 500);
+            } else if (datosGuardados && datosGuardados.fallado && datosGuardados.debeMostrarFallo) {
+                // Si ya mostró fallo ayer, no mostrar nada hoy
+                console.log("✅ Ya mostró fallo ayer - Reiniciando evento");
+                datosGuardados.debeMostrarFallo = false;
+                this.estado = datosGuardados;
+                this.guardarDatos();
+                this.reiniciarEventoDiario();
+            } else {
+                // Día normal, reiniciar evento
+                console.log("🔄 Reiniciando evento diario normalmente");
+                this.reiniciarEventoDiario();
+            }
         } else {
-            console.log("📋 Cargando evento existente");
+            console.log("📋 Cargando evento existente para hoy");
             this.estado = datosGuardados;
         }
         
-        // Mostrar evento diario si no se ha completado ni fallado
-        if (!this.estado.completado && !this.estado.fallado && this.estado.eventoActual) {
-            console.log("🎁 Mostrando evento diario");
+        // Mostrar evento diario si está pendiente
+        this.mostrarEventoSiEsNecesario();
+    },
+    
+    // Mostrar evento si es necesario
+    mostrarEventoSiEsNecesario: function() {
+        // Solo mostrar si hay evento actual, no está completado, no está fallado y no debe mostrar fallo
+        if (this.estado.eventoActual && 
+            !this.estado.completado && 
+            !this.estado.fallado && 
+            !this.estado.debeMostrarFallo) {
+            console.log("🎁 Mostrando evento diario pendiente");
             setTimeout(() => {
                 this.mostrarEventoDiario();
             }, 1000);
         } else {
             console.log("❌ Evento no mostrado - Razón:", {
+                tieneEvento: !!this.estado.eventoActual,
                 completado: this.estado.completado,
                 fallado: this.estado.fallado,
-                tieneEvento: !!this.estado.eventoActual
+                debeMostrarFallo: this.estado.debeMostrarFallo
             });
         }
     },
@@ -536,11 +575,13 @@ const eventosDiarios = {
         
         this.estado = {
             eventoActual: eventoAleatorio,
+            aceptado: false,
             completado: false,
             fallado: false,
             progreso: 0,
             mazosCompletadosHoy: 0,
-            ultimaFecha: this.obtenerFechaHoy()
+            ultimaFecha: this.obtenerFechaHoy(),
+            debeMostrarFallo: false
         };
         
         console.log("🎯 Nuevo evento:", eventoAleatorio.nombre);
@@ -661,21 +702,21 @@ const eventosDiarios = {
     // Aceptar el evento diario
     aceptarEvento: function() {
         console.log("✅ Evento diario aceptado");
+        this.estado.aceptado = true;
+        this.guardarDatos();
         this.ocultarPantallaEvento();
         // El evento continúa en segundo plano
     },
     
-    // Omitir el evento diario (considerado como fallo)
+    // Omitir el evento diario (considerado como fallo inmediato)
     omitirEvento: function() {
         console.log("❌ Evento diario omitido");
         this.estado.fallado = true;
+        this.estado.debeMostrarFallo = true; // Mostrar fallo al día siguiente
         this.guardarDatos();
-        this.ocultarPantallaEvento();
         
-        // Mostrar mensaje de confirmación
-        setTimeout(() => {
-            alert("Evento omitido para hoy. ¡Vuelve mañana para un nuevo reto! 📅");
-        }, 300);
+        // Mostrar video de fallo inmediatamente
+        this.mostrarVideoFallo();
     },
     
     // Ocultar pantalla de evento
@@ -696,7 +737,7 @@ const eventosDiarios = {
     
     // Registrar mazo completado
     registrarMazoCompletado: function() {
-        if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado) {
+        if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado || !this.estado.aceptado) {
             console.log("📝 Mazo completado pero evento no activo");
             return;
         }
@@ -728,19 +769,19 @@ const eventosDiarios = {
         this.guardarDatos();
     },
     
-   // Completar evento exitosamente
-completarEvento: function() {
-    console.log("🎉 Evento diario completado!");
-    this.estado.completado = true;
-    this.guardarDatos();
-    
-    // Dar recompensa monetaria
-    const recompensa = this.estado.eventoActual.recompensa.dinero;
-    sistemaEconomia.agregarDinero(recompensa, "Evento diario completado");
-    
-    // MOSTRAR VIDEO DEL EVENTO INMEDIATAMENTE
-    this.mostrarVideoRecompensa();
-},
+    // Completar evento exitosamente
+    completarEvento: function() {
+        console.log("🎉 Evento diario completado!");
+        this.estado.completado = true;
+        this.guardarDatos();
+        
+        // Dar recompensa monetaria
+        const recompensa = this.estado.eventoActual.recompensa.dinero;
+        sistemaEconomia.agregarDinero(recompensa, "Evento diario completado");
+        
+        // MOSTRAR VIDEO DEL EVENTO INMEDIATAMENTE
+        this.mostrarVideoRecompensa();
+    },
     
     // Mostrar video de recompensa
     mostrarVideoRecompensa: function() {
@@ -779,9 +820,14 @@ completarEvento: function() {
         }
     },
     
-    // Mostrar video de fallo (se llama al día siguiente si falló)
+    // Mostrar video de fallo (al día siguiente o inmediatamente si se omite)
     mostrarVideoFallo: function() {
         const evento = this.estado.eventoActual;
+        if (!evento) {
+            console.error("No hay evento para mostrar fallo");
+            return;
+        }
+        
         console.log("📉 Mostrando video de fallo");
 
         // Ocultar todas las pantallas
@@ -812,6 +858,11 @@ completarEvento: function() {
                 videoElement.controls = true;
             });
         }
+        
+        // Resetear estado después de mostrar fallo
+        this.estado.debeMostrarFallo = false;
+        this.estado.fallado = false; // Reset para que no interfiera con nuevo evento
+        this.guardarDatos();
     },
     
     // Cerrar video de recompensa
@@ -822,6 +873,11 @@ completarEvento: function() {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
+        
+        // Reiniciar evento para el nuevo día
+        this.reiniciarEventoDiario();
+        
+        // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
     },
     
@@ -833,6 +889,11 @@ completarEvento: function() {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
+        
+        // Reiniciar evento para el nuevo día
+        this.reiniciarEventoDiario();
+        
+        // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
     }
 };
@@ -2375,16 +2436,6 @@ document.addEventListener('DOMContentLoaded', function() {
     sistemaEconomia.inicializar();
     misionesDiarias.inicializar();
     eventosDiarios.inicializar();
-    
-    // Verificar si hay un evento fallado del día anterior para mostrar video
-    const datosEventos = eventosDiarios.cargarDatos();
-    if (datosEventos && datosEventos.fallado && datosEventos.ultimaFecha !== eventosDiarios.obtenerFechaHoy()) {
-        console.log("📅 Mostrando video de fallo del día anterior");
-        eventosDiarios.mostrarVideoFallo();
-        // Reiniciar estado de fallo
-        datosEventos.fallado = false;
-        eventosDiarios.guardarDatos();
-    }
     
     console.log("✅ Sistemas inicializados correctamente");
 });
