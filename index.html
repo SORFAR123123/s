@@ -147,6 +147,19 @@
             </div>
             
             <div class="menu-principal">
+                <!-- NUEVO: APARTADO DE PALABRAS FALLADAS -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">📝 ENTRENAMIENTO ESPECIAL</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="mostrarPalabrasFalladas()">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Palabras Falladas" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">🔥 PALABRAS FALLADAS</div>
+                            <div class="lastsummer-info">Revisa y practica tus errores</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE CONTENEDORES PRINCIPALES -->
                 <div class="seccion-menu">
                     <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
                     <div class="contenedor-tarjetas">
@@ -407,6 +420,11 @@
                 <div id="mensaje-rpg" class="mensaje-sistema"></div>
             </div>
         </div>
+    </div>
+
+    <!-- NUEVA PANTALLA: PALABRAS FALLADAS -->
+    <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
+        <!-- Esta pantalla se crea dinámicamente en script.js -->
     </div>
 
     <script src="script.js"></script>
