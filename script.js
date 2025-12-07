@@ -1981,25 +1981,27 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         }
     });
     
-    if (respuestaSeleccionada === respuestaCorrecta) {
-        document.getElementById('lectura').textContent = `(${lectura})`;
-        resultado.textContent = '¡Correcto!';
-        resultado.className = 'resultado correcto';
-        respuestasCorrectas++;
-        
-        // Navegación automática para respuestas correctas
-        setTimeout(() => {
-            siguientePregunta();
-        }, 1000);
-        
-    } else {
-        resultado.textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
-        resultado.className = 'resultado incorrecto';
-        respuestasIncorrectas++;
-        
-        // Mostrar botón "Continuar" solo para respuestas incorrectas
-        document.getElementById('boton-siguiente').style.display = 'block';
-    }
+    // MUEVE LA LÍNEA DE LECTURA FUERA DEL IF PARA QUE SIEMPRE SE MUESTRE
+document.getElementById('lectura').textContent = `(${lectura})`;  // <-- Ahora se muestra siempre
+
+if (respuestaSeleccionada === respuestaCorrecta) {
+    resultado.textContent = '¡Correcto!';
+    resultado.className = 'resultado correcto';
+    respuestasCorrectas++;
+    
+    // Navegación automática para respuestas correctas
+    setTimeout(() => {
+        siguientePregunta();
+    }, 1000);
+    
+} else {
+    resultado.textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
+    resultado.className = 'resultado incorrecto';
+    respuestasIncorrectas++;
+    
+    // Mostrar botón "Continuar" solo para respuestas incorrectas
+    document.getElementById('boton-siguiente').style.display = 'block';
+}
 }
 
 function siguientePregunta() {
