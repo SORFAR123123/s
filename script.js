@@ -466,20 +466,20 @@ const videosRecompensa = [
     },
     {
         id: 3,
-        titulo: "¡Eres Increíble! 💪",
+        titulo: "¡ Nino te telaja con su boca! 💪",
         url: "ninocaricia.mp4",
         duracion: "12s"
     },
     {
         id: 4,
-        titulo: "¡Perfecto! 🏆",
+        titulo: "¡ Nino te telaja con su boca! 🏆",
         url: "ninocaricia.mp4",
         duracion: "8s"
     },
     {
         id: 5,
-        titulo: "¡Misión Cumplida! 🚀",
-        url: "Belinda.mp4",
+        titulo: "¡Nino esta pensando en ti ! 🚀",
+        url: "ninopensando.mp4",
         duracion: "11s"
     }
 ];
