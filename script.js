@@ -460,8 +460,8 @@ const videosRecompensa = [
     },
     {
         id: 2,
-        titulo: " Nino te telaja con su boca ⭐",
-        url: "ninocaricia.mp4",
+        titulo: "A miku le gustan los inteligentes y entrega el poto a Fabrizio  y Aldo ⭐",
+        url: "miku.mp4",
         duracion: "15s"
     },
     {
