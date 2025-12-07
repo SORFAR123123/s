@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE RESULTADOS CON BOTÓN DE REPASO -->
+    <!-- PANTALLA DE RESULTADOS -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
@@ -337,43 +337,8 @@
                 <!-- Los resultados se mostrarán aquí -->
             </div>
             
-            <!-- BOTÓN DE REPASO (SE MUESTRA SOLO SI HAY PALABRAS FALLADAS) -->
-            <button class="boton-principal" id="boton-repasar" onclick="iniciarRepasoFalladas()" style="display: none; background: linear-gradient(135deg, #ff6b6b, #ff4757);">
-                🔄 REPASAR PALABRAS FALLADAS
-            </button>
-            
-            <div class="botones-resultados">
-                <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
-                <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE REPASO DE PALABRAS FALLADAS -->
-    <div id="pantalla-repaso-falladas" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador">🔄 REPASO DE PALABRAS FALLADAS</div>
-                <div class="botones-superiores">
-                    <button class="boton-home" onclick="finalizarRepaso()">Volver a Resultados</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
-                </div>
-            </div>
-            
-            <h2>🔄 MAZO DE REPASO</h2>
-            <p class="subtitulo" id="subtitulo-repaso">Practica las palabras que fallaste en el mazo anterior</p>
-            
-            <div class="info-repaso" id="info-repaso">
-                <!-- Información del repaso se actualizará dinámicamente -->
-            </div>
-            
-            <div class="contenido-quiz" id="contenido-repaso">
-                <!-- Aquí se cargará el quiz de repaso -->
-            </div>
-            
-            <div id="contenedor-repaso-final" style="display: none;">
-                <!-- Resultados del repaso -->
-            </div>
+            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
+            <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
         </div>
     </div>
 
@@ -511,11 +476,14 @@
         </div>
     </div>
 
-    <!-- PANTALLA: PALABRAS FALLADAS (GLOBAL) -->
-    <div id="pantalla-palabras-falladas" class="pantalla">
-        <!-- Esta pantalla se crea dinámicamente en script.js -->
-    </div>
+    <!-- PANTALLA DE PALABRAS FALLADAS (SE CREA DINÁMICAMENTE) -->
+    <!-- Esta pantalla se crea en script.js cuando se necesita -->
 
+    <!-- ARCHIVOS JAVASCRIPT -->
+    <!-- VOCABULARIO SEPARADO (NUEVO) -->
+    <script src="vocabulario.js"></script>
+    
+    <!-- SCRIPT PRINCIPAL (LIMPIO) -->
     <script src="script.js"></script>
 </body>
 </html>
