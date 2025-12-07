@@ -226,7 +226,10 @@
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador" id="titulo-contenedor">Contenedor</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
             </div>
             
             <h2 id="nombre-contenedor">Sub-Contenedores</h2>
@@ -242,7 +245,10 @@
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
-                <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
             </div>
             
             <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
@@ -258,7 +264,10 @@
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
-                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
             </div>
             
             <div class="contenido-quiz">
@@ -280,6 +289,14 @@
     <!-- PANTALLA DE VIDEO RECOMPENSA -->
     <div id="pantalla-video-recompensa" class="pantalla">
         <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">¡Recompensa!</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="saltarVideo()">Saltar Video</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
             <div class="contenido-video">
                 <h1 id="titulo-video">¡Felicidades! 🎉</h1>
                 <p class="subtitulo-video">Has completado el mazo al 100%</p>
@@ -306,6 +323,14 @@
     <!-- PANTALLA DE RESULTADOS -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">Resultados del Quiz</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
             <h1>Resultados del Quiz</h1>
             
             <div class="resultado-final" id="resultado-final">
@@ -322,7 +347,10 @@
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador">💕 RPG de Novia</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
             </div>
             
             <div class="rpg-container">
