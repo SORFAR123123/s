@@ -2078,7 +2078,7 @@ function mostrarPregunta() {
     }
 }
 
-// FUNCIÓN MEJORADA - REGISTRA PALABRAS FALLADAS
+// FUNCIÓN CORREGIDA - REGISTRA PALABRAS FALLADAS Y MUESTRA LA PRONUNCIACIÓN SIEMPRE
 function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
     const opciones = document.querySelectorAll('.opcion');
     const resultado = document.getElementById('resultado');
@@ -2096,13 +2096,15 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         }
     });
     
+    // CORRECCIÓN 1: MOSTRAR LA PRONUNCIACIÓN SIEMPRE, TANTO EN RESPUESTA CORRECTA COMO INCORRECTA
+    document.getElementById('lectura').textContent = `(${lectura})`;
+    
     if (respuestaSeleccionada === respuestaCorrecta) {
-        document.getElementById('lectura').textContent = `(${lectura})`;
         resultado.textContent = '¡Correcto!';
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
         
-        // Navegación automática para respuestas correctas
+        // CORRECCIÓN 2: Navegación automática solo para respuestas correctas
         setTimeout(() => {
             siguientePregunta();
         }, 1000);
@@ -2122,6 +2124,9 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         
         // Mostrar botón "Continuar" solo para respuestas incorrectas
         document.getElementById('boton-siguiente').style.display = 'block';
+        
+        // CORRECCIÓN 3: NO NAVEGACIÓN AUTOMÁTICA PARA RESPUESTAS INCORRECTAS
+        // El usuario debe hacer clic en "Continuar" manualmente
     }
 }
 
