@@ -485,7 +485,7 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
-// SISTEMA DE EVENTOS DIARIOS - CORREGIDO
+// SISTEMA DE EVENTOS DIARIOS - CORREGIDO Y MEJORADO
 // ============================================================================
 
 const eventosDiarios = {
@@ -602,7 +602,8 @@ const eventosDiarios = {
         progreso: 0,
         mazosCompletadosHoy: 0,
         ultimaFecha: null,
-        debeMostrarFallo: false // NUEVO: Para mostrar fallo al día siguiente
+        vistoHoy: false, // NUEVO: Controla si el evento ya fue visto hoy
+        debeMostrarFallo: false
     },
     
     // Inicializar sistema de eventos
@@ -616,58 +617,58 @@ const eventosDiarios = {
         
         // Verificar si es un nuevo día
         if (!datosGuardados || datosGuardados.ultimaFecha !== hoy) {
-            console.log("🆕 Nuevo día - Verificando evento anterior");
+            console.log("🆕 Nuevo día - Configurando nuevo evento");
             
-            // Si hay evento del día anterior que no se completó, marcar para mostrar fallo
-            if (datosGuardados && datosGuardados.aceptado && !datosGuardados.completado) {
-                console.log("📉 Evento anterior no completado - Mostrar fallo mañana");
-                // Guardar que debe mostrar fallo al día siguiente
-                datosGuardados.debeMostrarFallo = true;
-                datosGuardados.ultimaFecha = hoy; // Actualizar fecha
-                this.estado = datosGuardados;
-                this.guardarDatos();
-                
-                // Mostrar video de fallo inmediatamente
-                setTimeout(() => {
-                    this.mostrarVideoFallo();
-                    // Reiniciar evento para el nuevo día
-                    this.reiniciarEventoDiario();
-                }, 500);
-            } else if (datosGuardados && datosGuardados.fallado && datosGuardados.debeMostrarFallo) {
-                // Si ya mostró fallo ayer, no mostrar nada hoy
-                console.log("✅ Ya mostró fallo ayer - Reiniciando evento");
+            // Si hay datos guardados y tiene debeMostrarFallo, limpiarlo
+            if (datosGuardados && datosGuardados.debeMostrarFallo) {
+                console.log("🧹 Limpiando estado de fallo del día anterior");
                 datosGuardados.debeMostrarFallo = false;
-                this.estado = datosGuardados;
-                this.guardarDatos();
-                this.reiniciarEventoDiario();
-            } else {
-                // Día normal, reiniciar evento
-                console.log("🔄 Reiniciando evento diario normalmente");
-                this.reiniciarEventoDiario();
             }
+            
+            this.reiniciarEventoDiario();
         } else {
             console.log("📋 Cargando evento existente para hoy");
             this.estado = datosGuardados;
         }
         
-        // Mostrar evento diario si está pendiente
+        // Mostrar evento diario si NO ha sido visto hoy
         this.mostrarEventoSiEsNecesario();
     },
     
     // Mostrar evento si es necesario
     mostrarEventoSiEsNecesario: function() {
-        // Solo mostrar si hay evento actual, no está completado, no está fallado y no debe mostrar fallo
+        console.log("🔍 Verificando si se debe mostrar evento:", {
+            tieneEvento: !!this.estado.eventoActual,
+            vistoHoy: this.estado.vistoHoy,
+            completado: this.estado.completado,
+            fallado: this.estado.fallado,
+            debeMostrarFallo: this.estado.debeMostrarFallo
+        });
+        
+        // CORRECCIÓN 1: Solo mostrar si hay evento actual, NO ha sido visto hoy, NO está completado, NO está fallado
         if (this.estado.eventoActual && 
+            !this.estado.vistoHoy && 
             !this.estado.completado && 
-            !this.estado.fallado && 
-            !this.estado.debeMostrarFallo) {
+            !this.estado.fallado) {
             console.log("🎁 Mostrando evento diario pendiente");
+            
+            // CORRECCIÓN 2: Esperar un poco para que cargue la página principal primero
             setTimeout(() => {
                 this.mostrarEventoDiario();
-            }, 1000);
+            }, 1500);
+        } else if (this.estado.debeMostrarFallo) {
+            // CORRECCIÓN 3: Si debe mostrar fallo (por evento omitido ayer), mostrar video de fallo
+            console.log("📉 Mostrando video de fallo de evento omitido");
+            setTimeout(() => {
+                this.mostrarVideoFallo();
+                // Limpiar el estado después de mostrar
+                this.estado.debeMostrarFallo = false;
+                this.guardarDatos();
+            }, 2000);
         } else {
             console.log("❌ Evento no mostrado - Razón:", {
                 tieneEvento: !!this.estado.eventoActual,
+                vistoHoy: this.estado.vistoHoy,
                 completado: this.estado.completado,
                 fallado: this.estado.fallado,
                 debeMostrarFallo: this.estado.debeMostrarFallo
@@ -721,6 +722,7 @@ const eventosDiarios = {
             progreso: 0,
             mazosCompletadosHoy: 0,
             ultimaFecha: this.obtenerFechaHoy(),
+            vistoHoy: false, // IMPORTANTE: Nuevo día, no visto
             debeMostrarFallo: false
         };
         
@@ -735,107 +737,65 @@ const eventosDiarios = {
             return;
         }
         
-        console.log("📱 Creando pantalla de evento diario con video");
+        console.log("📱 Mostrando pantalla de evento diario");
         
-        // Ocultar pantalla de inicio primero
-        document.getElementById('pantalla-inicio').classList.remove('activa');
+        // Marcar como visto hoy
+        this.estado.vistoHoy = true;
+        this.guardarDatos();
         
-        // Crear y mostrar la pantalla de evento diario con video
-        const eventoHTML = `
-            <div id="pantalla-evento-diario" class="pantalla activa">
-                <div class="contenedor">
-                    <div class="evento-diario-container">
-                        <div class="evento-header">
-                            <h1>🎁 Evento Diario</h1>
-                            <p class="evento-fecha">${new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                        </div>
-                        
-                        <div class="evento-content">
-                            <div class="video-container-evento">
-                                <video id="video-evento-presentacion" controls muted loop playsinline class="video-evento">
-                                    <source src="${this.estado.eventoActual.video}" type="video/mp4">
-                                    Tu navegador no soporta el elemento video.
-                                </video>
-                                <div class="video-overlay"></div>
-                                <div class="video-play-indicator">
-                                    <div class="play-icon">▶️</div>
-                                    <p>Haz clic para reproducir</p>
-                                </div>
-                            </div>
-                            
-                            <div class="evento-info">
-                                <h2 class="evento-nombre">${this.estado.eventoActual.nombre}</h2>
-                                <p class="evento-descripcion">${this.estado.eventoActual.descripcion}</p>
-                                
-                                <div class="evento-progreso">
-                                    <div class="progreso-texto">
-                                        Progreso: <span id="contador-progreso">${this.estado.progreso}</span>/${this.estado.eventoActual.objetivo}
-                                    </div>
-                                    <div class="barra-progreso-evento">
-                                        <div id="barra-progreso-fill" class="barra-progreso-fill-evento" 
-                                             style="width: ${(this.estado.progreso / this.estado.eventoActual.objetivo) * 100}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="evento-recompensa">
-                                    <h3>🎯 Recompensa:</h3>
-                                    <p>+${this.estado.eventoActual.recompensa.dinero} S/. 💰</p>
-                                    <p>${this.estado.eventoActual.recompensa.mensaje}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="evento-actions">
-                            <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
-                                ¡Aceptar Reto! 🚀
-                            </button>
-                            <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
-                                Omitir por hoy
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        // CORRECCIÓN 4: Ocultar pantalla de inicio primero
+        const pantallaInicio = document.getElementById('pantalla-inicio');
+        if (pantallaInicio) {
+            pantallaInicio.classList.remove('activa');
+        }
         
-        // Agregar la pantalla al DOM
-        document.body.insertAdjacentHTML('afterbegin', eventoHTML);
-        console.log("✅ Pantalla de evento diario con video creada");
-        
-        // Configurar el video de presentación
-        const videoElement = document.getElementById('video-evento-presentacion');
-        const playIndicator = document.querySelector('.video-play-indicator');
-        
-        if (videoElement) {
-            // Configurar eventos del video
-            videoElement.addEventListener('play', function() {
-                if (playIndicator) {
-                    playIndicator.style.display = 'none';
-                }
+        // Mostrar pantalla de evento diario (ya existe en el HTML)
+        const pantallaEvento = document.getElementById('pantalla-evento-diario');
+        if (pantallaEvento) {
+            pantallaEvento.classList.add('activa');
+            
+            // Actualizar contenido
+            const evento = this.estado.eventoActual;
+            document.getElementById('fecha-evento').textContent = new Date().toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
             });
+            document.getElementById('nombre-evento').textContent = evento.nombre;
+            document.getElementById('descripcion-evento').textContent = evento.descripcion;
+            document.getElementById('contador-progreso').textContent = this.estado.progreso;
+            document.getElementById('objetivo-evento').textContent = evento.objetivo;
+            document.getElementById('recompensa-evento').textContent = `+${evento.recompensa.dinero} S/. 💰`;
             
-            videoElement.addEventListener('pause', function() {
-                if (playIndicator) {
-                    playIndicator.style.display = 'flex';
-                }
-            });
+            // Actualizar barra de progreso
+            const porcentaje = (this.estado.progreso / evento.objetivo) * 100;
+            document.getElementById('barra-progreso-fill').style.width = `${porcentaje}%`;
             
-            // Intentar reproducción automática silenciada
-            videoElement.muted = true;
-            const playPromise = videoElement.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Autoplay bloqueado, el usuario debe iniciar manualmente:", error);
-                    // Mostrar indicador de reproducción
+            // Configurar el video de presentación
+            const videoElement = document.getElementById('video-evento-presentacion');
+            if (videoElement) {
+                // MUTEAR EL VIDEO PARA EVITAR SONIDOS SIMULTÁNEOS
+                videoElement.muted = true;
+                videoElement.src = evento.video;
+                videoElement.loop = true;
+                
+                // Detectar cuando se empieza a reproducir para ocultar indicador
+                videoElement.addEventListener('play', function() {
+                    const playIndicator = document.querySelector('.video-play-indicator');
+                    if (playIndicator) {
+                        playIndicator.style.display = 'none';
+                    }
+                });
+                
+                // Detectar cuando se pausa para mostrar indicador
+                videoElement.addEventListener('pause', function() {
+                    const playIndicator = document.querySelector('.video-play-indicator');
                     if (playIndicator) {
                         playIndicator.style.display = 'flex';
                     }
                 });
             }
-            
-            // Configurar para que se repita
-            videoElement.loop = true;
         }
     },
     
@@ -851,34 +811,47 @@ const eventosDiarios = {
     // Omitir el evento diario (considerado como fallo inmediato)
     omitirEvento: function() {
         console.log("❌ Evento diario omitido");
+        
+        // CORRECCIÓN 5: Marcar como fallado y programar fallo para mañana
         this.estado.fallado = true;
         this.estado.debeMostrarFallo = true; // Mostrar fallo al día siguiente
+        this.estado.vistoHoy = true; // Marcar como visto
         this.guardarDatos();
         
-        // Mostrar video de fallo inmediatamente
-        this.mostrarVideoFallo();
+        // Cerrar pantalla actual
+        this.ocultarPantallaEvento();
+        
+        // NO mostrar video de fallo inmediatamente - se mostrará mañana
+        console.log("⏰ Video de fallo programado para mañana");
+        
+        // Mostrar mensaje al usuario
+        alert("Evento omitido. Mañana verás el resultado.");
     },
     
     // Ocultar pantalla de evento
     ocultarPantallaEvento: function() {
+        // Detener cualquier video antes de cambiar
+        const videoElement = document.getElementById('video-evento-presentacion');
+        if (videoElement) {
+            videoElement.pause();
+            videoElement.currentTime = 0;
+        }
+        
+        // Ocultar pantalla de evento
         const pantallaEvento = document.getElementById('pantalla-evento-diario');
         if (pantallaEvento) {
-            // Detener cualquier video antes de remover
-            const videoElement = pantallaEvento.querySelector('video');
-            if (videoElement) {
-                videoElement.pause();
-                videoElement.src = '';
-            }
-            pantallaEvento.remove();
+            pantallaEvento.classList.remove('activa');
         }
+        
         // Mostrar pantalla de inicio
         document.getElementById('pantalla-inicio').classList.add('activa');
     },
     
     // Registrar mazo completado
     registrarMazoCompletado: function() {
+        // Solo registrar si hay evento activo y aceptado
         if (!this.estado.eventoActual || this.estado.completado || this.estado.fallado || !this.estado.aceptado) {
-            console.log("📝 Mazo completado pero evento no activo");
+            console.log("📝 Mazo completado pero evento no activo o ya finalizado");
             return;
         }
         
@@ -888,18 +861,6 @@ const eventosDiarios = {
         this.estado.progreso++;
         
         console.log("📊 Progreso actual:", this.estado.progreso, "/", this.estado.eventoActual.objetivo);
-        
-        // Actualizar contador visual si está visible
-        const contadorProgreso = document.getElementById('contador-progreso');
-        const barraProgreso = document.getElementById('barra-progreso-fill');
-        
-        if (contadorProgreso) {
-            contadorProgreso.textContent = this.estado.progreso;
-        }
-        if (barraProgreso) {
-            const porcentaje = (this.estado.progreso / this.estado.eventoActual.objetivo) * 100;
-            barraProgreso.style.width = `${porcentaje}%`;
-        }
         
         // Verificar si se completó el evento
         if (this.estado.progreso >= this.estado.eventoActual.objetivo) {
@@ -941,7 +902,7 @@ const eventosDiarios = {
         const videoElement = document.getElementById('video-evento-recompensa');
         videoElement.src = evento.recompensa.video;
         videoElement.controls = true;
-        videoElement.muted = false; // Permitir sonido en recompensa
+        videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
         
         // QUITAR el evento onended para que no se cierre automáticamente
@@ -960,7 +921,7 @@ const eventosDiarios = {
         }
     },
     
-    // Mostrar video de fallo (al día siguiente o inmediatamente si se omite)
+    // Mostrar video de fallo (al día siguiente o si se fuerza)
     mostrarVideoFallo: function() {
         const evento = this.estado.eventoActual;
         if (!evento) {
@@ -982,7 +943,7 @@ const eventosDiarios = {
         const videoElement = document.getElementById('video-evento-fallo');
         videoElement.src = evento.fallo.video;
         videoElement.controls = true;
-        videoElement.muted = false;
+        videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
         
         // QUITAR el evento onended para que no se cierre automáticamente
@@ -1001,7 +962,6 @@ const eventosDiarios = {
         
         // Resetear estado después de mostrar fallo
         this.estado.debeMostrarFallo = false;
-        this.estado.fallado = false; // Reset para que no interfiera con nuevo evento
         this.guardarDatos();
     },
     
@@ -1013,9 +973,6 @@ const eventosDiarios = {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
-        
-        // Reiniciar evento para el nuevo día
-        this.reiniciarEventoDiario();
         
         // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
@@ -1029,9 +986,6 @@ const eventosDiarios = {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
-        
-        // Reiniciar evento para el nuevo día
-        this.reiniciarEventoDiario();
         
         // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
@@ -1985,8 +1939,27 @@ function obtenerVideoAleatorio() {
 }
 
 // ============================================================================
-// FUNCIONES DEL SISTEMA PRINCIPAL
+// FUNCIONES DEL SISTEMA PRINCIPAL - CON BOTÓN "IR AL MENÚ"
 // ============================================================================
+
+// FUNCIÓN MEJORADA: "Ir al Menú" - Regresa a la pantalla principal
+function irAlMenu() {
+    cambiarPantalla('pantalla-inicio');
+    
+    // Detener cualquier video que esté reproduciéndose
+    detenerTodosLosVideos();
+    
+    console.log("🏠 Navegando al menú principal");
+}
+
+// Función para detener todos los videos
+function detenerTodosLosVideos() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.pause();
+        video.currentTime = 0;
+    });
+}
 
 function cargarContenedor(idContenedor) {
     if (estructura[idContenedor]) {
@@ -2316,7 +2289,10 @@ function mostrarPalabrasFalladas() {
             <div class="contenedor">
                 <div class="barra-superior">
                     <div class="contador">📝 PALABRAS FALLADAS</div>
-                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                    <div class="botones-superiores">
+                        <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                        <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    </div>
                 </div>
                 
                 <div class="palabras-falladas-container">
@@ -2859,6 +2835,13 @@ document.addEventListener('DOMContentLoaded', function() {
     sistemaPalabrasFalladas.inicializar();
     
     console.log("✅ Sistemas inicializados correctamente");
+    
+    // Asegurarse de que la pantalla de inicio esté activa
+    setTimeout(() => {
+        if (!document.querySelector('.pantalla.activa')) {
+            cambiarPantalla('pantalla-inicio');
+        }
+    }, 100);
 });
 
 // Función para forzar la aparición del evento diario (para testing)
