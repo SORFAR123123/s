@@ -1124,7 +1124,7 @@ h1 {
 }
 
 /* ============================================================================
-   RPG DE NOVIA
+   RPG DE NOVIA - MEJORADO
    ============================================================================ */
 
 .rpg-container {
@@ -1253,7 +1253,7 @@ h1 {
     min-height: 120px;
 }
 
-.dialogo-novia {
+.dialogo-burbuja {
     background: linear-gradient(135deg, #4a90e2, #7b68ee);
     border-radius: 15px;
     padding: 15px;
@@ -1271,6 +1271,13 @@ h1 {
     color: white;
     font-size: 1.1rem;
     line-height: 1.4;
+}
+
+.traduccion-dialogo {
+    color: #cccccc;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    font-style: italic;
 }
 
 .tiempo-dialogo {
@@ -1401,6 +1408,15 @@ h1 {
     text-align: center;
 }
 
+.linea-traduccion {
+    color: #ffd700;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    text-align: center;
+    font-style: italic;
+}
+
 /* VIDEOS ÍNTIMOS */
 .video-escena-adulta {
     background: linear-gradient(135deg, #8b0000, #b22222);
@@ -1474,6 +1490,986 @@ h1 {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================================
+   ANÁLISIS DE PROGRESO - NUEVO
+   ============================================================================ */
+
+.analisis-container {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
+    padding: 30px;
+    border: 3px solid #4a90e2;
+    box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+}
+
+.analisis-estadisticas {
+    margin-bottom: 30px;
+}
+
+.analisis-estadisticas h2 {
+    color: #4a90e2;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.estadisticas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.estadistica-grande {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #4a90e2;
+}
+
+.estadistica-valor {
+    color: #ff6b9d;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.estadistica-label {
+    color: #cccccc;
+    font-size: 1rem;
+}
+
+.racha-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.racha-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: 2px solid #ffd700;
+}
+
+.racha-label {
+    color: #ffd700;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.racha-valor {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.analisis-grafico {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+}
+
+.analisis-grafico h2 {
+    color: #4a90e2;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.grafico-simulado {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.grafico-barras {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.barra-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.barra {
+    width: 40px;
+    background: linear-gradient(to top, #4a90e2, #7b68ee);
+    border-radius: 5px 5px 0 0;
+    transition: height 0.5s ease;
+}
+
+.barra-label {
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.grafico-leyenda {
+    text-align: center;
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.color-barra {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    background: linear-gradient(to right, #4a90e2, #7b68ee);
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.analisis-tipos {
+    margin-bottom: 30px;
+}
+
+.analisis-tipos h2 {
+    color: #4a90e2;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.tipos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tipo-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.tipo-nombre {
+    color: #ff6b9d;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.tipo-progreso {
+    margin-top: 10px;
+}
+
+.progreso-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progreso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00cc6a);
+    border-radius: 10px;
+    transition: width 1s ease;
+}
+
+.tipo-estadisticas {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.tipo-correctas {
+    color: #00ff88;
+}
+
+.tipo-falladas {
+    color: #ff6b6b;
+}
+
+.tipo-porcentaje {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.analisis-recomendaciones {
+    margin-bottom: 30px;
+}
+
+.analisis-recomendaciones h2 {
+    color: #4a90e2;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.recomendaciones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recomendacion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    border-left: 5px solid #4a90e2;
+}
+
+.recomendacion-item.recomendacion-debilidad {
+    border-left-color: #ff6b6b;
+}
+
+.recomendacion-item.recomendacion-motivacion {
+    border-left-color: #ffd700;
+}
+
+.recomendacion-item.recomendacion-mejora {
+    border-left-color: #00ff88;
+}
+
+.recomendacion-icono {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.recomendacion-contenido {
+    flex: 1;
+}
+
+.recomendacion-texto {
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.recomendacion-accion {
+    color: #ffa500;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.analisis-historial {
+    margin-bottom: 30px;
+}
+
+.analisis-historial h2 {
+    color: #4a90e2;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.historial-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.historial-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid #4a90e2;
+}
+
+.historial-fecha {
+    color: #ff6b9d;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.historial-datos {
+    display: flex;
+    gap: 15px;
+}
+
+.historial-dato {
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.analisis-acciones {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* ============================================================================
+   MINIJUEGOS INTERACTIVOS - NUEVO
+   ============================================================================ */
+
+.minijuego-container {
+    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
+    border-radius: 20px;
+    padding: 30px;
+    border: 3px solid #ff6b9d;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+}
+
+.minijuego-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.minijuego-header h2 {
+    color: #ff6b9d;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.minijuego-instrucciones {
+    color: #cccccc;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.minijuego-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.minijuego-dificultad, .minijuego-tiempo, .minijuego-puntos {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #4a90e2;
+    font-weight: bold;
+}
+
+.minijuego-contenido {
+    margin-bottom: 30px;
+    min-height: 300px;
+}
+
+.minijuego-controles {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* OFERTA DE MINIJUEGO */
+.oferta-minijuego-container {
+    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
+    border-radius: 20px;
+    padding: 30px;
+    border: 3px solid #ffd700;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.oferta-minijuego-container h1 {
+    color: #ffd700;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.oferta-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.oferta-imagen img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffd700;
+}
+
+.oferta-info h2 {
+    color: #ff6b9d;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.oferta-info p {
+    color: #cccccc;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.oferta-detalles {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.oferta-detalles p {
+    margin: 8px 0;
+    color: #ffa500;
+}
+
+.oferta-advertencia {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.oferta-opciones {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* POEMA */
+.minijuego-poema {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #4a90e2;
+}
+
+.poema-contenido {
+    margin-bottom: 20px;
+}
+
+.poema-linea {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.opcion-poema {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.opcion-poema option {
+    background: #2d2d2d;
+    color: white;
+}
+
+.poema-traduccion {
+    color: #cccccc;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* CANCIÓN */
+.minijuego-cancion {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #ff6b9d;
+}
+
+.minijuego-cancion h3 {
+    color: #ff6b9d;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.cancion-letra {
+    margin-bottom: 20px;
+}
+
+.cancion-linea {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.opcion-cancion {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #ff6b9d;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.opciones-cancion {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.opcion-sugerida {
+    background: rgba(74, 144, 226, 0.3);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.opcion-sugerida:hover {
+    background: rgba(74, 144, 226, 0.5);
+    transform: translateY(-2px);
+}
+
+/* ADIVINANZA */
+.minijuego-adivinanza {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #00ff88;
+}
+
+.adivinanza-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #00ff88;
+}
+
+.adivinanza-item h4 {
+    color: #00ff88;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.adivinanza-pregunta {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.adivinanza-opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.opcion-adivinanza {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.opcion-adivinanza:hover {
+    background: rgba(74, 144, 226, 0.3);
+    transform: translateY(-2px);
+}
+
+.adivinanza-explicacion {
+    color: #ffa500;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+/* CONVERSACIÓN */
+.minijuego-conversacion {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #ffd700;
+}
+
+.conversacion-dialogos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.dialogo-nino {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 15px;
+    padding: 15px;
+    align-self: flex-start;
+    max-width: 80%;
+}
+
+.dialogo-jugador {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    border-radius: 15px;
+    padding: 15px;
+    align-self: flex-end;
+    max-width: 80%;
+}
+
+.dialogo-personaje {
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.dialogo-texto {
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.dialogo-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.opcion-dialogo {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.opcion-dialogo:hover {
+    background: rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+/* MEMORIA */
+.minijuego-memoria {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #ff6b9d;
+    text-align: center;
+}
+
+.minijuego-memoria h3 {
+    color: #ff6b9d;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.palabras-memoria {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+}
+
+.palabra-memoria {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+}
+
+.memoria-input {
+    margin: 30px 0;
+}
+
+.memoria-input p {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+#input-memoria {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #4a90e2;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.memoria-contador {
+    background: rgba(255, 107, 157, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #ff6b9d;
+    color: #ff6b9d;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* RESULTADO DE MINIJUEGO */
+.resultado-minijuego {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    border: 3px solid #4a90e2;
+}
+
+.resultado-minijuego.ganado {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.resultado-minijuego.perdido {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.resultado-minijuego h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.resultado-minijuego.ganado h3 {
+    color: #00ff88;
+}
+
+.resultado-minijuego.perdido h3 {
+    color: #ff6b6b;
+}
+
+.resultado-minijuego p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.minijuego-mensaje {
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+/* ============================================================================
+   NOVELA VISUAL - NUEVO
+   ============================================================================ */
+
+.novela-visual-container {
+    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
+    border-radius: 20px;
+    padding: 20px;
+    border: 3px solid #ff6b9d;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+    min-height: 600px;
+    position: relative;
+}
+
+.novela-fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.novela-fondo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    filter: blur(2px);
+}
+
+.novela-dialogo {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 300px;
+    backdrop-filter: blur(10px);
+    border: 2px solid #4a90e2;
+}
+
+.personaje-info {
+    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.dialogo-texto {
+    color: #ffffff;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    min-height: 80px;
+}
+
+.dialogo-opciones {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.opcion-novela {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.opcion-novela:hover {
+    background: rgba(74, 144, 226, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+}
+
+.dialogo-traduccion {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    border-left: 4px solid #00ff88;
+}
+
+.dialogo-traduccion strong {
+    color: #00ff88;
+}
+
+.novela-controles {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* FINAL NOVELA */
+.final-novela-container {
+    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
+    border-radius: 20px;
+    padding: 30px;
+    border: 3px solid #ffd700;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    text-align: center;
+}
+
+.final-novela-container h1 {
+    color: #ffd700;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.final-imagen img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ffd700;
+    margin: 20px 0;
+}
+
+.final-descripcion {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.final-descripcion p {
+    color: #ffffff;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.final-estadisticas {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.final-estadisticas h3 {
+    color: #4a90e2;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.final-estadisticas p {
+    margin: 8px 0;
+    color: #cccccc;
+    font-size: 1.1rem;
+}
+
+.final-recompensa {
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid #00ff88;
+}
+
+.final-recompensa h3 {
+    color: #00ff88;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.final-recompensa p {
+    color: #ffffff;
+    margin: 8px 0;
+    font-size: 1.1rem;
+}
+
+.final-opciones {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 /* ============================================================================
@@ -1597,7 +2593,7 @@ h1 {
 }
 
 /* ============================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - MEJORADO
    ============================================================================ */
 
 @media (max-width: 768px) {
@@ -1729,6 +2725,86 @@ h1 {
     .opciones-palabras-falladas {
         grid-template-columns: 1fr;
     }
+    
+    /* ANÁLISIS RESPONSIVE */
+    .estadisticas-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .racha-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .analisis-estadisticas h2,
+    .analisis-grafico h2,
+    .analisis-tipos h2,
+    .analisis-recomendaciones h2,
+    .analisis-historial h2 {
+        font-size: 1.3rem;
+    }
+    
+    .historial-datos {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    /* MINIJUEGOS RESPONSIVE */
+    .minijuego-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .minijuego-controles {
+        flex-direction: column;
+    }
+    
+    .adivinanza-opciones {
+        grid-template-columns: 1fr;
+    }
+    
+    .cancion-linea {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .opcion-cancion {
+        width: 100%;
+    }
+    
+    /* NOVELA VISUAL RESPONSIVE */
+    .novela-dialogo {
+        margin-top: 200px;
+        padding: 20px;
+    }
+    
+    .dialogo-texto {
+        font-size: 1.2rem;
+    }
+    
+    .final-imagen img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .final-opciones {
+        flex-direction: column;
+    }
+    
+    /* OFERTA MINIJUEGO RESPONSIVE */
+    .oferta-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .oferta-imagen img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .oferta-opciones {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1754,6 +2830,51 @@ h1 {
     
     .estadisticas-palabras {
         grid-template-columns: 1fr;
+    }
+    
+    .estadistica-grande {
+        padding: 15px;
+    }
+    
+    .estadistica-valor {
+        font-size: 2rem;
+    }
+    
+    .grafico-barras {
+        height: 150px;
+    }
+    
+    .barra {
+        width: 30px;
+    }
+    
+    .minijuego-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .minijuego-instrucciones {
+        font-size: 1rem;
+    }
+    
+    .poema-linea {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .opcion-poema {
+        width: 100%;
+    }
+    
+    .novela-controles {
+        flex-direction: column;
+    }
+    
+    .final-novela-container h1 {
+        font-size: 2rem;
+    }
+    
+    .final-descripcion {
+        padding: 15px;
     }
 }
 
@@ -1828,4 +2949,590 @@ h1 {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 20px;
+}
+
+/* ============================================================================
+   ESTILOS PARA BOTONES DESHABILITADOS
+   ============================================================================ */
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+button:disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ============================================================================
+   ESTILOS PARA SCROLLBAR PERSONALIZADA
+   ============================================================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #7b68ee, #4a90e2);
+}
+
+/* ============================================================================
+   ESTILOS PARA SELECTORES PERSONALIZADOS
+   ============================================================================ */
+
+select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+}
+
+/* ============================================================================
+   ESTILOS PARA INPUTS PERSONALIZADOS
+   ============================================================================ */
+
+input[type="text"] {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+}
+
+input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================================================
+   ESTILOS PARA TARJETAS DE PROGRESO
+   ============================================================================ */
+
+.progreso-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #4a90e2;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.progreso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
+}
+
+.progreso-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.progreso-card-titulo {
+    color: #ff6b9d;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.progreso-card-valor {
+    color: #ffd700;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.progreso-card-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progreso-card-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #7b68ee);
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+/* ============================================================================
+   ESTILOS PARA BADGES
+   ============================================================================ */
+
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.badge-nivel {
+    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
+    color: white;
+}
+
+.badge-premium {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #1e1e1e;
+}
+
+.badge-nuevo {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #1e1e1e;
+}
+
+.badge-popular {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+}
+
+/* ============================================================================
+   ESTILOS PARA TOOLTIPS
+   ============================================================================ */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ============================================================================
+   ESTILOS PARA NOTIFICACIONES FLOTANTES
+   ============================================================================ */
+
+.notificacion-flotante {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #1e1e1e;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 10000;
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+    animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+    max-width: 300px;
+}
+
+.notificacion-flotante.error {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
+}
+
+.notificacion-flotante.warning {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #1e1e1e;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100%); }
+}
+
+/* ============================================================================
+   ESTILOS PARA LOADING
+   ============================================================================ */
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid #4a90e2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   ESTILOS PARA MODALES
+   ============================================================================ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 3px solid #4a90e2;
+    box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+    animation: slideInFromTop 0.5s ease;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    color: #ff6b9d;
+    font-size: 1.8rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #ff6b6b;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    color: #ffffff;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+/* ============================================================================
+   ESTILOS PARA TARJETAS FLIP
+   ============================================================================ */
+
+.flip-card {
+    background-color: transparent;
+    width: 200px;
+    height: 200px;
+    perspective: 1000px;
+    margin: 20px auto;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.flip-card-front {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+    border: 3px solid #4169e1;
+}
+
+.flip-card-back {
+    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
+    color: white;
+    border: 3px solid #ff6b9d;
+    transform: rotateY(180deg);
+}
+
+/* ============================================================================
+   ESTILOS PARA RANKINGS
+   ============================================================================ */
+
+.ranking-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin: 10px 0;
+    border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.ranking-posicion {
+    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.ranking-info {
+    flex: 1;
+}
+
+.ranking-nombre {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.ranking-puntos {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* ============================================================================
+   ESTILOS PARA BARRAS DE PROGRESO MÚLTIPLES
+   ============================================================================ */
+
+.multi-progress-bar {
+    display: flex;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-segment {
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.progress-segment:nth-child(1) { background: #00ff88; }
+.progress-segment:nth-child(2) { background: #4a90e2; }
+.progress-segment:nth-child(3) { background: #ff6b9d; }
+.progress-segment:nth-child(4) { background: #ffd700; }
+
+/* ============================================================================
+   ESTILOS PARA TIMERS ANIMADOS
+   ============================================================================ */
+
+.timer-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.timer-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.timer-background {
+    width: 100%;
+    height: 100%;
+    border: 10px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.timer-progress {
+    width: 100%;
+    height: 100%;
+    border: 10px solid #ff6b9d;
+    border-radius: 50%;
+    position: absolute;
+    clip: rect(0, 50px, 100px, 0);
+    transform: rotate(0deg);
+    transition: transform 1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff6b9d;
+}
+
+/* ============================================================================
+   ÚLTIMOS ESTILOS PARA COMPATIBILIDAD
+   ============================================================================ */
+
+.legacy-support {
+    display: none;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .legacy-support {
+        display: block;
+        background: rgba(255, 107, 107, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #ff6b6b;
+    }
+    
+    .legacy-support p {
+        color: #ff6b6b;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+/* ============================================================================
+   FONDO DE PARTÍCULAS SIMULADO
+   ============================================================================ */
+
+.particles-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+.particle {
+    position: absolute;
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100vw);
+        opacity: 0;
+    }
 }
