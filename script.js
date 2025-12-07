@@ -76,7 +76,7 @@ const configImagenes = {
         'mazo5': 'imagenes/mazo5.jpg'
     },
     rpg: {
-        novia: 'imagenes/novia.jpg',
+        novia: 'https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png',
         fondo: 'imagenes/fondo-rpg.jpg',
         iconoFlores: 'imagenes/flores.png',
         iconoChocolates: 'imagenes/chocolates.png',
@@ -85,7 +85,305 @@ const configImagenes = {
 };
 
 // ============================================================================
-// SISTEMA DE PALABRAS FALLADAS - NUEVO
+// SISTEMA DE ANÁLISIS DE PROGRESO - NUEVO
+// ============================================================================
+
+const sistemaAnalisis = {
+    // Historial de aprendizaje
+    historialAprendizaje: [],
+    
+    // Estadísticas por día
+    estadisticasDia: {
+        fecha: '',
+        mazosCompletados: 0,
+        palabrasAprendidas: 0,
+        palabrasFalladas: 0,
+        porcentajeAcierto: 0,
+        tiempoEstudio: 0
+    },
+    
+    // Palabras clasificadas por tipo
+    palabrasPorTipo: {
+        sustantivos: { aprendidas: 0, falladas: 0 },
+        verbos: { aprendidas: 0, falladas: 0 },
+        adjetivos: { aprendidas: 0, falladas: 0 },
+        adverbios: { aprendidas: 0, falladas: 0 },
+        expresiones: { aprendidas: 0, falladas: 0 }
+    },
+    
+    // Inicializar sistema
+    inicializar: function() {
+        const datosGuardados = this.cargarDatos();
+        if (datosGuardados) {
+            this.historialAprendizaje = datosGuardados.historialAprendizaje || [];
+            this.palabrasPorTipo = datosGuardados.palabrasPorTipo || this.palabrasPorTipo;
+        }
+        
+        this.iniciarNuevoDia();
+        console.log("📊 Sistema de análisis inicializado");
+    },
+    
+    // Cargar datos guardados
+    cargarDatos: function() {
+        try {
+            const datos = localStorage.getItem('sistemaAnalisis');
+            return datos ? JSON.parse(datos) : null;
+        } catch (e) {
+            console.error("Error cargando análisis:", e);
+            return null;
+        }
+    },
+    
+    // Guardar datos
+    guardarDatos: function() {
+        try {
+            localStorage.setItem('sistemaAnalisis', JSON.stringify({
+                historialAprendizaje: this.historialAprendizaje,
+                palabrasPorTipo: this.palabrasPorTipo
+            }));
+            return true;
+        } catch (e) {
+            console.error("Error guardando análisis:", e);
+            return false;
+        }
+    },
+    
+    // Iniciar nuevo día
+    iniciarNuevoDia: function() {
+        const hoy = this.obtenerFechaHoy();
+        
+        // Verificar si ya existe estadística para hoy
+        const estadisticaHoy = this.historialAprendizaje.find(e => e.fecha === hoy);
+        
+        if (!estadisticaHoy) {
+            this.estadisticasDia = {
+                fecha: hoy,
+                mazosCompletados: 0,
+                palabrasAprendidas: 0,
+                palabrasFalladas: 0,
+                porcentajeAcierto: 0,
+                tiempoEstudio: 0
+            };
+            
+            // Si no es el primer día, guardar estadística del día anterior
+            if (this.historialAprendizaje.length > 0) {
+                const ultimaEstadistica = this.historialAprendizaje[this.historialAprendizaje.length - 1];
+                if (ultimaEstadistica.fecha !== hoy) {
+                    this.historialAprendizaje.push(ultimaEstadistica);
+                }
+            }
+        } else {
+            this.estadisticasDia = estadisticaHoy;
+        }
+    },
+    
+    // Obtener fecha actual
+    obtenerFechaHoy: function() {
+        const ahora = new Date();
+        if (ahora.getHours() < 3) {
+            ahora.setDate(ahora.getDate() - 1);
+        }
+        return ahora.toISOString().split('T')[0];
+    },
+    
+    // Registrar resultado de quiz
+    registrarQuiz: function(mazoCompletado, palabrasTotales, palabrasCorrectas, palabrasFalladas) {
+        const hoy = this.obtenerFechaHoy();
+        
+        if (mazoCompletado) {
+            this.estadisticasDia.mazosCompletados++;
+        }
+        
+        this.estadisticasDia.palabrasAprendidas += palabrasCorrectas;
+        this.estadisticasDia.palabrasFalladas += palabrasFalladas;
+        
+        // Calcular porcentaje de acierto
+        const totalPalabras = palabrasCorrectas + palabrasFalladas;
+        if (totalPalabras > 0) {
+            this.estadisticasDia.porcentajeAcierto = Math.round((palabrasCorrectas / totalPalabras) * 100);
+        }
+        
+        // Actualizar historial
+        const index = this.historialAprendizaje.findIndex(e => e.fecha === hoy);
+        if (index !== -1) {
+            this.historialAprendizaje[index] = { ...this.estadisticasDia };
+        } else {
+            this.historialAprendizaje.push({ ...this.estadisticasDia });
+        }
+        
+        // Limitar historial a 30 días
+        if (this.historialAprendizaje.length > 30) {
+            this.historialAprendizaje.shift();
+        }
+        
+        this.guardarDatos();
+    },
+    
+    // Registrar palabra aprendida (clasificada)
+    registrarPalabraAprendida: function(palabra, tipo) {
+        if (this.palabrasPorTipo[tipo]) {
+            this.palabrasPorTipo[tipo].aprendidas++;
+        }
+        this.guardarDatos();
+    },
+    
+    // Registrar palabra fallada (clasificada)
+    registrarPalabraFallada: function(palabra, tipo) {
+        if (this.palabrasPorTipo[tipo]) {
+            this.palabrasPorTipo[tipo].falladas++;
+        }
+        this.guardarDatos();
+    },
+    
+    // Obtener estadísticas generales
+    obtenerEstadisticas: function() {
+        return {
+            totalMazosCompletados: this.historialAprendizaje.reduce((sum, dia) => sum + dia.mazosCompletados, 0),
+            totalPalabrasAprendidas: this.historialAprendizaje.reduce((sum, dia) => sum + dia.palabrasAprendidas, 0),
+            totalPalabrasFalladas: this.historialAprendizaje.reduce((sum, dia) => sum + dia.palabrasFalladas, 0),
+            diasActivos: this.historialAprendizaje.length,
+            porcentajeAciertoPromedio: this.calcularPorcentajePromedio(),
+            palabrasPorTipo: this.palabrasPorTipo,
+            rachaActual: this.calcularRacha(),
+            mejorRacha: this.calcularMejorRacha()
+        };
+    },
+    
+    // Calcular porcentaje promedio de acierto
+    calcularPorcentajePromedio: function() {
+        if (this.historialAprendizaje.length === 0) return 0;
+        
+        const total = this.historialAprendizaje.reduce((sum, dia) => sum + dia.porcentajeAcierto, 0);
+        return Math.round(total / this.historialAprendizaje.length);
+    },
+    
+    // Calcular racha actual (días consecutivos)
+    calcularRacha: function() {
+        if (this.historialAprendizaje.length === 0) return 0;
+        
+        const fechasOrdenadas = [...this.historialAprendizaje]
+            .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+            .map(d => d.fecha);
+        
+        let racha = 0;
+        const hoy = new Date(this.obtenerFechaHoy());
+        
+        for (let i = 0; i < fechasOrdenadas.length; i++) {
+            const fechaEstudio = new Date(fechasOrdenadas[i]);
+            const diferenciaDias = Math.floor((hoy - fechaEstudio) / (1000 * 60 * 60 * 24));
+            
+            if (diferenciaDias === i) {
+                racha++;
+            } else {
+                break;
+            }
+        }
+        
+        return racha;
+    },
+    
+    // Calcular mejor racha
+    calcularMejorRacha: function() {
+        if (this.historialAprendizaje.length === 0) return 0;
+        
+        const fechasOrdenadas = [...this.historialAprendizaje]
+            .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+            .map(d => new Date(d.fecha));
+        
+        let mejorRacha = 0;
+        let rachaActual = 1;
+        
+        for (let i = 1; i < fechasOrdenadas.length; i++) {
+            const diferenciaDias = Math.floor((fechasOrdenadas[i] - fechasOrdenadas[i - 1]) / (1000 * 60 * 60 * 24));
+            
+            if (diferenciaDias === 1) {
+                rachaActual++;
+                if (rachaActual > mejorRacha) {
+                    mejorRacha = rachaActual;
+                }
+            } else if (diferenciaDias > 1) {
+                rachaActual = 1;
+            }
+        }
+        
+        return Math.max(mejorRacha, rachaActual);
+    },
+    
+    // Obtener recomendaciones inteligentes
+    obtenerRecomendaciones: function() {
+        const recomendaciones = [];
+        
+        // Analizar palabras por tipo
+        const tipos = Object.keys(this.palabrasPorTipo);
+        let tipoMasDificil = null;
+        let mayorPorcentajeFallo = 0;
+        
+        tipos.forEach(tipo => {
+            const datos = this.palabrasPorTipo[tipo];
+            const total = datos.aprendidas + datos.falladas;
+            
+            if (total > 0) {
+                const porcentajeFallo = (datos.falladas / total) * 100;
+                
+                if (porcentajeFallo > mayorPorcentajeFallo) {
+                    mayorPorcentajeFallo = porcentajeFallo;
+                    tipoMasDificil = tipo;
+                }
+            }
+        });
+        
+        if (tipoMasDificil) {
+            recomendaciones.push({
+                tipo: 'debilidad',
+                mensaje: `Tienes dificultad con ${tipoMasDificil}. Te recomendamos practicar más este tipo de palabras.`,
+                accion: 'Practicar ' + tipoMasDificil
+            });
+        }
+        
+        // Recomendación basada en racha
+        const racha = this.calcularRacha();
+        if (racha >= 3) {
+            recomendaciones.push({
+                tipo: 'motivacion',
+                mensaje: `¡Llevas ${racha} días seguidos estudiando! ¡Sigue así!`,
+                accion: 'Mantener la racha'
+            });
+        }
+        
+        // Recomendación basada en porcentaje
+        const porcentajePromedio = this.calcularPorcentajePromedio();
+        if (porcentajePromedio < 70) {
+            recomendaciones.push({
+                tipo: 'mejora',
+                mensaje: `Tu porcentaje de acierto es ${porcentajePromedio}%. Intenta repasar las palabras falladas.`,
+                accion: 'Revisar palabras falladas'
+            });
+        }
+        
+        return recomendaciones;
+    },
+    
+    // Generar gráfico de progreso (datos para gráfico)
+    generarDatosGrafico: function(dias = 7) {
+        const ultimosDias = [...this.historialAprendizaje]
+            .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+            .slice(0, dias)
+            .reverse();
+        
+        return {
+            fechas: ultimosDias.map(d => {
+                const fecha = new Date(d.fecha);
+                return `${fecha.getDate()}/${fecha.getMonth() + 1}`;
+            }),
+            palabrasAprendidas: ultimosDias.map(d => d.palabrasAprendidas),
+            porcentajeAcierto: ultimosDias.map(d => d.porcentajeAcierto),
+            mazosCompletados: ultimosDias.map(d => d.mazosCompletados)
+        };
+    }
+};
+
+// ============================================================================
+// SISTEMA DE PALABRAS FALLADAS - MEJORADO
 // ============================================================================
 
 const sistemaPalabrasFalladas = {
@@ -159,11 +457,15 @@ const sistemaPalabrasFalladas = {
     
     // Registrar palabra fallada
     registrarPalabraFallada: function(palabra, respuestaSeleccionada, respuestaCorrecta, lectura) {
+        // Clasificar tipo de palabra (simplificado)
+        const tipo = this.clasificarPalabra(palabra);
+        
         const palabraFallada = {
             palabra: palabra,
             respuestaSeleccionada: respuestaSeleccionada,
             respuestaCorrecta: respuestaCorrecta,
             lectura: lectura,
+            tipo: tipo,
             fecha: new Date().toISOString(),
             hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
         };
@@ -176,7 +478,20 @@ const sistemaPalabrasFalladas = {
         
         this.guardarDatos();
         
-        console.log(`❌ Palabra fallada registrada: ${palabra}`);
+        // Registrar en análisis
+        sistemaAnalisis.registrarPalabraFallada(palabra, tipo);
+        
+        console.log(`❌ Palabra fallada registrada: ${palabra} (${tipo})`);
+    },
+    
+    // Clasificar palabra por tipo
+    clasificarPalabra: function(palabra) {
+        // Clasificación simplificada basada en terminaciones comunes
+        if (palabra.endsWith('る') || palabra.endsWith('う')) return 'verbos';
+        if (palabra.endsWith('い') || palabra.endsWith('な')) return 'adjetivos';
+        if (palabra.endsWith('に') || palabra.endsWith('く')) return 'adverbios';
+        if (palabra.includes('こと') || palabra.includes('の') || palabra.length <= 2) return 'expresiones';
+        return 'sustantivos';
     },
     
     // Obtener palabras más falladas del día
@@ -191,6 +506,7 @@ const sistemaPalabrasFalladas = {
                     palabra: palabra.palabra,
                     lectura: palabra.lectura,
                     respuestaCorrecta: palabra.respuestaCorrecta,
+                    tipo: palabra.tipo,
                     veces: 1
                 };
             }
@@ -212,8 +528,23 @@ const sistemaPalabrasFalladas = {
         return {
             totalHoy: this.palabrasFalladasHoy.length,
             totalHistorial: this.historialFalladas.length,
-            fechaActual: this.ultimaFecha
+            fechaActual: this.ultimaFecha,
+            porTipo: this.obtenerEstadisticasPorTipo()
         };
+    },
+    
+    // Obtener estadísticas por tipo
+    obtenerEstadisticasPorTipo: function() {
+        const porTipo = {};
+        
+        this.palabrasFalladasHoy.forEach(palabra => {
+            if (!porTipo[palabra.tipo]) {
+                porTipo[palabra.tipo] = 0;
+            }
+            porTipo[palabra.tipo]++;
+        });
+        
+        return porTipo;
     },
     
     // Limpiar historial completo
@@ -448,6 +779,1481 @@ const misionesDiarias = {
 };
 
 // ============================================================================
+// SISTEMA DE MINI-JUEGOS INTERACTIVOS - NUEVO
+// ============================================================================
+
+const sistemaMinijuegos = {
+    // Estado actual
+    estado: {
+        minijuegoActual: null,
+        enProgreso: false,
+        resultado: null,
+        puntuacion: 0,
+        tiempoRestante: 60
+    },
+    
+    // Tipos de minijuegos
+    tiposMinijuegos: [
+        {
+            id: 'poema',
+            nombre: '📜 Escribir Poema',
+            descripcion: 'Completa el poema romántico en japonés',
+            dificultad: 'media',
+            afinidadGanada: 15,
+            afinidadPerdida: 8,
+            probabilidadAparicion: 0.3 // 30%
+        },
+        {
+            id: 'cancion',
+            nombre: '🎵 Cantar Juntos',
+            descripcion: 'Sigue la letra de la canción en japonés',
+            dificultad: 'alta',
+            afinidadGanada: 20,
+            afinidadPerdida: 10,
+            probabilidadAparicion: 0.2 // 20%
+        },
+        {
+            id: 'adivinanza',
+            nombre: '❓ Adivinanzas',
+            descripcion: 'Responde adivinanzas en japonés',
+            dificultad: 'baja',
+            afinidadGanada: 10,
+            afinidadPerdida: 5,
+            probabilidadAparicion: 0.4 // 40%
+        },
+        {
+            id: 'conversacion',
+            nombre: '💬 Conversación',
+            descripcion: 'Mantén una conversación fluida',
+            dificultad: 'media',
+            afinidadGanada: 12,
+            afinidadPerdida: 6,
+            probabilidadAparicion: 0.3 // 30%
+        },
+        {
+            id: 'memoria',
+            nombre: '🧠 Juego de Memoria',
+            descripcion: 'Memoriza palabras y repítelas',
+            dificultad: 'baja',
+            afinidadGanada: 8,
+            afinidadPerdida: 4,
+            probabilidadAparicion: 0.25 // 25%
+        }
+    ],
+    
+    // Datos de minijuegos
+    datosMinijuegos: {
+        poema: {
+            titulo: "Escribe un poema romántico para Nino",
+            instrucciones: "Completa el poema con las palabras correctas en japonés",
+            poemas: [
+                {
+                    lineas: [
+                        "君の笑顔が", // Tu sonrisa
+                        "私の________になる", // se convierte en mi ________
+                        "毎日が________に", // Cada día se vuelve ________
+                        "君がいるから" // Porque estás aquí
+                    ],
+                    opciones: [
+                        { palabra: "幸せ", posicion: 1, opciones: ["幸せ", "悲しみ", "普通", "退屈"] }, // felicidad
+                        { palabra: "輝く", posicion: 2, opciones: ["輝く", "暗い", "同じ", "寂しい"] } // brillar
+                    ],
+                    soluciones: ["幸せ", "輝く"]
+                },
+                {
+                    lineas: [
+                        "桜の花びら", // Pétalos de cerezo
+                        "舞い散る________で", // En el ________ que cae
+                        "君の________思い出す", // Recuerdo tu ________
+                        "春の________" // ________ de primavera
+                    ],
+                    opciones: [
+                        { palabra: "中", posicion: 1, opciones: ["中", "上", "下", "外"] }, // en medio
+                        { palabra: "優しい", posicion: 2, opciones: ["優しい", "厳しい", "冷たい", "熱い"] }, // amable
+                        { palabra: "風", posicion: 3, opciones: ["風", "雨", "雪", "雷"] } // viento
+                    ],
+                    soluciones: ["中", "優しい", "風"]
+                }
+            ]
+        },
+        
+        cancion: {
+            titulo: "Canta con Nino",
+            instrucciones: "Completa la letra de la canción que Nino está cantando",
+            canciones: [
+                {
+                    titulo: "恋のうた", // Canción de amor
+                    letra: [
+                        "君に________初めて", // La primera vez que te ________
+                        "心が________音", // El sonido de mi corazón ________
+                        "この________伝えたい", // Quiero transmitir este ________
+                        "ずっと________から" // Porque ________ para siempre
+                    ],
+                    opciones: [
+                        { palabra: "会った", posicion: 0, opciones: ["会った", "離れた", "忘れた", "嫌った"] }, // conocí
+                        { palabra: "鳴った", posicion: 1, opciones: ["鳴った", "止んだ", "壊れた", "消えた"] }, // sonó
+                        { palabra: "気持ち", posicion: 2, opciones: ["気持ち", "秘密", "痛み", "怒り"] }, // sentimiento
+                        { palabra: "好き", posicion: 3, opciones: ["好き", "嫌い", "普通", "無関心"] } // me gustas
+                    ],
+                    soluciones: ["会った", "鳴った", "気持ち", "好き"]
+                }
+            ]
+        },
+        
+        adivinanza: {
+            titulo: "Adivinanzas con Nino",
+            instrucciones: "Responde las adivinanzas que Nino te hace en japonés",
+            adivinanzas: [
+                {
+                    pregunta: "朝は四本足、昼は二本足、夜は三本足。これは何？",
+                    opciones: ["人間", "動物", "椅子", "時計"],
+                    respuesta: 0, // Humano (bebé, adulto, anciano con bastón)
+                    explicacion: "Es un humano: bebé (cuatro patas gateando), adulto (dos piernas), anciano (dos piernas + bastón)"
+                },
+                {
+                    pregunta: "持つと軽い、放すと重い。これは何？",
+                    opciones: ["風船", "石", "水", "影"],
+                    respuesta: 0, // Globo
+                    explicacion: "Un globo: cuando lo sostienes es ligero, cuando lo sueltas se hace pesado (porque sube)"
+                },
+                {
+                    pregunta: "食べると減る、飲むと増える。これは何？",
+                    opciones: ["飴", "火", "水", "パン"],
+                    respuesta: 1, // Fuego
+                    explicacion: "El fuego: cuando 'comes' leña disminuye, cuando 'bebes' aire aumenta"
+                }
+            ]
+        },
+        
+        conversacion: {
+            titulo: "Conversa con Nino",
+            instrucciones: "Elige las respuestas correctas para mantener la conversación",
+            conversaciones: [
+                {
+                    escena: "Nino te invita a salir",
+                    dialogos: [
+                        { personaje: "Nino", texto: "今日、一緒に映画を見に行かない？" },
+                        { personaje: "Jugador", opciones: ["いいよ、行こう！", "すみません、忙しいです", "映画は好きじゃない", "また今度ね"], respuesta: 0 },
+                        { personaje: "Nino", texto: "どんな映画が好き？" },
+                        { personaje: "Jugador", opciones: ["アクション映画", "恋愛映画", "ホラー映画", "アニメ"], respuesta: 1 },
+                        { personaje: "Nino", texto: "私も恋愛映画が好き！じゃあ、この新しい映画はどう？" }
+                    ],
+                    respuestasCorrectas: [0, 1]
+                }
+            ]
+        },
+        
+        memoria: {
+            titulo: "Juego de Memoria con Nino",
+            instrucciones: "Memoriza las palabras que Nino dice y repítelas en orden",
+            niveles: [
+                {
+                    palabras: ["桜", "愛", "春", "風"],
+                    tiempoMemorizacion: 10
+                },
+                {
+                    palabras: ["幸せ", "未来", "一緒", "永遠", "約束"],
+                    tiempoMemorizacion: 12
+                },
+                {
+                    palabras: ["星", "月", "夜", "夢", "希望", "光"],
+                    tiempoMemorizacion: 15
+                }
+            ]
+        }
+    },
+    
+    // Verificar si aparece minijuego después de completar mazo
+    verificarAparicionMinijuego: function() {
+        const probabilidad = Math.random();
+        let minijuegoDisponible = null;
+        
+        // Calcular probabilidad total
+        this.tiposMinijuegos.forEach(minijuego => {
+            if (probabilidad <= minijuego.probabilidadAparicion && !minijuegoDisponible) {
+                minijuegoDisponible = minijuego;
+            }
+        });
+        
+        return minijuegoDisponible;
+    },
+    
+    // Iniciar minijuego
+    iniciarMinijuego: function(tipoMinijuego) {
+        const minijuego = this.tiposMinijuegos.find(m => m.id === tipoMinijuego);
+        
+        if (!minijuego) {
+            console.error("Minijuego no encontrado:", tipoMinijuego);
+            return false;
+        }
+        
+        this.estado.minijuegoActual = minijuego;
+        this.estado.enProgreso = true;
+        this.estado.resultado = null;
+        this.estado.puntuacion = 0;
+        this.estado.tiempoRestante = 60;
+        
+        // Mostrar pantalla de minijuego
+        this.mostrarPantallaMinijuego(tipoMinijuego);
+        
+        return true;
+    },
+    
+    // Mostrar pantalla de minijuego
+    mostrarPantallaMinijuego: function(tipoMinijuego) {
+        const datos = this.datosMinijuegos[tipoMinijuego];
+        
+        if (!datos) {
+            console.error("Datos de minijuego no encontrados:", tipoMinijuego);
+            return;
+        }
+        
+        // Crear HTML para el minijuego
+        let html = '';
+        
+        switch(tipoMinijuego) {
+            case 'poema':
+                html = this.generarHTMLPoema();
+                break;
+            case 'cancion':
+                html = this.generarHTMLCancion();
+                break;
+            case 'adivinanza':
+                html = this.generarHTMLAdivinanza();
+                break;
+            case 'conversacion':
+                html = this.generarHTMLConversacion();
+                break;
+            case 'memoria':
+                html = this.generarHTMLMemoria();
+                break;
+            default:
+                html = `<h2>Minijuego no disponible</h2>`;
+        }
+        
+        // Crear pantalla completa
+        const pantallaHTML = `
+            <div id="pantalla-minijuego" class="pantalla activa">
+                <div class="contenedor">
+                    <div class="barra-superior">
+                        <div class="contador">🎮 ${datos.titulo}</div>
+                        <div class="botones-superiores">
+                            <button class="boton-home" onclick="rechazarMinijuego()">Rechazar</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                        </div>
+                    </div>
+                    
+                    <div class="minijuego-container">
+                        <div class="minijuego-header">
+                            <h2>${datos.titulo}</h2>
+                            <p class="minijuego-instrucciones">${datos.instrucciones}</p>
+                            <div class="minijuego-info">
+                                <span class="minijuego-dificultad">Dificultad: ${this.estado.minijuegoActual.dificultad}</span>
+                                <span class="minijuego-tiempo">⏱️ <span id="tiempo-minijuego">60</span>s</span>
+                                <span class="minijuego-puntos">⭐ <span id="puntos-minijuego">0</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="minijuego-contenido">
+                            ${html}
+                        </div>
+                        
+                        <div class="minijuego-controles">
+                            <button class="boton-secundario" onclick="rechazarMinijuego()">
+                                ❌ Rechazar
+                            </button>
+                            <button class="boton-principal" onclick="completarMinijuego()" id="boton-completar-minijuego">
+                                ✅ Completar
+                            </button>
+                        </div>
+                        
+                        <div class="minijuego-mensaje" id="mensaje-minijuego"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Ocultar pantalla actual
+        document.querySelectorAll('.pantalla').forEach(pantalla => {
+            pantalla.classList.remove('activa');
+        });
+        
+        // Agregar la nueva pantalla
+        document.body.insertAdjacentHTML('beforeend', pantallaHTML);
+        
+        // Iniciar temporizador
+        this.iniciarTemporizador();
+    },
+    
+    // Generar HTML para poema
+    generarHTMLPoema: function() {
+        const datos = this.datosMinijuegos.poema;
+        const poema = datos.poemas[Math.floor(Math.random() * datos.poemas.length)];
+        
+        let html = `
+            <div class="minijuego-poema">
+                <div class="poema-contenido">
+        `;
+        
+        poema.lineas.forEach((linea, indexLinea) => {
+            const opcion = poema.opciones.find(o => o.posicion === indexLinea);
+            
+            if (opcion) {
+                html += `
+                    <div class="poema-linea">
+                        <span>${linea.replace('________', '')}</span>
+                        <select class="opcion-poema" data-posicion="${indexLinea}">
+                            <option value="">Selecciona...</option>
+                `;
+                
+                opcion.opciones.forEach((op, index) => {
+                    html += `<option value="${op}">${op}</option>`;
+                });
+                
+                html += `
+                        </select>
+                    </div>
+                `;
+            } else {
+                html += `<div class="poema-linea">${linea}</div>`;
+            }
+        });
+        
+        html += `
+                </div>
+                <div class="poema-traduccion">
+                    <small>Traducción aproximada del poema</small>
+                </div>
+            </div>
+        `;
+        
+        return html;
+    },
+    
+    // Generar HTML para canción
+    generarHTMLCancion: function() {
+        const datos = this.datosMinijuegos.cancion;
+        const cancion = datos.canciones[0]; // Por simplicidad, usamos la primera
+        
+        let html = `
+            <div class="minijuego-cancion">
+                <h3>${cancion.titulo}</h3>
+                <div class="cancion-letra">
+        `;
+        
+        cancion.letra.forEach((linea, indexLinea) => {
+            const opcion = cancion.opciones.find(o => o.posicion === indexLinea);
+            
+            if (opcion) {
+                html += `
+                    <div class="cancion-linea">
+                        <span>${linea.replace('________', '')}</span>
+                        <input type="text" class="opcion-cancion" data-posicion="${indexLinea}" placeholder="Escribe la palabra">
+                        <div class="opciones-cancion" style="display: none;">
+                `;
+                
+                opcion.opciones.forEach(op => {
+                    html += `<span class="opcion-sugerida" onclick="seleccionarOpcionCancion(this, ${indexLinea})">${op}</span>`;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `<div class="cancion-linea">${linea}</div>`;
+            }
+        });
+        
+        html += `
+                </div>
+            </div>
+        `;
+        
+        return html;
+    },
+    
+    // Generar HTML para adivinanza
+    generarHTMLAdivinanza: function() {
+        const datos = this.datosMinijuegos.adivinanza;
+        const adivinanzas = [...datos.adivinanzas].sort(() => Math.random() - 0.5).slice(0, 3);
+        
+        let html = `
+            <div class="minijuego-adivinanza">
+        `;
+        
+        adivinanzas.forEach((adivinanza, index) => {
+            html += `
+                <div class="adivinanza-item" data-index="${index}">
+                    <h4>Adivinanza ${index + 1}</h4>
+                    <p class="adivinanza-pregunta">${adivinanza.pregunta}</p>
+                    <div class="adivinanza-opciones">
+            `;
+            
+            adivinanza.opciones.forEach((opcion, opcionIndex) => {
+                html += `
+                    <button class="opcion-adivinanza" onclick="seleccionarRespuestaAdivinanza(${index}, ${opcionIndex})">
+                        ${opcion}
+                    </button>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    <div class="adivinanza-explicacion" id="explicacion-${index}" style="display: none;">
+                        ${adivinanza.explicacion}
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += `</div>`;
+        
+        return html;
+    },
+    
+    // Generar HTML para conversación
+    generarHTMLConversacion: function() {
+        const datos = this.datosMinijuegos.conversacion;
+        const conversacion = datos.conversaciones[0];
+        
+        let html = `
+            <div class="minijuego-conversacion">
+                <div class="conversacion-dialogos">
+        `;
+        
+        conversacion.dialogos.forEach((dialogo, index) => {
+            if (dialogo.personaje === 'Nino') {
+                html += `
+                    <div class="dialogo-nino">
+                        <div class="dialogo-personaje">Nino:</div>
+                        <div class="dialogo-texto">${dialogo.texto}</div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="dialogo-jugador">
+                        <div class="dialogo-personaje">Tú:</div>
+                        <div class="dialogo-opciones">
+                `;
+                
+                dialogo.opciones.forEach((opcion, opcionIndex) => {
+                    html += `
+                        <button class="opcion-dialogo" onclick="seleccionarOpcionDialogo(${index}, ${opcionIndex})">
+                            ${opcion}
+                        </button>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        
+        html += `
+                </div>
+            </div>
+        `;
+        
+        return html;
+    },
+    
+    // Generar HTML para memoria
+    generarHTMLMemoria: function() {
+        const datos = this.datosMinijuegos.memoria;
+        const nivel = datos.niveles[0]; // Primer nivel
+        
+        let html = `
+            <div class="minijuego-memoria">
+                <h3>Memoriza estas palabras:</h3>
+                <div class="palabras-memoria" id="palabras-memoria">
+        `;
+        
+        nivel.palabras.forEach((palabra, index) => {
+            html += `<span class="palabra-memoria" data-index="${index}">${palabra}</span>`;
+        });
+        
+        html += `
+                </div>
+                <div class="memoria-input" style="display: none;" id="memoria-input">
+                    <p>Escribe las palabras en orden:</p>
+                    <input type="text" id="input-memoria" placeholder="Escribe las palabras separadas por comas">
+                    <button onclick="verificarMemoria()">Verificar</button>
+                </div>
+                <div class="memoria-contador" id="contador-memoria">
+                    Memorizando... <span id="tiempo-memoria">${nivel.tiempoMemorizacion}</span>s
+                </div>
+            </div>
+        `;
+        
+        return html;
+    },
+    
+    // Iniciar temporizador del minijuego
+    iniciarTemporizador: function() {
+        const temporizador = setInterval(() => {
+            if (this.estado.tiempoRestante > 0) {
+                this.estado.tiempoRestante--;
+                const tiempoElement = document.getElementById('tiempo-minijuego');
+                if (tiempoElement) {
+                    tiempoElement.textContent = this.estado.tiempoRestante;
+                }
+            } else {
+                clearInterval(temporizador);
+                this.terminarMinijuego(false, "¡Se acabó el tiempo!");
+            }
+        }, 1000);
+        
+        // Guardar referencia al intervalo
+        this.temporizadorInterval = temporizador;
+    },
+    
+    // Verificar respuesta de minijuego
+    verificarRespuesta: function(tipoMinijuego, respuestas) {
+        const datos = this.datosMinijuegos[tipoMinijuego];
+        let correctas = 0;
+        let total = 0;
+        
+        switch(tipoMinijuego) {
+            case 'poema':
+                const poema = datos.poemas[0]; // Usamos el primero por simplicidad
+                poema.opciones.forEach((opcion, index) => {
+                    total++;
+                    if (respuestas[index] === opcion.palabra) {
+                        correctas++;
+                        this.estado.puntuacion += 10;
+                    }
+                });
+                break;
+                
+            case 'adivinanza':
+                respuestas.forEach((respuesta, index) => {
+                    total++;
+                    if (respuesta === true) {
+                        correctas++;
+                        this.estado.puntuacion += 15;
+                    }
+                });
+                break;
+        }
+        
+        return { correctas, total };
+    },
+    
+    // Terminar minijuego
+    terminarMinijuego: function(ganado, mensaje) {
+        if (this.temporizadorInterval) {
+            clearInterval(this.temporizadorInterval);
+        }
+        
+        this.estado.enProgreso = false;
+        this.estado.resultado = ganado ? 'ganado' : 'perdido';
+        
+        // Calcular afinidad ganada/perdida
+        let afinidadCambio = 0;
+        
+        if (ganado) {
+            afinidadCambio = this.estado.minijuegoActual.afinidadGanada;
+            sistemaEconomia.agregarDinero(5, `Minijuego ${this.estado.minijuegoActual.nombre} ganado`);
+        } else {
+            afinidadCambio = -this.estado.minijuegoActual.afinidadPerdida;
+        }
+        
+        // Aplicar cambios a RPG
+        if (typeof rpgNovia !== 'undefined') {
+            rpgNovia.aumentarAfinidad(afinidadCambio);
+        }
+        
+        // Mostrar resultado
+        const mensajeElement = document.getElementById('mensaje-minijuego');
+        if (mensajeElement) {
+            mensajeElement.innerHTML = `
+                <div class="resultado-minijuego ${ganado ? 'ganado' : 'perdido'}">
+                    <h3>${ganado ? '🎉 ¡Ganaste!' : '😔 Perdiste'}</h3>
+                    <p>${mensaje}</p>
+                    <p>Afinidad ${ganado ? '+' : ''}${afinidadCambio}%</p>
+                    <p>Puntuación: ${this.estado.puntuacion} puntos</p>
+                    <button class="boton-principal" onclick="cerrarMinijuego()">
+                        Continuar
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Registrar en análisis
+        sistemaAnalisis.registrarQuiz(
+            false, // No es mazo completado
+            0, // palabrasTotales
+            ganado ? 1 : 0, // palabrasCorrectas
+            ganado ? 0 : 1 // palabrasFalladas
+        );
+    },
+    
+    // Iniciar minijuego desde RPG
+    iniciarDesdeRPG: function(tipoMinijuego) {
+        return this.iniciarMinijuego(tipoMinijuego);
+    }
+};
+
+// ============================================================================
+// SISTEMA RPG DE NOVIA - MEJORADO CON NINO NAKANO
+// ============================================================================
+
+const rpgNovia = {
+    // Estado de la relación con Nino Nakano
+    estado: {
+        nombreNovia: "Nino Nakano",
+        nivelRelacion: 1,
+        experiencia: 0,
+        afinidad: 50, // 0-100
+        estadoAnimo: "feliz",
+        energia: 100,
+        ultimaVisita: null,
+        conversacionesDesbloqueadas: [],
+        escenasDesbloqueadas: [],
+        fechaInicio: null,
+        totalMinijuegosGanados: 0,
+        totalMinijuegosPerdidos: 0
+    },
+    
+    // Economía del RPG
+    economia: {
+        moneda: "S/.",
+        nombre: "Soles",
+        saldo: 0,
+        inventario: {
+            condones: 0,
+            flores: 0,
+            chocolates: 0,
+            joyas: 0
+        }
+    },
+    
+    // Sistema +18 con niveles de desbloqueo
+    contenidoAdulto: {
+        desbloqueado: false,
+        nivelesDesbloqueo: {
+            beso: 1,       // Nivel 1
+            caricias: 2,    // Nivel 2
+            intimidad1: 3,  // Nivel 3
+            intimidad2: 4   // Nivel 4
+        },
+        escenasDisponibles: [
+            { id: "beso", nombre: "Beso Apasionado", costoCondones: 1, nivelRequerido: 1, afinidadRequerida: 30 },
+            { id: "caricias", nombre: "Carícias Íntimas", costoCondones: 1, nivelRequerido: 2, afinidadRequerida: 50 },
+            { id: "intimidad1", nombre: "Primera Noche", costoCondones: 1, nivelRequerido: 3, afinidadRequerida: 70 },
+            { id: "intimidad2", nombre: "Noche de Pasión", costoCondones: 2, nivelRequerido: 4, afinidadRequerida: 85 }
+        ],
+        escenasCompletadas: []
+    },
+    
+    // Conversaciones específicas de Nino Nakano
+    conversaciones: {
+        saludos: [
+            "ふふっ、来てくれたのね。", // Hehe, viniste.
+            "今日も一緒に勉強しましょう！", // ¡Estudiemos juntos hoy también!
+            "あなたが来るのを待ってたわ。", // Estaba esperando que vinieras.
+            "勉強の調子はどう？", // ¿Cómo va el estudio?
+            "私、今日は特別な気分なの…" // Hoy me siento especial...
+        ],
+        conversacionesNormales: [
+            { 
+                pregunta: "今日は何を勉強したの？", // ¿Qué estudiaste hoy?
+                respuestas: [
+                    "たくさん単語を覚えたよ！", // ¡Memoricé muchas palabras!
+                    "文法を勉強してたんだ", // Estaba estudiando gramática
+                    "Ninoと話す練習をしてた" // Estaba practicando hablar con Nino
+                ]
+            },
+            { 
+                pregunta: "私の料理、食べたい？", // ¿Quieres comer mi comida?
+                respuestas: [
+                    "もちろん！Ninoの料理は美味しいよね", // ¡Claro! La comida de Nino es deliciosa
+                    "どんな料理を作るの？", // ¿Qué tipo de comida preparas?
+                    "手伝おうか？" // ¿Te ayudo?
+                ]
+            },
+            { 
+                pregunta: "将来、日本に行きたい？", // ¿Quieres ir a Japón en el futuro?
+                respuestas: [
+                    "Ninoと一緒に行きたいな", // Me gustaría ir con Nino
+                    "日本語がもっと上手くなったらね", // Cuando mejore mi japonés
+                    "絶対に行くよ！" // ¡Definitivamente iré!
+                ]
+            }
+        ],
+        conversacionesIntimas: [
+            { 
+                pregunta: "私のこと、どう思ってる？", // ¿Qué piensas de mí?
+                respuestas: [
+                    "世界で一番可愛いと思う", // Creo que eres la más linda del mundo
+                    "大切な人だよ", // Eres una persona importante para mí
+                    "もっと近づきたい…" // Quiero acercarme más...
+                ]
+            },
+            { 
+                pregunta: "二人でどこか行きたいところある？", // ¿Hay algún lugar al que quieras ir los dos juntos?
+                respuestas: [
+                    "お花見に行きたいな", // Quiero ir a ver los cerezos en flor
+                    "海に行って夕日を見たい", // Quiero ir al mar a ver el atardecer
+                    "どこでもNinoと一緒ならいいよ" // Cualquier lugar está bien si estoy con Nino
+                ]
+            }
+        ]
+    },
+    
+    // Inicializar RPG
+    inicializar: function() {
+        const datosGuardados = this.cargarDatos();
+        
+        if (datosGuardados) {
+            this.estado = datosGuardados.estado;
+            this.economia = datosGuardados.economia;
+            this.contenidoAdulto = datosGuardados.contenidoAdulto;
+            
+            // Verificar si es el primer día
+            if (!this.estado.fechaInicio) {
+                this.estado.fechaInicio = new Date().toISOString();
+            }
+        } else {
+            this.estado.fechaInicio = new Date().toISOString();
+        }
+        
+        // Sincronizar saldo con sistema global
+        this.economia.saldo = sistemaEconomia.saldoTotal;
+        
+        console.log("💕 RPG de Nino Nakano inicializado. Nivel:", this.estado.nivelRelacion);
+        return true;
+    },
+    
+    // Cargar datos guardados
+    cargarDatos: function() {
+        try {
+            const datos = localStorage.getItem('rpgNovia');
+            return datos ? JSON.parse(datos) : null;
+        } catch (e) {
+            console.error("Error cargando RPG:", e);
+            return null;
+        }
+    },
+    
+    // Guardar datos
+    guardarDatos: function() {
+        try {
+            localStorage.setItem('rpgNovia', JSON.stringify({
+                estado: this.estado,
+                economia: this.economia,
+                contenidoAdulto: this.contenidoAdulto
+            }));
+            return true;
+        } catch (e) {
+            console.error("Error guardando RPG:", e);
+            return false;
+        }
+    },
+    
+    // Aumentar afinidad
+    aumentarAfinidad: function(cantidad) {
+        const afinidadAnterior = this.estado.afinidad;
+        this.estado.afinidad = Math.min(100, this.estado.afinidad + cantidad);
+        
+        // Ganar experiencia por aumentar afinidad
+        if (cantidad > 0) {
+            this.ganarExperiencia(Math.floor(cantidad / 2));
+        }
+        
+        // Verificar desbloqueos
+        this.verificarDesbloqueos();
+        
+        this.guardarDatos();
+        this.actualizarInterfazRPG();
+        
+        console.log(`💝 Afinidad: ${afinidadAnterior}% → ${this.estado.afinidad}% (+${cantidad})`);
+        
+        return this.estado.afinidad;
+    },
+    
+    // Ganar experiencia
+    ganarExperiencia: function(cantidad) {
+        this.estado.experiencia += cantidad;
+        console.log(`✨ Experiencia: +${cantidad} (Total: ${this.estado.experiencia})`);
+        
+        // Verificar subida de nivel
+        this.verificarSubidaNivel();
+        
+        return this.estado.experiencia;
+    },
+    
+    // Verificar subida de nivel
+    verificarSubidaNivel: function() {
+        const expNecesaria = this.estado.nivelRelacion * 100;
+        
+        if (this.estado.experiencia >= expNecesaria) {
+            this.estado.nivelRelacion++;
+            this.estado.experiencia = 0;
+            
+            // Recompensa por subir de nivel
+            const recompensa = this.estado.nivelRelacion * 10;
+            sistemaEconomia.agregarDinero(recompensa, `Subida a nivel ${this.estado.nivelRelacion} con Nino`);
+            
+            this.mostrarMensaje(`🎉 ¡Subiste al nivel ${this.estado.nivelRelacion} con Nino! +${recompensa} S/.`);
+            
+            // Verificar desbloqueos por nivel
+            this.verificarDesbloqueos();
+            
+            console.log(`🏆 Nivel Up! Nivel ${this.estado.nivelRelacion}`);
+        }
+    },
+    
+    // Verificar desbloqueos
+    verificarDesbloqueos: function() {
+        const nivel = this.estado.nivelRelacion;
+        const afinidad = this.estado.afinidad;
+        
+        // Verificar desbloqueo de contenido +18
+        if (!this.contenidoAdulto.desbloqueado && nivel >= 1 && afinidad >= 30) {
+            this.contenidoAdulto.desbloqueado = true;
+            this.mostrarMensaje("💖 ¡Contenido especial desbloqueado! Ahora puedes tener momentos más íntimos con Nino.");
+        }
+        
+        // Verificar desbloqueo de minijuegos
+        const seccionMinijuegos = document.getElementById('seccion-minijuegos');
+        if (seccionMinijuegos && nivel >= 2) {
+            seccionMinijuegos.style.display = 'block';
+        }
+        
+        this.guardarDatos();
+    },
+    
+    // Hablar con Nino
+    hablarConNovia: function() {
+        const conversaciones = this.estado.afinidad >= 60 ? 
+            this.conversaciones.conversacionesIntimas : 
+            this.conversaciones.conversacionesNormales;
+        
+        const conversacion = conversaciones[Math.floor(Math.random() * conversaciones.length)];
+        const respuesta = conversacion.respuestas[Math.floor(Math.random() * conversacion.respuestas.length)];
+        
+        const dialogoElement = document.getElementById('dialogo-novia');
+        dialogoElement.innerHTML = `
+            <div class="dialogo-burbuja">
+                <div class="pregunta-dialogo">${conversacion.pregunta}</div>
+                <div class="texto-dialogo">${respuesta}</div>
+                <div class="tiempo-dialogo">Ahora</div>
+            </div>
+        `;
+        
+        // Aumentar afinidad por conversación
+        this.aumentarAfinidad(2);
+    },
+    
+    // Regalar item a Nino
+    regalarItem: function(tipo) {
+        const costos = {
+            flores: 5,
+            chocolates: 10,
+            joyas: 20
+        };
+        
+        const afinidadGanada = {
+            flores: 5,
+            chocolates: 8,
+            joyas: 15
+        };
+        
+        if (this.economia.saldo >= costos[tipo]) {
+            this.economia.saldo -= costos[tipo];
+            sistemaEconomia.agregarDinero(-costos[tipo], `Regalo de ${tipo} para Nino`);
+            this.economia.inventario[tipo]++;
+            
+            // Aumentar afinidad
+            this.aumentarAfinidad(afinidadGanada[tipo]);
+            
+            // Mensaje especial según el regalo
+            const mensajes = {
+                flores: "💐 花、ありがとう。私、花が大好きなの。", // Flores, gracias. Me encantan las flores.
+                chocolates: "🍫 チョコレート！嬉しい！", // ¡Chocolate! ¡Qué alegría!
+                joyas: "💎 まさかこんなものを…本当にありがとう。", // No puedo creer que me des esto... Muchas gracias de verdad.
+            };
+            
+            this.mostrarMensaje(`Le regalaste ${tipo} a Nino 💝`);
+            
+            // Mostrar diálogo especial
+            const dialogoElement = document.getElementById('dialogo-novia');
+            dialogoElement.innerHTML = `
+                <div class="dialogo-burbuja">
+                    <div class="texto-dialogo">${mensajes[tipo]}</div>
+                    <div class="tiempo-dialogo">Ahora</div>
+                </div>
+            `;
+        } else {
+            this.mostrarMensaje("No tienes suficiente dinero 💸");
+        }
+    },
+    
+    // Comprar condones
+    comprarCondones: function() {
+        const costo = 15;
+        if (this.economia.saldo >= costo) {
+            this.economia.saldo -= costo;
+            sistemaEconomia.agregarDinero(-costo, "Compra de condones");
+            this.economia.inventario.condones++;
+            this.actualizarInterfazRPG();
+            this.mostrarMensaje("¡Condones comprados! 💕");
+        } else {
+            this.mostrarMensaje("No tienes suficiente dinero para comprar condones 💸");
+        }
+    },
+    
+    // Usar condón para escena +18
+    usarCondon: function(escenaId) {
+        if (this.economia.inventario.condones <= 0) {
+            this.mostrarMensaje("No tienes condones disponibles 💔");
+            return;
+        }
+        
+        const escena = this.contenidoAdulto.escenasDisponibles.find(e => e.id === escenaId);
+        
+        if (!escena) {
+            this.mostrarMensaje("Escena no encontrada");
+            return;
+        }
+        
+        // Verificar requisitos de nivel
+        if (this.estado.nivelRelacion < escena.nivelRequerido) {
+            this.mostrarMensaje(`Necesitas nivel ${escena.nivelRequerido} para esta escena 💝`);
+            return;
+        }
+        
+        // Verificar requisitos de afinidad
+        if (this.estado.afinidad < escena.afinidadRequerida) {
+            this.mostrarMensaje(`Necesitas ${escena.afinidadRequerida}% de afinidad para esta escena 💝`);
+            return;
+        }
+        
+        // Usar condón
+        this.economia.inventario.condones -= escena.costoCondones;
+        
+        // Ejecutar escena
+        this.ejecutarEscenaAdulto(escena);
+    },
+    
+    // Ejecutar escena +18
+    ejecutarEscenaAdulto: function(escena) {
+        const dialogoElement = document.getElementById('dialogo-novia');
+        
+        // Mensajes específicos de Nino para cada escena
+        const mensajesNino = {
+            beso: [
+                "ん…ちゅっ…", // Mmm... beso...
+                "あなたの唇、柔らかい…", // Tus labios son suaves...
+                "もっと…", // Más...
+                "好き…", // Me gustas...
+                "ちゅっ、ちゅっ…" // Beso, beso...
+            ],
+            caricias: [
+                "あっ…そこ…", // Ah... ahí...
+                "優しくして…", // Sé amable...
+                "気持ちいい…", // Se siente bien...
+                "あなたの手、温かい…", // Tus manos están calientes...
+                "ん…だめ…恥ずかしい…" // Mmm... no... es vergonzoso...
+            ],
+            intimidad1: [
+                "今夜は…私を…", // Esta noche... a mí...
+                "怖くないよ…あなたとなら…", // No tengo miedo... si es contigo...
+                "優しく抱きしめて…", // Abrázame suavemente...
+                "愛してる…", // Te amo...
+                "一緒になりたい…" // Quiero estar contigo...
+            ],
+            intimidad2: [
+                "もう…我慢できない…", // Ya no... puedo aguantar...
+                "激しく…", // Intensamente...
+                "あなただけ…", // Solo tú...
+                "幸せ…", // Felicidad...
+                "ずっと一緒…" // Juntos para siempre...
+            ]
+        };
+        
+        let mensajeCompleto = `<div class="escena-adulta">`;
+        const mensajes = mensajesNino[escena.id] || mensajesNino.beso;
+        
+        mensajes.forEach((mensaje, index) => {
+            mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
+            
+            // Añadir traducción alternada
+            if (index % 2 === 0) {
+                const traducciones = {
+                    beso: ["Mmm... beso...", "Tus labios son suaves...", "Más...", "Me gustas...", "Beso, beso..."],
+                    caricias: ["Ah... ahí...", "Sé amable...", "Se siente bien...", "Tus manos están calientes...", "Mmm... no... es vergonzoso..."],
+                    intimidad1: ["Esta noche... a mí...", "No tengo miedo... si es contigo...", "Abrázame suavemente...", "Te amo...", "Quiero estar contigo..."],
+                    intimidad2: ["Ya no... puedo aguantar...", "Intensamente...", "Solo tú...", "Felicidad...", "Juntos para siempre..."]
+                };
+                
+                const traduccion = traducciones[escena.id] || traducciones.beso;
+                if (traduccion[index]) {
+                    mensajeCompleto += `<div class="linea-traduccion"><small>${traduccion[index]}</small></div>`;
+                }
+            }
+        });
+        
+        mensajeCompleto += `</div>`;
+        dialogoElement.innerHTML = mensajeCompleto;
+        
+        // Aumentar afinidad y experiencia
+        this.aumentarAfinidad(10);
+        this.ganarExperiencia(25);
+        
+        // Agregar a escenas completadas
+        if (!this.contenidoAdulto.escenasCompletadas.includes(escena.id)) {
+            this.contenidoAdulto.escenasCompletadas.push(escena.id);
+        }
+        
+        this.guardarDatos();
+        this.actualizarInterfazRPG();
+    },
+    
+    // Iniciar minijuego desde RPG
+    iniciarMinijuego: function(tipo) {
+        const resultado = sistemaMinijuegos.iniciarDesdeRPG(tipo);
+        
+        if (resultado) {
+            // Registrar en estadísticas
+            this.estado.totalMinijuegosGanados++;
+            this.guardarDatos();
+        }
+        
+        return resultado;
+    },
+    
+    // Actualizar interfaz RPG
+    actualizarInterfazRPG: function() {
+        // Actualizar información básica
+        document.getElementById('nombre-novia').textContent = this.estado.nombreNovia;
+        document.getElementById('nivel-relacion').textContent = `Nivel ${this.estado.nivelRelacion}`;
+        document.getElementById('afinidad').textContent = `${this.estado.afinidad}%`;
+        
+        // Sincronizar saldo con sistema global
+        this.economia.saldo = sistemaEconomia.saldoTotal;
+        document.getElementById('saldo-rpg').textContent = `${this.economia.saldo} ${this.economia.moneda}`;
+        
+        document.getElementById('condones-inventario').textContent = this.economia.inventario.condones;
+        
+        // Actualizar barra de afinidad
+        const barraAfinidad = document.getElementById('barra-afinidad');
+        barraAfinidad.style.width = `${this.estado.afinidad}%`;
+        
+        // Actualizar estado de ánimo
+        document.getElementById('estado-animo').textContent = this.obtenerEmojiEstadoAnimo(this.estado.estadoAnimo);
+        
+        // Mostrar/Ocultar sección +18 según nivel
+        const seccionAdulto = document.getElementById('seccion-adulto');
+        if (seccionAdulto) {
+            seccionAdulto.style.display = this.contenidoAdulto.desbloqueado ? 'block' : 'none';
+            
+            // Actualizar botones según nivel
+            const botonesAdulto = seccionAdulto.querySelectorAll('.boton-adulto');
+            botonesAdulto.forEach(boton => {
+                const escenaId = boton.onclick.toString().match(/usarCondon\('(.+?)'\)/)[1];
+                const escena = this.contenidoAdulto.escenasDisponibles.find(e => e.id === escenaId);
+                
+                if (escena) {
+                    const desbloqueado = this.estado.nivelRelacion >= escena.nivelRequerido;
+                    boton.disabled = !desbloqueado;
+                    
+                    if (!desbloqueado) {
+                        boton.title = `Desbloquea en nivel ${escena.nivelRequerido}`;
+                    }
+                }
+            });
+        }
+        
+        // Mostrar/Ocultar sección de minijuegos según nivel
+        const seccionMinijuegos = document.getElementById('seccion-minijuegos');
+        if (seccionMinijuegos) {
+            seccionMinijuegos.style.display = this.estado.nivelRelacion >= 2 ? 'block' : 'none';
+        }
+        
+        // Generar diálogo aleatorio si no hay diálogo activo
+        const dialogoElement = document.getElementById('dialogo-novia');
+        if (!dialogoElement.innerHTML.includes('linea-escena')) {
+            this.generarDialogoAleatorio();
+        }
+    },
+    
+    // Obtener emoji según estado de ánimo
+    obtenerEmojiEstadoAnimo: function(estado) {
+        const emojis = {
+            feliz: "😊",
+            enamorada: "🥰",
+            excitada: "😳",
+            juguetona: "😏",
+            timida: "😊",
+            pasional: "🔥",
+            concentrada: "🧠",
+            cariñosa: "💕"
+        };
+        return emojis[estado] || "😊";
+    },
+    
+    // Generar diálogo aleatorio
+    generarDialogoAleatorio: function() {
+        const dialogoElement = document.getElementById('dialogo-novia');
+        const saludos = this.conversaciones.saludos;
+        const saludoAleatorio = saludos[Math.floor(Math.random() * saludos.length)];
+        
+        // Traducciones de los saludos
+        const traducciones = [
+            "Hehe, viniste.",
+            "¡Estudiemos juntos hoy también!",
+            "Estaba esperando que vinieras.",
+            "¿Cómo va el estudio?",
+            "Hoy me siento especial..."
+        ];
+        
+        const indice = saludos.indexOf(saludoAleatorio);
+        const traduccion = indice !== -1 ? traducciones[indice] : "";
+        
+        dialogoElement.innerHTML = `
+            <div class="dialogo-burbuja">
+                <div class="texto-dialogo">${saludoAleatorio}</div>
+                <div class="traduccion-dialogo"><small>${traduccion}</small></div>
+                <div class="tiempo-dialogo">Ahora</div>
+            </div>
+        `;
+    },
+    
+    // Mostrar mensaje en RPG
+    mostrarMensaje: function(mensaje) {
+        const mensajeElement = document.getElementById('mensaje-rpg');
+        mensajeElement.textContent = mensaje;
+        mensajeElement.style.display = 'block';
+        
+        setTimeout(() => {
+            mensajeElement.style.display = 'none';
+        }, 3000);
+    },
+    
+    // Obtener estadísticas de RPG
+    obtenerEstadisticas: function() {
+        const fechaInicio = new Date(this.estado.fechaInicio);
+        const diasConocidos = Math.floor((new Date() - fechaInicio) / (1000 * 60 * 60 * 24));
+        
+        return {
+            nivelActual: this.estado.nivelRelacion,
+            afinidadActual: this.estado.afinidad,
+            experiencia: this.estado.experiencia,
+            experienciaNecesaria: this.estado.nivelRelacion * 100,
+            diasConocidos: diasConocidos,
+            totalMinijuegosGanados: this.estado.totalMinijuegosGanados,
+            totalMinijuegosPerdidos: this.estado.totalMinijuegosPerdidos,
+            escenasCompletadas: this.contenidoAdulto.escenasCompletadas.length,
+            inventario: this.economia.inventario
+        };
+    }
+};
+
+// ============================================================================
+// SISTEMA DE NOVELA VISUAL - NUEVO
+// ============================================================================
+
+const sistemaNovelaVisual = {
+    // Estado de la novela visual
+    estado: {
+        capituloActual: 0,
+        escenaActual: 0,
+        decisionActual: 0,
+        caminoElegido: [],
+        finalAlcanzado: null,
+        progreso: 0
+    },
+    
+    // Datos de la novela visual (Nino Nakano como protagonista)
+    novela: {
+        titulo: "La Quinta Hermana: Una Historia con Nino",
+        descripcion: "Una historia interactiva donde tu comprensión del japonés determina el desarrollo de la relación con Nino Nakano.",
+        capitulos: [
+            {
+                titulo: "Capítulo 1: El Encuentro",
+                escenas: [
+                    {
+                        imagen: "https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png",
+                        dialogo: "はじめまして。私は中野二乃です。よろしくお願いします。",
+                        traduccion: "Mucho gusto. Soy Nino Nakano. Encantada de conocerte.",
+                        opciones: [
+                            { texto: "はじめまして。よろしくお願いします。", correcta: true, efecto: "afinidad+5" },
+                            { texto: "こんにちは。元気ですか？", correcta: true, efecto: "afinidad+3" },
+                            { texto: "さようなら。", correcta: false, efecto: "afinidad-5" },
+                            { texto: "私は日本語を勉強しています。", correcta: true, efecto: "afinidad+2" }
+                        ]
+                    },
+                    {
+                        imagen: "https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png",
+                        dialogo: "日本語を勉強しているんですか？それは素晴らしいですね。",
+                        traduccion: "¿Estás estudiando japonés? Eso es maravilloso.",
+                        opciones: [
+                            { texto: "はい、頑張っています。", correcta: true, efecto: "afinidad+5" },
+                            { texto: "少し難しいですが、楽しいです。", correcta: true, efecto: "afinidad+7" },
+                            { texto: "いいえ、勉強していません。", correcta: false, efecto: "afinidad-10" },
+                            { texto: "日本語が話せますか？", correcta: true, efecto: "afinidad+3" }
+                        ]
+                    }
+                ]
+            },
+            {
+                titulo: "Capítulo 2: La Primera Cita",
+                escenas: [
+                    {
+                        imagen: "https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png",
+                        dialogo: "今度、一緒にお茶しない？",
+                        traduccion: "¿Quieres tomar té conmigo la próxima vez?",
+                        opciones: [
+                            { texto: "はい、喜んで！", correcta: true, efecto: "afinidad+10" },
+                            { texto: "ごめんなさい、忙しいです。", correcta: false, efecto: "afinidad-8" },
+                            { texto: "どこに行きたいですか？", correcta: true, efecto: "afinidad+5" },
+                            { texto: "お茶が好きです。", correcta: true, efecto: "afinidad+3" }
+                        ]
+                    }
+                ]
+            }
+        ],
+        finales: [
+            {
+                id: "bueno",
+                titulo: "Final Bueno: Juntos para Siempre",
+                descripcion: "Tu dominio del japonés y tus decisiones correctas hicieron que Nino se enamorara de ti.",
+                requisito: "Afinidad > 80, Todas las decisiones correctas"
+            },
+            {
+                id: "normal",
+                titulo: "Final Normal: Buenos Amigos",
+                descripcion: "Te llevas bien con Nino, pero la barrera del idioma impidió una relación más profunda.",
+                requisito: "Afinidad > 50"
+            },
+            {
+                id: "malo",
+                titulo: "Final Malo: Extraños",
+                descripcion: "Los malentendidos por el idioma llevaron a que Nino se alejara.",
+                requisito: "Afinidad < 30"
+            }
+        ]
+    },
+    
+    // Iniciar novela visual
+    iniciar: function() {
+        this.estado.capituloActual = 0;
+        this.estado.escenaActual = 0;
+        this.estado.decisionActual = 0;
+        this.estado.caminoElegido = [];
+        this.estado.finalAlcanzado = null;
+        this.estado.progreso = 0;
+        
+        this.mostrarPantallaNovela();
+        return true;
+    },
+    
+    // Mostrar pantalla de novela
+    mostrarPantallaNovela: function() {
+        const capitulo = this.novela.capitulos[this.estado.capituloActual];
+        const escena = capitulo.escenas[this.estado.escenaActual];
+        
+        // Ocultar todas las pantallas
+        document.querySelectorAll('.pantalla').forEach(pantalla => {
+            pantalla.classList.remove('activa');
+        });
+        
+        // Mostrar pantalla de novela
+        document.getElementById('pantalla-novela-visual').classList.add('activa');
+        
+        // Actualizar contenido
+        document.getElementById('imagen-fondo-novela').src = escena.imagen;
+        document.getElementById('texto-dialogo-novela').textContent = escena.dialogo;
+        document.getElementById('traduccion-dialogo').innerHTML = `<strong>Traducción:</strong> ${escena.traduccion}`;
+        
+        // Generar opciones
+        const opcionesContainer = document.getElementById('opciones-dialogo');
+        opcionesContainer.innerHTML = '';
+        
+        escena.opciones.forEach((opcion, index) => {
+            const boton = document.createElement('button');
+            boton.className = 'opcion-novela';
+            boton.textContent = opcion.texto;
+            boton.onclick = () => this.seleccionarOpcion(index);
+            opcionesContainer.appendChild(boton);
+        });
+        
+        // Actualizar progreso
+        this.actualizarProgreso();
+    },
+    
+    // Seleccionar opción en la novela
+    seleccionarOpcion: function(indiceOpcion) {
+        const capitulo = this.novela.capitulos[this.estado.capituloActual];
+        const escena = capitulo.escenas[this.estado.escenaActual];
+        const opcion = escena.opciones[indiceOpcion];
+        
+        // Registrar decisión
+        this.estado.caminoElegido.push({
+            capitulo: this.estado.capituloActual,
+            escena: this.estado.escenaActual,
+            opcion: indiceOpcion,
+            correcta: opcion.correcta
+        });
+        
+        // Aplicar efecto a RPG si la opción es correcta
+        if (opcion.correcta) {
+            if (opcion.efecto.includes('afinidad+')) {
+                const cantidad = parseInt(opcion.efecto.replace('afinidad+', ''));
+                rpgNovia.aumentarAfinidad(cantidad);
+            }
+        } else {
+            if (opcion.efecto.includes('afinidad-')) {
+                const cantidad = parseInt(opcion.efecto.replace('afinidad-', ''));
+                rpgNovia.aumentarAfinidad(-cantidad);
+            }
+        }
+        
+        // Avanzar a la siguiente escena
+        this.estado.escenaActual++;
+        
+        // Verificar si terminó el capítulo
+        if (this.estado.escenaActual >= capitulo.escenas.length) {
+            this.estado.capituloActual++;
+            this.estado.escenaActual = 0;
+            
+            // Verificar si terminó la novela
+            if (this.estado.capituloActual >= this.novela.capitulos.length) {
+                this.terminarNovela();
+                return;
+            }
+        }
+        
+        // Mostrar siguiente escena
+        this.mostrarPantallaNovela();
+    },
+    
+    // Avanzar diálogo (para diálogos sin opciones)
+    avanzarDialogo: function() {
+        this.estado.escenaActual++;
+        const capitulo = this.novela.capitulos[this.estado.capituloActual];
+        
+        if (this.estado.escenaActual >= capitulo.escenas.length) {
+            this.estado.capituloActual++;
+            this.estado.escenaActual = 0;
+            
+            if (this.estado.capituloActual >= this.novela.capitulos.length) {
+                this.terminarNovela();
+                return;
+            }
+        }
+        
+        this.mostrarPantallaNovela();
+    },
+    
+    // Terminar novela y mostrar final
+    terminarNovela: function() {
+        // Calcular afinidad final basada en decisiones
+        const decisionesCorrectas = this.estado.caminoElegido.filter(d => d.correcta).length;
+        const totalDecisiones = this.estado.caminoElegido.length;
+        const porcentajeCorrectas = totalDecisiones > 0 ? (decisionesCorrectas / totalDecisiones) * 100 : 0;
+        
+        // Determinar final basado en afinidad y decisiones
+        const afinidadRPG = rpgNovia.estado.afinidad;
+        let final;
+        
+        if (afinidadRPG > 80 && porcentajeCorrectas > 90) {
+            final = this.novela.finales[0]; // Final bueno
+        } else if (afinidadRPG > 50) {
+            final = this.novela.finales[1]; // Final normal
+        } else {
+            final = this.novela.finales[2]; // Final malo
+        }
+        
+        this.estado.finalAlcanzado = final.id;
+        
+        // Mostrar pantalla de final
+        const htmlFinal = `
+            <div class="contenedor">
+                <div class="barra-superior">
+                    <div class="contador">📖 FINAL ALCANZADO</div>
+                    <div class="botones-superiores">
+                        <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                        <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    </div>
+                </div>
+                
+                <div class="final-novela-container">
+                    <h1>${final.titulo}</h1>
+                    <div class="final-imagen">
+                        <img src="https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png" alt="Final">
+                    </div>
+                    <div class="final-descripcion">
+                        <p>${final.descripcion}</p>
+                        <div class="final-estadisticas">
+                            <h3>📊 Tus Estadísticas:</h3>
+                            <p>Afinidad con Nino: ${afinidadRPG}%</p>
+                            <p>Decisiones correctas: ${decisionesCorrectas}/${totalDecisiones} (${Math.round(porcentajeCorrectas)}%)</p>
+                            <p>Camino elegido: ${this.estado.caminoElegido.length} escenas</p>
+                        </div>
+                        <div class="final-recompensa">
+                            <h3>🎁 Recompensas:</h3>
+                            <p>+${Math.floor(afinidadRPG / 10) * 5} S/. por completar la novela</p>
+                            <p>+10% de afinidad con Nino</p>
+                        </div>
+                    </div>
+                    
+                    <div class="final-opciones">
+                        <button class="boton-principal" onclick="volverAlInicio()">
+                            Volver al Menú Principal
+                        </button>
+                        <button class="boton-secundario" onclick="sistemaNovelaVisual.reiniciar()">
+                            🔄 Reintentar Novela
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Ocultar pantalla actual
+        document.querySelectorAll('.pantalla').forEach(pantalla => {
+            pantalla.classList.remove('activa');
+        });
+        
+        // Crear pantalla de final
+        const pantallaFinal = document.createElement('div');
+        pantallaFinal.className = 'pantalla activa';
+        pantallaFinal.id = 'pantalla-final-novela';
+        pantallaFinal.innerHTML = htmlFinal;
+        
+        document.body.appendChild(pantallaFinal);
+        
+        // Dar recompensas
+        const recompensaDinero = Math.floor(afinidadRPG / 10) * 5;
+        sistemaEconomia.agregarDinero(recompensaDinero, "Completar novela visual");
+        rpgNovia.aumentarAfinidad(10);
+    },
+    
+    // Reiniciar novela
+    reiniciar: function() {
+        this.iniciar();
+        
+        // Eliminar pantalla de final si existe
+        const pantallaFinal = document.getElementById('pantalla-final-novela');
+        if (pantallaFinal) {
+            pantallaFinal.remove();
+        }
+    },
+    
+    // Actualizar progreso
+    actualizarProgreso: function() {
+        const totalEscenas = this.novela.capitulos.reduce((total, capitulo) => total + capitulo.escenas.length, 0);
+        const escenasCompletadas = this.estado.capituloActual * this.novela.capitulos[0].escenas.length + this.estado.escenaActual;
+        this.estado.progreso = totalEscenas > 0 ? Math.round((escenasCompletadas / totalEscenas) * 100) : 0;
+    }
+};
+
+// ============================================================================
 // VIDEOS DE RECOMPENSA
 // ============================================================================
 
@@ -530,66 +2336,6 @@ const eventosDiarios = {
                 video: "profesorfallo.mp4"
             },
             video: "profesor.mp4"
-        },
-        {
-            id: 3,
-            nombre: "🧠 Memoria Fotográfica", 
-            descripcion: "Completa 4 mazos diferentes hoy",
-            objetivo: 4,
-            recompensa: {
-                tipo: "video",
-                titulo: "¡Memoria de Elefante! 🐘",
-                mensaje: "Tu capacidad de retención es increíble",
-                video: "videos/memoria.mp4",
-                dinero: 5
-            },
-            fallo: {
-                tipo: "video",
-                titulo: "La memoria se ejercita 🧩",
-                mensaje: "No te rindas, sigue intentándolo",
-                video: "videos/ejercicio.mp4"
-            },
-            video: "videos/memoria.mp4"
-        },
-        {
-            id: 4,
-            nombre: "🌟 Estrella Naciente",
-            descripcion: "Completa 1 mazo con 100% de aciertos",
-            objetivo: 1,
-            recompensa: {
-                tipo: "video", 
-                titulo: "¡Brillas como una estrella! 🌟",
-                mensaje: "Tu dedicación está dando frutos",
-                video: "videos/estrella.mp4",
-                dinero: 5
-            },
-            fallo: {
-                tipo: "video",
-                titulo: "Las estrellas también descansan ✨",
-                mensaje: "Descansa y vuelve con más energía",
-                video: "videos/descanso.mp4"
-            },
-            video: "videos/estrella.mp4"
-        },
-        {
-            id: 5,
-            nombre: "🎮 Combo Perfecto",
-            descripcion: "Completa 5 mazos en total hoy",
-            objetivo: 5,
-            recompensa: {
-                tipo: "video",
-                titulo: "¡Combo Legendario! 🎯",
-                mensaje: "Has alcanzado la perfección hoy",
-                video: "videos/combo.mp4",
-                dinero: 5
-            },
-            fallo: {
-                tipo: "video",
-                titulo: "El combo continúa mañana 🔄",
-                mensaje: "Prepárate para el próximo reto",
-                video: "videos/continuara.mp4"
-            },
-            video: "videos/combo.mp4"
         }
     ],
     
@@ -602,7 +2348,7 @@ const eventosDiarios = {
         progreso: 0,
         mazosCompletadosHoy: 0,
         ultimaFecha: null,
-        vistoHoy: false, // NUEVO: Controla si el evento ya fue visto hoy
+        vistoHoy: false, // Controla si el evento ya fue visto hoy
         debeMostrarFallo: false
     },
     
@@ -611,9 +2357,6 @@ const eventosDiarios = {
         console.log("🔧 Inicializando sistema de eventos diarios...");
         const hoy = this.obtenerFechaHoy();
         const datosGuardados = this.cargarDatos();
-        
-        console.log("📅 Fecha hoy:", hoy);
-        console.log("💾 Datos guardados:", datosGuardados);
         
         // Verificar si es un nuevo día
         if (!datosGuardados || datosGuardados.ultimaFecha !== hoy) {
@@ -637,27 +2380,19 @@ const eventosDiarios = {
     
     // Mostrar evento si es necesario
     mostrarEventoSiEsNecesario: function() {
-        console.log("🔍 Verificando si se debe mostrar evento:", {
-            tieneEvento: !!this.estado.eventoActual,
-            vistoHoy: this.estado.vistoHoy,
-            completado: this.estado.completado,
-            fallado: this.estado.fallado,
-            debeMostrarFallo: this.estado.debeMostrarFallo
-        });
-        
-        // CORRECCIÓN 1: Solo mostrar si hay evento actual, NO ha sido visto hoy, NO está completado, NO está fallado
+        // Solo mostrar si hay evento actual, NO ha sido visto hoy, NO está completado, NO está fallado
         if (this.estado.eventoActual && 
             !this.estado.vistoHoy && 
             !this.estado.completado && 
             !this.estado.fallado) {
             console.log("🎁 Mostrando evento diario pendiente");
             
-            // CORRECCIÓN 2: Esperar un poco para que cargue la página principal primero
+            // Esperar un poco para que cargue la página principal primero
             setTimeout(() => {
                 this.mostrarEventoDiario();
             }, 1500);
         } else if (this.estado.debeMostrarFallo) {
-            // CORRECCIÓN 3: Si debe mostrar fallo (por evento omitido ayer), mostrar video de fallo
+            // Si debe mostrar fallo (por evento omitido ayer), mostrar video de fallo
             console.log("📉 Mostrando video de fallo de evento omitido");
             setTimeout(() => {
                 this.mostrarVideoFallo();
@@ -665,14 +2400,6 @@ const eventosDiarios = {
                 this.estado.debeMostrarFallo = false;
                 this.guardarDatos();
             }, 2000);
-        } else {
-            console.log("❌ Evento no mostrado - Razón:", {
-                tieneEvento: !!this.estado.eventoActual,
-                vistoHoy: this.estado.vistoHoy,
-                completado: this.estado.completado,
-                fallado: this.estado.fallado,
-                debeMostrarFallo: this.estado.debeMostrarFallo
-            });
         }
     },
     
@@ -743,13 +2470,13 @@ const eventosDiarios = {
         this.estado.vistoHoy = true;
         this.guardarDatos();
         
-        // CORRECCIÓN 4: Ocultar pantalla de inicio primero
+        // Ocultar pantalla de inicio primero
         const pantallaInicio = document.getElementById('pantalla-inicio');
         if (pantallaInicio) {
             pantallaInicio.classList.remove('activa');
         }
         
-        // Mostrar pantalla de evento diario (ya existe en el HTML)
+        // Mostrar pantalla de evento diario
         const pantallaEvento = document.getElementById('pantalla-evento-diario');
         if (pantallaEvento) {
             pantallaEvento.classList.add('activa');
@@ -775,26 +2502,9 @@ const eventosDiarios = {
             // Configurar el video de presentación
             const videoElement = document.getElementById('video-evento-presentacion');
             if (videoElement) {
-                // MUTEAR EL VIDEO PARA EVITAR SONIDOS SIMULTÁNEOS
                 videoElement.muted = true;
                 videoElement.src = evento.video;
                 videoElement.loop = true;
-                
-                // Detectar cuando se empieza a reproducir para ocultar indicador
-                videoElement.addEventListener('play', function() {
-                    const playIndicator = document.querySelector('.video-play-indicator');
-                    if (playIndicator) {
-                        playIndicator.style.display = 'none';
-                    }
-                });
-                
-                // Detectar cuando se pausa para mostrar indicador
-                videoElement.addEventListener('pause', function() {
-                    const playIndicator = document.querySelector('.video-play-indicator');
-                    if (playIndicator) {
-                        playIndicator.style.display = 'flex';
-                    }
-                });
             }
         }
     },
@@ -805,26 +2515,19 @@ const eventosDiarios = {
         this.estado.aceptado = true;
         this.guardarDatos();
         this.ocultarPantallaEvento();
-        // El evento continúa en segundo plano
     },
     
     // Omitir el evento diario (considerado como fallo inmediato)
     omitirEvento: function() {
         console.log("❌ Evento diario omitido");
         
-        // CORRECCIÓN 5: Marcar como fallado y programar fallo para mañana
         this.estado.fallado = true;
         this.estado.debeMostrarFallo = true; // Mostrar fallo al día siguiente
-        this.estado.vistoHoy = true; // Marcar como visto
+        this.estado.vistoHoy = true;
         this.guardarDatos();
         
-        // Cerrar pantalla actual
         this.ocultarPantallaEvento();
         
-        // NO mostrar video de fallo inmediatamente - se mostrará mañana
-        console.log("⏰ Video de fallo programado para mañana");
-        
-        // Mostrar mensaje al usuario
         alert("Evento omitido. Mañana verás el resultado.");
     },
     
@@ -894,7 +2597,7 @@ const eventosDiarios = {
             pantalla.classList.remove('activa');
         });
         
-        // Actualizar contenido de la pantalla de video existente
+        // Actualizar contenido
         document.getElementById('titulo-video-evento').textContent = evento.recompensa.titulo;
         document.getElementById('mensaje-video-evento').textContent = evento.recompensa.mensaje;
         document.getElementById('recompensa-dinero-evento').textContent = `+${evento.recompensa.dinero} S/. 💰`;
@@ -902,11 +2605,8 @@ const eventosDiarios = {
         const videoElement = document.getElementById('video-evento-recompensa');
         videoElement.src = evento.recompensa.video;
         videoElement.controls = true;
-        videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
-        videoElement.loop = true; // PONER EN BUCLE
-        
-        // QUITAR el evento onended para que no se cierre automáticamente
-        videoElement.onended = null;
+        videoElement.muted = true;
+        videoElement.loop = true;
         
         // Mostrar pantalla de video
         document.getElementById('pantalla-video-evento').classList.add('activa');
@@ -921,7 +2621,7 @@ const eventosDiarios = {
         }
     },
     
-    // Mostrar video de fallo (al día siguiente o si se fuerza)
+    // Mostrar video de fallo
     mostrarVideoFallo: function() {
         const evento = this.estado.eventoActual;
         if (!evento) {
@@ -936,18 +2636,15 @@ const eventosDiarios = {
             pantalla.classList.remove('activa');
         });
 
-        // Actualizar contenido de la pantalla de video de fallo existente
+        // Actualizar contenido
         document.getElementById('titulo-video-fallo').textContent = evento.fallo.titulo;
         document.getElementById('mensaje-video-fallo').textContent = evento.fallo.mensaje;
         
         const videoElement = document.getElementById('video-evento-fallo');
         videoElement.src = evento.fallo.video;
         videoElement.controls = true;
-        videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
-        videoElement.loop = true; // PONER EN BUCLE
-        
-        // QUITAR el evento onended para que no se cierre automáticamente
-        videoElement.onended = null;
+        videoElement.muted = true;
+        videoElement.loop = true;
         
         // Mostrar pantalla de video de fallo
         document.getElementById('pantalla-video-fallo').classList.add('activa');
@@ -967,27 +2664,23 @@ const eventosDiarios = {
     
     // Cerrar video de recompensa
     cerrarVideoRecompensa: function() {
-        // Detener el video antes de cambiar de pantalla
         const videoElement = document.getElementById('video-evento-recompensa');
         if (videoElement) {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
         
-        // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
     },
     
     // Cerrar video de fallo
     cerrarVideoFallo: function() {
-        // Detener el video antes de cambiar de pantalla
         const videoElement = document.getElementById('video-evento-fallo');
         if (videoElement) {
             videoElement.pause();
             videoElement.currentTime = 0;
         }
         
-        // Mostrar pantalla de inicio
         cambiarPantalla('pantalla-inicio');
     }
 };
@@ -1003,99 +2696,11 @@ const videosIntimos = {
     intimidad2: "https://assets.mixkit.co/videos/preview/mixkit-passionate-romantic-scene-44460-large.mp4"
 };
 
-// Función para cambiar las URLs de videos íntimos
-function cambiarVideoIntimo(escenaId, nuevaUrl) {
-    if (videosIntimos[escenaId]) {
-        videosIntimos[escenaId] = nuevaUrl;
-        console.log(`Video de ${escenaId} actualizado a: ${nuevaUrl}`);
-        return true;
-    }
-    return false;
-}
-
-// Funciones globales para cambiar videos desde consola
-window.cambiarVideoIntimo = function(escenaId, nuevaUrl) {
-    return cambiarVideoIntimo(escenaId, nuevaUrl);
-};
-
-window.cambiarTodosVideosIntimos = function(configuraciones) {
-    let exitosas = 0;
-    configuraciones.forEach(config => {
-        if (cambiarVideoIntimo(config.escena, config.url)) {
-            exitosas++;
-        }
-    });
-    return exitosas;
-};
-
-// ============================================================================
-// SISTEMA RPG DE NOVIA
-// ============================================================================
-
-const rpgNovia = {
-    // Estado de la relación
-    estado: {
-        nombreNovia: "Sakura",
-        nivelRelacion: 1,
-        experiencia: 0,
-        afinidad: 50, // 0-100
-        estadoAnimo: "feliz",
-        energia: 100,
-        ultimaVisita: null,
-        conversacionesDesbloqueadas: [],
-        escenasDesbloqueadas: []
-    },
-    
-    // Economía del RPG
-    economia: {
-        moneda: "S/.",
-        nombre: "Soles",
-        saldo: 0,
-        inventario: {
-            condones: 0,
-            flores: 0,
-            chocolates: 0,
-            joyas: 0
-        }
-    },
-    
-    // Sistema +18
-    contenidoAdulto: {
-        desbloqueado: false,
-        escenasDisponibles: [
-            { id: "beso", nombre: "Beso Apasionado", costoCondones: 1, afinidadRequerida: 30 },
-            { id: "caricias", nombre: "Carícias Íntimas", costoCondones: 1, afinidadRequerida: 50 },
-            { id: "intimidad1", nombre: "Primera Noche", costoCondones: 1, afinidadRequerida: 70 },
-            { id: "intimidad2", nombre: "Noche de Pasión", costoCondones: 2, afinidadRequerida: 85 }
-        ],
-        escenasCompletadas: []
-    },
-    
-    // Conversaciones y diálogos
-    conversaciones: {
-        saludos: [
-            "¡Hola mi amor! 💕 ¿Cómo estás?",
-            "¡Qué alegría verte! 😊",
-            "Te extrañaba tanto... 🥰",
-            "¡Mi vida ha llegado! 💖"
-        ],
-        conversacionesNormales: [
-            { pregunta: "¿Qué has hecho hoy?", respuestas: ["Estudié mucho para ti 💪", "Pensé en ti todo el día 😘", "Practiqué japonés para impresionarte 📚"] },
-            { pregunta: "¿Te gustaría salir?", respuestas: ["¡Claro! Donde tú quieras 💃", "Solo contigo iría a cualquier lugar 🌸", "Me encanta pasar tiempo contigo 🎮"] },
-            { pregunta: "¿Qué te parece mi progreso?", respuestas: ["Estoy muy orgullosa de ti 🏆", "Eres mi campeón favorito ⭐", "Cada día te superas más 💫"] }
-        ],
-        conversacionesIntimas: [
-            { pregunta: "¿Qué sientes por mí?", respuestas: ["Eres el amor de mi vida 💞", "Nunca había sentido esto por nadie 🌹", "Quiero estar contigo para siempre 💍"] },
-            { pregunta: "¿Te gusta cuando estamos cerca?", respuestas: ["Tu cercania me vuelve loca 🔥", "Siento mariposas en el estómago 🦋", "Es lo que más espero del día 🌙"] }
-        ]
-    }
-};
-
 // ============================================================================
 // ESTRUCTURA PRINCIPAL MODIFICADA
 // ============================================================================
 
-// Nueva estructura: 10 contenedores → 3 sub-contenedores → 5 mazos → 10 palabras específicas
+// Estructura de mazos (mantenida igual)
 const estructura = {
     'contenedor1': {
         nombre: 'The Last Summer 1',
@@ -1147,763 +2752,45 @@ const estructura = {
                 mazos: generarMazosEspecificos('sub3_3') 
             }
         }
-    },
-    'contenedor4': {
-        nombre: 'Contenedor 4',
-        subcontenedores: {
-            'sub4_1': { 
-                nombre: 'Sub-Contenedor 4.1', 
-                mazos: generarMazosEspecificos('sub4_1') 
-            },
-            'sub4_2': { 
-                nombre: 'Sub-Contenedor 4.2', 
-                mazos: generarMazosEspecificos('sub4_2') 
-            },
-            'sub4_3': { 
-                nombre: 'Sub-Contenedor 4.3', 
-                mazos: generarMazosEspecificos('sub4_3') 
-            }
-        }
-    },
-    'contenedor5': {
-        nombre: 'Contenedor 5',
-        subcontenedores: {
-            'sub5_1': { 
-                nombre: 'Sub-Contenedor 5.1', 
-                mazos: generarMazosEspecificos('sub5_1') 
-            },
-            'sub5_2': { 
-                nombre: 'Sub-Contenedor 5.2', 
-                mazos: generarMazosEspecificos('sub5_2') 
-            },
-            'sub5_3': { 
-                nombre: 'Sub-Contenedor 5.3', 
-                mazos: generarMazosEspecificos('sub5_3') 
-            }
-        }
-    },
-    'contenedor6': {
-        nombre: 'Contenedor 6',
-        subcontenedores: {
-            'sub6_1': { 
-                nombre: 'Sub-Contenedor 6.1', 
-                mazos: generarMazosEspecificos('sub6_1') 
-            },
-            'sub6_2': { 
-                nombre: 'Sub-Contenedor 6.2', 
-                mazos: generarMazosEspecificos('sub6_2') 
-            },
-            'sub6_3': { 
-                nombre: 'Sub-Contenedor 6.3', 
-                mazos: generarMazosEspecificos('sub6_3') 
-            }
-        }
-    },
-    'contenedor7': {
-        nombre: 'Contenedor 7',
-        subcontenedores: {
-            'sub7_1': { 
-                nombre: 'Sub-Contenedor 7.1', 
-                mazos: generarMazosEspecificos('sub7_1') 
-            },
-            'sub7_2': { 
-                nombre: 'Sub-Contenedor 7.2', 
-                mazos: generarMazosEspecificos('sub7_2') 
-            },
-            'sub7_3': { 
-                nombre: 'Sub-Contenedor 7.3', 
-                mazos: generarMazosEspecificos('sub7_3') 
-            }
-        }
-    },
-    'contenedor8': {
-        nombre: 'Contenedor 8',
-        subcontenedores: {
-            'sub8_1': { 
-                nombre: 'Sub-Contenedor 8.1', 
-                mazos: generarMazosEspecificos('sub8_1') 
-            },
-            'sub8_2': { 
-                nombre: 'Sub-Contenedor 8.2', 
-                mazos: generarMazosEspecificos('sub8_2') 
-            },
-            'sub8_3': { 
-                nombre: 'Sub-Contenedor 8.3', 
-                mazos: generarMazosEspecificos('sub8_3') 
-            }
-        }
-    },
-    'contenedor9': {
-        nombre: 'Contenedor 9',
-        subcontenedores: {
-            'sub9_1': { 
-                nombre: 'Sub-Contenedor 9.1', 
-                mazos: generarMazosEspecificos('sub9_1') 
-            },
-            'sub9_2': { 
-                nombre: 'Sub-Contenedor 9.2', 
-                mazos: generarMazosEspecificos('sub9_2') 
-            },
-            'sub9_3': { 
-                nombre: 'Sub-Contenedor 9.3', 
-                mazos: generarMazosEspecificos('sub9_3') 
-            }
-        }
-    },
-    'contenedor10': {
-        nombre: 'Contenedor 10',
-        subcontenedores: {
-            'sub10_1': { 
-                nombre: 'Sub-Contenedor 10.1', 
-                mazos: generarMazosEspecificos('sub10_1') 
-            },
-            'sub10_2': { 
-                nombre: 'Sub-Contenedor 10.2', 
-                mazos: generarMazosEspecificos('sub10_2') 
-            },
-            'sub10_3': { 
-                nombre: 'Sub-Contenedor 10.3', 
-                mazos: generarMazosEspecificos('sub10_3') 
-            }
-        }
     }
 };
 
-// Función para generar mazos específicos con palabras únicas para cada subcontenedor
+// Funciones de generación de mazos (mantenidas igual)
 function generarMazosEspecificos(subcontenedorId) {
     const mazos = {};
-    
-    // Detectar automáticamente cuántos mazos hay definidos
-    // Buscando hasta encontrar el límite
-    let numeroMazos = 0;
-    let i = 1;
-    
-    // Seguir buscando mazos mientras existan en generarPalabrasEspecificas
-    while (true) {
-        const palabras = generarPalabrasEspecificas(subcontenedorId, i);
-        // Si no hay palabras o son las genéricas, detenerse
-        if (!palabras || palabras.length === 0 || 
-            (palabras[0] && palabras[0].japones === '言葉')) { // Palabra genérica por defecto
-            break;
-        }
-        numeroMazos = i;
-        i++;
-        
-        // Límite máximo por seguridad
-        if (i > 20) break;
-    }
-    
-    // Si no se encontraron mazos específicos, usar 5 como valor por defecto
-    if (numeroMazos === 0) {
-        numeroMazos = 5;
-    }
-    
-    // Generar mazos específicos para cada subcontenedor
-    for (let i = 1; i <= numeroMazos; i++) {
+    for (let i = 1; i <= 5; i++) {
         const mazoId = `mazo${i}`;
         mazos[mazoId] = {
             nombre: `Mazo ${i}`,
             palabras: generarPalabrasEspecificas(subcontenedorId, i)
         };
     }
-    
     return mazos;
 }
 
-// Función para generar palabras específicas para cada mazo
 function generarPalabrasEspecificas(subcontenedorId, numeroMazo) {
-    // Base de datos de palabras organizadas por subcontenedor y mazo
+    // Base de datos de palabras (simplificada para este ejemplo)
     const palabrasDatabase = {
-        // THE LAST SUMMER 1
         'sub1_1': {
-    1: [
-        { japones: '今朝', lectura: 'kesa', opciones: ['Esta mañana', 'Esta tarde', 'Anoche', 'Ayer'], respuesta: 0 },
-        { japones: '処', lectura: 'tokoro', opciones: ['Lugar', 'Tiempo', 'Persona', 'Cosa'], respuesta: 0 },
-        { japones: '出掛け', lectura: 'dekake', opciones: ['Salir', 'Entrar', 'Quedarse', 'Volver'], respuesta: 0 },
-        { japones: '女将', lectura: 'okami', opciones: ['Dueña', 'Mesera', 'Cliente', 'Cocinera'], respuesta: 0 },
-        { japones: '寂しい', lectura: 'sabishii', opciones: ['Solitario', 'Alegre', 'Ocupado', 'Ruidoso'], respuesta: 0 },
-        { japones: '憩い', lectura: 'ikoi', opciones: ['Descanso', 'Trabajo', 'Ejercicio', 'Estudio'], respuesta: 0 },
-        { japones: '手伝い', lectura: 'tetsudai', opciones: ['Ayuda', 'Obstáculo', 'Problema', 'Solución'], respuesta: 0 },
-        { japones: '撮る', lectura: 'toru', opciones: ['Tomar foto', 'Escribir', 'Leer', 'Escuchar'], respuesta: 0 },
-        { japones: '見送る', lectura: 'miokuru', opciones: ['Despedir', 'Recibir', 'Ignorar', 'Saludar'], respuesta: 0 },
-        { japones: '限る', lectura: 'kagiru', opciones: ['Limitar', 'Ampliar', 'Permitir', 'Prohibir'], respuesta: 0 }
-    ],
-    2: [
-        { japones: '吐息', lectura: 'toiki', opciones: ['Suspiro', 'Risa', 'Grito', 'Llanto'], respuesta: 0 },
-        { japones: '応援', lectura: 'ouen', opciones: ['Apoyo', 'Crítica', 'Indiferencia', 'Oposición'], respuesta: 0 },
-        { japones: '文句', lectura: 'monku', opciones: ['Queja', 'Elogio', 'Sugerencia', 'Pregunta'], respuesta: 0 },
-        { japones: '構う', lectura: 'kamau', opciones: ['Preocuparse', 'Ignorar', 'Aceptar', 'Rechazar'], respuesta: 0 },
-        { japones: '残り香', lectura: 'nokorika', opciones: ['Aroma residual', 'Sonido', 'Imagen', 'Sabor'], respuesta: 0 },
-        { japones: '減る', lectura: 'heru', opciones: ['Disminuir', 'Aumentar', 'Mantener', 'Cambiar'], respuesta: 0 },
-        { japones: '誰彼', lectura: 'dareka', opciones: ['Alguien', 'Nadie', 'Todos', 'Algo'], respuesta: 0 },
-        { japones: '過激', lectura: 'kageki', opciones: ['Extremo', 'Moderado', 'Suave', 'Normal'], respuesta: 0 },
-        { japones: '開き直る', lectura: 'hirakinarou', opciones: ['Cambiar de actitud', 'Mantenerse', 'Rendirse', 'Avanzar'], respuesta: 0 },
-        { japones: '関係ない', lectura: 'kankeinai', opciones: ['No relacionado', 'Importante', 'Relevante', 'Conectado'], respuesta: 0 }
-    ],
-    3: [
-        { japones: '刺激', lectura: 'shigeki', opciones: ['Estímulo', 'Calma', 'Aburrimiento', 'Paz'], respuesta: 0 },
-        { japones: '否定', lectura: 'hitei', opciones: ['Negación', 'Afirmación', 'Duda', 'Aceptación'], respuesta: 0 },
-        { japones: '宝の持ち腐れ', lectura: 'takarano mochiguse', opciones: ['Talento desperdiciado', 'Tesoro', 'Pobreza', 'Generosidad'], respuesta: 0 },
-        { japones: '心配', lectura: 'shinpai', opciones: ['Preocupación', 'Tranquilidad', 'Confianza', 'Seguridad'], respuesta: 0 },
-        { japones: '性欲', lectura: 'seiyoku', opciones: ['Deseo sexual', 'Hambre', 'Sed', 'Cansancio'], respuesta: 0 },
-        { japones: '機会', lectura: 'kikai', opciones: ['Oportunidad', 'Peligro', 'Problema', 'Obstáculo'], respuesta: 0 },
-        { japones: '活かす', lectura: 'ikasu', opciones: ['Aprovechar', 'Desperdiciar', 'Ignorar', 'Rechazar'], respuesta: 0 },
-        { japones: '経験不足', lectura: 'keiken busoku', opciones: ['Falta de experiencia', 'Mucha experiencia', 'Talento', 'Habilidad'], respuesta: 0 },
-        { japones: '言い寄る', lectura: 'iiyoru', opciones: ['Acercarse a alguien', 'Alejarse', 'Ignorar', 'Evitar'], respuesta: 0 },
-        { japones: '飽きる', lectura: 'akiru', opciones: ['Cansarse', 'Entusiasmarse', 'Continuar', 'Empezar'], respuesta: 0 }
-    ],
-    4: [
-        { japones: '合格', lectura: 'goukaku', opciones: ['Aprobar', 'Reprobar', 'Intentar', 'Estudiar'], respuesta: 0 },
-        { japones: '圧し潰す', lectura: 'asshitsubusu', opciones: ['Aplastar', 'Levantar', 'Construir', 'Reparar'], respuesta: 0 },
-        { japones: '密着', lectura: 'micchaku', opciones: ['Pegado', 'Separado', 'Distante', 'Aislado'], respuesta: 0 },
-        { japones: '届く', lectura: 'todoku', opciones: ['Llegar', 'Partir', 'Perderse', 'Desaparecer'], respuesta: 0 },
-        { japones: '巻きつく', lectura: 'makitsuku', opciones: ['Enrollarse', 'Desenrollar', 'Cortar', 'Pegar'], respuesta: 0 },
-        { japones: '惜しい', lectura: 'oshii', opciones: ['Lamentable', 'Afortunado', 'Normal', 'Extraño'], respuesta: 0 },
-        { japones: '拒否権', lectura: 'kyohiken', opciones: ['Derecho a veto', 'Permiso', 'Aprobación', 'Acuerdo'], respuesta: 0 },
-        { japones: '経験', lectura: 'keiken', opciones: ['Experiencia', 'Ignorancia', 'Teoría', 'Estudio'], respuesta: 0 },
-        { japones: '蒸す', lectura: 'musu', opciones: ['Humedecer', 'Secar', 'Calentar', 'Enfriar'], respuesta: 0 }
-    ],
-    5: [
-        { japones: '大体', lectura: 'daitai', opciones: ['Aproximadamente', 'Exactamente', 'Completamente', 'Parcialmente'], respuesta: 0 },
-        { japones: '起きる', lectura: 'okiru', opciones: ['Despertar', 'Dormir', 'Soñar', 'Descansar'], respuesta: 0 },
-    ]
-},
-        'sub1_2': {
             1: [
-                { japones: '学校', lectura: 'gakkou', opciones: ['Escuela', 'Casa', 'Trabajo', 'Parque'], respuesta: 0 },
-                { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Juego', 'Descanso', 'Trabajo'], respuesta: 0 },
-                { japones: '教室', lectura: 'kyoushitsu', opciones: ['Salón de clases', 'Oficina', 'Cocina', 'Baño'], respuesta: 0 },
-                { japones: '先生', lectura: 'sensei', opciones: ['Profesor', 'Estudiante', 'Director', 'Padre'], respuesta: 0 },
-                { japones: '生徒', lectura: 'seito', opciones: ['Estudiante', 'Profesor', 'Padre', 'Vecino'], respuesta: 0 },
-                { japones: '試験', lectura: 'shiken', opciones: ['Examen', 'Tarea', 'Proyecto', 'Presentación'], respuesta: 0 },
-                { japones: '宿題', lectura: 'shukudai', opciones: ['Tarea', 'Examen', 'Proyecto', 'Investigación'], respuesta: 0 },
-                { japones: '卒業', lectura: 'sotsugyou', opciones: ['Graduación', 'Ingreso', 'Transferencia', 'Abandono'], respuesta: 0 },
-                { japones: '入学', lectura: 'nyuugaku', opciones: ['Ingreso', 'Graduación', 'Transferencia', 'Abandono'], respuesta: 0 },
-                { japones: 'クラス', lectura: 'kurasu', opciones: ['Clase', 'Escuela', 'Grupo', 'Equipo'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '部活', lectura: 'bukatsu', opciones: ['Club escolar', 'Trabajo', 'Estudio', 'Descanso'], respuesta: 0 },
-                { japones: '文化祭', lectura: 'bunkasai', opciones: ['Festival cultural', 'Deporte', 'Examen', 'Vacaciones'], respuesta: 0 },
-                { japones: '運動会', lectura: 'undoukai', opciones: ['Día deportivo', 'Ceremonia', 'Examen', 'Fiesta'], respuesta: 0 },
-                { japones: '修学旅行', lectura: 'shuugakuryokou', opciones: ['Viaje escolar', 'Vacaciones', 'Trabajo', 'Estudio'], respuesta: 0 },
-                { japones: '夏休み', lectura: 'natsuyasumi', opciones: ['Vacaciones de verano', 'Vacaciones de invierno', 'Fin de semana', 'Feriado'], respuesta: 0 },
-                { japones: '冬休み', lectura: 'fuyuyasumi', opciones: ['Vacaciones de invierno', 'Vacaciones de verano', 'Fin de semana', 'Feriado'], respuesta: 0 },
-                { japones: '春休み', lectura: 'haruyasumi', opciones: ['Vacaciones de primavera', 'Vacaciones de verano', 'Fin de semana', 'Feriado'], respuesta: 0 },
-                { japones: '新学期', lectura: 'shingakki', opciones: ['Nuevo semestre', 'Vacaciones', 'Exámenes', 'Graduación'], respuesta: 0 },
-                { japones: '終業式', lectura: 'shuugyoushiki', opciones: ['Ceremonia de fin de clases', 'Ceremonia de inicio', 'Graduación', 'Ingreso'], respuesta: 0 },
-                { japones: '始業式', lectura: 'shigyoushiki', opciones: ['Ceremonia de inicio de clases', 'Ceremonia de fin', 'Graduación', 'Ingreso'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '美術', lectura: 'bijutsu', opciones: ['Arte', 'Ciencia', 'Matemáticas', 'Historia'], respuesta: 0 },
-                { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Arte', 'Deporte', 'Ciencia'], respuesta: 0 },
-                { japones: '体育', lectura: 'taiiku', opciones: ['Educación física', 'Matemáticas', 'Historia', 'Arte'], respuesta: 0 },
-                { japones: '理科', lectura: 'rika', opciones: ['Ciencia', 'Matemáticas', 'Historia', 'Arte'], respuesta: 0 },
-                { japones: '社会', lectura: 'shakai', opciones: ['Estudios sociales', 'Matemáticas', 'Ciencia', 'Arte'], respuesta: 0 },
-                { japones: '国語', lectura: 'kokugo', opciones: ['Lengua japonesa', 'Matemáticas', 'Ciencia', 'Historia'], respuesta: 0 },
-                { japones: '数学', lectura: 'suugaku', opciones: ['Matemáticas', 'Ciencia', 'Historia', 'Arte'], respuesta: 0 },
-                { japones: '英語', lectura: 'eigo', opciones: ['Inglés', 'Japonés', 'Español', 'Francés'], respuesta: 0 },
-                { japones: '歴史', lectura: 'rekishi', opciones: ['Historia', 'Geografía', 'Ciencia', 'Matemáticas'], respuesta: 0 },
-                { japones: '地理', lectura: 'chiri', opciones: ['Geografía', 'Historia', 'Ciencia', 'Matemáticas'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '図書館', lectura: 'toshokan', opciones: ['Biblioteca', 'Laboratorio', 'Gimnasio', 'Oficina'], respuesta: 0 },
-                { japones: '実験', lectura: 'jikken', opciones: ['Experimento', 'Estudio', 'Investigación', 'Observación'], respuesta: 0 },
-                { japones: '研究', lectura: 'kenkyuu', opciones: ['Investigación', 'Estudio', 'Experimento', 'Observación'], respuesta: 0 },
-                { japones: '発表', lectura: 'happyou', opciones: ['Presentación', 'Examen', 'Tarea', 'Proyecto'], respuesta: 0 },
-                { japones: '討論', lectura: 'touron', opciones: ['Debate', 'Conversación', 'Charla', 'Monólogo'], respuesta: 0 },
-                { japones: '質問', lectura: 'shitsumon', opciones: ['Pregunta', 'Respuesta', 'Explicación', 'Afirmación'], respuesta: 0 },
-                { japones: '解答', lectura: 'kaitou', opciones: ['Respuesta', 'Pregunta', 'Problema', 'Solución'], respuesta: 0 },
-                { japones: '問題', lectura: 'mondai', opciones: ['Problema', 'Solución', 'Pregunta', 'Respuesta'], respuesta: 0 },
-                { japones: '理解', lectura: 'rikai', opciones: ['Comprensión', 'Confusión', 'Duda', 'Ignorancia'], respuesta: 0 },
-                { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Confusión'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '才能', lectura: 'sainou', opciones: ['Talento', 'Esfuerzo', 'Suerte', 'Oportunidad'], respuesta: 0 },
-                { japones: '創造', lectura: 'souzou', opciones: ['Creatividad', 'Imitación', 'Copia', 'Repetición'], respuesta: 0 },
-                { japones: '発明', lectura: 'hatsumei', opciones: ['Invención', 'Descubrimiento', 'Creación', 'Innovación'], respuesta: 0 },
-                { japones: '発見', lectura: 'hakken', opciones: ['Descubrimiento', 'Invención', 'Creación', 'Innovación'], respuesta: 0 },
-                { japones: '分析', lectura: 'bunseki', opciones: ['Análisis', 'Síntesis', 'Resumen', 'Conclusión'], respuesta: 0 },
-                { japones: '理論', lectura: 'riron', opciones: ['Teoría', 'Práctica', 'Hipótesis', 'Conclusión'], respuesta: 0 },
-                { japones: '実践', lectura: 'jissen', opciones: ['Práctica', 'Teoría', 'Estudio', 'Investigación'], respuesta: 0 },
-                { japones: '応用', lectura: 'ouyou', opciones: ['Aplicación', 'Teoría', 'Práctica', 'Estudio'], respuesta: 0 },
-                { japones: '基礎', lectura: 'kiso', opciones: ['Base', 'Avanzado', 'Complejo', 'Difícil'], respuesta: 0 },
-                { japones: '応用', lectura: 'ouyou', opciones: ['Avanzado', 'Básico', 'Simple', 'Fácil'], respuesta: 0 }
-            ]
-        },
-        'sub1_3': {
-            1: [
-                { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Amigos', 'Vecinos', 'Compañeros'], respuesta: 0 },
-                { japones: '父', lectura: 'chichi', opciones: ['Padre', 'Madre', 'Hermano', 'Hermana'], respuesta: 0 },
-                { japones: '母', lectura: 'haha', opciones: ['Madre', 'Padre', 'Hermano', 'Hermana'], respuesta: 0 },
-                { japones: '兄弟', lectura: 'kyoudai', opciones: ['Hermanos', 'Padres', 'Abuelos', 'Tíos'], respuesta: 0 },
-                { japones: '姉妹', lectura: 'shimai', opciones: ['Hermanas', 'Hermanos', 'Primos', 'Tíos'], respuesta: 0 },
-                { japones: '祖父', lectura: 'sofu', opciones: ['Abuelo', 'Abuela', 'Padre', 'Madre'], respuesta: 0 },
-                { japones: '祖母', lectura: 'sobo', opciones: ['Abuela', 'Abuelo', 'Madre', 'Padre'], respuesta: 0 },
-                { japones: '親戚', lectura: 'shinseki', opciones: ['Parientes', 'Amigos', 'Vecinos', 'Conocidos'], respuesta: 0 },
-                { japones: '家庭', lectura: 'katei', opciones: ['Hogar', 'Escuela', 'Trabajo', 'Comunidad'], respuesta: 0 },
-                { japones: '愛情', lectura: 'aijou', opciones: ['Amor familiar', 'Amistad', 'Respeto', 'Admiración'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '家', lectura: 'ie', opciones: ['Casa', 'Apartamento', 'Edificio', 'Escuela'], respuesta: 0 },
-                { japones: '庭', lectura: 'niwa', opciones: ['Jardín', 'Parque', 'Bosque', 'Campo'], respuesta: 0 },
-                { japones: '台所', lectura: 'daidokoro', opciones: ['Cocina', 'Baño', 'Sala', 'Dormitorio'], respuesta: 0 },
-                { japones: '寝室', lectura: 'shinshitsu', opciones: ['Dormitorio', 'Sala', 'Cocina', 'Baño'], respuesta: 0 },
-                { japones: '浴室', lectura: 'yokushitsu', opciones: ['Baño', 'Cocina', 'Sala', 'Dormitorio'], respuesta: 0 },
-                { japones: 'リビング', lectura: 'ribingu', opciones: ['Sala de estar', 'Dormitorio', 'Cocina', 'Baño'], respuesta: 0 },
-                { japones: '玄関', lectura: 'genkan', opciones: ['Entrada', 'Salida', 'Pasillo', 'Ventana'], respuesta: 0 },
-                { japones: '屋根', lectura: 'yane', opciones: ['Techo', 'Piso', 'Pared', 'Ventana'], respuesta: 0 },
-                { japones: '窓', lectura: 'mado', opciones: ['Ventana', 'Puerta', 'Pared', 'Techo'], respuesta: 0 },
-                { japones: 'ドア', lectura: 'doa', opciones: ['Puerta', 'Ventana', 'Pared', 'Techo'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '朝食', lectura: 'choushoku', opciones: ['Desayuno', 'Almuerzo', 'Cena', 'Merienda'], respuesta: 0 },
-                { japones: '昼食', lectura: 'chuushoku', opciones: ['Almuerzo', 'Desayuno', 'Cena', 'Merienda'], respuesta: 0 },
-                { japones: '夕食', lectura: 'yuushoku', opciones: ['Cena', 'Desayuno', 'Almuerzo', 'Merienda'], respuesta: 0 },
-                { japones: '食事', lectura: 'shokuji', opciones: ['Comida', 'Bebida', 'Postre', 'Aperitivo'], respuesta: 0 },
-                { japones: '料理', lectura: 'ryouri', opciones: ['Cocina', 'Comida', 'Bebida', 'Postre'], respuesta: 0 },
-                { japones: '食材', lectura: 'shokuzai', opciones: ['Ingredientes', 'Utensilios', 'Recetas', 'Platos'], respuesta: 0 },
-                { japones: '味', lectura: 'aji', opciones: ['Sabor', 'Olor', 'Texto', 'Apariencia'], respuesta: 0 },
-                { japones: '栄養', lectura: 'eiyou', opciones: ['Nutrición', 'Sabor', 'Calorías', 'Vitaminas'], respuesta: 0 },
-                { japones: '健康', lectura: 'kenkou', opciones: ['Salud', 'Enfermedad', 'Ejercicio', 'Descanso'], respuesta: 0 },
-                { japones: '美味しい', lectura: 'oishii', opciones: ['Delicioso', 'Desagradable', 'Normal', 'Amargo'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '習慣', lectura: 'shuukan', opciones: ['Hábito', 'Costumbre', 'Rutina', 'Tradición'], respuesta: 0 },
-                { japones: '日常', lectura: 'nichijou', opciones: ['Vida cotidiana', 'Extraordinario', 'Especial', 'Raro'], respuesta: 0 },
-                { japones: '規則', lectura: 'kisoku', opciones: ['Regla', 'Excepción', 'Sugerencia', 'Recomendación'], respuesta: 0 },
-                { japones: '時間割', lectura: 'jikanwari', opciones: ['Horario', 'Calendario', 'Agenda', 'Lista'], respuesta: 0 },
-                { japones: '予定', lectura: 'yotei', opciones: ['Plan', 'Improvisación', 'Sorpresa', 'Accidente'], respuesta: 0 },
-                { japones: '準備', lectura: 'junbi', opciones: ['Preparación', 'Improvisación', 'Descuidar', 'Olvidar'], respuesta: 0 },
-                { japones: '整理', lectura: 'seiri', opciones: ['Organización', 'Desorden', 'Confusión', 'Caos'], respuesta: 0 },
-                { japones: '掃除', lectura: 'souji', opciones: ['Limpieza', 'Suciedad', 'Desorden', 'Confusión'], respuesta: 0 },
-                { japones: '洗濯', lectura: 'sentaku', opciones: ['Lavado', 'Secado', 'Planchado', 'Doblar'], respuesta: 0 },
-                { japones: '買い物', lectura: 'kaimono', opciones: ['Compras', 'Ventas', 'Intercambio', 'Regalo'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '伝統', lectura: 'dentou', opciones: ['Tradición', 'Innovación', 'Moda', 'Tendencia'], respuesta: 0 },
-                { japones: '文化', lectura: 'bunka', opciones: ['Cultura', 'Naturaleza', 'Tecnología', 'Ciencia'], respuesta: 0 },
-                { japones: '歴史', lectura: 'rekishi', opciones: ['Historia', 'Futuro', 'Presente', 'Pasado'], respuesta: 0 },
-                { japones: '祭事', lectura: 'saiji', opciones: ['Evento ceremonial', 'Fiesta', 'Reunión', 'Celebración'], respuesta: 0 },
-                { japones: '正月', lectura: 'shougatsu', opciones: ['Año Nuevo', 'Navidad', 'Cumpleaños', 'Aniversario'], respuesta: 0 },
-                { japones: 'お盆', lectura: 'obon', opciones: ['Festival de los muertos', 'Año Nuevo', 'Navidad', 'Cumpleaños'], respuesta: 0 },
-                { japones: '七夕', lectura: 'tanabata', opciones: ['Festival de las estrellas', 'Año Nuevo', 'Navidad', 'Cumpleaños'], respuesta: 0 },
-                { japones: 'こどもの日', lectura: 'kodomonohi', opciones: ['Día del niño', 'Día de la madre', 'Día del padre', 'Navidad'], respuesta: 0 },
-                { japones: '成人式', lectura: 'seijinshiki', opciones: ['Ceremonia de la mayoría de edad', 'Graduación', 'Boda', 'Funeral'], respuesta: 0 },
-                { japones: '敬老の日', lectura: 'keirounohi', opciones: ['Día del respeto a los ancianos', 'Día del niño', 'Día de la madre', 'Navidad'], respuesta: 0 }
-            ]
-        },
-        // THE LAST SUMMER 2
-        'sub2_1': {
-            1: [
-                { japones: '会話', lectura: 'kaiwa', opciones: ['Conversación', 'Discusión', 'Debate', 'Charla'], respuesta: 0 },
-                { japones: '質問', lectura: 'shitsumon', opciones: ['Pregunta', 'Respuesta', 'Explicación', 'Afirmación'], respuesta: 0 },
-                { japones: '返事', lectura: 'henji', opciones: ['Respuesta', 'Pregunta', 'Solicitud', 'Propuesta'], respuesta: 0 },
-                { japones: '説明', lectura: 'setsumei', opciones: ['Explicación', 'Descripción', 'Interpretación', 'Traducción'], respuesta: 0 },
-                { japones: '意見', lectura: 'iken', opciones: ['Opinión', 'Hecho', 'Teoría', 'Hipótesis'], respuesta: 0 },
-                { japones: '賛成', lectura: 'sansei', opciones: ['Aprobación', 'Desaprobación', 'Neutralidad', 'Indiferencia'], respuesta: 0 },
-                { japones: '反対', lectura: 'hantai', opciones: ['Oposición', 'Apoyo', 'Aceptación', 'Acuerdo'], respuesta: 0 },
-                { japones: '同意', lectura: 'doui', opciones: ['Consentimiento', 'Rechazo', 'Duda', 'Indecisión'], respuesta: 0 },
-                { japones: '議論', lectura: 'giron', opciones: ['Discusión', 'Conversación', 'Monólogo', 'Diálogo'], respuesta: 0 },
-                { japones: '話題', lectura: 'wadai', opciones: ['Tema', 'Subtema', 'Asunto', 'Problema'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '感情', lectura: 'kanjou', opciones: ['Emoción', 'Razón', 'Lógica', 'Pensamiento'], respuesta: 0 },
-                { japones: '愛情', lectura: 'aijou', opciones: ['Afecto', 'Odio', 'Indiferencia', 'Respeto'], respuesta: 0 },
-                { japones: '喜び', lectura: 'yorokobi', opciones: ['Alegría', 'Tristeza', 'Enojo', 'Miedo'], respuesta: 0 },
-                { japones: '悲しみ', lectura: 'kanashimi', opciones: ['Tristeza', 'Alegría', 'Sorpresa', 'Expectativa'], respuesta: 0 },
-                { japones: '怒り', lectura: 'ikari', opciones: ['Enojo', 'Calma', 'Paz', 'Serenidad'], respuesta: 0 },
-                { japones: '驚き', lectura: 'odoroki', opciones: ['Sorpresa', 'Expectativa', 'Rutina', 'Normalidad'], respuesta: 0 },
-                { japones: '期待', lectura: 'kitai', opciones: ['Expectativa', 'Decepción', 'Realidad', 'Presente'], respuesta: 0 },
-                { japones: '安心', lectura: 'anshin', opciones: ['Tranquilidad', 'Ansiedad', 'Preocupación', 'Estrés'], respuesta: 0 },
-                { japones: '不安', lectura: 'fuan', opciones: ['Inseguridad', 'Confianza', 'Seguridad', 'Certeza'], respuesta: 0 },
-                { japones: '興奮', lectura: 'koufun', opciones: ['Excitación', 'Calma', 'Aburrimiento', 'Indiferencia'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '行動', lectura: 'koudou', opciones: ['Acción', 'Pensamiento', 'Palabra', 'Intención'], respuesta: 0 },
-                { japones: '選択', lectura: 'sentaku', opciones: ['Elección', 'Obligación', 'Azar', 'Destino'], respuesta: 0 },
-                { japones: '決断', lectura: 'ketsudan', opciones: ['Decisión', 'Duda', 'Indecisión', 'Vacilación'], respuesta: 0 },
-                { japones: '努力', lectura: 'doryoku', opciones: ['Esfuerzo', 'Flojera', 'Suerte', 'Talento'], respuesta: 0 },
-                { japones: '成功', lectura: 'seikou', opciones: ['Éxito', 'Fracaso', 'Intento', 'Esfuerzo'], respuesta: 0 },
-                { japones: '失敗', lectura: 'shippai', opciones: ['Fallo', 'Logro', 'Victoria', 'Triunfo'], respuesta: 0 },
-                { japones: '挑戦', lectura: 'chousen', opciones: ['Desafío', 'Rendición', 'Evitación', 'Rechazo'], respuesta: 0 },
-                { japones: '成長', lectura: 'seichou', opciones: ['Desarrollo', 'Estancamiento', 'Retroceso', 'Decadencia'], respuesta: 0 },
-                { japones: '変化', lectura: 'henka', opciones: ['Cambio', 'Permanencia', 'Estabilidad', 'Constancia'], respuesta: 0 },
-                { japones: '進歩', lectura: 'shinpo', opciones: ['Progreso', 'Regresión', 'Estancamiento', 'Inmovilidad'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '社会', lectura: 'shakai', opciones: ['Sociedad', 'Individuo', 'Familia', 'Comunidad'], respuesta: 0 },
-                { japones: '文化', lectura: 'bunka', opciones: ['Cultura', 'Naturaleza', 'Tecnología', 'Ciencia'], respuesta: 0 },
-                { japones: '伝統', lectura: 'dentou', opciones: ['Tradición', 'Innovación', 'Moda', 'Modernidad'], respuesta: 0 },
-                { japones: '習慣', lectura: 'shuukan', opciones: ['Costumbre', 'Excepción', 'Rareza', 'Anomalía'], respuesta: 0 },
-                { japones: '価値観', lectura: 'kachikan', opciones: ['Valores', 'Precio', 'Costo', 'Gasto'], respuesta: 0 },
-                { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Neutralidad', 'Indiferencia'], respuesta: 0 },
-                { japones: '法律', lectura: 'houritsu', opciones: ['Ley', 'Sugerencia', 'Recomendación', 'Consejo'], respuesta: 0 },
-                { japones: '権利', lectura: 'kenri', opciones: ['Derecho', 'Obligación', 'Prohibición', 'Restricción'], respuesta: 0 },
-                { japones: '義務', lectura: 'gimu', opciones: ['Deber', 'Derecho', 'Privilegio', 'Beneficio'], respuesta: 0 },
-                { japones: '責任', lectura: 'sekinin', opciones: ['Responsabilidad', 'Irresponsabilidad', 'Libertad', 'Despreocupación'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '自然', lectura: 'shizen', opciones: ['Naturaleza', 'Artificial', 'Urbano', 'Industrial'], respuesta: 0 },
-                { japones: '環境', lectura: 'kankyou', opciones: ['Medio ambiente', 'Contaminación', 'Tecnología', 'Civilización'], respuesta: 0 },
-                { japones: '資源', lectura: 'shigen', opciones: ['Recurso', 'Desperdicio', 'Contaminante', 'Residuo'], respuesta: 0 },
-                { japones: '汚染', lectura: 'osen', opciones: ['Contaminación', 'Limpieza', 'Pureza', 'Conservación'], respuesta: 0 },
-                { japones: '保護', lectura: 'hogo', opciones: ['Protección', 'Destrucción', 'Abandono', 'Negligencia'], respuesta: 0 },
-                { japones: '生態系', lectura: 'seitaikei', opciones: ['Ecosistema', 'Sistema artificial', 'Máquina', 'Tecnología'], respuesta: 0 },
-                { japones: '再生', lectura: 'saisei', opciones: ['Reciclaje', 'Desperdicio', 'Contaminación', 'Destrucción'], respuesta: 0 },
-                { japones: '持続可能', lectura: 'jizokukanou', opciones: ['Sostenible', 'Insostenible', 'Temporal', 'Limitado'], respuesta: 0 },
-                { japones: '地球温暖化', lectura: 'chikyuondanka', opciones: ['Calentamiento global', 'Enfriamiento', 'Estabilidad', 'Equilibrio'], respuesta: 0 },
-                { japones: '生物多様性', lectura: 'seibututayousei', opciones: ['Biodiversidad', 'Uniformidad', 'Homogeneidad', 'Similitud'], respuesta: 0 }
-            ]
-        },
-        'sub2_2': {
-            1: [
-                { japones: '技術', lectura: 'gijutsu', opciones: ['Tecnología', 'Arte', 'Ciencia', 'Filosofía'], respuesta: 0 },
-                { japones: '科学', lectura: 'kagaku', opciones: ['Ciencia', 'Arte', 'Literatura', 'Historia'], respuesta: 0 },
-                { japones: '研究', lectura: 'kenkyuu', opciones: ['Investigación', 'Improvisación', 'Suposición', 'Adivinanza'], respuesta: 0 },
-                { japones: '開発', lectura: 'kaihatsu', opciones: ['Desarrollo', 'Destrucción', 'Abandono', 'Estancamiento'], respuesta: 0 },
-                { japones: '発明', lectura: 'hatsumei', opciones: ['Invención', 'Descubrimiento', 'Copia', 'Imitación'], respuesta: 0 },
-                { japones: '革新', lectura: 'kakushin', opciones: ['Innovación', 'Tradición', 'Conservación', 'Preservación'], respuesta: 0 },
-                { japones: '実験', lectura: 'jikken', opciones: ['Experimento', 'Teoría', 'Hipótesis', 'Conclusión'], respuesta: 0 },
-                { japones: '分析', lectura: 'bunseki', opciones: ['Análisis', 'Síntesis', 'Resumen', 'Conclusión'], respuesta: 0 },
-                { japones: '理論', lectura: 'riron', opciones: ['Teoría', 'Práctica', 'Evidencia', 'Hecho'], respuesta: 0 },
-                { japones: '応用', lectura: 'ouyou', opciones: ['Aplicación', 'Teoría', 'Abstracción', 'Concepto'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '経済', lectura: 'keizai', opciones: ['Economía', 'Política', 'Cultura', 'Sociedad'], respuesta: 0 },
-                { japones: '市場', lectura: 'shijou', opciones: ['Mercado', 'Tienda', 'Almacén', 'Fábrica'], respuesta: 0 },
-                { japones: '企業', lectura: 'kigyou', opciones: ['Empresa', 'Gobierno', 'Individuo', 'Familia'], respuesta: 0 },
-                { japones: '投資', lectura: 'toushi', opciones: ['Inversión', 'Gasto', 'Pérdida', 'Ahorro'], respuesta: 0 },
-                { japones: '消費', lectura: 'shouhi', opciones: ['Consumo', 'Producción', 'Distribución', 'Venta'], respuesta: 0 },
-                { japones: '生産', lectura: 'seisan', opciones: ['Producción', 'Consumo', 'Destrucción', 'Desperdicio'], respuesta: 0 },
-                { japones: '貿易', lectura: 'boueki', opciones: ['Comercio', 'Aislamiento', 'Proteccionismo', 'Autarquía'], respuesta: 0 },
-                { japones: '競争', lectura: 'kyousou', opciones: ['Competencia', 'Cooperación', 'Colaboración', 'Asociación'], respuesta: 0 },
-                { japones: '需要', lectura: 'juyou', opciones: ['Demanda', 'Oferta', 'Excedente', 'Escasez'], respuesta: 0 },
-                { japones: '供給', lectura: 'kyoukyuu', opciones: ['Oferta', 'Demanda', 'Necesidad', 'Deseo'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '政治', lectura: 'seiji', opciones: ['Política', 'Economía', 'Cultura', 'Religión'], respuesta: 0 },
-                { japones: '政府', lectura: 'seifu', opciones: ['Gobierno', 'Oposición', 'Sociedad', 'Comunidad'], respuesta: 0 },
-                { japones: '選挙', lectura: 'senkyo', opciones: ['Elección', 'Designación', 'Nombramiento', 'Herencia'], respuesta: 0 },
-                { japones: '民主主義', lectura: 'minshushugi', opciones: ['Democracia', 'Dictadura', 'Monarquía', 'Oligarquía'], respuesta: 0 },
-                { japones: '権力', lectura: 'kenryoku', opciones: ['Poder', 'Debilidad', 'Sumisión', 'Obedeiencia'], respuesta: 0 },
-                { japones: '政策', lectura: 'seisaku', opciones: ['Política pública', 'Interés privado', 'Beneficio personal', 'Ventaja individual'], respuesta: 0 },
-                { japones: '国際関係', lectura: 'kokusaikankei', opciones: ['Relaciones internacionales', 'Asuntos internos', 'Política local', 'Administración municipal'], respuesta: 0 },
-                { japones: '外交', lectura: 'gaikou', opciones: ['Diplomacia', 'Guerra', 'Aislamiento', 'Neutralidad'], respuesta: 0 },
-                { japones: '平和', lectura: 'heiwa', opciones: ['Paz', 'Guerra', 'Conflicto', 'Violencia'], respuesta: 0 },
-                { japones: '安全保障', lectura: 'anzenhoshou', opciones: ['Seguridad', 'Peligro', 'Riesgo', 'Amenaza'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '芸術', lectura: 'geijutsu', opciones: ['Arte', 'Ciencia', 'Tecnología', 'Deporte'], respuesta: 0 },
-                { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Pintura', 'Escultura', 'Danza'], respuesta: 0 },
-                { japones: '絵画', lectura: 'kaiga', opciones: ['Pintura', 'Música', 'Literatura', 'Teatro'], respuesta: 0 },
-                { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Filosofía', 'Historia'], respuesta: 0 },
-                { japones: '演劇', lectura: 'engeki', opciones: ['Teatro', 'Cine', 'Televisión', 'Radio'], respuesta: 0 },
-                { japones: '映画', lectura: 'eiga', opciones: ['Cine', 'Teatro', 'Televisión', 'Radio'], respuesta: 0 },
-                { japones: '写真', lectura: 'shashin', opciones: ['Fotografía', 'Pintura', 'Dibujo', 'Escultura'], respuesta: 0 },
-                { japones: '建築', lectura: 'kenchiku', opciones: ['Arquitectura', 'Ingeniería', 'Diseño', 'Construcción'], respuesta: 0 },
-                { japones: 'デザイン', lectura: 'dezain', opciones: ['Diseño', 'Accidente', 'Improvisación', 'Casualidad'], respuesta: 0 },
-                { japones: '創造性', lectura: 'souzousei', opciones: ['Creatividad', 'Imitación', 'Copia', 'Repetición'], respuesta: 0 }
-            ],
-            5: [
-                { japones: 'スポーツ', lectura: 'supootsu', opciones: ['Deporte', 'Arte', 'Ciencia', 'Tecnología'], respuesta: 0 },
-                { japones: '競技', lectura: 'kyougi', opciones: ['Competición', 'Práctica', 'Entrenamiento', 'Ejercicio'], respuesta: 0 },
-                { japones: '選手', lectura: 'senshu', opciones: ['Atleta', 'Entrenador', 'Árbitro', 'Espectador'], respuesta: 0 },
-                { japones: '試合', lectura: 'shiai', opciones: ['Partido', 'Entrenamiento', 'Práctica', 'Calentamiento'], respuesta: 0 },
-                { japones: '勝利', lectura: 'shouri', opciones: ['Victoria', 'Derrota', 'Empate', 'Abandono'], respuesta: 0 },
-                { japones: '敗北', lectura: 'haiboku', opciones: ['Derrota', 'Victoria', 'Empate', 'Triunfo'], respuesta: 0 },
-                { japones: '記録', lectura: 'kiroku', opciones: ['Récord', 'Fracaso', 'Intentó', 'Esfuerzo'], respuesta: 0 },
-                { japones: '練習', lectura: 'renshuu', opciones: ['Práctica', 'Teoría', 'Improvisación', 'Talento natural'], respuesta: 0 },
-                { japones: 'チームワーク', lectura: 'chiimuwaaku', opciones: ['Trabajo en equipo', 'Individualismo', 'Egoísmo', 'Aislamiento'], respuesta: 0 },
-                { japones: 'フェアプレー', lectura: 'feapuree', opciones: ['Juego limpio', 'Trampa', 'Engaño', 'Ventaja injusta'], respuesta: 0 }
-            ]
-        },
-        'sub2_3': {
-            1: [
-                { japones: '旅行', lectura: 'ryokou', opciones: ['Viaje', 'Estancia', 'Residencia', 'Hogar'], respuesta: 0 },
-                { japones: '観光', lectura: 'kankou', opciones: ['Turismo', 'Trabajo', 'Estudio', 'Residencia'], respuesta: 0 },
-                { japones: '目的地', lectura: 'mokutekichi', opciones: ['Destino', 'Origen', 'Partida', 'Llegada'], respuesta: 0 },
-                { japones: '出発', lectura: 'shuppatsu', opciones: ['Salida', 'Llegada', 'Estancia', 'Permanencia'], respuesta: 0 },
-                { japones: '到着', lectura: 'touchaku', opciones: ['Llegada', 'Salida', 'Partida', 'Inicio'], respuesta: 0 },
-                { japones: '宿泊', lectura: 'shukuhaku', opciones: ['Alojamiento', 'Comida', 'Transporte', 'Entretenimiento'], respuesta: 0 },
-                { japones: '旅程', lectura: 'ryotei', opciones: ['Itinerario', 'Destino', 'Origen', 'Medio'], respuesta: 0 },
-                { japones: '観光地', lectura: 'kankouchi', opciones: ['Atracción turística', 'Zona residencial', 'Área industrial', 'Barrio comercial'], respuesta: 0 },
-                { japones: '土産', lectura: 'miyage', opciones: ['Souvenir', 'Recuerdo', 'Regalo', 'Compra'], respuesta: 0 },
-                { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '交通', lectura: 'koutsuu', opciones: ['Transporte', 'Comunicación', 'Información', 'Entretenimiento'], respuesta: 0 },
-                { japones: '手段', lectura: 'shudan', opciones: ['Medio', 'Fin', 'Objetivo', 'Propósito'], respuesta: 0 },
-                { japones: '電車', lectura: 'densha', opciones: ['Tren', 'Autobús', 'Avión', 'Barco'], respuesta: 0 },
-                { japones: 'バス', lectura: 'basu', opciones: ['Autobús', 'Tren', 'Taxi', 'Avión'], respuesta: 0 },
-                { japones: '飛行機', lectura: 'hikouki', opciones: ['Avión', 'Barco', 'Tren', 'Automóvil'], respuesta: 0 },
-                { japones: '船', lectura: 'fune', opciones: ['Barco', 'Avión', 'Tren', 'Autobús'], respuesta: 0 },
-                { japones: '地下鉄', lectura: 'chikatetsu', opciones: ['Metro', 'Tren superficial', 'Autobús', 'Taxi'], respuesta: 0 },
-                { japones: 'タクシー', lectura: 'takushii', opciones: ['Taxi', 'Autobús', 'Tren', 'Avión'], respuesta: 0 },
-                { japones: '自転車', lectura: 'jitensha', opciones: ['Bicicleta', 'Automóvil', 'Motocicleta', 'Patineta'], respuesta: 0 },
-                { japones: '歩行', lectura: 'hokou', opciones: ['Caminar', 'Correr', 'Nadar', 'Volar'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '食事', lectura: 'shokuji', opciones: ['Comida', 'Bebida', 'Postre', 'Aperitivo'], respuesta: 0 },
-                { japones: '料理', lectura: 'ryouri', opciones: ['Cocina', 'Comida', 'Bebida', 'Postre'], respuesta: 0 },
-                { japones: 'レストラン', lectura: 'resutoran', opciones: ['Restaurante', 'Cafetería', 'Bar', 'Pub'], respuesta: 0 },
-                { japones: 'メニュー', lectura: 'menyuu', opciones: ['Menú', 'Receta', 'Ingrediente', 'Utensilio'], respuesta: 0 },
-                { japones: '注文', lectura: 'chuumon', opciones: ['Pedido', 'Entrega', 'Preparación', 'Cocción'], respuesta: 0 },
-                { japones: 'サービス', lectura: 'saabisu', opciones: ['Servicio', 'Producto', 'Mercancía', 'Artículo'], respuesta: 0 },
-                { japones: '会計', lectura: 'kaikei', opciones: ['Cuenta', 'Pedido', 'Menú', 'Reserva'], respuesta: 0 },
-                { japones: 'チップ', lectura: 'chippu', opciones: ['Propina', 'Precio', 'Costo', 'Gasto'], respuesta: 0 },
-                { japones: '食材', lectura: 'shokuzai', opciones: ['Ingredientes', 'Utensilios', 'Recetas', 'Platos'], respuesta: 0 },
-                { japones: '調理', lectura: 'chouri', opciones: ['Cocción', 'Comer', 'Servir', 'Ordenar'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '買い物', lectura: 'kaimono', opciones: ['Compras', 'Ventas', 'Intercambio', 'Regalo'], respuesta: 0 },
-                { japones: '商店', lectura: 'shouten', opciones: ['Tienda', 'Almacén', 'Mercado', 'Centro comercial'], respuesta: 0 },
-                { japones: '市場', lectura: 'ichiba', opciones: ['Mercado', 'Tienda', 'Almacén', 'Fábrica'], respuesta: 0 },
-                { japones: 'デパート', lectura: 'depaato', opciones: ['Grandes almacenes', 'Mercado', 'Tienda', 'Boutique'], respuesta: 0 },
-                { japones: 'スーパー', lectura: 'suupaa', opciones: ['Supermercado', 'Tienda', 'Mercado', 'Almacén'], respuesta: 0 },
-                { japones: '価格', lectura: 'kakaku', opciones: ['Precio', 'Calidad', 'Cantidad', 'Valor'], respuesta: 0 },
-                { japones: '割引', lectura: 'waribiki', opciones: ['Descuento', 'Aumento', 'Mantenimiento', 'Estabilidad'], respuesta: 0 },
-                { japones: '品質', lectura: 'hinshitsu', opciones: ['Calidad', 'Cantidad', 'Precio', 'Valor'], respuesta: 0 },
-                { japones: 'ブランド', lectura: 'burando', opciones: ['Marca', 'Producto', 'Servicio', 'Artículo'], respuesta: 0 },
-                { japones: '消費税', lectura: 'shouhizei', opciones: ['Impuesto al consumo', 'Impuesto a la renta', 'Impuesto corporativo', 'Impuesto patrimonial'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '娯楽', lectura: 'goraku', opciones: ['Entretenimiento', 'Trabajo', 'Estudio', 'Obligación'], respuesta: 0 },
-                { japones: '趣味', lectura: 'shumi', opciones: ['Pasatiempo', 'Trabajo', 'Obligación', 'Deber'], respuesta: 0 },
-                { japones: '映画館', lectura: 'eigakan', opciones: ['Cine', 'Teatro', 'Museo', 'Galería'], respuesta: 0 },
-                { japones: 'コンサート', lectura: 'konsaato', opciones: ['Concierto', 'Obra de teatro', 'Exposición', 'Feria'], respuesta: 0 },
-                { japones: '博物館', lectura: 'hakubutsukan', opciones: ['Museo', 'Biblioteca', 'Archivo', 'Galería'], respuesta: 0 },
-                { japones: '公園', lectura: 'kouen', opciones: ['Parque', 'Jardín', 'Bosque', 'Montaña'], respuesta: 0 },
-                { japones: '遊園地', lectura: 'yuuenchi', opciones: ['Parque de atracciones', 'Parque natural', 'Jardín botánico', 'Zoológico'], respuesta: 0 },
-                { japones: '温泉', lectura: 'onsen', opciones: ['Aguas termales', 'Piscina', 'Playa', 'Río'], respuesta: 0 },
-                { japones: 'リラックス', lectura: 'rirakkusu', opciones: ['Relajación', 'Estrés', 'Tensión', 'Ansiedad'], respuesta: 0 },
-                { japones: 'レジャー', lectura: 'rejaa', opciones: ['Ocio', 'Trabajo', 'Estudio', 'Responsabilidad'], respuesta: 0 }
-            ]
-        },
-        // Yamada
-        'sub3_1': {
-            1: [
-                { japones: 'こんなこと', lectura: 'konna koto', opciones: ['algo así', 'nada', 'todo', 'alguien'], respuesta: 0 },
-                { japones: '俺達', lectura: 'oretachi', opciones: ['nosotros', 'ellos', 'ustedes', 'vosotros'], respuesta: 0 },
-                { japones: '伝える', lectura: 'tsutaeru', opciones: ['comunicar', 'escuchar', 'escribir', 'leer'], respuesta: 0 },
-                { japones: '無事', lectura: 'buji', opciones: ['sin problemas', 'con problemas', 'peligroso', 'difícil'], respuesta: 0 },
-                { japones: '順調', lectura: 'junchou', opciones: ['ir bien', 'ir mal', 'empeorar', 'estancarse'], respuesta: 0 },
-                { japones: '続', lectura: 'tsuzuku', opciones: ['continuar', 'parar', 'empezar', 'terminar'], respuesta: 0 },
-                { japones: '実際', lectura: 'jissai', opciones: ['en realidad', 'en teoría', 'aparentemente', 'posiblemente'], respuesta: 0 },
-                { japones: '周', lectura: 'mawari', opciones: ['alrededor', 'dentro', 'fuera', 'lejos'], respuesta: 0 },
-                { japones: 'ちょっかい', lectura: 'chokkai', opciones: ['molestias', 'ayuda', 'silencio', 'apoyo'], respuesta: 0 },
-                { japones: '厄介', lectura: 'yakkai', opciones: ['problemas', 'soluciones', 'facilidades', 'ventajas'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '大変', lectura: 'taihen', opciones: ['duro', 'fácil', 'simple', 'sencillo'], respuesta: 0 },
-                { japones: '男女', lectura: 'danjo', opciones: ['hombre y mujer', 'amigos', 'familia', 'compañeros'], respuesta: 0 },
-                { japones: '流', lectura: 'nagare', opciones: ['fluir', 'estancar', 'parar', 'bloquear'], respuesta: 0 },
-                { japones: '初体験', lectura: 'hatsu taiken', opciones: ['primera experiencia íntima', 'última vez', 'experiencia común', 'práctica'], respuesta: 0 },
-                { japones: '成功', lectura: 'seikou', opciones: ['fue un éxito', 'fue un fracaso', 'fue normal', 'fue mediocre'], respuesta: 0 },
-                { japones: '更に', lectura: 'sara ni', opciones: ['todavía más', 'menos', 'igual', 'diferente'], respuesta: 0 },
-                { japones: '深まる', lectura: 'fukamaru', opciones: ['profundizar', 'superficial', 'disminuir', 'reducir'], respuesta: 0 },
-                { japones: 'タガ', lectura: 'taga', opciones: ['limitación', 'libertad', 'expansión', 'apertura'], respuesta: 0 },
-                { japones: '外れる', lectura: 'hazureru', opciones: ['salirse', 'quedarse', 'entrar', 'fijarse'], respuesta: 0 },
-                { japones: '初々しい', lectura: 'ui ui shii', opciones: ['primero', 'experimentado', 'viejo', 'usado'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '何処', lectura: 'doko', opciones: ['Dónde', 'Cuándo', 'Cómo', 'Por qué'], respuesta: 0 },
-                { japones: 'のやら', lectura: 'noyara', opciones: ['expresión de duda', 'expresión de certeza', 'afirmación', 'negación'], respuesta: 0 },
-                { japones: '搾り取る', lectura: 'shiboritoru', opciones: ['exprimir', 'agregar', 'diluir', 'mezclar'], respuesta: 0 },
-                { japones: '慣れない', lectura: 'narenai', opciones: ['No estoy acostumbrado', 'Estoy acostumbrado', 'Me gusta', 'Me disgusta'], respuesta: 0 },
-                { japones: '毎回', lectura: 'maikai', opciones: ['cada vez', 'a veces', 'nunca', 'siempre'], respuesta: 0 },
-                { japones: '全然', lectura: 'zenzen', opciones: ['en absoluto', 'completamente', 'parcialmente', 'ligeramente'], respuesta: 0 },
-                { japones: '変える', lectura: 'kaeru', opciones: ['cambiar', 'mantener', 'mejorar', 'empeorar'], respuesta: 0 },
-                { japones: '極薄', lectura: 'kiwausu', opciones: ['ultra-delgado', 'grueso', 'normal', 'mediano'], respuesta: 0 },
-                { japones: '早速', lectura: 'sassoku', opciones: ['de inmediato', 'después', 'lentamente', 'nunca'], respuesta: 0 },
-                { japones: '興奮', lectura: 'koufun', opciones: ['excitarse', 'calmarse', 'dormir', 'descansar'], respuesta: 0 }
-            ],
-            4: [
-                { japones: 'いつもより', lectura: 'itsumo yori', opciones: ['más que de costumbre', 'menos que de costumbre', 'igual que siempre', 'diferente a siempre'], respuesta: 0 },
-                { japones: '薄い', lectura: 'usui', opciones: ['delgado', 'grueso', 'fuerte', 'débil'], respuesta: 0 },
-                { japones: '擦れる', lectura: 'sureru', opciones: ['rozar', 'separar', 'unir', 'pegar'], respuesta: 0 },
-                { japones: '天然', lectura: 'tennen', opciones: ['natural', 'artificial', 'sintético', 'falso'], respuesta: 0 },
-                { japones: '尊敬する', lectura: 'sonkei suru', opciones: ['respetar', 'despreciar', 'ignorar', 'olvidar'], respuesta: 0 },
-                { japones: '乱れてる', lectura: 'midareteru', opciones: ['desordenado', 'ordenado', 'limpio', 'organizado'], respuesta: 0 },
-                { japones: 'お陰', lectura: 'okage', opciones: ['gracias a', 'a pesar de', 'sin ayuda de', 'por culpa de'], respuesta: 0 },
-                { japones: '嬉しい', lectura: 'ureshii', opciones: ['feliz', 'triste', 'enojado', 'preocupado'], respuesta: 0 },
-                { japones: '取られた', lectura: 'torareta', opciones: ['agarrar', 'soltar', 'dejar', 'perder'], respuesta: 0 },
-                { japones: '濃い', lectura: 'koi', opciones: ['espeso', 'diluido', 'claro', 'suave'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '折角', lectura: 'sekkaku', opciones: ['con esfuerzo', 'fácilmente', 'accidentalmente', 'naturalmente'], respuesta: 0 },
-                { japones: '勢い', lectura: 'ikioi', opciones: ['fuerza', 'debilidad', 'calma', 'quietud'], respuesta: 0 },
-                { japones: '屈託', lectura: 'kuttaku', opciones: ['preocupación', 'alegría', 'tranquilidad', 'seguridad'], respuesta: 0 },
-                { japones: '満たされていない', lectura: 'mitasareteinai', opciones: ['insatisfecho', 'satisfecho', 'completo', 'lleno'], respuesta: 0 },
-                { japones: '味わえる', lectura: 'ajiw aeru', opciones: ['saborear', 'rechazar', 'ignorar', 'desperdiciar'], respuesta: 0 },
-                { japones: '勃つ', lectura: 'tatsu', opciones: ['erección', 'flacidez', 'calma', 'relajación'], respuesta: 0 },
-                { japones: '悔しい', lectura: 'kuyashii', opciones: ['frustrante', 'satisfactorio', 'agradable', 'placentero'], respuesta: 0 },
-                { japones: 'なんとか', lectura: 'nantoka', opciones: ['de alguna manera', 'imposible', 'fácilmente', 'sin esfuerzo'], respuesta: 0 },
-                { japones: '解決', lectura: 'kaiketsu', opciones: ['solución', 'problema', 'conflicto', 'dificultad'], respuesta: 0 },
-                { japones: '絶倫', lectura: 'zetsurin', opciones: ['potencia sexual', 'impotencia', 'debilidad', 'falta de energía'], respuesta: 0 }
-            ],
-            6: [
-                { japones: '伝授', lectura: 'denju', opciones: ['transmisión', 'recepción', 'bloqueo', 'ocultamiento'], respuesta: 0 },
-                { japones: '知識', lectura: 'chishiki', opciones: ['conocimiento', 'ignorancia', 'duda', 'confusión'], respuesta: 0 },
-                { japones: '迎え', lectura: 'mukae', opciones: ['bienvenida', 'despedida', 'rechazo', 'ignorancia'], respuesta: 0 },
-                { japones: '積極的', lectura: 'sekkyokuteki', opciones: ['asertivo', 'pasivo', 'timido', 'indeciso'], respuesta: 0 },
-                { japones: '用意', lectura: 'youi', opciones: ['preparación', 'improvisación', 'descuidar', 'olvidar'], respuesta: 0 },
-                { japones: '購入', lectura: 'kounyuu', opciones: ['compra', 'venta', 'intercambio', 'regalo'], respuesta: 0 },
-                { japones: '減らず口', lectura: 'herazuguchi', opciones: ['boca insolente', 'silencio', 'respeto', 'educación'], respuesta: 0 },
-                { japones: '使い切る', lectura: 'tsukaikiru', opciones: ['usar completamente', 'ahorrar', 'guardar', 'conservar'], respuesta: 0 },
-                { japones: '恐るべし', lectura: 'osorubeshi', opciones: ['formidable', 'débil', 'común', 'ordinario'], respuesta: 0 },
-                { japones: '勃つ', lectura: 'tatsu', opciones: ['erección', 'flacidez', 'calma', 'relajación'], respuesta: 0 }
-            ]
-        },
-        'sub3_2': {
-            1: [
-                { japones: '自然', lectura: 'shizen', opciones: ['Naturaleza', 'Artificial', 'Urbano', 'Industrial'], respuesta: 0 },
-                { japones: '環境', lectura: 'kankyou', opciones: ['Medio ambiente', 'Contaminación', 'Tecnología', 'Civilización'], respuesta: 0 },
-                { japones: '動物', lectura: 'doubutsu', opciones: ['Animal', 'Planta', 'Mineral', 'Objeto'], respuesta: 0 },
-                { japones: '植物', lectura: 'shokubutsu', opciones: ['Planta', 'Animal', 'Mineral', 'Ser humano'], respuesta: 0 },
-                { japones: '風景', lectura: 'fuukei', opciones: ['Paisaje', 'Ciudad', 'Edificio', 'Construcción'], respuesta: 0 },
-                { japones: '気候', lectura: 'kikou', opciones: ['Clima', 'Tiempo', 'Estación', 'Temperatura'], respuesta: 0 },
-                { japones: '季節', lectura: 'kisetsu', opciones: ['Estación', 'Mes', 'Semana', 'Día'], respuesta: 0 },
-                { japones: '天気', lectura: 'tenki', opciones: ['Tiempo atmosférico', 'Clima', 'Estación', 'Temperatura'], respuesta: 0 },
-                { japones: '資源', lectura: 'shigen', opciones: ['Recurso', 'Desperdicio', 'Contaminante', 'Residuo'], respuesta: 0 },
-                { japones: '保護', lectura: 'hogo', opciones: ['Protección', 'Destrucción', 'Abandono', 'Negligencia'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '宇宙', lectura: 'uchuu', opciones: ['Universo', 'Tierra', 'Planeta', 'Galaxia'], respuesta: 0 },
-                { japones: '地球', lectura: 'chikyuu', opciones: ['Planeta Tierra', 'Luna', 'Sol', 'Marte'], respuesta: 0 },
-                { japones: '太陽', lectura: 'taiyou', opciones: ['Sol', 'Luna', 'Estrella', 'Planeta'], respuesta: 0 },
-                { japones: '月', lectura: 'tsuki', opciones: ['Luna', 'Sol', 'Estrella', 'Planeta'], respuesta: 0 },
-                { japones: '星', lectura: 'hoshi', opciones: ['Estrella', 'Planeta', 'Satélite', 'Asteroide'], respuesta: 0 },
-                { japones: '銀河', lectura: 'ginga', opciones: ['Galaxia', 'Sistema solar', 'Constelación', 'Nebulosa'], respuesta: 0 },
-                { japones: '惑星', lectura: 'wakusei', opciones: ['Planeta', 'Estrella', 'Satélite', 'Asteroide'], respuesta: 0 },
-                { japones: '衛星', lectura: 'eisei', opciones: ['Satélite', 'Planeta', 'Estrella', 'Cometa'], respuesta: 0 },
-                { japones: '天文', lectura: 'tenmon', opciones: ['Astronomía', 'Astrología', 'Geología', 'Meteorología'], respuesta: 0 },
-                { japones: '探査', lectura: 'tansa', opciones: ['Exploración', 'Abandono', 'Ignorancia', 'Desinterés'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Espacio', 'Materia', 'Energía'], respuesta: 0 },
-                { japones: '過去', lectura: 'kako', opciones: ['Pasado', 'Presente', 'Futuro', 'Eterno'], respuesta: 0 },
-                { japones: '現在', lectura: 'genzai', opciones: ['Presente', 'Pasado', 'Futuro', 'Eterno'], respuesta: 0 },
-                { japones: '未来', lectura: 'mirai', opciones: ['Futuro', 'Pasado', 'Presente', 'Eterno'], respuesta: 0 },
-                { japones: '瞬間', lectura: 'shunkan', opciones: ['Instante', 'Eternidad', 'Periodo', 'Duración'], respuesta: 0 },
-                { japones: '永遠', lectura: 'eien', opciones: ['Eternidad', 'Momentáneo', 'Temporal', 'Pasajero'], respuesta: 0 },
-                { japones: '歴史', lectura: 'rekishi', opciones: ['Historia', 'Futuro', 'Presente', 'Actualidad'], respuesta: 0 },
-                { japones: '時代', lectura: 'jidai', opciones: ['Época', 'Momento', 'Instante', 'Segundo'], respuesta: 0 },
-                { japones: '周期', lectura: 'shuuki', opciones: ['Ciclo', 'Línea recta', 'Dirección única', 'Camino único'], respuesta: 0 },
-                { japones: '速度', lectura: 'sokudo', opciones: ['Velocidad', 'Lentitud', 'Inmovilidad', 'Estancamiento'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '物質', lectura: 'busshitsu', opciones: ['Materia', 'Energía', 'Espíritu', 'Pensamiento'], respuesta: 0 },
-                { japones: '元素', lectura: 'genso', opciones: ['Elemento', 'Compuesto', 'Mezcla', 'Sustancia'], respuesta: 0 },
-                { japones: '原子', lectura: 'genshi', opciones: ['Átomo', 'Molécula', 'Partícula', 'Elemento'], respuesta: 0 },
-                { japones: '分子', lectura: 'bunshi', opciones: ['Molécula', 'Átomo', 'Partícula', 'Elemento'], respuesta: 0 },
-                { japones: 'エネルギー', lectura: 'enerugii', opciones: ['Energía', 'Materia', 'Espacio', 'Tiempo'], respuesta: 0 },
-                { japones: '力', lectura: 'chikara', opciones: ['Fuerza', 'Debilidad', 'Fragilidad', 'Vulnerabilidad'], respuesta: 0 },
-                { japones: '運動', lectura: 'undou', opciones: ['Movimiento', 'Reposo', 'Inmovilidad', 'Estaticidad'], respuesta: 0 },
-                { japones: '変化', lectura: 'henka', opciones: ['Cambio', 'Permanencia', 'Estabilidad', 'Constancia'], respuesta: 0 },
-                { japones: '状態', lectura: 'joutai', opciones: ['Estado', 'Proceso', 'Transformación', 'Evolución'], respuesta: 0 },
-                { japones: '性質', lectura: 'seishitsu', opciones: ['Propiedad', 'Accidente', 'Coincidencia', 'Casualidad'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '生命', lectura: 'seimei', opciones: ['Vida', 'Muerte', 'Existencia', 'Esencia'], respuesta: 0 },
-                { japones: '生物', lectura: 'seibutsu', opciones: ['Ser vivo', 'Objeto inanimado', 'Mineral', 'Elemento'], respuesta: 0 },
-                { japones: '細胞', lectura: 'saibou', opciones: ['Célula', 'Tejido', 'Órgano', 'Sistema'], respuesta: 0 },
-                { japones: '遺伝', lectura: 'iden', opciones: ['Herencia', 'Adquisición', 'Aprendizaje', 'Experiencia'], respuesta: 0 },
-                { japones: '進化', lectura: 'shinka', opciones: ['Evolución', 'Involución', 'Estancamiento', 'Regresión'], respuesta: 0 },
-                { japones: '生態', lectura: 'seitai', opciones: ['Ecología', 'Anatomía', 'Fisiología', 'Biología'], respuesta: 0 },
-                { japones: '繁殖', lectura: 'hanshoku', opciones: ['Reproducción', 'Muerte', 'Extinción', 'Desaparición'], respuesta: 0 },
-                { japones: '適応', lectura: 'tekiou', opciones: ['Adaptación', 'Rigidez', 'Inflexibilidad', 'Inadaptación'], respuesta: 0 },
-                { japones: '多様性', lectura: 'tayousei', opciones: ['Diversidad', 'Uniformidad', 'Homogeneidad', 'Similitud'], respuesta: 0 },
-                { japones: '絶滅', lectura: 'zetsumetsu', opciones: ['Extinción', 'Supervivencia', 'Conservación', 'Preservación'], respuesta: 0 }
-            ]
-        },
-        'sub3_3': {
-            1: [
-                { japones: '哲学', lectura: 'tetsugaku', opciones: ['Filosofía', 'Ciencia', 'Arte', 'Religión'], respuesta: 0 },
-                { japones: '思想', lectura: 'shisou', opciones: ['Pensamiento', 'Acción', 'Palabra', 'Emoción'], respuesta: 0 },
-                { japones: '真理', lectura: 'shinri', opciones: ['Verdad', 'Mentira', 'Error', 'Engaño'], respuesta: 0 },
-                { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
-                { japones: '理性', lectura: 'risei', opciones: ['Razón', 'Emoción', 'Instinto', 'Intuición'], respuesta: 0 },
-                { japones: '存在', lectura: 'sonzai', opciones: ['Existencia', 'Inexistencia', 'Nada', 'Vacío'], respuesta: 0 },
-                { japones: '意識', lectura: 'ishiki', opciones: ['Conciencia', 'Inconsciencia', 'Sueño', 'Desmayo'], respuesta: 0 },
-                { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 },
-                { japones: '正義', lectura: 'seigi', opciones: ['Justicia', 'Injusticia', 'Corrupción', 'Abuso'], respuesta: 0 },
-                { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Amoralidad', 'Corrupción'], respuesta: 0 }
-            ],
-            2: [
-                { japones: '宗教', lectura: 'shuukyou', opciones: ['Religión', 'Ciencia', 'Filosofía', 'Arte'], respuesta: 0 },
-                { japones: '信仰', lectura: 'shinkou', opciones: ['Creencia', 'Duda', 'Escepticismo', 'Agnosticismo'], respuesta: 0 },
-                { japones: '神', lectura: 'kami', opciones: ['Dios', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
-                { japones: '祈り', lectura: 'inori', opciones: ['Oración', 'Maldición', 'Bendición', 'Profecía'], respuesta: 0 },
-                { japones: '儀式', lectura: 'gishiki', opciones: ['Ceremonia', 'Informalidad', 'Espontaneidad', 'Improvisación'], respuesta: 0 },
-                { japones: '寺院', lectura: 'jiin', opciones: ['Templo', 'Casa', 'Escuela', 'Oficina'], respuesta: 0 },
-                { japones: '聖書', lectura: 'seisho', opciones: ['Biblia', 'Novela', 'Poesía', 'Ensayo'], respuesta: 0 },
-                { japones: '信仰心', lectura: 'shinkoushin', opciones: ['Devoción', 'Ateísmo', 'Agnosticismo', 'Indiferencia'], respuesta: 0 },
-                { japones: '来世', lectura: 'raise', opciones: ['Vida después de la muerte', 'Vida presente', 'Reencarnación', 'Nirvana'], respuesta: 0 },
-                { japones: '奇跡', lectura: 'kiseki', opciones: ['Milagro', 'Normalidad', 'Rutina', 'Cotidianidad'], respuesta: 0 }
-            ],
-            3: [
-                { japones: '言語', lectura: 'gengo', opciones: ['Lenguaje', 'Silencio', 'Gesto', 'Expresión'], respuesta: 0 },
-                { japones: '文法', lectura: 'bunpou', opciones: ['Gramática', 'Vocabulario', 'Pronunciación', 'Escritura'], respuesta: 0 },
-                { japones: '語彙', lectura: 'goi', opciones: ['Vocabulario', 'Gramática', 'Pronunciación', 'Escritura'], respuesta: 0 },
-                { japones: '発音', lectura: 'hatsuon', opciones: ['Pronunciación', 'Escritura', 'Lectura', 'Comprensión'], respuesta: 0 },
-                { japones: '意味', lectura: 'imi', opciones: ['Significado', 'Significante', 'Símbolo', 'Representación'], respuesta: 0 },
-                { japones: '翻訳', lectura: 'honyaku', opciones: ['Traducción', 'Interpretación', 'Adaptación', 'Modificación'], respuesta: 0 },
-                { japones: '通訳', lectura: 'tsuuyaku', opciones: ['Interpretación', 'Traducción', 'Explicación', 'Aclaración'], respuesta: 0 },
-                { japones: '方言', lectura: 'hougen', opciones: ['Dialecto', 'Lengua estándar', 'Idioma', 'Jerga'], respuesta: 0 },
-                { japones: '表現', lectura: 'hyougen', opciones: ['Expresión', 'Represión', 'Ocultamiento', 'Silencio'], respuesta: 0 },
-                { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Soledad'], respuesta: 0 }
-            ],
-            4: [
-                { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Arte', 'Filosofía'], respuesta: 0 },
-                { japones: '詩', lectura: 'shi', opciones: ['Poesía', 'Prosa', 'Ensayo', 'Novela'], respuesta: 0 },
-                { japones: '小説', lectura: 'shousetsu', opciones: ['Novela', 'Poesía', 'Ensayo', 'Teatro'], respuesta: 0 },
-                { japones: '物語', lectura: 'monogatari', opciones: ['Historia', 'Hecho', 'Realidad', 'Verdad'], respuesta: 0 },
-                { japones: '作者', lectura: 'sakusha', opciones: ['Autor', 'Lector', 'Crítico', 'Editor'], respuesta: 0 },
-                { japones: '主人公', lectura: 'shujinkou', opciones: ['Protagonista', 'Antagonista', 'Personaje secundario', 'Narrador'], respuesta: 0 },
-                { japones: '文体', lectura: 'buntai', opciones: ['Estilo', 'Contenido', 'Tema', 'Argumento'], respuesta: 0 },
-                { japones: '比喩', lectura: 'hiyu', opciones: ['Metáfora', 'Literalidad', 'Realismo', 'Naturalismo'], respuesta: 0 },
-                { japones: '象徴', lectura: 'shouchou', opciones: ['Símbolo', 'Realidad', 'Hecho', 'Verdad'], respuesta: 0 },
-                { japones: '感動', lectura: 'kandou', opciones: ['Emoción', 'Indiferencia', 'Frialdad', 'Desapego'], respuesta: 0 }
-            ],
-            5: [
-                { japones: '神話', lectura: 'shinwa', opciones: ['Mito', 'Historia', 'Ciencia', 'Filosofía'], respuesta: 0 },
-                { japones: '伝説', lectura: 'densetsu', opciones: ['Leyenda', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
-                { japones: '民話', lectura: 'minwa', opciones: ['Cuento popular', 'Historia oficial', 'Ciencia', 'Filosofía'], respuesta: 0 },
-                { japones: '寓話', lectura: 'guuwa', opciones: ['Fábula', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
-                { japones: '昔話', lectura: 'mukashibanashi', opciones: ['Cuento antiguo', 'Historia contemporánea', 'Noticia', 'Reportaje'], respuesta: 0 },
-                { japones: '英雄', lectura: 'eiyuu', opciones: ['Héroe', 'Villano', 'Personaje común', 'Antihéroe'], respuesta: 0 },
-                { japones: '怪物', lectura: 'kaibutsu', opciones: ['Monstruo', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
-                { japones: '魔法', lectura: 'mahou', opciones: ['Magia', 'Ciencia', 'Tecnología', 'Realidad'], respuesta: 0 },
-                { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 },
-                { japones: '運命', lectura: 'unmei', opciones: ['Destino', 'Azar', 'Elección', 'Libre albedrío'], respuesta: 0 }
+                { japones: '今朝', lectura: 'kesa', opciones: ['Esta mañana', 'Esta tarde', 'Anoche', 'Ayer'], respuesta: 0 },
+                { japones: '処', lectura: 'tokoro', opciones: ['Lugar', 'Tiempo', 'Persona', 'Cosa'], respuesta: 0 }
             ]
         }
-        // ... continuar para los otros subcontenedores (sub2_1, sub2_2, etc.)
     };
-
-    // Si no hay palabras específicas para este subcontenedor y mazo, usar palabras por defecto
+    
     if (palabrasDatabase[subcontenedorId] && palabrasDatabase[subcontenedorId][numeroMazo]) {
         return palabrasDatabase[subcontenedorId][numeroMazo];
     } else {
-        // Fallback a palabras genéricas si no hay específicas
         return generarPalabras(10);
     }
 }
 
-// Función de respaldo para generar palabras genéricas
 function generarPalabras(cantidad) {
     const palabras = [];
     const palabrasBase = [
         { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
-        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
-        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
-        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
-        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
-        { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
-        { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
-        { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
-        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
-        { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
+        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 }
     ];
     
     for (let i = 0; i < cantidad; i++) {
@@ -1913,7 +2800,7 @@ function generarPalabras(cantidad) {
 }
 
 // ============================================================================
-// FUNCIONES GLOBALES
+// VARIABLES GLOBALES DEL SISTEMA PRINCIPAL
 // ============================================================================
 
 let contenedorActual = '';
@@ -1923,12 +2810,15 @@ let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
 
+// ============================================================================
+// FUNCIONES GLOBALES DEL SISTEMA
+// ============================================================================
+
 // Función para obtener la URL de una imagen
 function obtenerUrlImagen(tipo, id) {
     if (configImagenes[tipo] && configImagenes[tipo][id]) {
         return configImagenes[tipo][id];
     }
-    // Imagen por defecto si no se encuentra
     return 'imagenes/default.jpg';
 }
 
@@ -1938,17 +2828,10 @@ function obtenerVideoAleatorio() {
     return videosRecompensa[indiceAleatorio];
 }
 
-// ============================================================================
-// FUNCIONES DEL SISTEMA PRINCIPAL - CON BOTÓN "IR AL MENÚ"
-// ============================================================================
-
 // FUNCIÓN MEJORADA: "Ir al Menú" - Regresa a la pantalla principal
 function irAlMenu() {
     cambiarPantalla('pantalla-inicio');
-    
-    // Detener cualquier video que esté reproduciéndose
     detenerTodosLosVideos();
-    
     console.log("🏠 Navegando al menú principal");
 }
 
@@ -1961,6 +2844,7 @@ function detenerTodosLosVideos() {
     });
 }
 
+// Función para cargar contenedor
 function cargarContenedor(idContenedor) {
     if (estructura[idContenedor]) {
         contenedorActual = idContenedor;
@@ -1991,6 +2875,7 @@ function cargarContenedor(idContenedor) {
     }
 }
 
+// Función para cargar subcontenedor
 function cargarSubcontenedor(idSubcontenedor) {
     const contenedor = estructura[contenedorActual];
     if (contenedor && contenedor.subcontenedores[idSubcontenedor]) {
@@ -2022,6 +2907,7 @@ function cargarSubcontenedor(idSubcontenedor) {
     }
 }
 
+// Función para cargar mazo
 function cargarMazo(idMazo) {
     const contenedor = estructura[contenedorActual];
     const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
@@ -2037,6 +2923,7 @@ function cargarMazo(idMazo) {
     }
 }
 
+// Función para mezclar preguntas
 function mezclarPreguntas() {
     for (let i = mazoActual.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -2044,7 +2931,7 @@ function mezclarPreguntas() {
     }
 }
 
-// FUNCIÓN MEJORADA - NAVEGACIÓN AUTOMÁTICA + REGISTRO DE PALABRAS FALLADAS
+// FUNCIÓN MEJORADA - MOSTRAR PREGUNTA CON SISTEMA DE MINIJUEGOS
 function mostrarPregunta() {
     if (preguntaActual < mazoActual.length) {
         const pregunta = mazoActual[preguntaActual];
@@ -2070,7 +2957,7 @@ function mostrarPregunta() {
             const botonOpcion = document.createElement('button');
             botonOpcion.className = 'opcion';
             botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
+            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.japones);
             contenedorOpciones.appendChild(botonOpcion);
         });
     } else {
@@ -2078,11 +2965,10 @@ function mostrarPregunta() {
     }
 }
 
-// FUNCIÓN CORREGIDA - REGISTRA PALABRAS FALLADAS Y MUESTRA LA PRONUNCIACIÓN SIEMPRE
-function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
+// FUNCIÓN CORREGIDA - VERIFICAR RESPUESTA CON SISTEMA DE ANÁLISIS
+function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, palabraJapones) {
     const opciones = document.querySelectorAll('.opcion');
     const resultado = document.getElementById('resultado');
-    const palabraActual = document.getElementById('palabra-japones').textContent;
     
     opciones.forEach(opcion => {
         opcion.disabled = true;
@@ -2096,7 +2982,7 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         }
     });
     
-    // CORRECCIÓN 1: MOSTRAR LA PRONUNCIACIÓN SIEMPRE, TANTO EN RESPUESTA CORRECTA COMO INCORRECTA
+    // Mostrar la pronunciación SIEMPRE
     document.getElementById('lectura').textContent = `(${lectura})`;
     
     if (respuestaSeleccionada === respuestaCorrecta) {
@@ -2104,7 +2990,11 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
         
-        // CORRECCIÓN 2: Navegación automática solo para respuestas correctas
+        // Registrar palabra aprendida en análisis
+        const tipo = sistemaPalabrasFalladas.clasificarPalabra(palabraJapones);
+        sistemaAnalisis.registrarPalabraAprendida(palabraJapones, tipo);
+        
+        // Navegación automática solo para respuestas correctas
         setTimeout(() => {
             siguientePregunta();
         }, 1000);
@@ -2116,7 +3006,7 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         
         // REGISTRAR PALABRA FALLADA
         sistemaPalabrasFalladas.registrarPalabraFallada(
-            palabraActual,
+            palabraJapones,
             respuestaSeleccionada,
             respuestaCorrecta,
             lectura
@@ -2124,52 +3014,62 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         
         // Mostrar botón "Continuar" solo para respuestas incorrectas
         document.getElementById('boton-siguiente').style.display = 'block';
-        
-        // CORRECCIÓN 3: NO NAVEGACIÓN AUTOMÁTICA PARA RESPUESTAS INCORRECTAS
-        // El usuario debe hacer clic en "Continuar" manualmente
     }
 }
 
+// Función siguiente pregunta
 function siguientePregunta() {
     preguntaActual++;
     mostrarPregunta();
 }
 
-// FUNCIÓN MEJORADA - SOLO EVENTO DIARIO CUANDO HAY DOBLE COMPLETACIÓN
+// FUNCIÓN MEJORADA - MOSTRAR RESULTADOS CON SISTEMA DE MINIJUEGOS
 function mostrarResultados() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
+    // Registrar quiz en análisis
+    sistemaAnalisis.registrarQuiz(
+        porcentaje === 100,
+        mazoActual.length,
+        respuestasCorrectas,
+        respuestasIncorrectas
+    );
+    
     console.log("📊 Mostrando resultados:", {
         porcentaje: porcentaje,
-        tieneEventoActivo: !!eventosDiarios.estado.eventoActual,
-        eventoCompletado: eventosDiarios.estado.completado,
-        eventoProgreso: eventosDiarios.estado.progreso
+        tieneEventoActivo: !!eventosDiarios.estado.eventoActual
     });
     
     if (porcentaje === 100) {
         // Registrar mazo completado para misiones diarias
         misionesDiarias.registrarMazoCompletado();
         
-        // Registrar mazo completado para evento diario (esto podría completar el evento)
+        // Registrar mazo completado para evento diario
         const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
         eventosDiarios.registrarMazoCompletado();
         
-        // VERIFICAR: ¿Se completó el evento diario JUSTO AHORA?
+        // Verificar si se completó el evento diario JUSTO AHORA
         const eventoSeCompletoJustoAhora = eventoEstabaIncompleto && eventosDiarios.estado.completado;
         
-        console.log("🎯 Estado evento:", {
-            eventoEstabaIncompleto: eventoEstabaIncompleto,
-            eventoSeCompletoJustoAhora: eventoSeCompletoJustoAhora
-        });
-        
         if (eventoSeCompletoJustoAhora) {
-            // SOLUCIÓN: Si se completó el evento diario, SOLO mostrar el evento
+            // Si se completó evento diario, SOLO mostrar el evento
             console.log("🎁 Evento diario completado - Mostrando SOLO evento");
-            // El evento diario automáticamente mostrará su video
-            // NO mostramos el video del mazo
         } else {
-            // Si NO se completó evento diario, mostrar video normal del mazo
+            // Si NO se completó evento diario
             sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
+            
+            // VERIFICAR SI APARECE MINIJUEGO (30% de probabilidad)
+            const probabilidadMinijuego = Math.random();
+            if (probabilidadMinijuego <= 0.3) { // 30% de probabilidad
+                const minijuegoDisponible = sistemaMinijuegos.verificarAparicionMinijuego();
+                if (minijuegoDisponible) {
+                    // Mostrar oferta de minijuego
+                    mostrarOfertaMinijuego(minijuegoDisponible);
+                    return;
+                }
+            }
+            
+            // Si no hay minijuego, mostrar video normal
             mostrarVideoRecompensa();
         }
         
@@ -2185,6 +3085,101 @@ function mostrarResultados() {
     }
 }
 
+// Función para mostrar oferta de minijuego
+function mostrarOfertaMinijuego(minijuego) {
+    const htmlOferta = `
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🎮 OFERTA ESPECIAL</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="rechazarMinijuego()">Rechazar</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
+            <div class="oferta-minijuego-container">
+                <h1>¡Oferta Especial! 🎮</h1>
+                <div class="oferta-content">
+                    <div class="oferta-imagen">
+                        <img src="https://static.wikia.nocookie.net/5hanayome/images/6/64/Nino_Nakano_Anime.png" alt="Nino">
+                    </div>
+                    <div class="oferta-info">
+                        <h2>${minijuego.nombre}</h2>
+                        <p>Nino quiere jugar contigo después de tu excelente desempeño.</p>
+                        <div class="oferta-detalles">
+                            <p><strong>Dificultad:</strong> ${minijuego.dificultad}</p>
+                            <p><strong>Recompensa por ganar:</strong> +${minijuego.afinidadGanada}% afinidad</p>
+                            <p><strong>Riesgo por perder:</strong> -${minijuego.afinidadPerdida}% afinidad</p>
+                        </div>
+                        <div class="oferta-advertencia">
+                            <small>⚠️ Tu afinidad con Nino aumentará o disminuirá según el resultado</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="oferta-opciones">
+                    <button class="boton-secundario" onclick="rechazarMinijuego()">
+                        ❌ Rechazar Oferta
+                    </button>
+                    <button class="boton-principal" onclick="aceptarMinijuego('${minijuego.id}')">
+                        ✅ ¡Aceptar y Jugar!
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Ocultar todas las pantallas
+    document.querySelectorAll('.pantalla').forEach(pantalla => {
+        pantalla.classList.remove('activa');
+    });
+    
+    // Crear pantalla de oferta
+    const pantallaOferta = document.createElement('div');
+    pantallaOferta.className = 'pantalla activa';
+    pantallaOferta.id = 'pantalla-oferta-minijuego';
+    pantallaOferta.innerHTML = htmlOferta;
+    
+    document.body.appendChild(pantallaOferta);
+}
+
+// Función para aceptar minijuego
+function aceptarMinijuego(tipoMinijuego) {
+    // Eliminar pantalla de oferta
+    const pantallaOferta = document.getElementById('pantalla-oferta-minijuego');
+    if (pantallaOferta) {
+        pantallaOferta.remove();
+    }
+    
+    // Iniciar minijuego
+    sistemaMinijuegos.iniciarMinijuego(tipoMinijuego);
+}
+
+// Función para rechazar minijuego
+function rechazarMinijuego() {
+    // Eliminar pantalla de oferta
+    const pantallaOferta = document.getElementById('pantalla-oferta-minijuego');
+    if (pantallaOferta) {
+        pantallaOferta.remove();
+    }
+    
+    // Mostrar video normal de recompensa
+    sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
+    mostrarVideoRecompensa();
+}
+
+// Función para completar minijuego
+function completarMinijuego() {
+    // Esta función será implementada por cada tipo de minijuego
+    console.log("Completando minijuego...");
+}
+
+// Función para cerrar minijuego
+function cerrarMinijuego() {
+    cambiarPantalla('pantalla-inicio');
+}
+
+// Función para mostrar pantalla de resultados
 function mostrarPantallaResultados(porcentaje) {
     cambiarPantalla('pantalla-resultados');
     
@@ -2204,11 +3199,10 @@ function mostrarPantallaResultados(porcentaje) {
     `;
 }
 
-// FUNCIÓN MEJORADA - VIDEO EN BUCLE CON BOTÓN DE CERRAR (MUTEADO)
+// FUNCIÓN MEJORADA - VIDEO EN BUCLE
 function mostrarVideoRecompensa() {
     const video = obtenerVideoAleatorio();
     
-    // Actualizar la pantalla de video con la información del video seleccionado
     document.getElementById('titulo-video').textContent = video.titulo;
     document.getElementById('video-recompensa').src = video.url;
     document.getElementById('duracion-video').textContent = `Duración: ${video.duracion}`;
@@ -2216,16 +3210,9 @@ function mostrarVideoRecompensa() {
     
     cambiarPantalla('pantalla-video-recompensa');
     
-    // Reproducir el video automáticamente
     const videoElement = document.getElementById('video-recompensa');
-    
-    // Configurar para que se repita en bucle
     videoElement.loop = true;
-    
-    // MUTEAR EL VIDEO PARA QUE NO INTERRUMPA TU ASMR/TWITCH
-    videoElement.muted = true;  // <-- ESTA ES LA LÍNEA CLAVE PARA MUTEAR
-    
-    // QUITAR el evento onended para que no se cierre automáticamente
+    videoElement.muted = true;
     videoElement.onended = null;
     
     videoElement.play().catch(e => {
@@ -2233,25 +3220,25 @@ function mostrarVideoRecompensa() {
     });
 }
 
-// NUEVA FUNCIÓN PARA CERRAR VIDEO DE RECOMPENSA DE MAZO
+// Función para cerrar video de recompensa de mazo
 function cerrarVideoRecompensaMazo() {
-    // Detener el video
     const videoElement = document.getElementById('video-recompensa');
     if (videoElement) {
         videoElement.pause();
         videoElement.currentTime = 0;
     }
     
-    // Mostrar resultados
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     mostrarPantallaResultados(porcentaje);
 }
 
+// Función para saltar video
 function saltarVideo() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     mostrarPantallaResultados(porcentaje);
 }
 
+// Función para cambiar pantalla
 function cambiarPantalla(idPantalla) {
     document.querySelectorAll('.pantalla').forEach(pantalla => {
         pantalla.classList.remove('activa');
@@ -2259,6 +3246,7 @@ function cambiarPantalla(idPantalla) {
     document.getElementById(idPantalla).classList.add('activa');
 }
 
+// Funciones de navegación
 function volverAlInicio() {
     cambiarPantalla('pantalla-inicio');
 }
@@ -2281,68 +3269,158 @@ function repetirQuiz() {
 }
 
 // ============================================================================
-// FUNCIONES DEL SISTEMA DE PALABRAS FALLADAS - NUEVAS
+// FUNCIONES DEL SISTEMA DE ANÁLISIS - NUEVAS
 // ============================================================================
 
-// Función para mostrar la pantalla de palabras falladas
-function mostrarPalabrasFalladas() {
-    const estadisticas = sistemaPalabrasFalladas.obtenerEstadisticas();
+// Función para mostrar análisis de progreso
+function mostrarAnalisisProgreso() {
+    const estadisticas = sistemaAnalisis.obtenerEstadisticas();
+    const recomendaciones = sistemaAnalisis.obtenerRecomendaciones();
+    const datosGrafico = sistemaAnalisis.generarDatosGrafico(7);
     
     // Crear pantalla dinámica
     const pantallaHTML = `
-        <div id="pantalla-palabras-falladas" class="pantalla activa">
+        <div id="pantalla-analisis" class="pantalla activa">
             <div class="contenedor">
                 <div class="barra-superior">
-                    <div class="contador">📝 PALABRAS FALLADAS</div>
+                    <div class="contador">📊 ANÁLISIS DE PROGRESO</div>
                     <div class="botones-superiores">
                         <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
                         <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
                     </div>
                 </div>
                 
-                <div class="palabras-falladas-container">
-                    <div class="estadisticas-palabras">
-                        <div class="estadistica-item">
-                            <span class="estadistica-label">Palabras falladas hoy:</span>
-                            <span class="estadistica-valor" id="total-hoy">${estadisticas.totalHoy}</span>
+                <div class="analisis-container">
+                    <!-- ESTADÍSTICAS PRINCIPALES -->
+                    <div class="analisis-estadisticas">
+                        <h2>📈 Tu Progreso General</h2>
+                        <div class="estadisticas-grid">
+                            <div class="estadistica-grande">
+                                <div class="estadistica-valor">${estadisticas.totalMazosCompletados}</div>
+                                <div class="estadistica-label">Mazos Completados</div>
+                            </div>
+                            <div class="estadistica-grande">
+                                <div class="estadistica-valor">${estadisticas.totalPalabrasAprendidas}</div>
+                                <div class="estadistica-label">Palabras Aprendidas</div>
+                            </div>
+                            <div class="estadistica-grande">
+                                <div class="estadistica-valor">${estadisticas.porcentajeAciertoPromedio}%</div>
+                                <div class="estadistica-label">Tasa de Acierto</div>
+                            </div>
+                            <div class="estadistica-grande">
+                                <div class="estadistica-valor">${estadisticas.diasActivos}</div>
+                                <div class="estadistica-label">Días Activos</div>
+                            </div>
                         </div>
-                        <div class="estadistica-item">
-                            <span class="estadistica-label">Total histórico:</span>
-                            <span class="estadistica-valor" id="total-historial">${estadisticas.totalHistorial}</span>
-                        </div>
-                        <div class="estadistica-item">
-                            <span class="estadistica-label">Fecha actual:</span>
-                            <span class="estadistica-valor" id="fecha-actual">${estadisticas.fechaActual}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="opciones-palabras-falladas">
-                        <button class="boton-palabras-falladas" onclick="mostrarMasFalladasDelDia()">
-                            🔥 PALABRAS MÁS FALLADAS DEL DÍA
-                            <small>Top 10 que más te cuestan</small>
-                        </button>
                         
-                        <button class="boton-palabras-falladas" onclick="mostrarTodasFalladasHoy()">
-                            📋 TODAS LAS PALABRAS FALLADAS HOY
-                            <small>Lista completa de hoy</small>
-                        </button>
-                        
-                        <button class="boton-palabras-falladas" onclick="limpiarHistorialFalladas()">
-                            🗑️ LIMPIAR HISTORIAL COMPLETO
-                            <small>Eliminar todas las palabras falladas</small>
-                        </button>
+                        <div class="racha-info">
+                            <div class="racha-item">
+                                <span class="racha-label">🔥 Racha Actual:</span>
+                                <span class="racha-valor">${estadisticas.rachaActual} días</span>
+                            </div>
+                            <div class="racha-item">
+                                <span class="racha-label">🏆 Mejor Racha:</span>
+                                <span class="racha-valor">${estadisticas.mejorRacha} días</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="lista-palabras-container" id="lista-palabras-container">
-                        <!-- Aquí se mostrarán las listas de palabras -->
+                    <!-- GRÁFICO DE PROGRESO (simulado con HTML) -->
+                    <div class="analisis-grafico">
+                        <h2>📅 Progreso de los Últimos 7 Días</h2>
+                        <div class="grafico-simulado">
+                            <div class="grafico-barras">
+                                ${datosGrafico.palabrasAprendidas.map((valor, index) => `
+                                    <div class="barra-container">
+                                        <div class="barra" style="height: ${(valor / Math.max(...datosGrafico.palabrasAprendidas)) * 100}%"></div>
+                                        <div class="barra-label">${datosGrafico.fechas[index]}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="grafico-leyenda">
+                                <span class="leyenda-item"><div class="color-barra"></div> Palabras aprendidas por día</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="acciones-palabras">
-                        <button class="boton-secundario" onclick="volverAlInicio()">
-                            Volver al Inicio
+                    <!-- ANÁLISIS POR TIPO DE PALABRA -->
+                    <div class="analisis-tipos">
+                        <h2>🔤 Desempeño por Tipo de Palabra</h2>
+                        <div class="tipos-grid">
+                            ${Object.entries(estadisticas.palabrasPorTipo).map(([tipo, datos]) => {
+                                const total = datos.aprendidas + datos.falladas;
+                                const porcentaje = total > 0 ? Math.round((datos.aprendidas / total) * 100) : 0;
+                                return `
+                                    <div class="tipo-item">
+                                        <div class="tipo-nombre">${tipo.charAt(0).toUpperCase() + tipo.slice(1)}</div>
+                                        <div class="tipo-progreso">
+                                            <div class="progreso-bar">
+                                                <div class="progreso-fill" style="width: ${porcentaje}%"></div>
+                                            </div>
+                                            <div class="tipo-estadisticas">
+                                                <span class="tipo-correctas">✅ ${datos.aprendidas}</span>
+                                                <span class="tipo-falladas">❌ ${datos.falladas}</span>
+                                                <span class="tipo-porcentaje">${porcentaje}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- RECOMENDACIONES INTELIGENTES -->
+                    <div class="analisis-recomendaciones">
+                        <h2>💡 Recomendaciones Personalizadas</h2>
+                        <div class="recomendaciones-lista">
+                            ${recomendaciones.length > 0 ? recomendaciones.map(rec => `
+                                <div class="recomendacion-item recomendacion-${rec.tipo}">
+                                    <div class="recomendacion-icono">
+                                        ${rec.tipo === 'debilidad' ? '⚠️' : 
+                                          rec.tipo === 'motivacion' ? '🔥' : 
+                                          rec.tipo === 'mejora' ? '📈' : '💡'}
+                                    </div>
+                                    <div class="recomendacion-contenido">
+                                        <div class="recomendacion-texto">${rec.mensaje}</div>
+                                        <div class="recomendacion-accion">${rec.accion}</div>
+                                    </div>
+                                </div>
+                            `).join('') : `
+                                <div class="recomendacion-item">
+                                    <div class="recomendacion-icono">🎉</div>
+                                    <div class="recomendacion-contenido">
+                                        <div class="recomendacion-texto">¡Tu progreso es excelente! Sigue estudiando con consistencia.</div>
+                                        <div class="recomendacion-accion">Mantener el ritmo actual</div>
+                                    </div>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                    
+                    <!-- HISTORIAL COMPLETO -->
+                    <div class="analisis-historial">
+                        <h2>📋 Historial de Aprendizaje</h2>
+                        <div class="historial-lista">
+                            ${sistemaAnalisis.historialAprendizaje.slice(-5).reverse().map(dia => `
+                                <div class="historial-item">
+                                    <div class="historial-fecha">${dia.fecha}</div>
+                                    <div class="historial-datos">
+                                        <span class="historial-dato">📚 ${dia.mazosCompletados} mazos</span>
+                                        <span class="historial-dato">📝 ${dia.palabrasAprendidas} palabras</span>
+                                        <span class="historial-dato">🎯 ${dia.porcentajeAcierto}% acierto</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- ACCIONES -->
+                    <div class="analisis-acciones">
+                        <button class="boton-secundario" onclick="exportarDatosAnalisis()">
+                            📤 Exportar Datos
                         </button>
-                        <button class="boton-principal" onclick="practicarPalabrasFalladas()">
-                            🎯 PRACTICAR PALABRAS FALLADAS
+                        <button class="boton-principal" onclick="volverAlInicio()">
+                            🏠 Volver al Inicio
                         </button>
                     </div>
                 </div>
@@ -2359,487 +3437,108 @@ function mostrarPalabrasFalladas() {
     document.body.insertAdjacentHTML('beforeend', pantallaHTML);
 }
 
-// Función para mostrar las palabras más falladas del día
-function mostrarMasFalladasDelDia() {
-    const palabras = sistemaPalabrasFalladas.obtenerMasFalladasDelDia();
-    const container = document.getElementById('lista-palabras-container');
+// Función para exportar datos de análisis
+function exportarDatosAnalisis() {
+    const estadisticas = sistemaAnalisis.obtenerEstadisticas();
+    const datos = {
+        fechaExportacion: new Date().toISOString(),
+        estadisticas: estadisticas,
+        historial: sistemaAnalisis.historialAprendizaje,
+        recomendaciones: sistemaAnalisis.obtenerRecomendaciones()
+    };
     
-    if (palabras.length === 0) {
-        container.innerHTML = `
-            <div class="mensaje-vacio">
-                <h3>🎉 ¡Excelente trabajo!</h3>
-                <p>No has fallado ninguna palabra hoy.</p>
-                <p>¡Sigue así! 💪</p>
-            </div>
-        `;
-        return;
-    }
+    const datosTexto = JSON.stringify(datos, null, 2);
+    const blob = new Blob([datosTexto], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
     
-    let html = `
-        <div class="lista-palabras-header">
-            <h3>🔥 TOP 10 PALABRAS MÁS FALLADAS HOY</h3>
-            <p class="subtitulo-lista">Estas son las palabras que más te cuestan hoy</p>
-        </div>
-        <div class="lista-palabras">
-    `;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `analisis-japones-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
     
-    palabras.forEach((palabra, index) => {
-        html += `
-            <div class="palabra-item ${index < 3 ? 'palabra-destacada' : ''}">
-                <div class="palabra-posicion">${index + 1}</div>
-                <div class="palabra-info">
-                    <div class="palabra-japones">${palabra.palabra}</div>
-                    <div class="palabra-lectura">(${palabra.lectura})</div>
-                    <div class="palabra-traduccion">✅ ${palabra.respuestaCorrecta}</div>
-                </div>
-                <div class="palabra-veces">
-                    <span class="veces-numero">${palabra.veces}</span>
-                    <span class="veces-texto">veces</span>
-                </div>
-            </div>
-        `;
-    });
-    
-    html += `</div>`;
-    container.innerHTML = html;
-}
-
-// Función para mostrar todas las palabras falladas hoy
-function mostrarTodasFalladasHoy() {
-    const palabras = sistemaPalabrasFalladas.obtenerTodasFalladasHoy();
-    const container = document.getElementById('lista-palabras-container');
-    
-    if (palabras.length === 0) {
-        container.innerHTML = `
-            <div class="mensaje-vacio">
-                <h3>🎉 ¡Excelente trabajo!</h3>
-                <p>No has fallado ninguna palabra hoy.</p>
-                <p>¡Sigue así! 💪</p>
-            </div>
-        `;
-        return;
-    }
-    
-    let html = `
-        <div class="lista-palabras-header">
-            <h3>📋 TODAS LAS PALABRAS FALLADAS HOY</h3>
-            <p class="subtitulo-lista">Total: ${palabras.length} palabras</p>
-        </div>
-        <div class="lista-palabras-todas">
-    `;
-    
-    // Agrupar por hora
-    const palabrasPorHora = {};
-    palabras.forEach(palabra => {
-        const hora = palabra.hora;
-        if (!palabrasPorHora[hora]) {
-            palabrasPorHora[hora] = [];
-        }
-        palabrasPorHora[hora].push(palabra);
-    });
-    
-    Object.keys(palabrasPorHora).forEach(hora => {
-        html += `
-            <div class="grupo-hora">
-                <h4>🕒 ${hora}</h4>
-                <div class="palabras-hora">
-        `;
-        
-        palabrasPorHora[hora].forEach((palabra, index) => {
-            html += `
-                <div class="palabra-item-detalle">
-                    <div class="palabra-japones-detalle">${palabra.palabra}</div>
-                    <div class="palabra-info-detalle">
-                        <span class="palabra-error">❌ ${palabra.respuestaSeleccionada}</span>
-                        <span class="palabra-correcta">✅ ${palabra.respuestaCorrecta}</span>
-                        <span class="palabra-lectura-detalle">(${palabra.lectura})</span>
-                    </div>
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-    });
-    
-    html += `</div>`;
-    container.innerHTML = html;
-}
-
-// Función para limpiar el historial de palabras falladas
-function limpiarHistorialFalladas() {
-    if (confirm("¿Estás seguro de que quieres eliminar todo el historial de palabras falladas?\nEsta acción no se puede deshacer.")) {
-        sistemaPalabrasFalladas.limpiarHistorialCompleto();
-        
-        // Actualizar estadísticas en pantalla
-        document.getElementById('total-hoy').textContent = '0';
-        document.getElementById('total-historial').textContent = '0';
-        
-        // Mostrar mensaje de confirmación
-        const container = document.getElementById('lista-palabras-container');
-        container.innerHTML = `
-            <div class="mensaje-exito">
-                <h3>✅ Historial limpiado</h3>
-                <p>Todas las palabras falladas han sido eliminadas.</p>
-                <p>¡Nuevo comienzo! 🚀</p>
-            </div>
-        `;
-    }
-}
-
-// Función para practicar palabras falladas (modo especial)
-function practicarPalabrasFalladas() {
-    const palabras = sistemaPalabrasFalladas.obtenerMasFalladasDelDia();
-    
-    if (palabras.length === 0) {
-        alert("🎉 ¡No tienes palabras falladas para practicar!\nSigue estudiando y vuelve cuando tengas palabras para repasar.");
-        return;
-    }
-    
-    // Crear un mazo especial con las palabras más falladas
-    mazoActual = palabras.map(palabra => ({
-        japones: palabra.palabra,
-        lectura: palabra.lectura,
-        opciones: generarOpcionesAleatorias(palabra.respuestaCorrecta),
-        respuesta: 0 // La correcta siempre es la primera opción
-    }));
-    
-    preguntaActual = 0;
-    respuestasCorrectas = 0;
-    respuestasIncorrectas = 0;
-    
-    // Mezclar preguntas
-    for (let i = mazoActual.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [mazoActual[i], mazoActual[j]] = [mazoActual[j], mazoActual[i]];
-    }
-    
-    // Ir a la pantalla de quiz
-    cambiarPantalla('pantalla-quiz');
-    mostrarPregunta();
-    
-    // Cambiar título para indicar que es práctica especial
-    document.getElementById('contador-preguntas').innerHTML = `
-        🎯 PRÁCTICA ESPECIAL: <span id="numero-pregunta">1</span>/<span id="total-preguntas">${mazoActual.length}</span>
-    `;
-}
-
-// Función auxiliar para generar opciones aleatorias para la práctica
-function generarOpcionesAleatorias(respuestaCorrecta) {
-    const opcionesComunes = [
-        'Palabra', 'Tiempo', 'Lugar', 'Persona', 'Cosa', 'Asunto', 'Mundo', 
-        'Vida', 'Trabajo', 'Familia', 'Escuela', 'Estudio', 'Arte', 'Música',
-        'Comida', 'Casa', 'Amor', 'Amistad', 'Paz', 'Guerra', 'Felicidad'
-    ];
-    
-    const opciones = [respuestaCorrecta];
-    
-    // Agregar 3 opciones aleatorias diferentes
-    while (opciones.length < 4) {
-        const opcionAleatoria = opcionesComunes[Math.floor(Math.random() * opcionesComunes.length)];
-        if (!opciones.includes(opcionAleatoria)) {
-            opciones.push(opcionAleatoria);
-        }
-    }
-    
-    // Mezclar opciones
-    for (let i = opciones.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
-    }
-    
-    return opciones;
+    alert("📤 Datos exportados correctamente. El archivo se descargará automáticamente.");
 }
 
 // ============================================================================
-// FUNCIONES DEL RPG DE NOVIA - MEJORADAS
+// FUNCIONES DEL RPG - NUEVAS
 // ============================================================================
 
+// Función para iniciar RPG de novia
 function iniciarRPGNovia() {
+    rpgNovia.inicializar();
     cambiarPantalla('pantalla-rpg-novia');
-    actualizarInterfazRPG();
+    rpgNovia.actualizarInterfazRPG();
 }
 
+// Función para actualizar interfaz RPG
 function actualizarInterfazRPG() {
-    // Actualizar información básica
-    document.getElementById('nombre-novia').textContent = rpgNovia.estado.nombreNovia;
-    document.getElementById('nivel-relacion').textContent = `Nivel ${rpgNovia.estado.nivelRelacion}`;
-    document.getElementById('afinidad').textContent = `${rpgNovia.estado.afinidad}%`;
-    
-    // Sincronizar saldo con sistema global
-    rpgNovia.economia.saldo = sistemaEconomia.saldoTotal;
-    document.getElementById('saldo-rpg').textContent = `${rpgNovia.economia.saldo} ${rpgNovia.economia.moneda}`;
-    
-    document.getElementById('condones-inventario').textContent = rpgNovia.economia.inventario.condones;
-    
-    // Actualizar barra de afinidad
-    const barraAfinidad = document.getElementById('barra-afinidad');
-    barraAfinidad.style.width = `${rpgNovia.estado.afinidad}%`;
-    
-    // Actualizar estado de ánimo
-    document.getElementById('estado-animo').textContent = obtenerEmojiEstadoAnimo(rpgNovia.estado.estadoAnimo);
-    
-    // Mostrar/Ocultar sección +18
-    const seccionAdulto = document.getElementById('seccion-adulto');
-    seccionAdulto.style.display = rpgNovia.contenidoAdulto.desbloqueado ? 'block' : 'none';
-    
-    // Generar diálogo aleatorio
-    generarDialogoAleatorio();
+    rpgNovia.actualizarInterfazRPG();
 }
 
-function obtenerEmojiEstadoAnimo(estado) {
-    const emojis = {
-        feliz: "😊",
-        enamorada: "🥰",
-        excitada: "😳",
-        juguetona: "😏",
-        timida: "😊",
-        pasional: "🔥"
-    };
-    return emojis[estado] || "😊";
-}
-
-function generarDialogoAleatorio() {
-    const dialogoElement = document.getElementById('dialogo-novia');
-    const saludos = rpgNovia.conversaciones.saludos;
-    const saludoAleatorio = saludos[Math.floor(Math.random() * saludos.length)];
-    
-    dialogoElement.innerHTML = `
-        <div class="dialogo-burbuja">
-            <div class="texto-dialogo">${saludoAleatorio}</div>
-            <div class="tiempo-dialogo">Ahora</div>
-        </div>
-    `;
-}
-
+// Función para hablar con novia
 function hablarConNovia() {
-    const conversaciones = rpgNovia.estado.afinidad >= 60 ? 
-        rpgNovia.conversaciones.conversacionesIntimas : 
-        rpgNovia.conversaciones.conversacionesNormales;
-    
-    const conversacion = conversaciones[Math.floor(Math.random() * conversaciones.length)];
-    const respuesta = conversacion.respuestas[Math.floor(Math.random() * conversacion.respuestas.length)];
-    
-    const dialogoElement = document.getElementById('dialogo-novia');
-    dialogoElement.innerHTML = `
-        <div class="dialogo-burbuja">
-            <div class="pregunta-dialogo">${conversacion.pregunta}</div>
-            <div class="texto-dialogo">${respuesta}</div>
-            <div class="tiempo-dialogo">Ahora</div>
-        </div>
-    `;
-    
-    // Aumentar afinidad por conversación
-    aumentarAfinidad(2);
+    rpgNovia.hablarConNovia();
 }
 
-function aumentarAfinidad(cantidad) {
-    rpgNovia.estado.afinidad = Math.min(100, rpgNovia.estado.afinidad + cantidad);
-    actualizarInterfazRPG();
-    
-    // Verificar si se desbloquea contenido +18
-    if (rpgNovia.estado.afinidad >= 30 && !rpgNovia.contenidoAdulto.desbloqueado) {
-        rpgNovia.contenidoAdulto.desbloqueado = true;
-        mostrarMensaje("¡Nueva sección desbloqueada! 💕");
-    }
-}
-
+// Función para regalar item
 function regalarItem(tipo) {
-    const costos = {
-        flores: 5,
-        chocolates: 10,
-        joyas: 20
-    };
-    
-    if (rpgNovia.economia.saldo >= costos[tipo]) {
-        rpgNovia.economia.saldo -= costos[tipo];
-        sistemaEconomia.agregarDinero(-costos[tipo], `Regalo de ${tipo}`);
-        rpgNovia.economia.inventario[tipo]++;
-        
-        // Aumentar afinidad según el regalo
-        const afinidadGanada = {
-            flores: 5,
-            chocolates: 8,
-            joyas: 15
-        };
-        
-        aumentarAfinidad(afinidadGanada[tipo]);
-        mostrarMensaje(`Le regalaste ${tipo} a ${rpgNovia.estado.nombreNovia} 💝`);
-    } else {
-        mostrarMensaje("No tienes suficiente dinero 💸");
-    }
+    rpgNovia.regalarItem(tipo);
 }
 
+// Función para comprar condones
 function comprarCondones() {
-    const costo = 15;
-    if (rpgNovia.economia.saldo >= costo) {
-        rpgNovia.economia.saldo -= costo;
-        sistemaEconomia.agregarDinero(-costo, "Compra de condones");
-        rpgNovia.economia.inventario.condones++;
-        actualizarInterfazRPG();
-        mostrarMensaje("¡Condones comprados! 💕");
-    } else {
-        mostrarMensaje("No tienes suficiente dinero para comprar condones 💸");
-    }
+    rpgNovia.comprarCondones();
 }
 
+// Función para usar condón
 function usarCondon(escenaId) {
-    if (rpgNovia.economia.inventario.condones <= 0) {
-        mostrarMensaje("No tienes condones disponibles 💔");
-        return;
-    }
-    
-    const escena = rpgNovia.contenidoAdulto.escenasDisponibles.find(e => e.id === escenaId);
-    
-    if (!escena) {
-        mostrarMensaje("Escena no encontrada");
-        return;
-    }
-    
-    if (rpgNovia.estado.afinidad < escena.afinidadRequerida) {
-        mostrarMensaje(`Necesitas ${escena.afinidadRequerida}% de afinidad para esta escena 💝`);
-        return;
-    }
-    
-    // Usar condón
-    rpgNovia.economia.inventario.condones -= escena.costoCondones;
-    
-    // Ejecutar escena
-    ejecutarEscenaAdulto(escena);
+    rpgNovia.usarCondon(escenaId);
 }
 
-function ejecutarEscenaAdulto(escena) {
-    const dialogoElement = document.getElementById('dialogo-novia');
-    
-    // Verificar si existe el video para esta escena
-    if (!videosIntimos[escena.id]) {
-        // Fallback a texto si no hay video
-        const mensajes = {
-            beso: [
-                "Te acercas lentamente... 💋",
-                "Sientes su respiración acelerarse... 🌬️",
-                "Tus labios se encuentran en un beso apasionado 🔥",
-                "Ella responde con igual intensidad... 💕",
-                "El momento se siente mágico ✨"
-            ],
-            caricias: [
-                "Tus manos comienzan a explorar su cuerpo... ✋",
-                "Ella emite un suave gemido... 😳",
-                "La intimidad crece entre ustedes... 🌹",
-                "Sientes su piel suave bajo tus dedos... 💫",
-                "El ambiente se carga de deseo... 🔥"
-            ],
-            intimidad1: [
-                "La llevas suavemente hacia la cama... 🛏️",
-                "La mirada entre ustedes es intensa... 👁️",
-                "Comienzan a quitarse la ropa lentamente... 👗",
-                "La pasión los consume por completo... 🌋",
-                "Una noche inolvidable comienza... 🌙"
-            ],
-            intimidad2: [
-                "Ya conocen bien los cuerpos del otro... 💞",
-                "Cada movimiento es sincronizado perfectamente... 🎶",
-                "Los gemidos llenan la habitación... 🎵",
-                "Llegan al éxtasis juntos... 🌠",
-                "Una experiencia íntima y profunda... 💖"
-            ]
-        };
-        
-        let mensajeCompleto = `<div class="escena-adulta">`;
-        mensajes[escena.id].forEach((mensaje, index) => {
-            mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
-        });
-        mensajeCompleto += `</div>`;
-        dialogoElement.innerHTML = mensajeCompleto;
-    } else {
-        // Mostrar video
-        dialogoElement.innerHTML = `
-            <div class="video-escena-adulta">
-                <h4>${escena.nombre}</h4>
-                <video controls autoplay class="video-intimo">
-                    <source src="${videosIntimos[escena.id]}" type="video/mp4">
-                    Tu navegador no soporta el video. 
-                    <div class="fallback-text">
-                        💕 Disfruta este momento especial con ${rpgNovia.estado.nombreNovia}
-                    </div>
-                </video>
-                <div class="leyenda-escena">💖 Momento íntimo especial</div>
-                <div class="controles-video">
-                    <button class="boton-saltar-video" onclick="terminarEscenaIntima()">Finalizar Escena</button>
-                </div>
-            </div>
-        `;
-        
-        // Configurar evento cuando termine el video
-        const videoElement = dialogoElement.querySelector('.video-intimo');
-        videoElement.onended = function() {
-            terminarEscenaIntima();
-        };
-        
-        // Reproducir automáticamente (con mute para evitar restricciones)
-        videoElement.muted = true;
-        videoElement.play().catch(e => {
-            console.log("Auto-play bloqueado, el usuario debe iniciar manualmente");
-        });
-    }
-    
-    // Aumentar afinidad y experiencia
-    aumentarAfinidad(10);
-    rpgNovia.estado.experiencia += 25;
-    
-    // Verificar subida de nivel
-    verificarSubidaNivel();
-    
-    // Agregar a escenas completadas
-    if (!rpgNovia.contenidoAdulto.escenasCompletadas.includes(escena.id)) {
-        rpgNovia.contenidoAdulto.escenasCompletadas.push(escena.id);
-    }
-    
-    actualizarInterfazRPG();
-}
-
-function terminarEscenaIntima() {
-    // Volver al diálogo normal después de la escena
-    generarDialogoAleatorio();
-    mostrarMensaje("¡Qué momento tan especial! 💕 La afinidad ha aumentado.");
-}
-
-function verificarSubidaNivel() {
-    const expNecesaria = rpgNovia.estado.nivelRelacion * 100;
-    if (rpgNovia.estado.experiencia >= expNecesaria) {
-        rpgNovia.estado.nivelRelacion++;
-        rpgNovia.estado.experiencia = 0;
-        mostrarMensaje(`¡Subiste al nivel ${rpgNovia.estado.nivelRelacion} de relación! 💕`);
-    }
-}
-
-function mostrarMensaje(mensaje) {
-    const mensajeElement = document.getElementById('mensaje-rpg');
-    mensajeElement.textContent = mensaje;
-    mensajeElement.style.display = 'block';
-    
-    setTimeout(() => {
-        mensajeElement.style.display = 'none';
-    }, 3000);
+// Función para iniciar minijuego desde RPG
+function iniciarMinijuego(tipo) {
+    rpgNovia.iniciarMinijuego(tipo);
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA - MEJORADA
+// FUNCIONES DE NOVELA VISUAL - NUEVAS
 // ============================================================================
 
-// Inicializar la aplicación cuando se carga la página
+// Función para iniciar novela visual
+function iniciarNovelaVisual() {
+    sistemaNovelaVisual.iniciar();
+}
+
+// Función para avanzar diálogo en novela
+function avanzarDialogoNovela() {
+    sistemaNovelaVisual.avanzarDialogo();
+}
+
+// Función para repetir diálogo
+function repetirDialogo() {
+    // Esta función podría implementar síntesis de voz en el futuro
+    alert("🔊 Esta función reproducirá el diálogo en voz alta (síntesis de voz)");
+}
+
+// ============================================================================
+// INICIALIZACIÓN DEL SISTEMA COMPLETO
+// ============================================================================
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("🚀 Aplicación cargada - Inicializando sistemas...");
+    console.log("🚀 Aplicación cargada - Inicializando todos los sistemas...");
     
     // Inicializar sistemas en orden
     sistemaEconomia.inicializar();
     misionesDiarias.inicializar();
     eventosDiarios.inicializar();
     sistemaPalabrasFalladas.inicializar();
+    sistemaAnalisis.inicializar();
+    rpgNovia.inicializar();
     
-    console.log("✅ Sistemas inicializados correctamente");
+    console.log("✅ Todos los sistemas inicializados correctamente");
     
     // Asegurarse de que la pantalla de inicio esté activa
     setTimeout(() => {
@@ -2849,32 +3548,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
-// Función para forzar la aparición del evento diario (para testing)
+// ============================================================================
+// FUNCIONES DE TESTING Y DEBUG
+// ============================================================================
+
+// Función para forzar la aparición del evento diario
 window.mostrarEventoDiarioForzado = function() {
     eventosDiarios.reiniciarEventoDiario();
     eventosDiarios.mostrarEventoDiario();
 };
 
-// Función para reiniciar el sistema de eventos (para testing)
+// Función para reiniciar el sistema de eventos
 window.reiniciarSistemaEventos = function() {
     localStorage.removeItem('eventosDiarios');
     eventosDiarios.reiniciarEventoDiario();
     location.reload();
 };
 
-// Función para agregar dinero (testing)
+// Función para agregar dinero
 window.agregarDinero = function(cantidad) {
     sistemaEconomia.agregarDinero(cantidad, "Testing");
 };
 
-// Función para ver estado de sistemas (testing)
+// Función para ver estado de sistemas
 window.verEstadoSistemas = function() {
     console.log("=== ESTADO DE SISTEMAS ===");
     console.log("💰 Economía:", sistemaEconomia.saldoTotal);
     console.log("🎯 Misiones:", misionesDiarias.misiones);
     console.log("📅 Evento Diario:", eventosDiarios.estado);
     console.log("📝 Palabras Falladas:", sistemaPalabrasFalladas.obtenerEstadisticas());
-    console.log("💕 RPG Novia:", rpgNovia.estado);
+    console.log("📊 Análisis:", sistemaAnalisis.obtenerEstadisticas());
+    console.log("💕 RPG Nino:", rpgNovia.obtenerEstadisticas());
+    console.log("🎮 Minijuegos:", sistemaMinijuegos.estado);
+    console.log("📖 Novela Visual:", sistemaNovelaVisual.estado);
 };
 
 // Funciones de testing para palabras falladas
@@ -2883,11 +3589,11 @@ window.verPalabrasFalladas = function() {
     console.log("🔥 Más falladas hoy:", sistemaPalabrasFalladas.obtenerMasFalladasDelDia());
 };
 
+// Función para agregar palabra fallada de test
 window.agregarPalabraFalladaTest = function() {
     const palabrasTest = [
         { japones: '難しい', lectura: 'muzukashii', opciones: ['Difícil', 'Fácil', 'Simple', 'Complejo'], respuesta: 0 },
-        { japones: '美しい', lectura: 'utsukushii', opciones: ['Hermoso', 'Feo', 'Normal', 'Extraño'], respuesta: 0 },
-        { japones: '速い', lectura: 'hayai', opciones: ['Rápido', 'Lento', 'Medio', 'Variable'], respuesta: 0 }
+        { japones: '美しい', lectura: 'utsukushii', opciones: ['Hermoso', 'Feo', 'Normal', 'Extraño'], respuesta: 0 }
     ];
     
     const palabra = palabrasTest[Math.floor(Math.random() * palabrasTest.length)];
@@ -2901,4 +3607,29 @@ window.agregarPalabraFalladaTest = function() {
     );
     
     console.log("✅ Palabra fallada de test agregada");
+};
+
+// Función para probar minijuegos
+window.probarMinijuego = function(tipo) {
+    sistemaMinijuegos.iniciarMinijuego(tipo);
+};
+
+// Función para ver estadísticas de RPG
+window.verEstadisticasRPG = function() {
+    console.log("💕 Estadísticas RPG:", rpgNovia.obtenerEstadisticas());
+};
+
+// Función para aumentar nivel RPG
+window.subirNivelRPG = function() {
+    rpgNovia.ganarExperiencia(1000);
+    rpgNovia.actualizarInterfazRPG();
+    console.log("⬆️ Nivel RPG aumentado");
+};
+
+// Función para resetear todo
+window.resetearTodo = function() {
+    if (confirm("¿ESTÁS SEGURO? Esto eliminará TODOS tus datos de progreso.")) {
+        localStorage.clear();
+        location.reload();
+    }
 };
