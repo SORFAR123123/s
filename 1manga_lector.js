@@ -123,13 +123,13 @@ const mangaDatabase = {
     
     // Sub-contenedor 2.4 (TU NUEVO)
     'sub2_4': {
-        titulo: '🏊‍♂️ Natación y Amor',
+        titulo: 'Nadadora potona mi hermana sueca linda',
         descripcion: 'Historia de amor en el club de natación',
         autor: 'Fabrizio',
         capitulos: 1,
         paginas: [
-            'imagenes/manga/sub2_4/pagina1.jpg',
-            'imagenes/manga/sub2_4/pagina2.jpg',
+            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=small',
+            'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=small',
             'imagenes/manga/sub2_4/pagina3.jpg',
             'imagenes/manga/sub2_4/pagina4.jpg',
             'imagenes/manga/sub2_4/pagina5.jpg',
