@@ -158,12 +158,13 @@ const sistemaPalabrasFalladas = {
     },
     
     // Registrar palabra fallada
-    registrarPalabraFallada: function(palabra, respuestaSeleccionada, respuestaCorrecta, lectura) {
+    registrarPalabraFallada: function(palabra, respuestaSeleccionada, respuestaCorrecta, lectura, opcionesOriginales = []) {
         const palabraFallada = {
             palabra: palabra,
             respuestaSeleccionada: respuestaSeleccionada,
             respuestaCorrecta: respuestaCorrecta,
             lectura: lectura,
+            opciones: opcionesOriginales, // NUEVO: Guardar las opciones originales
             fecha: new Date().toISOString(),
             hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
         };
@@ -176,7 +177,7 @@ const sistemaPalabrasFalladas = {
         
         this.guardarDatos();
         
-        console.log(`❌ Palabra fallada registrada: ${palabra}`);
+        console.log(`❌ Palabra fallada registrada: ${palabra}`, opcionesOriginales);
     },
     
     // Obtener palabras más falladas del día
@@ -191,6 +192,7 @@ const sistemaPalabrasFalladas = {
                     palabra: palabra.palabra,
                     lectura: palabra.lectura,
                     respuestaCorrecta: palabra.respuestaCorrecta,
+                    opciones: palabra.opciones, // NUEVO: Incluir opciones
                     veces: 1
                 };
             }
@@ -904,7 +906,7 @@ const eventosDiarios = {
         videoElement.controls = true;
         videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
-    
+        
         // QUITAR el evento onended para que no se cierre automáticamente
         videoElement.onended = null;
         
@@ -945,7 +947,7 @@ const eventosDiarios = {
         videoElement.controls = true;
         videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
-    
+        
         // QUITAR el evento onended para que no se cierre automáticamente
         videoElement.onended = null;
         
@@ -1794,8 +1796,6 @@ let mazoActual = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
-// NUEVA VARIABLE: Registrar palabras falladas de este mazo específico
-let palabrasFalladasEsteMazo = [];
 
 // Función para obtener la URL de una imagen
 function obtenerUrlImagen(tipo, id) {
@@ -1904,8 +1904,6 @@ function cargarMazo(idMazo) {
         preguntaActual = 0;
         respuestasCorrectas = 0;
         respuestasIncorrectas = 0;
-        // NUEVO: Resetear palabras falladas de este mazo
-        palabrasFalladasEsteMazo = [];
         
         mezclarPreguntas();
         cambiarPantalla('pantalla-quiz');
@@ -1946,7 +1944,7 @@ function mostrarPregunta() {
             const botonOpcion = document.createElement('button');
             botonOpcion.className = 'opcion';
             botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
+            botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
             contenedorOpciones.appendChild(botonOpcion);
         });
     } else {
@@ -1955,16 +1953,16 @@ function mostrarPregunta() {
 }
 
 // FUNCIÓN CORREGIDA - REGISTRA PALABRAS FALLADAS Y MUESTRA LA PRONUNCIACIÓN SIEMPRE
-function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
-    const opciones = document.querySelectorAll('.opcion');
+function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
+    const opcionesDOM = document.querySelectorAll('.opcion');
     const resultado = document.getElementById('resultado');
     const palabraActual = document.getElementById('palabra-japones').textContent;
     
-    opciones.forEach(opcion => {
+    opcionesDOM.forEach(opcion => {
         opcion.disabled = true;
     });
     
-    opciones.forEach(opcion => {
+    opcionesDOM.forEach(opcion => {
         if (opcion.textContent === respuestaCorrecta) {
             opcion.classList.add('correcta');
         } else if (opcion.textContent === respuestaSeleccionada && respuestaSeleccionada !== respuestaCorrecta) {
@@ -1990,22 +1988,14 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         resultado.className = 'resultado incorrecto';
         respuestasIncorrectas++;
         
-        // REGISTRAR PALABRA FALLADA EN EL SISTEMA GLOBAL
+        // REGISTRAR PALABRA FALLADA CON OPCIONES ORIGINALES
         sistemaPalabrasFalladas.registrarPalabraFallada(
             palabraActual,
             respuestaSeleccionada,
             respuestaCorrecta,
-            lectura
+            lectura,
+            opciones // Guardar las opciones originales
         );
-        
-        // NUEVO: REGISTRAR PALABRA FALLADA PARA ESTE MAZO ESPECÍFICO
-        const palabraFalladaEsteMazo = {
-            japones: palabraActual,
-            lectura: lectura,
-            respuestaCorrecta: respuestaCorrecta,
-            respuestaSeleccionada: respuestaSeleccionada
-        };
-        palabrasFalladasEsteMazo.push(palabraFalladaEsteMazo);
         
         // Mostrar botón "Continuar" solo para respuestas incorrectas
         document.getElementById('boton-siguiente').style.display = 'block';
@@ -2018,68 +2008,6 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
 function siguientePregunta() {
     preguntaActual++;
     mostrarPregunta();
-}
-
-// FUNCIÓN NUEVA: REPASAR SOLO LAS PALABRAS FALLADAS DE ESTE MAZO
-function repetirFalladas() {
-    // Verificar si hay palabras falladas para repasar
-    if (palabrasFalladasEsteMazo.length === 0) {
-        alert("🎉 ¡No hay palabras falladas para repasar!\nCompletaste todas correctamente.");
-        return;
-    }
-    
-    // Crear mazo especial con las palabras falladas
-    mazoActual = palabrasFalladasEsteMazo.map(palabra => ({
-        japones: palabra.japones,
-        lectura: palabra.lectura,
-        opciones: generarOpcionesEspeciales(palabra.respuestaCorrecta),
-        respuesta: 0 // La correcta siempre es la primera
-    }));
-    
-    preguntaActual = 0;
-    respuestasCorrectas = 0;
-    respuestasIncorrectas = 0;
-    
-    // Mezclar preguntas
-    mezclarPreguntas();
-    
-    // Cambiar a pantalla de quiz
-    cambiarPantalla('pantalla-quiz');
-    
-    // Cambiar título para indicar que es repaso de falladas
-    document.getElementById('contador-preguntas').innerHTML = `
-        🔥 REPASO DE FALLADAS: <span id="numero-pregunta">1</span>/<span id="total-preguntas">${mazoActual.length}</span>
-    `;
-    
-    mostrarPregunta();
-}
-
-// FUNCIÓN AUXILIAR NUEVA: Generar opciones para repaso de falladas
-function generarOpcionesEspeciales(respuestaCorrecta) {
-    const opcionesComunes = [
-        'Palabra', 'Tiempo', 'Lugar', 'Persona', 'Cosa', 'Asunto', 'Mundo', 
-        'Vida', 'Trabajo', 'Familia', 'Escuela', 'Estudio', 'Arte', 'Música',
-        'Comida', 'Casa', 'Amor', 'Amistad', 'Paz', 'Guerra', 'Felicidad',
-        'Difícil', 'Hermoso', 'Rápido', 'Lento', 'Grande', 'Pequeño', 'Nuevo'
-    ];
-    
-    const opciones = [respuestaCorrecta];
-    
-    // Agregar 3 opciones aleatorias diferentes
-    while (opciones.length < 4) {
-        const opcionAleatoria = opcionesComunes[Math.floor(Math.random() * opcionesComunes.length)];
-        if (!opciones.includes(opcionAleatoria)) {
-            opciones.push(opcionAleatoria);
-        }
-    }
-    
-    // Mezclar opciones
-    for (let i = opciones.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
-    }
-    
-    return opciones;
 }
 
 // FUNCIÓN MEJORADA - SOLO EVENTO DIARIO CUANDO HAY DOBLE COMPLETACIÓN
@@ -2153,10 +2081,6 @@ function mostrarPantallaResultados(porcentaje) {
         ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
           porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
           'Sigue practicando, lo harás mejor la próxima vez 💪'}
-        
-        ${palabrasFalladasEsteMazo.length > 0 ? 
-          `\nPalabras que fallaste: ${palabrasFalladasEsteMazo.length}` : 
-          ''}
     `;
 }
 
@@ -2231,7 +2155,6 @@ function repetirQuiz() {
     preguntaActual = 0;
     respuestasCorrectas = 0;
     respuestasIncorrectas = 0;
-    palabrasFalladasEsteMazo = []; // NUEVO: Resetear palabras falladas
     mezclarPreguntas();
     cambiarPantalla('pantalla-quiz');
     mostrarPregunta();
@@ -2299,7 +2222,7 @@ function mostrarPalabrasFalladas() {
                             Volver al Inicio
                         </button>
                         <button class="boton-principal" onclick="practicarPalabrasFalladas()">
-                            🎯 PRACTICAR PALABRAS FALLADAS
+                            🎯 PRACTICAR PALABRAS FALLADAS (+3 S/.)
                         </button>
                     </div>
                 </div>
@@ -2446,26 +2369,31 @@ function limpiarHistorialFalladas() {
     }
 }
 
-// Función para practicar palabras falladas (modo especial)
+// FUNCIÓN CORREGIDA - Practicar palabras falladas con las opciones correctas
 function practicarPalabrasFalladas() {
-    const palabras = sistemaPalabrasFalladas.obtenerMasFalladasDelDia();
+    const palabrasFalladas = sistemaPalabrasFalladas.obtenerMasFalladasDelDia();
     
-    if (palabras.length === 0) {
+    if (palabrasFalladas.length === 0) {
         alert("🎉 ¡No tienes palabras falladas para practicar!\nSigue estudiando y vuelve cuando tengas palabras para repasar.");
         return;
     }
     
-    // Crear un mazo especial con las palabras más falladas
-    mazoActual = palabras.map(palabra => ({
-        japones: palabra.palabra,
-        lectura: palabra.lectura,
-        opciones: generarOpcionesAleatorias(palabra.respuestaCorrecta),
-        respuesta: 0 // La correcta siempre es la primera opción
-    }));
+    console.log("🔍 Preparando práctica con palabras falladas:", palabrasFalladas);
     
-    preguntaActual = 0;
-    respuestasCorrectas = 0;
-    respuestasIncorrectas = 0;
+    // Crear mazo de práctica usando las opciones ORIGINALES guardadas
+    mazoActual = palabrasFalladas.map(palabra => {
+        // Usar las opciones ORIGINALES guardadas, no generar nuevas
+        const opciones = palabra.opciones || [palabra.respuestaCorrecta, 'Opción 2', 'Opción 3', 'Opción 4'];
+        
+        return {
+            japones: palabra.palabra,
+            lectura: palabra.lectura,
+            opciones: opciones,
+            respuesta: opciones.indexOf(palabra.respuestaCorrecta) // Encontrar índice de la respuesta correcta
+        };
+    });
+    
+    console.log("📚 Mazo de práctica creado:", mazoActual);
     
     // Mezclar preguntas
     for (let i = mazoActual.length - 1; i > 0; i--) {
@@ -2473,41 +2401,21 @@ function practicarPalabrasFalladas() {
         [mazoActual[i], mazoActual[j]] = [mazoActual[j], mazoActual[i]];
     }
     
+    // Configurar para práctica
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasIncorrectas = 0;
+    
     // Ir a la pantalla de quiz
     cambiarPantalla('pantalla-quiz');
-    mostrarPregunta();
     
     // Cambiar título para indicar que es práctica especial
     document.getElementById('contador-preguntas').innerHTML = `
-        🎯 PRÁCTICA ESPECIAL: <span id="numero-pregunta">1</span>/<span id="total-preguntas">${mazoActual.length}</span>
+        🎯 PRÁCTICA ESPECIAL (+3 S/.): <span id="numero-pregunta">1</span>/<span id="total-preguntas">${mazoActual.length}</span>
     `;
-}
-
-// Función auxiliar para generar opciones aleatorias para la práctica
-function generarOpcionesAleatorias(respuestaCorrecta) {
-    const opcionesComunes = [
-        'Palabra', 'Tiempo', 'Lugar', 'Persona', 'Cosa', 'Asunto', 'Mundo', 
-        'Vida', 'Trabajo', 'Familia', 'Escuela', 'Estudio', 'Arte', 'Música',
-        'Comida', 'Casa', 'Amor', 'Amistad', 'Paz', 'Guerra', 'Felicidad'
-    ];
     
-    const opciones = [respuestaCorrecta];
-    
-    // Agregar 3 opciones aleatorias diferentes
-    while (opciones.length < 4) {
-        const opcionAleatoria = opcionesComunes[Math.floor(Math.random() * opcionesComunes.length)];
-        if (!opciones.includes(opcionAleatoria)) {
-            opciones.push(opcionAleatoria);
-        }
-    }
-    
-    // Mezclar opciones
-    for (let i = opciones.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
-    }
-    
-    return opciones;
+    // Mostrar primera pregunta
+    mostrarPregunta();
 }
 
 // ============================================================================
@@ -2637,7 +2545,8 @@ window.agregarPalabraFalladaTest = function() {
         palabra.japones,
         respuestaIncorrecta,
         palabra.opciones[palabra.respuesta],
-        palabra.lectura
+        palabra.lectura,
+        palabra.opciones // Guardar opciones originales
     );
     
     console.log("✅ Palabra fallada de test agregada");
@@ -2657,4 +2566,34 @@ window.verEstadoNovia = function() {
     console.log("- Experiencia Total:", rpgNovia.estado.experienciaTotal);
     console.log("- Humor:", rpgNovia.estado.humorActual);
     console.log("- Momentos desbloqueados:", rpgNovia.estado.momentosDesbloqueados);
+};
+
+// ============================================================================
+// NUEVA FUNCIÓN PARA GANAR DINERO AL COMPLETAR PRÁCTICA DE PALABRAS FALLADAS
+// ============================================================================
+
+// Modificar la función mostrarResultados para dar recompensa especial en práctica
+function mostrarResultadosPracticaEspecial(porcentaje) {
+    const recompensa = 3; // 3 S/. por completar la práctica
+    
+    if (porcentaje >= 80) {
+        sistemaEconomia.agregarDinero(recompensa, "Práctica de palabras falladas completada");
+        mostrarNotificacion(`🎉 ¡Práctica completada! +${recompensa} S/.`);
+    }
+    
+    mostrarPantallaResultados(porcentaje);
+}
+
+// Sobrescribir mostrarResultados para detectar si es práctica especial
+const mostrarResultadosOriginal = mostrarResultados;
+window.mostrarResultados = function() {
+    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    
+    // Verificar si es práctica especial (por el título)
+    const tituloElement = document.getElementById('contador-preguntas');
+    if (tituloElement && tituloElement.textContent.includes('PRÁCTICA ESPECIAL')) {
+        mostrarResultadosPracticaEspecial(porcentaje);
+    } else {
+        mostrarResultadosOriginal();
+    }
 };
