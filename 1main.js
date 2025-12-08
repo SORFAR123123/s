@@ -472,7 +472,7 @@ function siguientePregunta() {
     mostrarPregunta();
 }
 
-// FUNCIÓN MEJORADA - SOLO EVENTO DIARIO CUANDO HAY DOBLE COMPLETACIÓN
+// FUNCIÓN MEJORADA - SOLO EVENTO DIARIO CUANDO HAY DOBLE COMPLETACIÓN - CORREGIDA
 function mostrarResultados() {
     const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
     
@@ -480,7 +480,8 @@ function mostrarResultados() {
         porcentaje: porcentaje,
         tieneEventoActivo: !!eventosDiarios.estado.eventoActual,
         eventoCompletado: eventosDiarios.estado.completado,
-        eventoProgreso: eventosDiarios.estado.progreso
+        eventoProgreso: eventosDiarios.estado.progreso,
+        eventoAceptado: eventosDiarios.estado.aceptado
     });
     
     // Registrar experiencia en RPG de novia
@@ -492,33 +493,50 @@ function mostrarResultados() {
         // Registrar mazo completado para misiones diarias
         misionesDiarias.registrarMazoCompletado();
         
-        // Registrar mazo completado para evento diario (esto podría completar el evento)
-        const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
-        eventosDiarios.registrarMazoCompletado();
-        
-        // VERIFICAR: ¿Se completó el evento diario JUSTO AHORA?
-        const eventoSeCompletoJustoAhora = eventoEstabaIncompleto && eventosDiarios.estado.completado;
-        
-        console.log("🎯 Estado evento:", {
-            eventoEstabaIncompleto: eventoEstabaIncompleto,
-            eventoSeCompletoJustoAhora: eventoSeCompletoJustoAhora
-        });
-        
-        if (eventoSeCompletoJustoAhora) {
-            // SOLUCIÓN: Si se completó el evento diario, SOLO mostrar el evento
-            console.log("🎁 Evento diario completado - Mostrando SOLO evento");
-            // El evento diario automáticamente mostrará su video
-            // NO mostramos el video del mazo
-        } else {
-            // Si NO se completó evento diario, mostrar video normal del mazo
-            sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
-            mostrarVideoRecompensa();
+        // IMPORTANTE: Solo registrar para evento diario si el evento está ACTIVO y ACEPTADO
+        if (eventosDiarios.estado.eventoActual && 
+            eventosDiarios.estado.aceptado && 
+            !eventosDiarios.estado.completado && 
+            !eventosDiarios.estado.fallado) {
+            
+            const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
+            eventosDiarios.registrarMazoCompletado();
+            
+            // VERIFICAR: ¿Se completó el evento diario JUSTO AHORA?
+            const eventoSeCompletoJustoAhora = eventoEstabaIncompleto && eventosDiarios.estado.completado;
+            
+            console.log("🎯 Estado evento después de registrar:", {
+                eventoEstabaIncompleto: eventoEstabaIncompleto,
+                eventoSeCompletoJustoAhora: eventoSeCompletoJustoAhora,
+                eventoCompletado: eventosDiarios.estado.completado
+            });
+            
+            if (eventoSeCompletoJustoAhora) {
+                // SOLUCIÓN: Si se completó el evento diario, SOLO mostrar el evento
+                console.log("🎁 Evento diario completado - Mostrando SOLO evento");
+                // El evento diario automáticamente mostrará su video
+                // NO mostramos el video del mazo
+                return; // ¡IMPORTANTE! Salir de la función aquí
+            }
         }
+        
+        // Si NO se completó evento diario, mostrar video normal del mazo
+        console.log("🎬 Mostrando video normal del mazo al 100%");
+        sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
+        mostrarVideoRecompensa();
         
     } else if (porcentaje >= 80) {
         // Registrar mazo completado para misiones diarias (80% cuenta como completado)
         misionesDiarias.registrarMazoCompletado();
-        eventosDiarios.registrarMazoCompletado();
+        
+        // Solo registrar evento si está activo y aceptado
+        if (eventosDiarios.estado.eventoActual && 
+            eventosDiarios.estado.aceptado && 
+            !eventosDiarios.estado.completado && 
+            !eventosDiarios.estado.fallado) {
+            eventosDiarios.registrarMazoCompletado();
+        }
+        
         sistemaEconomia.agregarDinero(0.5, "Mazo completado al 80%");
         mostrarPantallaResultados(porcentaje);
         
@@ -563,6 +581,8 @@ function mostrarPantallaResultados(porcentaje) {
 // FUNCIÓN MEJORADA - VIDEO EN BUCLE CON BOTÓN DE CERRAR (MUTEADO)
 function mostrarVideoRecompensa() {
     const video = obtenerVideoAleatorio();
+    
+    console.log("🎬 Mostrando video de recompensa normal del mazo:", video.titulo);
     
     // Actualizar la pantalla de video con la información del video seleccionado
     document.getElementById('titulo-video').textContent = video.titulo;
