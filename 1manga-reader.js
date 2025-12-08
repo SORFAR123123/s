@@ -74,8 +74,8 @@ const sistemaManga = {
             titulo: 'Toono Esuke - Capítulo 4',
             descripcion: 'Cuarto capítulo de Toono Esuke',
             imagenes: [
-                'https://example.com/manga/sub2_4/page1.jpg',
-                'https://example.com/manga/sub2_4/page2.jpg'
+                'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
+                'https://i2.nhentai.net/galleries/3670573/5.webp'
                 // AÑADE MÁS IMÁGENES AQUÍ
             ]
         },
