@@ -483,9 +483,9 @@ const sistemaNakano = {
             return false;
         }
         
-        if (this.economia.saldo >= regalo.costo) {
-            this.economia.saldo -= regalo.costo;
-            sistemaEconomia.agregarDinero(-regalo.costo, `Regalo de ${tipo}`);
+          if (sistemaEconomia.saldoTotal >= regalo.costo) {
+        sistemaEconomia.agregarDinero(-regalo.costo, `Regalo de ${tipo}`);
+        this.economia.saldo = sistemaEconomia.saldoTotal;
             
             const expGanada = this.agregarExperiencia(regalo.experiencia, `Regalo de ${tipo}`);
             
@@ -509,9 +509,9 @@ const sistemaNakano = {
             return false;
         }
         
-        if (this.economia.saldo >= regalo.costo) {
-            this.economia.saldo -= regalo.costo;
-            sistemaEconomia.agregarDinero(-regalo.costo, `Regalo especial de ${tipo}`);
+          if (sistemaEconomia.saldoTotal >= regalo.costo) {
+        sistemaEconomia.agregarDinero(-regalo.costo, `Regalo especial de ${tipo}`);
+        this.economia.saldo = sistemaEconomia.saldoTotal;
             
             const expGanada = this.agregarExperiencia(regalo.experiencia, `Regalo especial: ${tipo}`);
             
@@ -568,9 +568,9 @@ const sistemaNakano = {
     // COMPRAR CONDONES
     comprarCondones: function() {
         const costo = 15;
-        if (this.economia.saldo >= costo) {
-            this.economia.saldo -= costo;
-            sistemaEconomia.agregarDinero(-costo, "Compra de condones");
+  if (sistemaEconomia.saldoTotal >= costo) {
+        sistemaEconomia.agregarDinero(-costo, "Compra de condones");
+        this.economia.saldo = sistemaEconomia.saldoTotal;
             this.economia.inventario.condones++;
             
             this.agregarExperiencia(5, "Compra de condones");
@@ -593,9 +593,9 @@ const sistemaNakano = {
             return false;
         }
         
-        if (this.economia.saldo >= decoracion.precio) {
-            this.economia.saldo -= decoracion.precio;
-            sistemaEconomia.agregarDinero(-decoracion.precio, `Compra: ${decoracion.nombre}`);
+       if (sistemaEconomia.saldoTotal >= decoracion.precio) {
+        sistemaEconomia.agregarDinero(-decoracion.precio, `Compra Nakano: ${decoracion.nombre}`);
+        this.economia.saldo = sistemaEconomia.saldoTotal;
             
             this.habitacion.dineroGastado += decoracion.precio;
             
@@ -753,6 +753,8 @@ const sistemaNakano = {
         document.getElementById('experiencia-actual').textContent = `${novia.experiencia}`;
         document.getElementById('experiencia-total').textContent = `${novia.experienciaTotal}`;
         document.getElementById('humor-nakano').textContent = novia.humorActual ? novia.humorActual.nombre : "Normal 😐";
+         document.getElementById('imagen-nakano').src = obtenerImagenNakano(novia.id);
+    document.getElementById('descripcion-nakano').textContent = novia.descripcion;
         
         // 3. ACTUALIZAR BARRA DE EXPERIENCIA
         const expNecesaria = this.calcularExpParaNivel(novia.nivel + 1);
