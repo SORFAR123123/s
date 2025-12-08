@@ -69,8 +69,8 @@ const imagenesMazos = {
     
     // Sub-contenedor 2.4 (TU NUEVO)
     'sub2_4': {
-        'mazo1': 'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=small',
-        'mazo2': 'imagenes/mazos/sub2_4/mazo2.jpg',
+        'mazo1': 'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
+        'mazo2': 'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=small',
         'mazo3': 'imagenes/mazos/sub2_4/mazo3.jpg',
         'mazo4': 'imagenes/mazos/sub2_4/mazo4.jpg',
         'mazo5': 'imagenes/mazos/sub2_4/mazo5.jpg',
