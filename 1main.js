@@ -61,7 +61,7 @@ const estructura = {
         }
     },
       'contenedor2': {
-        nombre: 'The Last Summer 2',
+        nombre: 'Toono esuke',
         subcontenedores: {
             'sub2_1': { 
                 nombre: 'Sub-Contenedor 2.1', 
@@ -76,7 +76,7 @@ const estructura = {
                 mazos: generarMazosEspecificos('sub2_3') 
             },  // ← PONES COMA AQUÍ (QUITA EL ESPACIO VACÍO)
             'sub2_4': { 
-                nombre: 'Sub-Contenedor 2.4', 
+                nombre: 'Hermana sueca  buenas curvas potona', 
                 mazos: generarMazosEspecificos('sub2_4') 
             }  // ← PONES ESTA LÍNEA NUEVA
         }
