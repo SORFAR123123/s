@@ -215,6 +215,13 @@
                             <div class="lastsummer-texto">💕 Quintillizas Nakano RPG</div>
                             <div class="lastsummer-info">5 hermanas + sistema único + decoración</div>
                         </div>
+                        
+                        <!-- NUEVA TARJETA: CALENDARIO FABRIZIO 2026 -->
+                        <div class="lastsummer-card" onclick="iniciarCalendarioFabrizio()">
+                            <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Fabrizio+2026" alt="Calendario Fabrizio" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">📅 Calendario Fabrizio 2026</div>
+                            <div class="lastsummer-info">12 meses × 4 semanas × 5 fotos = 240 fotos</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -521,6 +528,81 @@
         </div>
     </div>
 
+    <!-- ============================================================================ -->
+    <!-- NUEVO: PANTALLAS DEL CALENDARIO FABRIZIO 2026 -->
+    <!-- ============================================================================ -->
+
+    <!-- PANTALLA DE MESES DEL CALENDARIO -->
+    <div id="pantalla-calendario-meses" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">📅 Calendario Fabrizio 2026</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
+            <h1>📅 Calendario 2026</h1>
+            <p class="subtitulo">Selecciona un mes para ver sus fotos</p>
+            
+            <div class="contenedor-meses" id="contenedor-meses">
+                <!-- Los meses se cargarán dinámicamente por JavaScript -->
+            </div>
+            
+            <div class="info-calendario">
+                <p>🌟 12 meses × 4 semanas × 5 fotos = 240 fotos especiales de Fabrizio</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE SEMANAS DEL MES -->
+    <div id="pantalla-calendario-semanas" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-mes-seleccionado">Mes 2026</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="calendarioFabrizio.volverAMeses()">← Volver a Meses</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
+            <h2>Semanas del Mes</h2>
+            
+            <div class="contenedor-semanas" id="contenedor-semanas">
+                <!-- Las semanas se cargarán dinámicamente -->
+            </div>
+            
+            <div class="info-semana">
+                <p>📸 Cada semana tiene 5 fotos (lunes a viernes)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE FOTOS DE LA SEMANA -->
+    <div id="pantalla-calendario-fotos" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-semana-seleccionada">Semana 2026</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="calendarioFabrizio.volverASemanas()">← Volver a Semanas</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
+            <h2>Fotos de la Semana</h2>
+            <p class="subtitulo">5 fotos de lunes a viernes</p>
+            
+            <div class="contenedor-fotos" id="contenedor-fotos">
+                <!-- Las fotos se cargarán dinámicamente -->
+            </div>
+            
+            <div class="info-fotos">
+                <p>💖 Disfruta de cada día con una foto especial</p>
+            </div>
+        </div>
+    </div>
+
     <!-- PANTALLA DE PALABRAS FALLADAS -->
     <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
         <!-- Esta pantalla se crea dinámicamente en script.js -->
@@ -532,7 +614,8 @@
 <script src="1systems.js"></script>
 <script src="1failed-words.js"></script>
 <script src="1events.js"></script>
-<script src="1rpg_nakano.js"></script> <!-- ¡REEMPLAZADO! -->
+<script src="1rpg_nakano.js"></script>
+<script src="1calendario.js"></script> <!-- ¡NUEVO ARCHIVO! -->
 <script src="1main.js"></script>
 
 </body>
