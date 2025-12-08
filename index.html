@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Mazos + RPG + Eventos Diarios</title>
+    <title>Aplicación de Mazos + Quintillizas Nakano RPG</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -147,7 +147,7 @@
             </div>
             
             <div class="menu-principal">
-                <!-- NUEVO: APARTADO DE PALABRAS FALLADAS -->
+                <!-- APARTADO DE PALABRAS FALLADAS -->
                 <div class="seccion-menu">
                     <h2 class="titulo-seccion">📝 ENTRENAMIENTO ESPECIAL</h2>
                     <div class="contenedor-tarjetas">
@@ -206,14 +206,14 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN RPG DE NOVIA -->
+                <!-- SECCIÓN RPG DE QUINTILLIZAS NAKANO -->
                 <div class="seccion-menu">
                     <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
                     <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="iniciarRPGNovia()">
-                            <img src="https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096" alt="RPG de Novia" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">💕 Mi Novia RPG</div>
-                            <div class="lastsummer-info">Sistema de relación +18</div>
+                        <div class="lastsummer-card" onclick="iniciarSistemaNakano()">
+                            <img src="https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096" alt="Quintillizas Nakano" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">💕 Quintillizas Nakano RPG</div>
+                            <div class="lastsummer-info">5 hermanas + sistema único + decoración</div>
                         </div>
                     </div>
                 </div>
@@ -340,7 +340,7 @@
             <div class="botones-resultados">
                 <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
                 <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
-                <!-- NUEVO BOTÓN PARA REPASAR FALLADAS -->
+                <!-- BOTÓN PARA REPASAR FALLADAS -->
                 <button class="boton-terciario" id="boton-repasar-falladas" onclick="repetirFalladas()">
                     🔥 Repasar Falladas (+3 S/.)
                 </button>
@@ -348,11 +348,11 @@
         </div>
     </div>
 
-    <!-- PANTALLA RPG DE NOVIA MODIFICADA -->
-    <div id="pantalla-rpg-novia" class="pantalla">
+    <!-- PANTALLA RPG DE LAS QUINTILLIZAS NAKANO -->
+    <div id="pantalla-rpg-nakano" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador">💕 RPG de Novia</div>
+                <div class="contador">💕 Quintillizas Nakano RPG</div>
                 <div class="botones-superiores">
                     <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
                     <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
@@ -360,12 +360,21 @@
             </div>
             
             <div class="rpg-container">
-                <!-- PERFIL DE LA NOVIA MODIFICADO -->
-                <div class="perfil-novia">
-                    <img src="imagenes/novia.jpg" alt="Novia" class="imagen-novia">
-                    <div class="info-novia">
-                        <h2 id="nombre-novia">Sakura</h2>
-                        <div class="estadisticas">
+                <!-- SELECTOR DE QUINTILLIZAS -->
+                <div class="selector-nakano-container">
+                    <h3>👥 Selecciona una Quintilliza</h3>
+                    <div class="selector-nakano" id="selector-nakano">
+                        <!-- Se llena dinámicamente por JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- PERFIL DE LA NOVIA SELECCIONADA -->
+                <div class="perfil-nakano">
+                    <img src="imagenes/nakano/ichika.jpg" alt="Quintilliza" class="imagen-nakano" id="imagen-nakano">
+                    <div class="info-nakano">
+                        <h2 id="nombre-nakano">Ichika Nakano</h2>
+                        <div class="descripcion-nakano" id="descripcion-nakano">La hermana mayor, actriz y coqueta</div>
+                        <div class="estadisticas-nakano">
                             <div class="stat">
                                 <span class="stat-label">Nivel:</span>
                                 <span id="nivel-relacion" class="stat-value">0</span>
@@ -380,7 +389,7 @@
                             </div>
                             <div class="stat">
                                 <span class="stat-label">Humor:</span>
-                                <span id="humor-novia" class="stat-value">Normal 😐</span>
+                                <span id="humor-nakano" class="stat-value">Normal 😐</span>
                             </div>
                         </div>
                     </div>
@@ -400,11 +409,11 @@
                     </div>
                 </div>
                 
-                <!-- ECONOMÍA RPG MODIFICADA -->
-                <div class="economia-rpg">
+                <!-- ECONOMÍA -->
+                <div class="economia-nakano">
                     <div class="saldo">
                         <span class="saldo-label">Dinero:</span>
-                        <span id="saldo-rpg" class="saldo-valor">0 S/.</span>
+                        <span id="saldo-nakano" class="saldo-valor">0 S/.</span>
                     </div>
                     <div class="inventario">
                         <div class="inventario-item">
@@ -428,70 +437,103 @@
                 
                 <!-- DIÁLOGO -->
                 <div class="dialogo-container">
-                    <div id="dialogo-novia" class="dialogo-novia">
+                    <div id="dialogo-nakano" class="dialogo-nakano">
                         <div class="dialogo-burbuja">
-                            <div class="texto-dialogo">¡Hola mi amor! 💕 ¿Cómo estás hoy?</div>
+                            <div class="texto-dialogo">¡Hola! Soy Ichika, ¿quieres ser mi protagonista? 💕</div>
                             <div class="tiempo-dialogo">Ahora</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- ACCIONES BÁSICAS MODIFICADAS (SIN CONVERSAR) -->
+                <!-- ACCIONES BÁSICAS -->
                 <div class="acciones-basicas">
                     <button class="boton-accion" onclick="comprarCondones()">🛒 Comprar Condones (S/.15)</button>
+                    <button class="boton-accion" onclick="sistemaNakano.actualizarInterfazNakano()">🔄 Actualizar</button>
                 </div>
                 
-                <!-- TIENDA DE REGALOS -->
+                <!-- REGALOS GENERALES -->
                 <div class="tienda-regalos">
-                    <h3>🎁 Tienda de Regalos (Gana XP)</h3>
+                    <h3>🎁 Regalos para Todas</h3>
                     <div class="regalos-grid">
-                        <button class="boton-regalo" onclick="regalarItem('flores')">
+                        <button id="boton-regalo-flores" class="boton-regalo" onclick="regalarItem('flores')">
                             💐 Flores (S/.5) +10 XP
                         </button>
-                        <button class="boton-regalo" onclick="regalarItem('chocolates')">
+                        <button id="boton-regalo-chocolates" class="boton-regalo" onclick="regalarItem('chocolates')">
                             🍫 Chocolates (S/.10) +25 XP
                         </button>
-                        <button class="boton-regalo" onclick="regalarItem('joyas')">
+                        <button id="boton-regalo-joyas" class="boton-regalo" onclick="regalarItem('joyas')">
                             💎 Joyas (S/.20) +50 XP
                         </button>
                     </div>
                 </div>
                 
-                <!-- MOMENTOS ÍNTIMOS (SIEMPRE VISIBLES PERO CON REQUISITOS) -->
-                <div class="seccion-adulto">
-                    <h3>💖 Momentos Íntimos</h3>
-                    <div class="acciones-adulto">
-                        <button id="boton-beso" class="boton-adulto" onclick="usarMomentoIntimo('beso')">
-                            💋 Beso Apasionado (1 condón) - Nivel 1
+                <!-- REGALOS ESPECIALES (SEGÚN QUINTILLIZA) -->
+                <div class="regalos-especiales-container">
+                    <h3>✨ Regalos Especiales (con Video)</h3>
+                    <div class="regalos-especiales-grid" id="regalos-especiales-grid">
+                        <!-- Se llena dinámicamente según la quintilliza seleccionada -->
+                        <button class="boton-regalo-especial" onclick="regalarItemEspecial('microfono')">
+                            🎤 Micrófono (S/.25) +50 XP
                         </button>
-                        <button id="boton-caricias" class="boton-adulto" onclick="usarMomentoIntimo('caricias')">
-                            ✋ Carícias Íntimas (1 condón) - Nivel 2
+                        <button class="boton-regalo-especial" onclick="regalarItemEspecial('maquillaje')">
+                            💄 Kit de Maquillaje (S/.20) +40 XP
                         </button>
-                        <button id="boton-intimidad1" class="boton-adulto" onclick="usarMomentoIntimo('intimidad1')">
-                            🌙 Primera Noche (1 condón) - Nivel 3
+                        <button class="boton-regalo-especial" onclick="regalarItemEspecial('guion')">
+                            📖 Guion Especial (S/.30) +60 XP
                         </button>
-                        <button id="boton-intimidad2" class="boton-adulto" onclick="usarMomentoIntimo('intimidad2')">
-                            🔥 Noche de Pasión (2 condones) - Nivel 5
+                    </div>
+                </div>
+                
+                <!-- DECORACIÓN DE HABITACIÓN -->
+                <div class="decoracion-container">
+                    <h3>🛏️ Decorar Nuestra Habitación</h3>
+                    <div class="decoracion-contenedor" id="decoracion-contenedor">
+                        <!-- Se llena dinámicamente -->
+                        <div class="estado-habitacion">
+                            <div class="dinero-gastado">Gastado: 0 S/.</div>
+                            <div class="items-totales">Items: 0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MOMENTOS ÍNTIMOS -->
+                <div class="seccion-intima">
+                    <h3>💖 Momentos Íntimos Especiales</h3>
+                    <div class="acciones-intimas">
+                        <button id="boton-beso_ichika" class="boton-intimo" onclick="usarMomentoIntimo('beso_ichika')">
+                            💋 Beso tras bambalinas (1 condón) - Nivel 1
+                        </button>
+                        <button id="boton-escena_privada" class="boton-intimo" onclick="usarMomentoIntimo('escena_privada')">
+                            🎭 Escena privada contigo (1 condón) - Nivel 2
+                        </button>
+                        <button id="boton-noche_estrellas" class="boton-intimo" onclick="usarMomentoIntimo('noche_estrellas')">
+                            🌟 Noche bajo las estrellas (2 condones) - Nivel 4
+                        </button>
+                        <button id="boton-maquillaje_intimo" class="boton-intimo" onclick="usarMomentoIntimo('maquillaje_intimo')">
+                            💋 Maquillaje íntimo (3 condones) - Nivel 6
                         </button>
                     </div>
                 </div>
                 
                 <!-- MENSAJES DEL SISTEMA -->
-                <div id="mensaje-rpg" class="mensaje-sistema"></div>
+                <div id="mensaje-nakano" class="mensaje-sistema"></div>
             </div>
         </div>
     </div>
 
-    <!-- NUEVA PANTALLA: PALABRAS FALLADAS -->
+    <!-- PANTALLA DE PALABRAS FALLADAS -->
     <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
         <!-- Esta pantalla se crea dinámicamente en script.js -->
     </div>
-<script src="1vocabulario.js"></script>      <!-- PRIMERO: Base de datos de vocabulario -->
-<script src="1config.js"></script>          <!-- SEGUNDO: Configuraciones generales -->
-<script src="1systems.js"></script>         <!-- TERCERO: Sistemas base (economía, misiones) -->
-<script src="1failed-words.js"></script>    <!-- CUARTO: Sistema de palabras falladas -->
-<script src="1events.js"></script>          <!-- QUINTO: Sistema de eventos diarios -->
-<script src="1rpg.js"></script>             <!-- SEXTO: Sistema RPG de novia -->
-<script src="1main.js"></script>            <!-- ÚLTIMO: Funciones principales y estructura -->
+
+<!-- ARCHIVOS JS (IMPORTANTE: ORDEN CORRECTO) -->
+<script src="1vocabulario.js"></script>
+<script src="1config.js"></script>
+<script src="1systems.js"></script>
+<script src="1failed-words.js"></script>
+<script src="1events.js"></script>
+<script src="1rpg_nakano.js"></script> <!-- ¡REEMPLAZADO! -->
+<script src="1main.js"></script>
+
 </body>
 </html>
