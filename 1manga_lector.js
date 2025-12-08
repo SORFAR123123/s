@@ -128,7 +128,7 @@ const mangaDatabase = {
         autor: 'Fabrizio',
         capitulos: 1,
         paginas: [
-            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=small',
+            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
             'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=small',
             'imagenes/manga/sub2_4/pagina3.jpg',
             'imagenes/manga/sub2_4/pagina4.jpg',
