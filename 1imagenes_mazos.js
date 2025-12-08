@@ -1,5 +1,4 @@
-[file name]: 1imagenes_mazos.js
-[file content begin]
+
 // ============================================================================
 // CONFIGURACIÓN DE IMÁGENES PARA TODOS LOS MAZOS
 // Organizado por subcontenedor y mazo
@@ -432,4 +431,4 @@ window.obtenerImagenMazo = obtenerImagenMazo;
 
 console.log("✅ 1imagenes_mazos.js cargado correctamente");
 console.log("📁 Subcontenedores con imágenes:", Object.keys(imagenesMazos).length);
-[file content end]
+
