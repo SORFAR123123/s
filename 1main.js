@@ -484,9 +484,9 @@ function mostrarResultados() {
         eventoAceptado: eventosDiarios.estado.aceptado
     });
     
-    // Registrar experiencia en RPG de novia
-    if (typeof rpgNovia !== 'undefined') {
-        rpgNovia.registrarMazoCompletado(porcentaje);
+    // Registrar experiencia en SISTEMA NAKANO (actualizado)
+    if (typeof sistemaNakano !== 'undefined') {
+        sistemaNakano.registrarMazoCompletado(porcentaje);
     }
     
     if (porcentaje === 100) {
@@ -717,7 +717,23 @@ function repetirFalladas() {
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA - MEJORADA
+// FUNCIÓN PARA INICIAR SISTEMA NAKANO (REEMPLAZA LA ANTERIOR)
+// ============================================================================
+
+function iniciarSistemaNakano() {
+    cambiarPantalla('pantalla-rpg-nakano');
+    
+    // Inicializar sistema Nakano si no está inicializado
+    if (typeof sistemaNakano !== 'undefined') {
+        sistemaNakano.actualizarInterfazNakano();
+    } else {
+        console.error("⚠️ Sistema Nakano no cargado");
+        mostrarNotificacion("Error: Sistema Nakano no disponible");
+    }
+}
+
+// ============================================================================
+// INICIALIZACIÓN DEL SISTEMA - ACTUALIZADA PARA NAKANO
 // ============================================================================
 
 // Inicializar la aplicación cuando se carga la página
@@ -730,9 +746,9 @@ document.addEventListener('DOMContentLoaded', function() {
     eventosDiarios.inicializar();
     sistemaPalabrasFalladas.inicializar();
     
-    // Inicializar sistema RPG de novia
-    if (typeof rpgNovia !== 'undefined' && rpgNovia.inicializar) {
-        rpgNovia.inicializar();
+    // Inicializar sistema NAKANO (reemplazó a rpgNovia)
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.inicializar) {
+        sistemaNakano.inicializar();
     }
     
     console.log("✅ Sistemas inicializados correctamente");
@@ -744,6 +760,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
 });
+
+// ============================================================================
+// FUNCIONES DE TESTING (ACTUALIZADAS PARA NAKANO)
+// ============================================================================
 
 // Función para forzar la aparición del evento diario (para testing)
 window.mostrarEventoDiarioForzado = function() {
@@ -763,14 +783,23 @@ window.agregarDinero = function(cantidad) {
     sistemaEconomia.agregarDinero(cantidad, "Testing");
 };
 
-// Función para ver estado de sistemas (testing)
+// Función para ver estado de sistemas (testing) - ACTUALIZADA
 window.verEstadoSistemas = function() {
     console.log("=== ESTADO DE SISTEMAS ===");
     console.log("💰 Economía:", sistemaEconomia.saldoTotal);
     console.log("🎯 Misiones:", misionesDiarias.misiones);
     console.log("📅 Evento Diario:", eventosDiarios.estado);
     console.log("📝 Palabras Falladas:", sistemaPalabrasFalladas.obtenerEstadisticas());
-    console.log("💕 RPG Novia:", rpgNovia.estado);
+    
+    // Estado Nakano
+    if (typeof sistemaNakano !== 'undefined') {
+        console.log("💕 Sistema Nakano:");
+        console.log("- Novia seleccionada:", sistemaNakano.noviaSeleccionada);
+        console.log("- Saldo Nakano:", sistemaNakano.economia.saldo);
+        console.log("- Quintillizas:", Object.keys(sistemaNakano.quintillizas).length);
+    } else {
+        console.log("❌ Sistema Nakano no cargado");
+    }
 };
 
 // Funciones de testing para palabras falladas
@@ -800,18 +829,89 @@ window.agregarPalabraFalladaTest = function() {
     console.log("✅ Palabra fallada de test agregada");
 };
 
-// Funciones de testing para RPG de novia
-window.agregarExperienciaNovia = function(cantidad) {
-    if (typeof rpgNovia !== 'undefined' && rpgNovia.agregarExperiencia) {
-        rpgNovia.agregarExperiencia(cantidad, "Testing");
+// Funciones de testing para SISTEMA NAKANO
+window.agregarExperienciaNakano = function(cantidad) {
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.agregarExperiencia) {
+        sistemaNakano.agregarExperiencia(cantidad, "Testing");
     }
 };
 
-window.verEstadoNovia = function() {
-    console.log("💕 Estado Novia:");
-    console.log("- Nivel:", rpgNovia.estado.nivel);
-    console.log("- Experiencia:", rpgNovia.estado.experiencia);
-    console.log("- Experiencia Total:", rpgNovia.estado.experienciaTotal);
-    console.log("- Humor:", rpgNovia.estado.humorActual);
-    console.log("- Momentos desbloqueados:", rpgNovia.estado.momentosDesbloqueados);
+window.verEstadoNakano = function() {
+    if (typeof sistemaNakano !== 'undefined') {
+        const novia = sistemaNakano.obtenerNoviaActual();
+        console.log("💕 Estado Nakano:");
+        console.log("- Novia actual:", novia.nombre);
+        console.log("- Nivel:", novia.nivel);
+        console.log("- Experiencia:", novia.experiencia);
+        console.log("- Experiencia Total:", novia.experienciaTotal);
+        console.log("- Humor:", novia.humorActual ? novia.humorActual.nombre : "N/A");
+        console.log("- Quintillizas totales:", Object.keys(sistemaNakano.quintillizas).length);
+        console.log("- Items decoración:", sistemaNakano.habitacion.itemsComprados.length);
+    } else {
+        console.log("❌ Sistema Nakano no disponible");
+    }
+};
+
+// Función para seleccionar quintilliza desde consola
+window.seleccionarQuintilliza = function(id) {
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.seleccionarNovia) {
+        return sistemaNakano.seleccionarNovia(id);
+    }
+    return false;
+};
+
+// Función para regalar item especial desde consola
+window.regalarEspecialNakano = function(tipo) {
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.regalarItemEspecial) {
+        return sistemaNakano.regalarItemEspecial(tipo);
+    }
+    return false;
+};
+
+// Función para comprar decoración desde consola
+window.comprarDecoracionNakano = function(id) {
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.comprarDecoracion) {
+        return sistemaNakano.comprarDecoracion(id);
+    }
+    return false;
+};
+
+// Función para resetear sistema Nakano
+window.resetearSistemaNakano = function() {
+    if (confirm("¿Estás seguro de resetear TODO el sistema Nakano?\nSe perderán niveles, experiencia y decoraciones.")) {
+        localStorage.removeItem('sistemaNakano');
+        location.reload();
+    }
+};
+
+// Función para añadir condones (testing)
+window.agregarCondones = function(cantidad) {
+    if (typeof sistemaNakano !== 'undefined') {
+        sistemaNakano.economia.inventario.condones += cantidad;
+        sistemaNakano.guardarDatos();
+        sistemaNakano.actualizarInterfazNakano();
+        console.log(`✅ ${cantidad} condones añadidos`);
+        return true;
+    }
+    return false;
+};
+
+// Función para ver todas las quintillizas
+window.verTodasQuintillizas = function() {
+    if (typeof sistemaNakano !== 'undefined') {
+        console.log("👥 Todas las Quintillizas:");
+        Object.values(sistemaNakano.quintillizas).forEach(quintilliza => {
+            console.log(`- ${quintilliza.nombre}: Nivel ${quintilliza.nivel}, XP ${quintilliza.experiencia}`);
+        });
+    }
+};
+
+// Función para simular mazo completado (testing)
+window.simularMazoCompletado = function(porcentaje) {
+    if (typeof sistemaNakano !== 'undefined' && sistemaNakano.registrarMazoCompletado) {
+        sistemaNakano.registrarMazoCompletado(porcentaje);
+        console.log(`📊 Mazo simulado al ${porcentaje}% para ${sistemaNakano.obtenerNoviaActual().nombre}`);
+        return true;
+    }
+    return false;
 };
