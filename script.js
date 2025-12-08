@@ -159,12 +159,24 @@ const sistemaPalabrasFalladas = {
     
     // Registrar palabra fallada
     registrarPalabraFallada: function(palabra, respuestaSeleccionada, respuestaCorrecta, lectura, opcionesOriginales = []) {
+        // CORRECCIÓN: Asegurarse de que tenemos las opciones completas
+        let opciones = [...opcionesOriginales];
+        if (opciones.length < 4) {
+            // Si no hay suficientes opciones, generar algunas adicionales
+            const opcionesBase = ['Opción A', 'Opción B', 'Opción C', 'Opción D'];
+            for (let i = opciones.length; i < 4; i++) {
+                if (!opciones.includes(opcionesBase[i])) {
+                    opciones.push(opcionesBase[i]);
+                }
+            }
+        }
+        
         const palabraFallada = {
             palabra: palabra,
             respuestaSeleccionada: respuestaSeleccionada,
             respuestaCorrecta: respuestaCorrecta,
             lectura: lectura,
-            opciones: opcionesOriginales, // NUEVO: Guardar las opciones originales
+            opciones: opciones, // Guardar las opciones completas
             fecha: new Date().toISOString(),
             hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
         };
@@ -177,7 +189,7 @@ const sistemaPalabrasFalladas = {
         
         this.guardarDatos();
         
-        console.log(`❌ Palabra fallada registrada: ${palabra}`, opcionesOriginales);
+        console.log(`❌ Palabra fallada registrada: ${palabra}`, opciones);
     },
     
     // Obtener palabras más falladas del día
@@ -192,7 +204,7 @@ const sistemaPalabrasFalladas = {
                     palabra: palabra.palabra,
                     lectura: palabra.lectura,
                     respuestaCorrecta: palabra.respuestaCorrecta,
-                    opciones: palabra.opciones, // NUEVO: Incluir opciones
+                    opciones: palabra.opciones,
                     veces: 1
                 };
             }
@@ -1958,10 +1970,17 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
     const resultado = document.getElementById('resultado');
     const palabraActual = document.getElementById('palabra-japones').textContent;
     
+    // CORRECCIÓN: Asegurar que todos los botones son clickeables
+    opcionesDOM.forEach(opcion => {
+        opcion.disabled = false; // Asegurar que no estén deshabilitados
+    });
+    
+    // Deshabilitar botones después de hacer clic
     opcionesDOM.forEach(opcion => {
         opcion.disabled = true;
     });
     
+    // Marcar respuestas correctas e incorrectas
     opcionesDOM.forEach(opcion => {
         if (opcion.textContent === respuestaCorrecta) {
             opcion.classList.add('correcta');
@@ -2071,16 +2090,30 @@ function mostrarPantallaResultados(porcentaje) {
     const resultadoFinal = document.getElementById('resultado-final');
     
     resultadoFinal.innerHTML = `
-        Resumen del Quiz:
-        
-        Preguntas totales: ${mazoActual.length}
-        Respuestas correctas: ${respuestasCorrectas}
-        Respuestas incorrectas: ${respuestasIncorrectas}
-        Porcentaje de aciertos: ${porcentaje}%
-        
-        ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
-          porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
-          'Sigue practicando, lo harás mejor la próxima vez 💪'}
+        <div class="resultado-detalle">
+            <h3>Resumen del Quiz</h3>
+            <div class="resultado-item">
+                <span class="resultado-label">Preguntas totales:</span>
+                <span class="resultado-valor">${mazoActual.length}</span>
+            </div>
+            <div class="resultado-item">
+                <span class="resultado-label">Respuestas correctas:</span>
+                <span class="resultado-valor">${respuestasCorrectas}</span>
+            </div>
+            <div class="resultado-item">
+                <span class="resultado-label">Respuestas incorrectas:</span>
+                <span class="resultado-valor">${respuestasIncorrectas}</span>
+            </div>
+            <div class="resultado-item">
+                <span class="resultado-label">Porcentaje de aciertos:</span>
+                <span class="resultado-valor resultado-porcentaje">${porcentaje}%</span>
+            </div>
+            <div class="resultado-mensaje">
+                ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
+                  porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
+                  'Sigue practicando, lo harás mejor la próxima vez 💪'}
+            </div>
+        </div>
     `;
 }
 
@@ -2161,7 +2194,7 @@ function repetirQuiz() {
 }
 
 // ============================================================================
-// FUNCIONES DEL SISTEMA DE PALABRAS FALLADAS - NUEVAS
+// FUNCIONES DEL SISTEMA DE PALABRAS FALLADAS - NUEVAS Y CORREGIDAS
 // ============================================================================
 
 // Función para mostrar la pantalla de palabras falladas
@@ -2369,7 +2402,7 @@ function limpiarHistorialFalladas() {
     }
 }
 
-// FUNCIÓN CORREGIDA - Practicar palabras falladas con las opciones correctas
+// FUNCIÓN CORREGIDA COMPLETAMENTE - Practicar palabras falladas con las opciones correctas
 function practicarPalabrasFalladas() {
     const palabrasFalladas = sistemaPalabrasFalladas.obtenerMasFalladasDelDia();
     
@@ -2380,20 +2413,45 @@ function practicarPalabrasFalladas() {
     
     console.log("🔍 Preparando práctica con palabras falladas:", palabrasFalladas);
     
-    // Crear mazo de práctica usando las opciones ORIGINALES guardadas
+    // CORRECCIÓN: Crear mazo de práctica usando las opciones ORIGINALES guardadas
+    // y asegurarse de que la respuesta correcta esté en el índice correcto
     mazoActual = palabrasFalladas.map(palabra => {
-        // Usar las opciones ORIGINALES guardadas, no generar nuevas
-        const opciones = palabra.opciones || [palabra.respuestaCorrecta, 'Opción 2', 'Opción 3', 'Opción 4'];
+        // Usar las opciones ORIGINALES guardadas
+        let opciones = palabra.opciones || [];
+        
+        // Asegurarse de que la respuesta correcta esté en las opciones
+        if (!opciones.includes(palabra.respuestaCorrecta)) {
+            opciones = [palabra.respuestaCorrecta, ...opciones.slice(0, 3)];
+        }
+        
+        // Asegurarse de que haya exactamente 4 opciones
+        while (opciones.length < 4) {
+            opciones.push(`Opción ${opciones.length + 1}`);
+        }
+        
+        // Mezclar las opciones para que la respuesta correcta no siempre esté en la misma posición
+        for (let i = opciones.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
+        }
+        
+        // Encontrar el índice de la respuesta correcta después de mezclar
+        const respuestaIndex = opciones.indexOf(palabra.respuestaCorrecta);
         
         return {
             japones: palabra.palabra,
             lectura: palabra.lectura,
             opciones: opciones,
-            respuesta: opciones.indexOf(palabra.respuestaCorrecta) // Encontrar índice de la respuesta correcta
+            respuesta: respuestaIndex // Índice correcto de la respuesta
         };
     });
     
     console.log("📚 Mazo de práctica creado:", mazoActual);
+    
+    // Limitar a 10 palabras máximo para no hacerlo muy largo
+    if (mazoActual.length > 10) {
+        mazoActual = mazoActual.slice(0, 10);
+    }
     
     // Mezclar preguntas
     for (let i = mazoActual.length - 1; i > 0; i--) {
@@ -2584,6 +2642,30 @@ function mostrarResultadosPracticaEspecial(porcentaje) {
     mostrarPantallaResultados(porcentaje);
 }
 
+// Función para mostrar notificación
+function mostrarNotificacion(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff9800, #ff5722);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideInRight 0.3s ease;
+    `;
+    notificacion.textContent = mensaje;
+    
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.remove();
+    }, 3000);
+}
+
 // Sobrescribir mostrarResultados para detectar si es práctica especial
 const mostrarResultadosOriginal = mostrarResultados;
 window.mostrarResultados = function() {
@@ -2597,3 +2679,9 @@ window.mostrarResultados = function() {
         mostrarResultadosOriginal();
     }
 };
+
+// CORRECCIÓN: Función para repasar falladas desde pantalla de resultados
+function repetirFalladas() {
+    // Llamar a la función de práctica de palabras falladas
+    practicarPalabrasFalladas();
+}
