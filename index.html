@@ -613,7 +613,59 @@
     <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
         <!-- Esta pantalla se crea dinámicamente en script.js -->
     </div>
-
+<!-- ============================================================================ -->
+<!-- PANTALLA DE LECTOR DE MANGA (NUEVA) -->
+<!-- ============================================================================ -->
+<div id="pantalla-manga" class="pantalla">
+    <div class="cabecera">
+        <button onclick="volverAMazosDesdeManga()" class="boton-volver">← Volver</button>
+        <div class="contador" id="contador-pagina">Página 1 de 10</div>
+        <button onclick="reiniciarMangaActual()" class="boton-reiniciar" title="Reiniciar manga">🔄</button>
+    </div>
+    
+    <div class="contenido-manga">
+        <!-- Información del manga -->
+        <div class="info-manga">
+            <h2 id="titulo-manga">Título del Manga</h2>
+            <p id="descripcion-manga">Descripción del manga</p>
+            <div class="detalles-manga">
+                <span id="autor-manga">✍️ Autor: </span>
+                <span id="capitulos-manga">📚 Capítulos: </span>
+                <span id="recompensa-manga">💰 Recompensa: </span>
+            </div>
+        </div>
+        
+        <!-- Barra de progreso -->
+        <div class="barra-progreso-contenedor">
+            <div id="barra-progreso-manga" class="barra-progreso"></div>
+        </div>
+        
+        <!-- Selector de página -->
+        <div class="selector-pagina">
+            <label for="selector-pagina">📄 Ir a página:</label>
+            <select id="selector-pagina" onchange="irAPaginaManga(this.value)">
+                <option value="1">Página 1</option>
+            </select>
+        </div>
+        
+        <!-- Imagen del manga -->
+        <div id="imagen-manga" class="contenedor-imagen-manga">
+            <!-- La imagen se carga aquí dinámicamente -->
+        </div>
+        
+        <!-- Mensaje de completado -->
+        <div id="mensaje-completado" class="mensaje-completado" style="display: none;">
+            🎉 ¡MANGA COMPLETADO! +5 S/.
+        </div>
+        
+        <!-- Controles de navegación -->
+        <div class="controles-manga">
+            <button id="boton-anterior" onclick="paginaAnteriorManga()" class="boton-manga">← Anterior</button>
+            <button onclick="volverAMazosDesdeManga()" class="boton-manga">🏠 Menú Mazos</button>
+            <button id="boton-siguiente" onclick="paginaSiguienteManga()" class="boton-manga">Siguiente →</button>
+        </div>
+    </div>
+</div>
 <!-- ARCHIVOS JS (IMPORTANTE: ORDEN CORRECTO) -->
 <script src="1vocabulario.js"></script>
 <script src="1config.js"></script>
