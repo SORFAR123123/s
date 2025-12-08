@@ -1,5 +1,5 @@
 /* ============================================================================
-   ESTILOS COMPLETOS PARA LA APLICACIÓN
+   ESTILOS COMPLETOS PARA LA APLICACIÓN CON SISTEMA NAKANO
    ============================================================================ */
 
 * {
@@ -71,7 +71,7 @@ body {
     border: 2px solid #4a90e2;
 }
 
-/* CONTENEDOR DE VIDEO PARA EVENTOS DIARIOS - CORREGIDO */
+/* CONTENEDOR DE VIDEO PARA EVENTOS DIARIOS */
 .video-container-evento {
     position: relative;
     width: 300px;
@@ -140,7 +140,6 @@ body {
     font-weight: bold;
 }
 
-/* MENSAJE DE FALLBACK PARA VIDEO */
 .video-fallback-message {
     position: absolute;
     top: 50%;
@@ -1107,6 +1106,25 @@ h1 {
     box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
 }
 
+.boton-terciario {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+    margin: 10px;
+}
+
+.boton-terciario:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 152, 0, 0.6);
+}
+
 .boton-saltar {
     background-color: #444444;
     color: #ffffff;
@@ -1124,21 +1142,109 @@ h1 {
 }
 
 /* ============================================================================
-   RPG DE NOVIA MODIFICADO
+   ESTILOS PARA SISTEMA NAKANO
    ============================================================================ */
 
-.rpg-container {
-    max-width: 600px;
-    margin: 0 auto;
+/* SELECTOR DE QUINTILLIZAS */
+.selector-nakano-container {
     background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
     border-radius: 20px;
-    padding: 25px;
+    padding: 20px;
+    margin-bottom: 25px;
     border: 3px solid #ff6b9d;
-    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
 }
 
-/* PERFIL DE LA NOVIA MODIFICADO */
-.perfil-novia {
+.selector-nakano-container h3 {
+    color: #ff6b9d;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.nakano-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.nakano-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.nakano-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #4a90e2;
+}
+
+.nakano-card.seleccionada {
+    border-color: #ff6b9d;
+    background: rgba(255, 107, 157, 0.2);
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}
+
+.nakano-imagen {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    margin-bottom: 10px;
+}
+
+.nakano-card.seleccionada .nakano-imagen {
+    border-color: #ff6b9d;
+    box-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
+}
+
+.nakano-info {
+    font-size: 0.9rem;
+}
+
+.nakano-nombre {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nakano-nivel {
+    color: #4a90e2;
+    font-size: 0.8rem;
+}
+
+.nakano-xp {
+    color: #00ff88;
+    font-size: 0.8rem;
+}
+
+.seleccion-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b9d;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+/* PERFIL NAKANO */
+.perfil-nakano {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -1147,44 +1253,35 @@ h1 {
     border-radius: 15px;
     padding: 20px;
     border: 2px solid #ff6b9d;
-    position: relative;
-    overflow: hidden;
 }
 
-.perfil-novia::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1));
-    pointer-events: none;
-}
-
-.imagen-novia {
-    width: 100px;
-    height: 100px;
+.imagen-nakano {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #ff6b9d;
+    border: 4px solid #ff6b9d;
     box-shadow: 0 5px 15px rgba(255, 107, 157, 0.5);
-    z-index: 1;
 }
 
-.info-novia {
+.info-nakano {
     flex: 1;
-    z-index: 1;
 }
 
-.info-novia h2 {
+.info-nakano h2 {
     color: #ff6b9d;
     font-size: 1.8rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8px;
 }
 
-.estadisticas {
+.descripcion-nakano {
+    color: #cccccc;
+    font-style: italic;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.estadisticas-nakano {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
@@ -1256,8 +1353,8 @@ h1 {
     transition: width 0.5s ease;
 }
 
-/* ECONOMÍA RPG MODIFICADA */
-.economia-rpg {
+/* ECONOMÍA NAKANO */
+.economia-nakano {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 15px;
@@ -1330,7 +1427,7 @@ h1 {
     min-height: 120px;
 }
 
-.dialogo-novia {
+.dialogo-nakano {
     background: linear-gradient(135deg, #4a90e2, #7b68ee);
     border-radius: 15px;
     padding: 15px;
@@ -1421,8 +1518,176 @@ h1 {
     box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
 }
 
-/* SECCIÓN +18 MODIFICADA */
-.seccion-adulto {
+/* REGALOS ESPECIALES */
+.regalos-especiales-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #7b68ee;
+}
+
+.regalos-especiales-container h3 {
+    color: #7b68ee;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.regalos-especiales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.boton-regalo-especial {
+    background: linear-gradient(135deg, #7b68ee, #4a90e2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.boton-regalo-especial:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
+}
+
+/* DECORACIÓN DE HABITACIÓN */
+.decoracion-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #00ff88;
+}
+
+.decoracion-container h3 {
+    color: #00ff88;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.estado-habitacion {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.dinero-gastado {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.items-totales {
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.muebles-actuales {
+    margin-bottom: 15px;
+}
+
+.muebles-actuales h5 {
+    color: #ff6b9d;
+    margin-bottom: 8px;
+}
+
+.mueble-item {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 5px;
+    border: 1px solid #4a90e2;
+    font-size: 0.9rem;
+}
+
+.decoraciones-disponibles {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.decoraciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.decoracion-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.decoracion-item.comprado {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.decoracion-item.no-dinero {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    opacity: 0.7;
+}
+
+.decoracion-nombre {
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.decoracion-precio {
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.decoracion-tipo {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.boton-comprar {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.boton-comprar:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.boton-comprar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.comprado-label {
+    color: #00ff88;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* MOMENTOS ÍNTIMOS NAKANO */
+.seccion-intima {
     background: rgba(139, 0, 0, 0.3);
     border-radius: 15px;
     padding: 20px;
@@ -1430,19 +1695,19 @@ h1 {
     border: 2px solid #8b0000;
 }
 
-.seccion-adulto h3 {
+.seccion-intima h3 {
     color: #ff6b9d;
     text-align: center;
     margin-bottom: 15px;
 }
 
-.acciones-adulto {
+.acciones-intimas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
 }
 
-.boton-adulto {
+.boton-intimo {
     background: linear-gradient(135deg, #8b0000, #b22222);
     color: white;
     border: none;
@@ -1455,19 +1720,19 @@ h1 {
     position: relative;
 }
 
-.boton-adulto:hover {
+.boton-intimo:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
 }
 
-.boton-adulto:disabled {
+.boton-intimo:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
 }
 
 /* Tooltip para botones de momentos íntimos */
-.boton-adulto:hover::after {
+.boton-intimo:hover::after {
     content: attr(title);
     position: absolute;
     bottom: 100%;
@@ -1672,12 +1937,12 @@ h1 {
    EFECTOS VISUALES PARA BOTONES
    ============================================================================ */
 
-.boton-principal, .boton-secundario, .boton-palabras-falladas {
+.boton-principal, .boton-secundario, .boton-palabras-falladas, .boton-terciario {
     position: relative;
     overflow: hidden;
 }
 
-.boton-principal::before, .boton-secundario::before, .boton-palabras-falladas::before {
+.boton-principal::before, .boton-secundario::before, .boton-palabras-falladas::before, .boton-terciario::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1688,7 +1953,7 @@ h1 {
     transition: left 0.5s;
 }
 
-.boton-principal:hover::before, .boton-secundario:hover::before, .boton-palabras-falladas:hover::before {
+.boton-principal:hover::before, .boton-secundario:hover::before, .boton-palabras-falladas:hover::before, .boton-terciario:hover::before {
     left: 100%;
 }
 
@@ -1801,25 +2066,27 @@ h1 {
         font-size: 1.1rem;
     }
     
-    /* Responsive para RPG modificado */
-    .perfil-novia {
+    /* Responsive para NAKANO */
+    .nakano-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .perfil-nakano {
         flex-direction: column;
         text-align: center;
     }
     
-    .estadisticas {
-        flex-direction: column;
-        align-items: center;
+    .imagen-nakano {
+        width: 100px;
+        height: 100px;
     }
     
-    .stat {
-        width: 100%;
-        text-align: center;
+    .estadisticas-nakano {
+        justify-content: center;
     }
     
-    .economia-rpg {
+    .economia-nakano {
         grid-template-columns: 1fr;
-        gap: 10px;
     }
     
     .saldo {
@@ -1837,11 +2104,11 @@ h1 {
         min-width: 100%;
     }
     
-    .regalos-grid {
+    .regalos-grid, .regalos-especiales-grid {
         grid-template-columns: 1fr;
     }
     
-    .acciones-adulto {
+    .acciones-intimas {
         grid-template-columns: 1fr;
     }
     
@@ -1852,6 +2119,10 @@ h1 {
     }
     
     .opciones-palabras-falladas {
+        grid-template-columns: 1fr;
+    }
+    
+    .decoraciones-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -1886,17 +2157,26 @@ h1 {
         padding: 15px;
     }
     
-    .tienda-regalos {
+    .tienda-regalos, .regalos-especiales-container, .decoracion-container, .seccion-intima {
         padding: 15px;
     }
     
-    .seccion-adulto {
-        padding: 15px;
-    }
-    
-    .boton-adulto {
+    .boton-intimo, .boton-regalo, .boton-regalo-especial {
         font-size: 0.8rem;
         padding: 10px;
+    }
+    
+    .nakano-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nakano-imagen {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .nakano-nombre {
+        font-size: 0.8rem;
     }
 }
 
@@ -2011,11 +2291,11 @@ h1 {
    ESTILOS PARA BOTONES CON ESTADOS ESPECIALES
    ============================================================================ */
 
-.boton-regalo:hover {
+.boton-regalo:hover, .boton-regalo-especial:hover {
     background: linear-gradient(135deg, #ff8eb4, #ff6b9d);
 }
 
-.boton-adulto:not(:disabled):hover {
+.boton-intimo:not(:disabled):hover {
     background: linear-gradient(135deg, #b22222, #8b0000);
 }
 
@@ -2030,21 +2310,21 @@ h1 {
 }
 
 /* Scrollbar personalizado */
-.inventario::-webkit-scrollbar {
+.inventario::-webkit-scrollbar, .decoraciones-disponibles::-webkit-scrollbar {
     width: 5px;
 }
 
-.inventario::-webkit-scrollbar-track {
+.inventario::-webkit-scrollbar-track, .decoraciones-disponibles::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
 }
 
-.inventario::-webkit-scrollbar-thumb {
+.inventario::-webkit-scrollbar-thumb, .decoraciones-disponibles::-webkit-scrollbar-thumb {
     background: #ff6b9d;
     border-radius: 10px;
 }
 
-.inventario::-webkit-scrollbar-thumb:hover {
+.inventario::-webkit-scrollbar-thumb:hover, .decoraciones-disponibles::-webkit-scrollbar-thumb:hover {
     background: #ff8eb4;
 }
 
@@ -2071,4 +2351,234 @@ h1 {
 @keyframes shine-bar {
     0% { left: -100%; }
     100% { left: 100%; }
+}
+
+/* ============================================================================
+   ESTILOS PARA RESULTADOS DETALLADOS
+   ============================================================================ */
+
+.resultado-detalle {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #4a90e2;
+}
+
+.resultado-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resultado-item:last-child {
+    border-bottom: none;
+}
+
+.resultado-label {
+    color: #cccccc;
+    font-weight: bold;
+}
+
+.resultado-valor {
+    color: white;
+    font-weight: bold;
+}
+
+.resultado-porcentaje {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.resultado-mensaje {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ff6b9d;
+}
+
+/* ============================================================================
+   ESTILOS PARA BOTONES DE RESULTADOS
+   ============================================================================ */
+
+.botones-resultados {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* ============================================================================
+   EFECTO DE SELECCIÓN PARA TARJETAS NAKANO
+   ============================================================================ */
+
+.nakano-card.seleccionada::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff6b9d, #7b68ee, #4a90e2, #ff6b9d);
+    border-radius: 17px;
+    z-index: -1;
+    animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   ESTILOS PARA ICONOS DE DECORACIÓN
+   ============================================================================ */
+
+.decoracion-tipo.poster { color: #ff6b9d; }
+.decoracion-tipo.mueble { color: #4a90e2; }
+.decoracion-tipo.decoracion { color: #ffd700; }
+
+/* ============================================================================
+   ESTILOS PARA VIDEOS DE REGALOS RECÍPROCOS
+   ============================================================================ */
+
+#pantalla-video-regalo {
+    z-index: 10000;
+}
+
+#pantalla-video-regalo h2 {
+    color: #ff6b9d;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#video-regalo-reciproco {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    background: #000;
+}
+
+/* ============================================================================
+   ESTILOS PARA ESTADOS DE HUMOR
+   ============================================================================ */
+
+.humor-coqueta { color: #ff6b9d; }
+.humor-tsundere { color: #ff4444; }
+.humor-timida { color: #7b68ee; }
+.humor-energetica { color: #00ff88; }
+.humor-estudiosa { color: #4a90e2; }
+.humor-actriz { color: #ffd700; }
+.humor-chef { color: #ff9800; }
+.humor-historica { color: #9c27b0; }
+.humor-deportista { color: #00bcd4; }
+.humor-glotona { color: #ff5722; }
+
+/* ============================================================================
+   ESTILOS PARA TEXTO DE DESCRIPCIÓN NAKANO
+   ============================================================================ */
+
+.descripcion-nakano {
+    font-size: 1rem;
+    color: #cccccc;
+    line-height: 1.4;
+    padding: 5px 0;
+}
+
+/* ============================================================================
+   ESTILOS PARA BOTONES DESHABILITADOS
+   ============================================================================ */
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ============================================================================
+   ESTILOS PARA MENSAJE DE ERROR/CARGA
+   ============================================================================ */
+
+.mensaje-carga {
+    text-align: center;
+    padding: 30px;
+    color: #4a90e2;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    text-align: center;
+    padding: 30px;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 15px;
+    border: 2px solid #ff6b6b;
+}
+
+/* ============================================================================
+   ESTILOS FINALES PARA BOTONES DE ACCIÓN
+   ============================================================================ */
+
+.boton-accion.secundario {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+}
+
+.boton-accion.terciario {
+    background: linear-gradient(135deg, #9c27b0, #673ab7);
+}
+
+.boton-accion.cuaternario {
+    background: linear-gradient(135deg, #00bcd4, #0097a7);
+}
+
+/* ============================================================================
+   ESTILOS PARA VERSION MÓVIL MEJORADA
+   ============================================================================ */
+
+@media (max-width: 360px) {
+    .contenedor {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitulo {
+        font-size: 1rem;
+    }
+    
+    .lastsummer-imagen {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .lastsummer-texto {
+        font-size: 1.1rem;
+    }
+    
+    .palabra-japones {
+        font-size: 2.5rem;
+    }
+    
+    .opcion {
+        padding: 15px;
+        font-size: 1rem;
+        min-height: 60px;
+    }
+    
+    .boton-principal, .boton-secundario, .boton-terciario {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
 }
