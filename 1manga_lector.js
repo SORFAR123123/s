@@ -1,4 +1,3 @@
-
 // ============================================================================
 // SISTEMA DE LECTOR DE MANGA COMPLETO
 // Cada subcontenedor tiene su propio manga para leer
@@ -128,7 +127,7 @@ const mangaDatabase = {
         autor: 'Fabrizio',
         capitulos: 1,
         paginas: [
-            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
+            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=small',
             'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=small',
             'imagenes/manga/sub2_4/pagina3.jpg',
             'imagenes/manga/sub2_4/pagina4.jpg',
@@ -838,7 +837,7 @@ function iniciarLecturaManga(subcontenedorId) {
     console.log(`📖 Iniciando lectura: ${manga.titulo}`);
 }
 
-// Función para mostrar página actual
+// Función para mostrar página actual CON ZOOM
 function mostrarPaginaManga(subcontenedorId) {
     const manga = sistemaManga.obtenerManga(subcontenedorId);
     const pagina = sistemaManga.obtenerPaginaActual(subcontenedorId);
@@ -856,17 +855,24 @@ function mostrarPaginaManga(subcontenedorId) {
         return;
     }
     
-    // Actualizar imagen
+    // Actualizar imagen con sistema de zoom
     document.getElementById('imagen-manga').innerHTML = `
-        <img src="${pagina}" 
-             alt="Página ${progreso.actual} - ${manga.titulo}" 
-             class="manga-pagina" 
-             onload="this.style.opacity='1'; console.log('✅ Imagen cargada: ${pagina}')" 
-             onerror="this.onerror=null; 
-                      this.src='imagenes/manga/error.jpg';
-                      console.error('❌ Error cargando imagen: ${pagina}')"
-             onclick="paginaSiguienteManga()">
+        <div id="contenedor-pagina-manga" class="contenedor-imagen-manga">
+            <div class="area-cambio-pagina area-anterior" onclick="paginaAnteriorManga()"></div>
+            <img src="${pagina}" 
+                 alt="Página ${progreso.actual} - ${manga.titulo}" 
+                 id="imagen-manga-actual"
+                 class="manga-pagina" 
+                 onload="imagenMangaCargada(this); console.log('✅ Imagen cargada: ${pagina}')" 
+                 onerror="this.onerror=null; 
+                          this.src='imagenes/manga/error.jpg';
+                          console.error('❌ Error cargando imagen: ${pagina}')">
+            <div class="area-cambio-pagina area-siguiente" onclick="paginaSiguienteManga()"></div>
+        </div>
     `;
+    
+    // Inicializar funcionalidad de arrastre
+    inicializarArrastreManga();
     
     // Actualizar contador
     document.getElementById('contador-pagina').textContent = `📄 Página ${progreso.actual} de ${progreso.total}`;
@@ -911,6 +917,8 @@ function mostrarPaginaManga(subcontenedorId) {
             mensajeCompletado.style.display = 'none';
         }
     }
+    
+    console.log(`📖 Mostrando página ${progreso.actual} de ${manga.titulo} (ZOOM ACTIVADO)`);
 }
 
 // Función para página siguiente
@@ -984,6 +992,151 @@ function mostrarNotificacion(mensaje) {
         setTimeout(() => notificacion.remove(), 3000);
     }
 }
+
+// ============================================================================
+// NUEVAS FUNCIONES PARA ZOOM Y ARRASTRE
+// ============================================================================
+
+// Función para inicializar arrastre en la imagen del manga
+function inicializarArrastreManga() {
+    const contenedor = document.getElementById('contenedor-pagina-manga');
+    if (!contenedor) return;
+    
+    let isDragging = false;
+    let startX, startY, scrollLeft, scrollTop;
+    
+    // Eventos para mouse
+    contenedor.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        contenedor.classList.add('grabbing');
+        startX = e.pageX - contenedor.offsetLeft;
+        startY = e.pageY - contenedor.offsetTop;
+        scrollLeft = contenedor.scrollLeft;
+        scrollTop = contenedor.scrollTop;
+        e.preventDefault(); // Prevenir selección de texto
+    });
+    
+    contenedor.addEventListener('mouseleave', () => {
+        isDragging = false;
+        contenedor.classList.remove('grabbing');
+    });
+    
+    contenedor.addEventListener('mouseup', () => {
+        isDragging = false;
+        contenedor.classList.remove('grabbing');
+    });
+    
+    contenedor.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - contenedor.offsetLeft;
+        const y = e.pageY - contenedor.offsetTop;
+        const walkX = (x - startX) * 2; // Multiplicador para velocidad
+        const walkY = (y - startY) * 2;
+        contenedor.scrollLeft = scrollLeft - walkX;
+        contenedor.scrollTop = scrollTop - walkY;
+    });
+    
+    // Eventos para touch (móviles)
+    contenedor.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - contenedor.offsetLeft;
+        startY = e.touches[0].pageY - contenedor.offsetTop;
+        scrollLeft = contenedor.scrollLeft;
+        scrollTop = contenedor.scrollTop;
+    });
+    
+    contenedor.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - contenedor.offsetLeft;
+        const y = e.touches[0].pageY - contenedor.offsetTop;
+        const walkX = (x - startX) * 2;
+        const walkY = (y - startY) * 2;
+        contenedor.scrollLeft = scrollLeft - walkX;
+        contenedor.scrollTop = scrollTop - walkY;
+    });
+    
+    contenedor.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+    
+    // Doble clic para zoom
+    contenedor.addEventListener('dblclick', (e) => {
+        const img = document.getElementById('imagen-manga-actual');
+        if (!img) return;
+        
+        // Cambiar entre zoom 100% y 150%
+        if (img.style.transform === 'scale(1.5)') {
+            img.style.transform = 'scale(1)';
+            mostrarNotificacionManga("🔍 Zoom: 100%");
+        } else {
+            img.style.transform = 'scale(1.5)';
+            mostrarNotificacionManga("🔍 Zoom: 150%");
+        }
+        
+        // Centrar en el punto del clic
+        const rect = contenedor.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        
+        // Ajustar scroll para mantener el punto visible
+        contenedor.scrollLeft = clickX * 0.5;
+        contenedor.scrollTop = clickY * 0.5;
+    });
+}
+
+// Función para cuando la imagen del manga se carga
+function imagenMangaCargada(img) {
+    img.style.opacity = '1';
+    
+    const contenedor = document.getElementById('contenedor-pagina-manga');
+    if (contenedor) {
+        // Centrar inicialmente (opcional - puedes quitar esto si quieres que empiece desde arriba)
+        setTimeout(() => {
+            // Scroll inicial al centro aproximado
+            contenedor.scrollLeft = img.clientWidth / 4;
+            contenedor.scrollTop = img.clientHeight / 8;
+        }, 100);
+    }
+    
+    console.log('📖 Imagen ampliada lista para lectura');
+}
+
+// Función para mostrar notificaciones en el manga
+function mostrarNotificacionManga(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #ffd700;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: fadeInOut 2s ease;
+        border: 2px solid #ffd700;
+    `;
+    notificacion.textContent = mensaje;
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => notificacion.remove(), 2000);
+}
+
+// Definir animación para notificaciones
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+`;
+document.head.appendChild(style);
 
 // ============================================================================
 // FUNCIONES DE TESTING DESDE CONSOLA
@@ -1102,5 +1255,8 @@ window.paginaAnteriorManga = paginaAnteriorManga;
 window.irAPaginaManga = irAPaginaManga;
 window.volverAMazosDesdeManga = volverAMazosDesdeManga;
 window.reiniciarMangaActual = reiniciarMangaActual;
+window.inicializarArrastreManga = inicializarArrastreManga;
+window.imagenMangaCargada = imagenMangaCargada;
+window.mostrarNotificacionManga = mostrarNotificacionManga;
 
-console.log("✅ 1manga_lector.js cargado - Sistema de manga completo");
+console.log("✅ 1manga_lector.js cargado - Sistema de manga completo CON ZOOM");
