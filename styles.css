@@ -3410,3 +3410,105 @@ button:disabled {
         gap: 15px;
     }
 }
+/* ESTILOS ZOOM nhentai */
+.contenedor-imagen-zoom {
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.imagen-manga {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease-out;
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.imagen-manga:active {
+    cursor: grabbing;
+}
+
+.controles-zoom-nhentai {
+    display: flex;
+    gap: 10px;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    border: 1px solid #444;
+}
+
+.boton-zoom-nhentai {
+    background: linear-gradient(135deg, #333, #555);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.boton-zoom-nhentai:hover {
+    background: linear-gradient(135deg, #555, #777);
+    transform: scale(1.1);
+}
+
+.indicador-zoom-nhentai {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00ff88;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 10;
+    border: 1px solid #00ff88;
+}
+
+/* Indicador de click */
+.indicador-click {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.icono-click {
+    font-size: 24px;
+    margin-bottom: 5px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
