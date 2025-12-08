@@ -1050,7 +1050,7 @@ h1 {
 }
 
 /* ============================================================================
-   PANTALLA DE RESULTADOS
+   PANTALLA DE RESULTADOS MEJORADA
    ============================================================================ */
 
 .resultado-final {
@@ -1063,6 +1063,92 @@ h1 {
     font-size: 1.1rem;
     white-space: pre-line;
     border: 2px solid #4a90e2;
+}
+
+/* Estilos adicionales para resultados detallados */
+.resultado-detalle {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.resultado-detalle h3 {
+    color: #ff6b9d;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.resultado-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resultado-item:last-child {
+    border-bottom: none;
+}
+
+.resultado-label {
+    color: #cccccc;
+    font-weight: normal;
+}
+
+.resultado-valor {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.resultado-porcentaje {
+    color: #ffd700;
+    font-size: 1.3rem;
+}
+
+.resultado-mensaje {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4a90e2;
+}
+
+/* Botones de resultados */
+.botones-resultados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Botón terciario para repasar falladas */
+.boton-terciario {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 18px 35px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+    margin: 10px;
+}
+
+.boton-terciario:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 152, 0, 0.6);
+}
+
+.boton-terciario:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
 }
 
 /* ============================================================================
@@ -1672,12 +1758,12 @@ h1 {
    EFECTOS VISUALES PARA BOTONES
    ============================================================================ */
 
-.boton-principal, .boton-secundario, .boton-palabras-falladas {
+.boton-principal, .boton-secundario, .boton-palabras-falladas, .boton-terciario {
     position: relative;
     overflow: hidden;
 }
 
-.boton-principal::before, .boton-secundario::before, .boton-palabras-falladas::before {
+.boton-principal::before, .boton-secundario::before, .boton-palabras-falladas::before, .boton-terciario::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1688,12 +1774,12 @@ h1 {
     transition: left 0.5s;
 }
 
-.boton-principal:hover::before, .boton-secundario:hover::before, .boton-palabras-falladas:hover::before {
+.boton-principal:hover::before, .boton-secundario:hover::before, .boton-palabras-falladas:hover::before, .boton-terciario:hover::before {
     left: 100%;
 }
 
 /* ============================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN COMPLETO
    ============================================================================ */
 
 @media (max-width: 768px) {
@@ -1801,6 +1887,17 @@ h1 {
         font-size: 1.1rem;
     }
     
+    /* Botones de resultados en móvil */
+    .botones-resultados {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .boton-terciario, .boton-principal, .boton-secundario {
+        width: 90%;
+        margin: 5px 0;
+    }
+    
     /* Responsive para RPG modificado */
     .perfil-novia {
         flex-direction: column;
@@ -1854,6 +1951,30 @@ h1 {
     .opciones-palabras-falladas {
         grid-template-columns: 1fr;
     }
+    
+    /* Responsive para palabras falladas */
+    .palabras-falladas-container {
+        padding: 15px;
+    }
+    
+    .estadisticas-palabras {
+        grid-template-columns: 1fr;
+    }
+    
+    .palabra-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .palabra-posicion {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .acciones-palabras {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1897,6 +2018,36 @@ h1 {
     .boton-adulto {
         font-size: 0.8rem;
         padding: 10px;
+    }
+    
+    /* Ajustes para quiz */
+    .palabra-japones {
+        font-size: 2.5rem;
+    }
+    
+    .lectura {
+        font-size: 1.3rem;
+    }
+    
+    .opcion {
+        padding: 15px;
+        min-height: 60px;
+        font-size: 1rem;
+    }
+    
+    /* Resultados en móvil pequeño */
+    .resultado-final {
+        padding: 15px;
+    }
+    
+    .resultado-detalle {
+        padding: 15px;
+    }
+    
+    .resultado-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
     }
 }
 
@@ -2071,4 +2222,163 @@ h1 {
 @keyframes shine-bar {
     0% { left: -100%; }
     100% { left: 100%; }
+}
+
+/* ============================================================================
+   NOTIFICACIONES FLOTANTES
+   ============================================================================ */
+
+.notificacion-flotante {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slideInRight 0.3s ease;
+    max-width: 300px;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+/* ============================================================================
+   EFECTO DE FELICITACIONES PARA 100%
+   ============================================================================ */
+
+.felicidades-container {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border-radius: 20px;
+    margin: 20px 0;
+    animation: pulse-gold 1s infinite;
+}
+
+.felicidades-container h2 {
+    color: #1e1e1e;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.felicidades-container p {
+    color: #1e1e1e;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* ============================================================================
+   ESTILOS PARA PÁGINA DE CARGA
+   ============================================================================ */
+
+.pagina-carga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e1e1e, #2d1b4e);
+}
+
+.cargando {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ff6b9d;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   MEJORAS PARA TEXTO SELECTION
+   ============================================================================ */
+
+::selection {
+    background-color: #ff6b9d;
+    color: white;
+}
+
+/* ============================================================================
+   ESTILOS PARA TEXTO DE AYUDA
+   ============================================================================ */
+
+.texto-ayuda {
+    color: #cccccc;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* ============================================================================
+   SOMBRAS MEJORADAS
+   ============================================================================ */
+
+.sombra-intensa {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.sombra-suave {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================================
+   ESTILOS PARA BORDES ANIMADOS
+   ============================================================================ */
+
+.borde-animado {
+    position: relative;
+    overflow: hidden;
+}
+
+.borde-animado::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(45deg, #ff6b9d, #4a90e2, #00ff88, #ffd700) border-box;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotarBorde 3s linear infinite;
+}
+
+@keyframes rotarBorde {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   ESTILOS PARA TEXTO GRADIENTE
+   ============================================================================ */
+
+.texto-gradiente {
+    background: linear-gradient(135deg, #ff6b9d, #4a90e2, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================================================
+   ESTILOS FINALES DE PULSO PARA BOTONES IMPORTANTES
+   ============================================================================ */
+
+.boton-destacado {
+    animation: pulse 2s infinite;
+}
+
+.boton-destacado:hover {
+    animation: none;
 }
