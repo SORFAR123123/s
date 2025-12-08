@@ -3,495 +3,946 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Mazos + RPG + Eventos Diarios</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sistema de Aprendizaje de Japonés - RPG Quintillizas</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- PANTALLA DE EVENTO DIARIO -->
-    <div id="pantalla-evento-diario" class="pantalla">
-        <div class="contenedor">
-            <div class="evento-diario-container">
-                <div class="evento-header">
-                    <h1>🎁 Evento Diario</h1>
-                    <p class="evento-fecha" id="fecha-evento">Hoy</p>
-                </div>
-                
-                <div class="evento-content">
-                    <div class="video-container-evento">
-                        <video id="video-evento-presentacion" controls muted loop playsinline class="video-evento">
-                            Tu navegador no soporta el elemento video.
-                        </video>
-                        <div class="video-overlay"></div>
-                        <div class="video-play-indicator">
-                            <div class="play-icon">▶️</div>
-                            <p>Haz clic para reproducir</p>
-                        </div>
-                    </div>
-                    
-                    <div class="evento-info">
-                        <h2 class="evento-nombre" id="nombre-evento">Reto Diario</h2>
-                        <p class="evento-descripcion" id="descripcion-evento">Completa el desafío de hoy</p>
-                        
-                        <div class="evento-progreso">
-                            <div class="progreso-texto">
-                                Progreso: <span id="contador-progreso">0</span>/<span id="objetivo-evento">3</span>
-                            </div>
-                            <div class="barra-progreso-evento">
-                                <div id="barra-progreso-fill" class="barra-progreso-fill-evento" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="evento-recompensa">
-                            <h3>🎯 Recompensa:</h3>
-                            <p id="recompensa-evento">+5 S/. 💰</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="evento-actions">
-                    <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
-                        ¡Aceptar Reto! 🚀
-                    </button>
-                    <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
-                        Omitir por hoy
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE VIDEO RECOMPENSA EVENTO -->
-    <div id="pantalla-video-evento" class="pantalla">
-        <div class="contenedor">
-            <div class="contenido-video">
-                <h1 id="titulo-video-evento">¡Felicidades! 🎉</h1>
-                <p class="subtitulo-video" id="mensaje-video-evento">Has completado el evento diario</p>
-                
-                <div class="video-container">
-                    <video id="video-evento-recompensa" controls autoplay class="video-recompensa">
-                        Tu navegador no soporta el elemento video.
-                    </video>
-                </div>
-                
-                <div class="info-video">
-                    <p class="mensaje-video">¡Excelente trabajo completando el evento diario! 🎉</p>
-                    <p class="recompensa-dinero" id="recompensa-dinero-evento">+5 S/. 💰</p>
-                </div>
-                
-                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
-                    Cerrar y Continuar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE VIDEO FALLO EVENTO -->
-    <div id="pantalla-video-fallo" class="pantalla">
-        <div class="contenedor">
-            <div class="contenido-video">
-                <h1 id="titulo-video-fallo">Sigue Intentando 💪</h1>
-                <p class="subtitulo-video" id="mensaje-video-fallo">Mañana será otro día</p>
-                
-                <div class="video-container">
-                    <video id="video-evento-fallo" controls autoplay class="video-recompensa">
-                        Tu navegador no soporta el elemento video.
-                    </video>
-                </div>
-                
-                <div class="info-video">
-                    <p class="mensaje-video">¡Hoy es un nuevo día para intentarlo! 💪</p>
-                </div>
-                
-                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoFallo()">
-                    Cerrar y Continuar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE INICIO -->
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE INICIO - MENÚ PRINCIPAL -->
+    <!-- ============================================================================ -->
     <div id="pantalla-inicio" class="pantalla activa">
         <div class="contenedor">
-            <h1>BIBLIOTECA DE MAZOS</h1>
-            <p class="subtitulo">Selecciona un contenedor principal</p>
-            
-            <!-- PANEL DE MISIONES DIARIAS -->
-            <div class="misiones-diarias-panel">
-                <h3>🎯 Misiones Diarias</h3>
-                <div class="misiones-lista">
-                    <div class="mision-item">
-                        <span class="mision-texto">Completar 1 mazo al 100%</span>
-                        <span class="mision-recompensa">+1 S/. 💰</span>
-                        <div class="mision-progreso">
-                            <span id="mision1-progreso">0/1</span>
-                        </div>
-                    </div>
-                    <div class="mision-item">
-                        <span class="mision-texto">Completar 3 mazos al 100%</span>
-                        <span class="mision-recompensa">+3 S/. 💰</span>
-                        <div class="mision-progreso">
-                            <span id="mision2-progreso">0/3</span>
-                        </div>
-                    </div>
-                    <div class="mision-item">
-                        <span class="mision-texto">Completar 5 mazos al 100%</span>
-                        <span class="mision-recompensa">+5 S/. 💰</span>
-                        <div class="mision-progreso">
-                            <span id="mision3-progreso">0/5</span>
-                        </div>
-                    </div>
+            <div class="barra-superior">
+                <div class="contador">
+                    <i class="fas fa-coins"></i> Saldo: <span id="saldo-total">0</span> S/.
                 </div>
-                <div class="economia-panel">
-                    <span class="saldo-total">Saldo: <span id="saldo-total">0</span> S/.</span>
+                <div class="botones-superiores">
+                    <button class="boton-sistema" onclick="mostrarPalabrasFalladas()">
+                        <i class="fas fa-book"></i> Palabras Falladas
+                    </button>
+                    <button class="boton-sistema" onclick="verEstadoSistemas()">
+                        <i class="fas fa-chart-bar"></i> Estado
+                    </button>
                 </div>
             </div>
             
             <div class="menu-principal">
-                <!-- NUEVO: APARTADO DE PALABRAS FALLADAS -->
-                <div class="seccion-menu">
-                    <h2 class="titulo-seccion">📝 ENTRENAMIENTO ESPECIAL</h2>
-                    <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="mostrarPalabrasFalladas()">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Palabras Falladas" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">🔥 PALABRAS FALLADAS</div>
-                            <div class="lastsummer-info">Revisa y practica tus errores</div>
+                <h1 class="titulo-principal">
+                    <i class="fas fa-language"></i> Aprende Japonés
+                    <span class="subtitulo">con las Quintillizas Nakano</span>
+                </h1>
+                
+                <div class="estadisticas-rapidas">
+                    <div class="estadistica-item">
+                        <span class="estadistica-icono">📚</span>
+                        <span class="estadistica-texto">10 Contenedores</span>
+                    </div>
+                    <div class="estadistica-item">
+                        <span class="estadistica-icono">🎯</span>
+                        <span class="estadistica-texto">30 Subcontenedores</span>
+                    </div>
+                    <div class="estadistica-item">
+                        <span class="estadistica-icono">💕</span>
+                        <span class="estadistica-texto">5 Quintillizas</span>
+                    </div>
+                    <div class="estadistica-item">
+                        <span class="estadistica-icono">🎮</span>
+                        <span class="estadistica-texto">Sistema RPG</span>
+                    </div>
+                </div>
+                
+                <div class="menu-botones">
+                    <button class="boton-menu-inicio" onclick="cargarContenedores()">
+                        <span class="boton-icono">📚</span>
+                        <span class="boton-texto">Comenzar a Estudiar</span>
+                        <span class="boton-desc">10 contenedores disponibles</span>
+                    </button>
+                    
+                    <button class="boton-menu-inicio" onclick="iniciarRPGQuintillizasDesdeMenu()">
+                        <span class="boton-icono">💕</span>
+                        <span class="boton-texto">RPG Quintillizas</span>
+                        <span class="boton-desc">5 hermanas, 25 videos únicos</span>
+                    </button>
+                    
+                    <button class="boton-menu-inicio" onclick="mostrarPalabrasFalladas()">
+                        <span class="boton-icono">📝</span>
+                        <span class="boton-texto">Palabras Falladas</span>
+                        <span class="boton-desc">Practica tus errores (+3 S/.)</span>
+                    </button>
+                    
+                    <button class="boton-menu-inicio" onclick="verMisionesDiarias()">
+                        <span class="boton-icono">🎯</span>
+                        <span class="boton-texto">Misiones Diarias</span>
+                        <span class="boton-desc">Completa retos por recompensas</span>
+                    </button>
+                    
+                    <button class="boton-menu-inicio" onclick="mostrarEventoDiarioForzado()">
+                        <span class="boton-icono">📅</span>
+                        <span class="boton-texto">Evento Diario</span>
+                        <span class="boton-desc">Reto especial del día</span>
+                    </button>
+                    
+                    <button class="boton-menu-inicio" onclick="configuracionRapidaTesting()">
+                        <span class="boton-icono">⚙️</span>
+                        <span class="boton-texto">Testing Rápido</span>
+                        <span class="boton-desc">Configuración para desarrollo</span>
+                    </button>
+                </div>
+                
+                <div class="misiones-rapidas">
+                    <h3><i class="fas fa-tasks"></i> Misiones de Hoy</h3>
+                    <div class="misiones-lista">
+                        <div class="mision-item">
+                            <span class="mision-nombre">Completar 1 mazo al 100%</span>
+                            <span class="mision-progreso" id="mision1-progreso">0/1</span>
+                        </div>
+                        <div class="mision-item">
+                            <span class="mision-nombre">Completar 3 mazos al 100%</span>
+                            <span class="mision-progreso" id="mision2-progreso">0/3</span>
+                        </div>
+                        <div class="mision-item">
+                            <span class="mision-nombre">Completar 5 mazos al 100%</span>
+                            <span class="mision-progreso" id="mision3-progreso">0/5</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- SECCIÓN DE CONTENEDORES PRINCIPALES -->
-                <div class="seccion-menu">
-                    <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
-                    <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
-                            <img src="https://pbs.twimg.com/media/G5_wCzcWsAAmHcA?format=png&name=small" alt="Contenedor 1" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">The last summer 1</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
-                            <img src="https://pbs.twimg.com/media/G6EARd6XIAEYjvU?format=jpg&name=medium" alt="Contenedor 2" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Toono Esuke 2</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
-                            <img src="https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small" alt="Contenedor 3" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Yamada</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
-                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 4</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
-                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 5</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
-                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 6</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
-                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 7</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
-                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 8</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
-                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 9</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
-                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 10</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECCIÓN RPG DE NOVIA -->
-                <div class="seccion-menu">
-                    <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
-                    <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="iniciarRPGNovia()">
-                            <img src="https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096" alt="RPG de Novia" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">💕 Mi Novia RPG</div>
-                            <div class="lastsummer-info">Sistema de relación +18</div>
-                        </div>
+                
+                <div class="footer-menu">
+                    <p class="version">Sistema v2.0 - RPG de Quintillizas Nakano</p>
+                    <div class="controles-rapidos">
+                        <button class="boton-pequeno" onclick="agregarDinero(10)">+10 S/.</button>
+                        <button class="boton-pequeno" onclick="agregarExperienciaQuintilliza(50)">+50 XP</button>
+                        <button class="boton-pequeno" onclick="desbloquearTodosMomentos()">Desbloquear Todo</button>
+                        <button class="boton-pequeno" onclick="reiniciarRPGQuintillizas()">Reiniciar RPG</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE CONTENEDORES -->
+    <!-- ============================================================================ -->
+    <div id="pantalla-contenedores" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">📚 CONTENEDORES DISPONIBLES</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">📚 Menú</button>
+                </div>
+            </div>
+            
+            <div class="titulo-pantalla">
+                <h2 id="titulo-contenedores">Selecciona un Contenedor</h2>
+                <p id="descripcion-contenedores">10 contenedores con 3 subcontenedores cada uno</p>
+            </div>
+            
+            <div class="contenedor-grid" id="contenedor-contenedores">
+                <!-- Los contenedores se cargarán dinámicamente -->
+            </div>
+            
+            <div class="pantalla-acciones">
+                <button class="boton-secundario" onclick="volverAlInicio()">
+                    Volver al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
     <!-- PANTALLA DE SUBCONTENEDORES -->
+    <!-- ============================================================================ -->
     <div id="pantalla-subcontenedores" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador" id="titulo-contenedor">Contenedor</div>
+                <div class="contador" id="nombre-contenedor">Contenedor Actual</div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="volverAContenedores()">📚 Contenedores</button>
                 </div>
             </div>
             
-            <h2 id="nombre-contenedor">Sub-Contenedores</h2>
+            <div class="titulo-pantalla">
+                <h2 id="titulo-contenedor">Sub-Contenedores</h2>
+                <p>3 subcontenedores con 5 mazos cada uno</p>
+            </div>
             
-            <div class="contenedor-subcontenedores" id="contenedor-subcontenedores">
-                <!-- Los sub-contenedores se cargarán dinámicamente -->
+            <div class="contenedor-grid" id="contenedor-subcontenedores">
+                <!-- Los subcontenedores se cargarán dinámicamente -->
+            </div>
+            
+            <div class="pantalla-acciones">
+                <button class="boton-secundario" onclick="volverAContenedores()">
+                    Volver a Contenedores
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- ============================================================================ -->
     <!-- PANTALLA DE MAZOS -->
+    <!-- ============================================================================ -->
     <div id="pantalla-mazos" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
+                <div class="contador" id="nombre-subcontenedor">Mazos Disponibles</div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="volverASubcontenedores()">📚 Subcontenedores</button>
                 </div>
             </div>
             
-            <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
+            <div class="titulo-pantalla">
+                <h2 id="titulo-subcontenedor">Mazos</h2>
+                <p>5 mazos con 10 palabras cada uno</p>
+            </div>
             
-            <div class="contenedor-mazos" id="contenedor-mazos">
+            <div class="contenedor-grid" id="contenedor-mazos">
                 <!-- Los mazos se cargarán dinámicamente -->
+            </div>
+            
+            <div class="pantalla-acciones">
+                <button class="boton-secundario" onclick="volverASubcontenedores()">
+                    Volver a Subcontenedores
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- PANTALLA DEL QUIZ -->
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE QUIZ / PRUEBA -->
+    <!-- ============================================================================ -->
     <div id="pantalla-quiz" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
+                <div class="contador" id="contador-preguntas">
+                    Pregunta <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span>
+                </div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">📚 Menú</button>
                 </div>
             </div>
             
-            <div class="contenido-quiz">
-                <div class="palabra-japones" id="palabra-japones">言葉</div>
-                <div class="lectura" id="lectura"></div>
-                
-                <div class="contenedor-opciones" id="contenedor-opciones">
-                    <!-- Las opciones se generarán dinámicamente -->
+            <div class="quiz-container">
+                <div class="quiz-palabra">
+                    <h1 id="palabra-japones">言葉</h1>
+                    <p id="lectura" class="lectura-palabra">(kotoba)</p>
                 </div>
                 
-                <div class="resultado" id="resultado"></div>
+                <div class="quiz-opciones" id="contenedor-opciones">
+                    <!-- Las opciones se cargarán dinámicamente -->
+                </div>
                 
-                <!-- EL BOTÓN SIGUIENTE SE MUESTRA SOLO PARA RESPUESTAS INCORRECTAS -->
-                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Continuar</button>
+                <div class="quiz-resultado">
+                    <p id="resultado" class="resultado"></p>
+                    <button id="boton-siguiente" class="boton-siguiente" onclick="siguientePregunta()" style="display: none;">
+                        Continuar ▶️
+                    </button>
+                </div>
+                
+                <div class="quiz-progreso">
+                    <div class="barra-progreso">
+                        <div class="barra-progreso-fill" id="barra-progreso-quiz"></div>
+                    </div>
+                    <div class="estadisticas-quiz">
+                        <span class="estadistica">✅ <span id="correctas-quiz">0</span></span>
+                        <span class="estadistica">❌ <span id="incorrectas-quiz">0</span></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PANTALLA DE VIDEO RECOMPENSA -->
-    <div id="pantalla-video-recompensa" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador">¡Recompensa!</div>
-                <div class="botones-superiores">
-                    <button class="boton-home" onclick="saltarVideo()">Saltar Video</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
-                </div>
-            </div>
-            
-            <div class="contenido-video">
-                <h1 id="titulo-video">¡Felicidades! 🎉</h1>
-                <p class="subtitulo-video">Has completado el mazo al 100%</p>
-                
-                <div class="video-container">
-                    <video id="video-recompensa" controls autoplay class="video-recompensa">
-                        Tu navegador no soporta el elemento video.
-                    </video>
-                </div>
-                
-                <div class="info-video">
-                    <p id="duracion-video" class="duracion-video">Duración: 10s</p>
-                    <p class="mensaje-video">¡Disfruta tu recompensa!</p>
-                    <p class="recompensa-dinero" id="recompensa-mazo">+1 S/. 💰</p>
-                </div>
-                
-                <button class="boton-principal" onclick="cerrarVideoRecompensaMazo()">
-                    Cerrar y Ver Resultados
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE RESULTADOS MODIFICADA -->
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE RESULTADOS -->
+    <!-- ============================================================================ -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador">Resultados del Quiz</div>
+                <div class="contador">📊 RESULTADOS DEL QUIZ</div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">📚 Menú</button>
                 </div>
             </div>
             
-            <h1>Resultados del Quiz</h1>
-            
-            <div class="resultado-final" id="resultado-final">
-                <!-- Los resultados se mostrarán aquí -->
-            </div>
-            
-            <div class="botones-resultados">
-                <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
-                <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
-                <!-- NUEVO BOTÓN PARA REPASAR FALLADAS -->
-                <button class="boton-terciario" id="boton-repasar-falladas" onclick="repetirFalladas()">
-                    🔥 Repasar Falladas (+3 S/.)
-                </button>
+            <div class="resultados-container">
+                <div id="resultado-final">
+                    <!-- Los resultados se cargarán dinámicamente -->
+                </div>
+                
+                <div class="resultados-acciones">
+                    <button class="boton-resultado" onclick="repetirQuiz()">
+                        🔄 Repetir Quiz
+                    </button>
+                    <button class="boton-resultado" onclick="repetirFalladas()">
+                        📝 Repetir Falladas
+                    </button>
+                    <button class="boton-resultado" onclick="volverAlInicio()">
+                        🏠 Volver al Inicio
+                    </button>
+                    <button class="boton-resultado" onclick="volverAMazos()">
+                        📚 Volver a Mazos
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PANTALLA RPG DE NOVIA MODIFICADA -->
-    <div id="pantalla-rpg-novia" class="pantalla">
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE VIDEO DE RECOMPENSA (MAZOS) -->
+    <!-- ============================================================================ -->
+    <div id="pantalla-video-recompensa" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador">💕 RPG de Novia</div>
+                <div class="contador">🎬 RECOMPENSA POR 100%</div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                    <button class="boton-menu" onclick="cerrarVideoRecompensaMazo()">❌ Cerrar</button>
+                </div>
+            </div>
+            
+            <div class="video-recompensa-container">
+                <h2 id="titulo-video">¡Excelente trabajo!</h2>
+                <p class="video-descripcion">Recompensa por completar el mazo al 100%</p>
+                
+                <div class="video-player">
+                    <video id="video-recompensa" controls autoplay class="video-recompensa" muted loop>
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+                
+                <div class="video-info">
+                    <p><i class="fas fa-clock"></i> <span id="duracion-video">Duración: 10s</span></p>
+                    <p><i class="fas fa-coins"></i> <span id="recompensa-mazo">+1 S/. 💰</span></p>
+                </div>
+                
+                <div class="video-acciones">
+                    <button class="boton-saltar" onclick="saltarVideo()">
+                        ⏭️ Saltar Video
+                    </button>
+                    <button class="boton-principal" onclick="cerrarVideoRecompensaMazo()">
+                        🎯 Ver Resultados
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE EVENTO DIARIO -->
+    <!-- ============================================================================ -->
+    <div id="pantalla-evento-diario" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">📅 EVENTO DIARIO</div>
+                <div class="botones-superiores">
+                    <button class="boton-menu" onclick="eventosDiarios.omitirEvento()">❌ Omitir</button>
+                </div>
+            </div>
+            
+            <div class="evento-container">
+                <div class="evento-header">
+                    <h2>🎯 Evento del Día</h2>
+                    <p id="fecha-evento" class="evento-fecha">12 de Diciembre, 2024</p>
+                </div>
+                
+                <div class="evento-info">
+                    <h3 id="nombre-evento">Reto de Maestría</h3>
+                    <p id="descripcion-evento" class="evento-descripcion">Completa 3 mazos al 100% hoy</p>
+                    
+                    <div class="evento-progreso">
+                        <div class="barra-progreso">
+                            <div class="barra-progreso-fill" id="barra-progreso-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progreso-texto">
+                            <span id="contador-progreso">0</span>/<span id="objetivo-evento">3</span> mazos
+                        </div>
+                    </div>
+                    
+                    <div class="evento-recompensa">
+                        <h4>🎁 Recompensa:</h4>
+                        <p id="recompensa-evento">+5 S/. 💰</p>
+                    </div>
+                </div>
+                
+                <div class="evento-video">
+                    <div class="video-play-indicator">
+                        <i class="fas fa-play"></i> Haz clic para reproducir
+                    </div>
+                    <video id="video-evento-presentacion" class="video-evento" muted loop>
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+                
+                <div class="evento-acciones">
+                    <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
+                        🙅‍♂️ Omitir Evento
+                    </button>
+                    <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
+                        ✅ Aceptar Reto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE VIDEO DE EVENTO (RECOMPENSA) -->
+    <!-- ============================================================================ -->
+    <div id="pantalla-video-evento" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🏆 EVENTO COMPLETADO</div>
+                <div class="botones-superiores">
+                    <button class="boton-menu" onclick="eventosDiarios.cerrarVideoRecompensa()">❌ Cerrar</button>
+                </div>
+            </div>
+            
+            <div class="video-evento-container">
+                <h2 id="titulo-video-evento">¡Dominio Total!</h2>
+                <p id="mensaje-video-evento" class="video-mensaje">Has demostrado tu maestría en japonés</p>
+                
+                <div class="video-player">
+                    <video id="video-evento-recompensa" controls autoplay class="video-evento-completado" muted loop>
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+                
+                <div class="video-recompensa-info">
+                    <p><i class="fas fa-trophy"></i> ¡Evento Diario Completado!</p>
+                    <p><i class="fas fa-coins"></i> <span id="recompensa-dinero-evento">+5 S/. 💰</span></p>
+                </div>
+                
+                <div class="video-acciones">
+                    <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
+                        🎯 Continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- PANTALLA DE VIDEO DE EVENTO (FALLO) -->
+    <!-- ============================================================================ -->
+    <div id="pantalla-video-fallo" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">📉 EVENTO FALLADO</div>
+                <div class="botones-superiores">
+                    <button class="boton-menu" onclick="eventosDiarios.cerrarVideoFallo()">❌ Cerrar</button>
+                </div>
+            </div>
+            
+            <div class="video-fallo-container">
+                <h2 id="titulo-video-fallo">Necesitas más práctica</h2>
+                <p id="mensaje-video-fallo" class="video-mensaje">Mañana será otro día para mejorar</p>
+                
+                <div class="video-player">
+                    <video id="video-evento-fallo" controls autoplay class="video-evento-fallo" muted loop>
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+                
+                <div class="video-fallo-info">
+                    <p><i class="fas fa-exclamation-triangle"></i> Evento Diario Fallado</p>
+                    <p><i class="fas fa-calendar-alt"></i> ¡Vuelve a intentarlo mañana!</p>
+                </div>
+                
+                <div class="video-acciones">
+                    <button class="boton-principal" onclick="eventosDiarios.cerrarVideoFallo()">
+                        🔄 Intentar de Nuevo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- NUEVAS PANTALLAS PARA SISTEMA RPG DE 5 QUINTILLIZAS -->
+    <!-- ============================================================================ -->
+
+    <!-- PANTALLA DE SELECCIÓN DE QUINTILLIZA -->
+    <div id="pantalla-seleccion-novia" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">💖 SELECCIONA TU QUINTILLIZA</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">📚 Menú</button>
+                </div>
+            </div>
+            
+            <div class="seleccion-novia-container">
+                <div class="seleccion-header">
+                    <h2>💕 Las Quintillizas Nakano</h2>
+                    <p class="seleccion-subtitulo">Selecciona a tu novia activa. Solo ella recibirá experiencia.</p>
+                    <div class="seleccion-info">
+                        <span class="info-item">🎯 <strong>Novia Activa:</strong> <span id="novia-activa-nombre">Ichika Nakano</span></span>
+                        <span class="info-item">💰 <strong>Saldo:</strong> <span id="saldo-seleccion">0</span> S/.</span>
+                    </div>
+                </div>
+                
+                <div class="contenedor-hermanas" id="contenedor-hermanas">
+                    <!-- Las hermanas se cargarán dinámicamente aquí -->
+                </div>
+                
+                <div class="seleccion-acciones">
+                    <button class="boton-secundario" onclick="volverAlInicio()">
+                        ↩️ Volver al Inicio
+                    </button>
+                    <button class="boton-principal" onclick="cambiarPantalla('pantalla-rpg-quintillizas'); actualizarInterfazRPG();">
+                        🎮 Ir al RPG con la Seleccionada
+                    </button>
+                </div>
+                
+                <div class="seleccion-consejos">
+                    <h4>💡 Consejos:</h4>
+                    <ul>
+                        <li>Solo la novia activa recibe experiencia de los mazos</li>
+                        <li>Puedes cambiar de novia activa en cualquier momento</li>
+                        <li>Cada quintilliza tiene humores y momentos únicos</li>
+                        <li>Mejora su habitación para aumentar la comodidad</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA PRINCIPAL RPG DE QUINTILLIZAS -->
+    <div id="pantalla-rpg-quintillizas" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">💕 RPG - QUINTILLIZAS NAKANO</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">🏠 Inicio</button>
+                    <button class="boton-menu" onclick="cambiarPantalla('pantalla-seleccion-novia'); actualizarPantallaSeleccion();">👥 Cambiar Novia</button>
+                    <button class="boton-menu" onclick="irAlMenu()">📚 Menú</button>
                 </div>
             </div>
             
             <div class="rpg-container">
-                <!-- PERFIL DE LA NOVIA MODIFICADO -->
-                <div class="perfil-novia">
-                    <img src="imagenes/novia.jpg" alt="Novia" class="imagen-novia">
-                    <div class="info-novia">
-                        <h2 id="nombre-novia">Sakura</h2>
-                        <div class="estadisticas">
-                            <div class="stat">
-                                <span class="stat-label">Nivel:</span>
-                                <span id="nivel-relacion" class="stat-value">0</span>
+                <!-- COLUMNA IZQUIERDA: INFORMACIÓN DE LA NOVIA -->
+                <div class="rpg-columna-izquierda">
+                    <div class="novia-info-card">
+                        <div class="novia-header">
+                            <div class="novia-imagen-container">
+                                <img id="imagen-novia-activa" src="imagenes/quintillizas/ichika/principal.jpg" alt="Novia" class="novia-imagen">
+                                <div class="novia-nivel-badge" id="nivel-relacion">Nivel 1</div>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">XP Actual:</span>
-                                <span id="experiencia-actual" class="stat-value">0</span>
+                            <div class="novia-datos">
+                                <h2 id="nombre-novia-activa">Ichika Nakano</h2>
+                                <p id="descripcion-novia" class="novia-descripcion">La hermana mayor, actriz prometedora</p>
+                                
+                                <div class="novia-estadisticas">
+                                    <div class="estadistica">
+                                        <span class="estadistica-label">Afecto:</span>
+                                        <div class="barra-afecto">
+                                            <div class="barra-afecto-fill" id="barra-afecto-fill" style="width: 50%"></div>
+                                        </div>
+                                        <span class="estadistica-valor" id="afecto-novia">50%</span>
+                                    </div>
+                                    
+                                    <div class="estadistica">
+                                        <span class="estadistica-label">Experiencia:</span>
+                                        <div class="barra-experiencia">
+                                            <div class="barra-experiencia-fill" id="barra-experiencia-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="estadistica-valor" id="experiencia-actual">0</span>/<span id="experiencia-siguiente-nivel">150</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="novia-humor">
+                                    <span class="humor-label">Humor de hoy:</span>
+                                    <span class="humor-valor" id="humor-novia">Coqueta 😘</span>
+                                    <span class="multiplicador-exp" id="multiplicador-exp">1.8x</span>
+                                </div>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">XP Total:</span>
-                                <span id="experiencia-total" class="stat-value">0</span>
+                        </div>
+                        
+                        <div class="novia-acciones">
+                            <button class="boton-accion-novia" onclick="verHabitacion()">
+                                🏠 Ver Habitación
+                            </button>
+                            <button class="boton-accion-novia" onclick="cambiarPantalla('pantalla-seleccion-novia'); actualizarPantallaSeleccion();">
+                                👥 Cambiar Novia
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- INVENTARIO -->
+                    <div class="inventario-card">
+                        <h3>🎒 Tu Inventario</h3>
+                        <div class="inventario-items">
+                            <div class="inventario-item">
+                                <span class="item-icon">💵</span>
+                                <span class="item-nombre">Dinero:</span>
+                                <span class="item-cantidad" id="saldo-rpg">0 S/.</span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">Humor:</span>
-                                <span id="humor-novia" class="stat-value">Normal 😐</span>
+                            <div class="inventario-item">
+                                <span class="item-icon">💝</span>
+                                <span class="item-nombre">Flores:</span>
+                                <span class="item-cantidad" id="flores-inventario">5</span>
+                            </div>
+                            <div class="inventario-item">
+                                <span class="item-icon">🍫</span>
+                                <span class="item-nombre">Chocolates:</span>
+                                <span class="item-cantidad" id="chocolates-inventario">3</span>
+                            </div>
+                            <div class="inventario-item">
+                                <span class="item-icon">💎</span>
+                                <span class="item-nombre">Joyas:</span>
+                                <span class="item-cantidad" id="joyas-inventario">1</span>
+                            </div>
+                            <div class="inventario-item">
+                                <span class="item-icon">💍</span>
+                                <span class="item-nombre">Anillos:</span>
+                                <span class="item-cantidad" id="anillos-inventario">0</span>
+                            </div>
+                            <div class="inventario-item importante">
+                                <span class="item-icon">🛡️</span>
+                                <span class="item-nombre">Condones:</span>
+                                <span class="item-cantidad" id="condones-inventario">0</span>
+                                <button class="boton-comprar-chico" onclick="comprarCondones()">Comprar (15 S/.)</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- BARRA DE EXPERIENCIA -->
-                <div class="barra-progreso-container">
-                    <div class="barra-progreso-label">
-                        Experiencia: <span id="experiencia-actual-text">0</span>/<span id="experiencia-siguiente-nivel">100</span>
-                        <span style="color: #ffd700; margin-left: 10px;">Multiplicador: <span id="multiplicador-exp">1.0x</span></span>
-                    </div>
-                    <div class="barra-progreso">
-                        <div id="barra-experiencia-fill" class="barra-progreso-fill" style="width: 0%"></div>
-                    </div>
-                    <div id="descripcion-humor" class="descripcion-humor" style="font-size: 0.9rem; color: #cccccc; margin-top: 5px;">
-                        Humor normal del día
-                    </div>
-                </div>
-                
-                <!-- ECONOMÍA RPG MODIFICADA -->
-                <div class="economia-rpg">
-                    <div class="saldo">
-                        <span class="saldo-label">Dinero:</span>
-                        <span id="saldo-rpg" class="saldo-valor">0 S/.</span>
-                    </div>
-                    <div class="inventario">
-                        <div class="inventario-item">
-                            <span class="inventario-label">Condones:</span>
-                            <span id="condones-inventario" class="inventario-valor">0</span>
-                        </div>
-                        <div class="inventario-item">
-                            <span class="inventario-label">Flores:</span>
-                            <span id="flores-inventario" class="inventario-valor">0</span>
-                        </div>
-                        <div class="inventario-item">
-                            <span class="inventario-label">Chocolates:</span>
-                            <span id="chocolates-inventario" class="inventario-valor">0</span>
-                        </div>
-                        <div class="inventario-item">
-                            <span class="inventario-label">Joyas:</span>
-                            <span id="joyas-inventario" class="inventario-valor">0</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- DIÁLOGO -->
-                <div class="dialogo-container">
-                    <div id="dialogo-novia" class="dialogo-novia">
-                        <div class="dialogo-burbuja">
-                            <div class="texto-dialogo">¡Hola mi amor! 💕 ¿Cómo estás hoy?</div>
-                            <div class="tiempo-dialogo">Ahora</div>
+                <!-- COLUMNA DERECHA: ACCIONES Y MOMENTOS -->
+                <div class="rpg-columna-derecha">
+                    <!-- REGALOS -->
+                    <div class="acciones-card">
+                        <h3>🎁 Regalos</h3>
+                        <p class="card-descripcion">Regala algo a tu novia activa. Ella te responderá con un video especial.</p>
+                        
+                        <div class="regalos-container">
+                            <button class="boton-regalo" onclick="regalarItem('flores')">
+                                <span class="regalo-icono">💐</span>
+                                <span class="regalo-nombre">Flores</span>
+                                <span class="regalo-precio">5 S/.</span>
+                                <small class="regalo-desc">+5 afecto</small>
+                            </button>
+                            
+                            <button class="boton-regalo" onclick="regalarItem('chocolates')">
+                                <span class="regalo-icono">🍫</span>
+                                <span class="regalo-nombre">Chocolates</span>
+                                <span class="regalo-precio">10 S/.</span>
+                                <small class="regalo-desc">+8 afecto</small>
+                            </button>
+                            
+                            <button class="boton-regalo" onclick="regalarItem('joyas')">
+                                <span class="regalo-icono">💎</span>
+                                <span class="regalo-nombre">Joyas</span>
+                                <span class="regalo-precio">20 S/.</span>
+                                <small class="regalo-desc">+12 afecto</small>
+                            </button>
+                            
+                            <button class="boton-regalo especial" onclick="regalarItem('anillos')">
+                                <span class="regalo-icono">💍</span>
+                                <span class="regalo-nombre">Anillo</span>
+                                <span class="regalo-precio">50 S/.</span>
+                                <small class="regalo-desc">+20 afecto</small>
+                            </button>
                         </div>
                     </div>
+                    
+                    <!-- MOMENTOS ÍNTIMOS -->
+                    <div class="momentos-card">
+                        <h3>💖 Momentos Íntimos</h3>
+                        <p class="card-descripcion">Usa condones para momentos especiales. Cada quintilliza tiene 5 momentos únicos.</p>
+                        
+                        <div class="momentos-container">
+                            <button id="momento-1" class="boton-momento bloqueado" onclick="usarMomentoIntimo('beso_coqueto')">
+                                <span class="momento-icono">💋</span>
+                                <span class="momento-nombre">Beso Coqueto</span>
+                                <small class="momento-condones">1 condón</small>
+                            </button>
+                            
+                            <button id="momento-2" class="boton-momento bloqueado" onclick="usarMomentoIntimo('masaje_actriz')">
+                                <span class="momento-icono">✋</span>
+                                <span class="momento-nombre">Masaje Sensual</span>
+                                <small class="momento-condones">1 condón</small>
+                            </button>
+                            
+                            <button id="momento-3" class="boton-momento bloqueado" onclick="usarMomentoIntimo('noche_estrellas')">
+                                <span class="momento-icono">🌙</span>
+                                <span class="momento-nombre">Noche Estrellas</span>
+                                <small class="momento-condones">1 condón</small>
+                            </button>
+                            
+                            <button id="momento-4" class="boton-momento bloqueado" onclick="usarMomentoIntimo('escena_pasion')">
+                                <span class="momento-icono">🔥</span>
+                                <span class="momento-nombre">Escena de Pasión</span>
+                                <small class="momento-condones">2 condones</small>
+                            </button>
+                            
+                            <button id="momento-5" class="boton-momento bloqueado" onclick="usarMomentoIntimo('amanecer_juntos')">
+                                <span class="momento-icono">🌅</span>
+                                <span class="momento-nombre">Amanecer Juntos</span>
+                                <small class="momento-condones">3 condones</small>
+                            </button>
+                        </div>
+                        
+                        <div class="momentos-info">
+                            <p>🎯 <strong>Niveles requeridos:</strong> 1, 2, 3, 4, 5</p>
+                            <p>💡 <strong>Consejo:</strong> Sube de nivel y mejora el afecto para desbloquear momentos</p>
+                        </div>
+                    </div>
+                    
+                    <!-- COMPRAR CONDONES -->
+                    <div class="condones-card">
+                        <h3>🛡️ Protección</h3>
+                        <div class="condones-contenido">
+                            <p>Los condones son necesarios para los momentos íntimos.</p>
+                            <div class="compra-condones">
+                                <button class="boton-comprar-grande" onclick="comprarCondones()">
+                                    <span class="compra-icono">🛒</span>
+                                    <span class="compra-texto">Comprar Condones</span>
+                                    <span class="compra-precio">15 S/.</span>
+                                </button>
+                                <small class="compra-info">+5 XP a la novia activa</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- ACCIONES BÁSICAS MODIFICADAS (SIN CONVERSAR) -->
-                <div class="acciones-basicas">
-                    <button class="boton-accion" onclick="comprarCondones()">🛒 Comprar Condones (S/.15)</button>
+            </div>
+            
+            <!-- MENSAJES DEL RPG -->
+            <div id="mensaje-rpg" class="mensaje-flotante"></div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE HABITACIÓN Y DECORACIÓN -->
+    <div id="pantalla-habitacion" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🏠 HABITACIÓN DE TU QUINTILLIZA</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlRPG()">↩️ Volver al RPG</button>
+                    <button class="boton-menu" onclick="volverAlInicio()">🏠 Inicio</button>
                 </div>
-                
-                <!-- TIENDA DE REGALOS -->
-                <div class="tienda-regalos">
-                    <h3>🎁 Tienda de Regalos (Gana XP)</h3>
-                    <div class="regalos-grid">
-                        <button class="boton-regalo" onclick="regalarItem('flores')">
-                            💐 Flores (S/.5) +10 XP
-                        </button>
-                        <button class="boton-regalo" onclick="regalarItem('chocolates')">
-                            🍫 Chocolates (S/.10) +25 XP
-                        </button>
-                        <button class="boton-regalo" onclick="regalarItem('joyas')">
-                            💎 Joyas (S/.20) +50 XP
-                        </button>
+            </div>
+            
+            <div class="habitacion-container">
+                <div class="habitacion-info">
+                    <div class="habitacion-header">
+                        <h2 id="nombre-habitacion">Habitación de Ichika</h2>
+                        <div class="habitacion-estadisticas">
+                            <div class="estadistica-habitacion">
+                                <span class="estadistica-label">Nivel:</span>
+                                <span class="estadistica-valor" id="nivel-habitacion">1</span>
+                            </div>
+                            <div class="estadistica-habitacion">
+                                <span class="estadistica-label">Comodidad:</span>
+                                <span class="estadistica-valor" id="comodidad-habitacion">15</span>
+                            </div>
+                            <div class="estadistica-habitacion">
+                                <span class="estadistica-label">Estilo:</span>
+                                <span class="estadistica-valor" id="estilo-habitacion">Actriz</span>
+                            </div>
+                            <div class="estadistica-habitacion">
+                                <span class="estadistica-label">Items:</span>
+                                <span class="estadistica-valor" id="items-habitacion">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="habitacion-items">
+                        <h3>🛏️ Items en la Habitación</h3>
+                        <ul id="lista-decoracion" class="lista-items">
+                            <li>✅ Cama básica</li>
+                            <li>✅ Mesa pequeña</li>
+                            <li>✅ Espejo de maquillaje</li>
+                            <!-- Se agregarán dinámicamente -->
+                        </ul>
+                        
+                        <div class="habitacion-beneficios">
+                            <h4>✨ Beneficios de la Comodidad:</h4>
+                            <ul>
+                                <li>+5 comodidad = +1% multiplicador de experiencia</li>
+                                <li>+20 comodidad = Desbloquea diálogos especiales</li>
+                                <li>+50 comodidad = Momentos íntimos mejorados</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- MOMENTOS ÍNTIMOS (SIEMPRE VISIBLES PERO CON REQUISITOS) -->
-                <div class="seccion-adulto">
-                    <h3>💖 Momentos Íntimos</h3>
-                    <div class="acciones-adulto">
-                        <button id="boton-beso" class="boton-adulto" onclick="usarMomentoIntimo('beso')">
-                            💋 Beso Apasionado (1 condón) - Nivel 1
-                        </button>
-                        <button id="boton-caricias" class="boton-adulto" onclick="usarMomentoIntimo('caricias')">
-                            ✋ Carícias Íntimas (1 condón) - Nivel 2
-                        </button>
-                        <button id="boton-intimidad1" class="boton-adulto" onclick="usarMomentoIntimo('intimidad1')">
-                            🌙 Primera Noche (1 condón) - Nivel 3
-                        </button>
-                        <button id="boton-intimidad2" class="boton-adulto" onclick="usarMomentoIntimo('intimidad2')">
-                            🔥 Noche de Pasión (2 condones) - Nivel 5
-                        </button>
+                <div class="habitacion-tienda">
+                    <div class="tienda-header">
+                        <h3>🛒 Tienda de Decoración</h3>
+                        <div class="tienda-saldo">
+                            <span class="saldo-label">Tu saldo:</span>
+                            <span class="saldo-valor" id="saldo-tienda">0</span> S/.
+                        </div>
+                    </div>
+                    
+                    <div class="tienda-descripcion">
+                        <p>Mejora la habitación de tu quintilliza para aumentar la comodidad y desbloquear beneficios.</p>
+                    </div>
+                    
+                    <div class="tienda-items" id="tienda-decoracion">
+                        <!-- Los items se cargarán dinámicamente -->
+                        <div class="item-tienda">
+                            <div class="item-info">
+                                <h4>Cama King Size</h4>
+                                <p class="item-tipo">cama</p>
+                                <p class="item-comodidad">+20 comodidad</p>
+                            </div>
+                            <div class="item-precio">
+                                <span class="precio">50 S/.</span>
+                                <button class="boton-comprar" onclick="comprarDecoracion('cama_lujosa', 'ichika')">
+                                    🛒 Comprar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tienda-consejos">
+                        <h4>💡 Consejos de Decoración:</h4>
+                        <ul>
+                            <li>Compra items que combinen con la personalidad de tu quintilliza</li>
+                            <li>La comodidad afecta positivamente la relación</li>
+                            <li>Cada nivel de habitación desbloquea nuevos items</li>
+                            <li>Decora para desbloquear escenas especiales</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <!-- MENSAJES DEL SISTEMA -->
-                <div id="mensaje-rpg" class="mensaje-sistema"></div>
+            </div>
+            
+            <div class="habitacion-acciones">
+                <button class="boton-secundario" onclick="volverAlRPG()">
+                    ↩️ Volver al RPG
+                </button>
+                <button class="boton-principal" onclick="cambiarPantalla('pantalla-rpg-quintillizas')">
+                    💖 Volver con tu Quintilliza
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- NUEVA PANTALLA: PALABRAS FALLADAS -->
-    <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
-        <!-- Esta pantalla se crea dinámicamente en script.js -->
+    <!-- PANTALLA DE VIDEO DE REGALO RECÍPROCO -->
+    <div id="pantalla-video-regalo" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🎁 REGALO RECÍPROCO</div>
+                <div class="botones-superiores">
+                    <button class="boton-menu" onclick="cerrarVideoRegalo()">❌ Cerrar</button>
+                </div>
+            </div>
+            
+            <div class="video-regalo-container">
+                <div class="video-regalo-header">
+                    <h2 id="titulo-video-regalo">Tu Quintilliza recibe tu regalo</h2>
+                    <p id="mensaje-video-regalo" class="video-mensaje">¡Gracias por el regalo!</p>
+                </div>
+                
+                <div class="video-regalo-player">
+                    <video id="video-regalo-reciproco" controls autoplay class="video-regalo">
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+                
+                <div class="video-regalo-info">
+                    <p>🎬 <strong>Regalo Recíproco:</strong> Cada quintilliza tiene una reacción única a tus regalos.</p>
+                    <p>💖 <strong>Afecto:</strong> Los regalos aumentan el afecto y desbloquean diálogos especiales.</p>
+                </div>
+                
+                <div class="video-regalo-acciones">
+                    <button class="boton-principal" onclick="cerrarVideoRegalo()">
+                        🎮 Continuar en el RPG
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-<script src="1vocabulario.js"></script>      <!-- PRIMERO: Base de datos de vocabulario -->
-<script src="1config.js"></script>          <!-- SEGUNDO: Configuraciones generales -->
-<script src="1systems.js"></script>         <!-- TERCERO: Sistemas base (economía, misiones) -->
-<script src="1failed-words.js"></script>    <!-- CUARTO: Sistema de palabras falladas -->
-<script src="1events.js"></script>          <!-- QUINTO: Sistema de eventos diarios -->
-<script src="1rpg.js"></script>             <!-- SEXTO: Sistema RPG de novia -->
-<script src="1main.js"></script>            <!-- ÚLTIMO: Funciones principales y estructura -->
+
+    <!-- PANTALLA DE VIDEO ÍNTIMO -->
+    <div id="pantalla-video-intimo" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">💖 MOMENTO ÍNTIMO</div>
+                <div class="botones-superiores">
+                    <button class="boton-menu" onclick="cerrarVideoIntimo()">❌ Cerrar</button>
+                </div>
+            </div>
+            
+            <div class="video-intimo-container">
+                <div class="video-intimo-header">
+                    <h2 id="titulo-video-intimo">Momento Especial</h2>
+                    <p id="descripcion-video-intimo" class="video-descripcion">Un momento especial con tu quintilliza</p>
+                    <div class="video-intimo-info">
+                        <span class="info-item">👤 <span id="hermana-video-intimo">Con: Ichika Nakano</span></span>
+                        <span class="info-item">⏱️ <span id="duracion-video-intimo">Duración: 15s</span></span>
+                    </div>
+                </div>
+                
+                <div class="video-intimo-player">
+                    <video id="video-intimo-momento" controls autoplay class="video-intimo">
+                        Tu navegador no soporta el video.
+                    </video>
+                    
+                    <div class="video-intimo-advertencia">
+                        <p>⚠️ <strong>Contenido para adultos:</strong> Este video contiene momentos íntimos.</p>
+                        <p>🔞 Solo para mayores de 18 años.</p>
+                    </div>
+                </div>
+                
+                <div class="video-intimo-beneficios">
+                    <h4>✨ Beneficios del Momento:</h4>
+                    <ul>
+                        <li>+25 XP por cada condón usado</li>
+                        <li>+10 afecto por cada condón usado</li>
+                        <li>Desbloquea diálogos especiales</li>
+                        <li>Mejora la relación con tu quintilliza</li>
+                    </ul>
+                </div>
+                
+                <div class="video-intimo-acciones">
+                    <button class="boton-principal" onclick="cerrarVideoIntimo()">
+                        💕 Continuar la Relación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- SCRIPT DE INICIALIZACIÓN -->
+    <!-- ============================================================================ -->
+    
+   <!-- PRIMERO: Configuración y datos base -->
+<script src="1config.js"></script>
+<script src="1vocabulario.js"></script>
+
+<!-- SEGUNDO: Sistemas base -->
+<script src="1systems.js"></script>
+<script src="1failed-words.js"></script>
+<script src="1events.js"></script>
+
+<!-- TERCERO: RPG (usa la configuración) -->
+<script src="1rpg.js"></script>
+
+<!-- CUARTO: Sistema principal (usa TODOS los anteriores) -->
+<script src="1main.js"></script>
+    
+    <script>
+        // Función para cargar contenedores (ejemplo)
+        function cargarContenedores() {
+            cambiarPantalla('pantalla-contenedores');
+            // Aquí iría tu lógica para cargar los contenedores
+        }
+        
+        function verMisionesDiarias() {
+            alert("Mostraría pantalla de misiones diarias");
+        }
+        
+        function volverAContenedores() {
+            cambiarPantalla('pantalla-contenedores');
+        }
+    </script>
 </body>
 </html>
