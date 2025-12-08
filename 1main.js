@@ -311,11 +311,15 @@ function cargarContenedor(idContenedor) {
             subDiv.className = 'subcontenedor-card';
             subDiv.onclick = () => cargarSubcontenedor(key);
             
-            subDiv.innerHTML = `
-                <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen">
-                <div class="subcontenedor-texto">${sub.nombre}</div>
-                <div class="subcontenedor-info">5 mazos disponibles</div>
-            `;
+          subDiv.innerHTML = `
+    <img src="${obtenerUrlImagen('subcontenedores', key)}" alt="${sub.nombre}" class="subcontenedor-imagen">
+    <div class="subcontenedor-texto">${sub.nombre}</div>
+    <div class="subcontenedor-info">5 mazos disponibles</div>
+    <!-- NUEVO BOTÓN PARA MANGA -->
+    <button class="boton-manga" onclick="iniciarLecturaManga('${key}'); event.stopPropagation();">
+        📖 Leer Manga
+    </button>
+`;
             
             contenedorSub.appendChild(subDiv);
         });
