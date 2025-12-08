@@ -56,11 +56,11 @@ const configImagenes = {
     },
     // AQUÍ ESTÁN LAS IMÁGENES DE LAS QUINTILLIZAS NAKANO (DENTRO DE configImagenes)
     nakano: {
-        'ichika': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/9/9d/Ichika_Nakano_Manga_Profile.png',
-        'nino': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/e/eb/Nino_Nakano_Manga_Profile.png',
-        'miku': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0b/Miku_Nakano_Manga_Profile.png',
-        'yotsuba': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0f/Yotsuba_Nakano_Manga_Profile.png',
-        'itsuki': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/1/19/Itsuki_Nakano_Manga_Profile.png',
+        'ichika': 'https://pbs.twimg.com/media/G7qfcGRWkAAV74w?format=png&name=small',
+        'nino': 'https://pbs.twimg.com/media/G7qfpGZXAAAib4A?format=png&name=small',
+        'miku': 'https://pbs.twimg.com/media/G7qfrrKWsAAv6ZT?format=png&name=small',
+        'yotsuba': 'https://pbs.twimg.com/media/G7qfupkXUAAX0aS?format=png&name=small',
+        'itsuki': 'https://pbs.twimg.com/media/G7qfxnsX0AIbJK1?format=png&name=small',
         'default': 'imagenes/nakano/default.jpg'
     }
 };
