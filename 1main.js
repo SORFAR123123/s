@@ -487,6 +487,8 @@ function mostrarResultados() {
     // Registrar experiencia en SISTEMA NAKANO (actualizado)
     if (typeof sistemaNakano !== 'undefined') {
         sistemaNakano.registrarMazoCompletado(porcentaje);
+          // Sincronizar dinero primero
+        sistemaNakano.economia.saldo = sistemaEconomia.saldoTotal;
     }
     
     if (porcentaje === 100) {
