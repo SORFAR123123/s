@@ -240,38 +240,39 @@ const calendarioFabrizio = {
         contenedor.innerHTML = html;
     },
     
-    // Actualizar interfaz de fotos
-    actualizarInterfazFotos: function() {
-        const contenedor = document.getElementById('contenedor-fotos');
-        const titulo = document.getElementById('titulo-semana-seleccionada');
-        
-        if (!contenedor || !this.mesActual || !this.semanaActual) return;
-        
-        const mesInfo = this.calendario[this.mesActual];
-        
-        if (titulo) {
-            titulo.textContent = `${mesInfo.nombre} - Semana ${this.semanaActual}`;
-        }
-        
-        let html = '<div class="fotos-grid">';
-        
-        const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
-        
-        for (let foto = 1; foto <= this.fotosPorSemana; foto++) {
-            const urlFoto = this.obtenerFoto(this.mesActual, this.semanaActual, foto);
-            html += `
-                <div class="foto-card">
-                    <div class="foto-dia">${dias[foto-1]}</div>
-                    <img src="${urlFoto}" alt="Foto ${foto}" class="foto-imagen" 
-                         onerror="this.src='https://via.placeholder.com/300x400/cccccc/333333?text=Foto+${foto}'">
-                    <div class="foto-info">Día ${foto} de 5</div>
-                </div>
-            `;
-        }
-        
-        html += '</div>';
-        contenedor.innerHTML = html;
-    },
+   // Actualizar interfaz de fotos
+actualizarInterfazFotos: function() {
+    const contenedor = document.getElementById('contenedor-fotos');
+    const titulo = document.getElementById('titulo-semana-seleccionada');
+    
+    if (!contenedor || !this.mesActual || !this.semanaActual) return;
+    
+    const mesInfo = this.calendario[this.mesActual];
+    
+    if (titulo) {
+        titulo.textContent = `${mesInfo.nombre} - Semana ${this.semanaActual}`;
+    }
+    
+    let html = '<div class="fotos-grid">';
+    
+    const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+    
+    for (let foto = 1; foto <= this.fotosPorSemana; foto++) {
+        const urlFoto = this.obtenerFoto(this.mesActual, this.semanaActual, foto);
+        html += `
+            <div class="foto-card" onclick="verFotoGrande(${this.mesActual}, ${this.semanaActual}, ${foto})">
+                <div class="foto-dia">${dias[foto-1]}</div>
+                <img src="${urlFoto}" alt="Foto ${foto}" class="foto-imagen" 
+                     onerror="this.src='https://via.placeholder.com/300x400/cccccc/333333?text=Foto+${foto}'">
+                <div class="foto-info">Día ${foto} de 5</div>
+                <div class="foto-click">👆 Toca para agrandar</div>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    contenedor.innerHTML = html;
+},
     
     // Navegar atrás desde fotos
     volverASemanas: function() {
