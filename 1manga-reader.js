@@ -10,7 +10,7 @@ const sistemaManga = {
             titulo: 'The Last Summer - Capítulo 1',
             descripcion: 'Primer capítulo del manga The Last Summer',
             imagenes: [
-                'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=large',
+                'https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=large',
                 'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=large',
                 'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large'
                 // AÑADE TANTAS IMÁGENES COMO QUIERAS AQUÍ
