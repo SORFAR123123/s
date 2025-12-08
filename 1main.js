@@ -343,7 +343,7 @@ function cargarSubcontenedor(idSubcontenedor) {
             mazoDiv.onclick = () => cargarMazo(key);
             
             mazoDiv.innerHTML = `
-                <img src="${obtenerUrlImagen('mazos', key)}" alt="${mazo.nombre}" class="mazo-imagen">
+            <img src="${obtenerImagenMazo(subcontenedorActual, key)}" alt="${mazo.nombre}" class="mazo-imagen">
                 <div class="mazo-texto">${mazo.nombre}</div>
                 <div class="mazo-info">10 palabras</div>
             `;
