@@ -38,6 +38,29 @@ function generarPalabras(cantidad) {
 }
 
 // ============================================================================
+// FUNCIÓN PARA OBTENER IMAGEN DE MAZO
+// ============================================================================
+
+function obtenerImagenMazo(subcontenedorId, mazoId) {
+    // Si existe el sistema de imágenes de mazos
+    if (typeof imagenesMazos !== 'undefined' && 
+        imagenesMazos[subcontenedorId] && 
+        imagenesMazos[subcontenedorId][mazoId]) {
+        return imagenesMazos[subcontenedorId][mazoId];
+    }
+    
+    // Si no, usar imagen por defecto según config.js
+    if (typeof configImagenes !== 'undefined' && 
+        configImagenes.mazos && 
+        configImagenes.mazos[mazoId]) {
+        return configImagenes.mazos[mazoId];
+    }
+    
+    // Último recurso: imagen por defecto
+    return 'imagenes/mazos/default.jpg';
+}
+
+// ============================================================================
 // ESTRUCTURA PRINCIPAL MODIFICADA
 // ============================================================================
 
@@ -60,7 +83,7 @@ const estructura = {
             }
         }
     },
-      'contenedor2': {
+    'contenedor2': {
         nombre: 'Toono esuke',
         subcontenedores: {
             'sub2_1': { 
@@ -74,11 +97,11 @@ const estructura = {
             'sub2_3': { 
                 nombre: 'Sub-Contenedor 2.3', 
                 mazos: generarMazosEspecificos('sub2_3') 
-            },  // ← PONES COMA AQUÍ (QUITA EL ESPACIO VACÍO)
+            },
             'sub2_4': { 
-                nombre: 'Hermana sueca  buenas curvas potona', 
+                nombre: 'Hermana sueca buenas curvas potona', 
                 mazos: generarMazosEspecificos('sub2_4') 
-            }  // ← PONES ESTA LÍNEA NUEVA
+            }
         }
     },
     'contenedor3': {
@@ -272,6 +295,53 @@ let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
 
 // ============================================================================
+// FUNCIONES DE NOTIFICACIÓN
+// ============================================================================
+
+function mostrarNotificacion(mensaje) {
+    // Crear notificación temporal
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff5722, #ff9800);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideInRight 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    `;
+    notificacion.textContent = mensaje;
+    
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notificacion.remove(), 300);
+    }, 3000);
+}
+
+// Añade la animación CSS si no existe
+if (!document.querySelector('#notification-styles')) {
+    const style = document.createElement('style');
+    style.id = 'notification-styles';
+    style.textContent = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// ============================================================================
 // FUNCIONES DEL SISTEMA PRINCIPAL - CON BOTÓN "IR AL MENÚ"
 // ============================================================================
 
@@ -325,7 +395,7 @@ function cargarContenedor(idContenedor) {
 }
 
 function cargarSubcontenedor(idSubcontenedor) {
-    // Guardar para poder volver desde el manga ← NUEVA LÍNEA
+    // Guardar para poder volver desde el manga
     window.subcontenedorActual = idSubcontenedor;
     
     const contenedor = estructura[contenedorActual];
@@ -345,17 +415,16 @@ function cargarSubcontenedor(idSubcontenedor) {
             mazoDiv.className = 'mazo-card';
             mazoDiv.onclick = () => cargarMazo(key);
             
-            // USAR LAS NUEVAS IMÁGENES DE MAZOS ← CAMBIO IMPORTANTE
             mazoDiv.innerHTML = `
                 <img src="${obtenerImagenMazo(subcontenedorActual, key)}" alt="${mazo.nombre}" class="mazo-imagen">
                 <div class="mazo-texto">${mazo.nombre}</div>
-                <div class="mazo-info">10 palabras</div>
+                <div class="mazo-info">${mazo.palabras ? mazo.palabras.length : 10} palabras</div>
             `;
             
             contenedorMazos.appendChild(mazoDiv);
         });
         
-        // AGREGAR BOTÓN DE MANGA SI EXISTE ← NUEVO CÓDIGO
+        // AGREGAR BOTÓN DE MANGA SI EXISTE
         const botonMangaHTML = agregarBotonManga(idSubcontenedor);
         if (botonMangaHTML) {
             contenedorMazos.innerHTML += botonMangaHTML;
@@ -366,18 +435,71 @@ function cargarSubcontenedor(idSubcontenedor) {
 }
 
 function cargarMazo(idMazo) {
-    const contenedor = estructura[contenedorActual];
-    const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
-    if (subcontenedor && subcontenedor.mazos[idMazo]) {
-        mazoActual = [...subcontenedor.mazos[idMazo].palabras];
-        preguntaActual = 0;
-        respuestasCorrectas = 0;
-        respuestasIncorrectas = 0;
-        
-        mezclarPreguntas();
-        cambiarPantalla('pantalla-quiz');
-        mostrarPregunta();
+    // DEBUG: Verificar variables
+    console.log("🔍 DEBUG cargarMazo llamado con:", {
+        contenedorActual: contenedorActual,
+        subcontenedorActual: subcontenedorActual,
+        mazoId: idMazo
+    });
+    
+    // Verificar que todo esté correctamente definido
+    if (!contenedorActual || !subcontenedorActual) {
+        console.error("❌ No hay contenedor o subcontenedor seleccionado");
+        mostrarNotificacion("Error: Primero selecciona un subcontenedor");
+        return;
     }
+    
+    const contenedor = estructura[contenedorActual];
+    if (!contenedor) {
+        console.error(`❌ Contenedor ${contenedorActual} no encontrado`);
+        mostrarNotificacion("Error: Contenedor no encontrado");
+        return;
+    }
+    
+    const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
+    if (!subcontenedor) {
+        console.error(`❌ Subcontenedor ${subcontenedorActual} no encontrado`);
+        mostrarNotificacion("Error: Subcontenedor no encontrado");
+        return;
+    }
+    
+    const mazo = subcontenedor.mazos[idMazo];
+    if (!mazo) {
+        console.error(`❌ Mazo ${idMazo} no encontrado en ${subcontenedorActual}`);
+        mostrarNotificacion(`Error: Mazo ${idMazo} no disponible`);
+        return;
+    }
+    
+    // DEBUG: Verificar que el mazo tiene palabras
+    console.log("📦 Cargando mazo:", {
+        contenedor: contenedorActual,
+        subcontenedor: subcontenedorActual,
+        mazo: idMazo,
+        palabras: mazo.palabras ? mazo.palabras.length : 0,
+        nombre: mazo.nombre
+    });
+    
+    if (!mazo.palabras || mazo.palabras.length === 0) {
+        console.error("❌ El mazo no tiene palabras");
+        mostrarNotificacion("Error: Este mazo no tiene palabras configuradas");
+        return;
+    }
+    
+    // Cargar el mazo
+    mazoActual = [...mazo.palabras];
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasIncorrectas = 0;
+    
+    // Actualizar título del quiz
+    const tituloElement = document.getElementById('contador-preguntas');
+    if (tituloElement) {
+        tituloElement.textContent = `${subcontenedor.nombre} - ${mazo.nombre}`;
+    }
+    
+    mezclarPreguntas();
+    cambiarPantalla('pantalla-quiz');
+    mostrarPregunta();
 }
 
 function mezclarPreguntas() {
@@ -427,11 +549,6 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
     const resultado = document.getElementById('resultado');
     const palabraActual = document.getElementById('palabra-japones').textContent;
     
-    // CORRECCIÓN: Asegurar que todos los botones son clickeables
-    opcionesDOM.forEach(opcion => {
-        opcion.disabled = false; // Asegurar que no estén deshabilitados
-    });
-    
     // Deshabilitar botones después de hacer clic
     opcionesDOM.forEach(opcion => {
         opcion.disabled = true;
@@ -446,7 +563,7 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
         }
     });
     
-    // CORRECCIÓN 1: MOSTRAR LA PRONUNCIACIÓN SIEMPRE, TANTO EN RESPUESTA CORRECTA COMO INCORRECTA
+    // MOSTRAR LA PRONUNCIACIÓN SIEMPRE
     document.getElementById('lectura').textContent = `(${lectura})`;
     
     if (respuestaSeleccionada === respuestaCorrecta) {
@@ -454,7 +571,7 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
         resultado.className = 'resultado correcto';
         respuestasCorrectas++;
         
-        // CORRECCIÓN 2: Navegación automática solo para respuestas correctas
+        // Navegación automática solo para respuestas correctas
         setTimeout(() => {
             siguientePregunta();
         }, 1000);
@@ -465,19 +582,18 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
         respuestasIncorrectas++;
         
         // REGISTRAR PALABRA FALLADA CON OPCIONES ORIGINALES
-        sistemaPalabrasFalladas.registrarPalabraFallada(
-            palabraActual,
-            respuestaSeleccionada,
-            respuestaCorrecta,
-            lectura,
-            opciones // Guardar las opciones originales
-        );
+        if (typeof sistemaPalabrasFalladas !== 'undefined' && sistemaPalabrasFalladas.registrarPalabraFallada) {
+            sistemaPalabrasFalladas.registrarPalabraFallada(
+                palabraActual,
+                respuestaSeleccionada,
+                respuestaCorrecta,
+                lectura,
+                opciones
+            );
+        }
         
         // Mostrar botón "Continuar" solo para respuestas incorrectas
         document.getElementById('boton-siguiente').style.display = 'block';
-        
-        // CORRECCIÓN 3: NO NAVEGACIÓN AUTOMÁTICA PARA RESPUESTAS INCORRECTAS
-        // El usuario debe hacer clic en "Continuar" manualmente
     }
 }
 
@@ -492,28 +608,32 @@ function mostrarResultados() {
     
     console.log("📊 Mostrando resultados:", {
         porcentaje: porcentaje,
-        tieneEventoActivo: !!eventosDiarios.estado.eventoActual,
-        eventoCompletado: eventosDiarios.estado.completado,
-        eventoProgreso: eventosDiarios.estado.progreso,
-        eventoAceptado: eventosDiarios.estado.aceptado
+        tieneEventoActivo: typeof eventosDiarios !== 'undefined' && !!eventosDiarios.estado?.eventoActual,
+        eventoCompletado: typeof eventosDiarios !== 'undefined' && eventosDiarios.estado?.completado,
+        eventoAceptado: typeof eventosDiarios !== 'undefined' && eventosDiarios.estado?.aceptado
     });
     
     // Registrar experiencia en SISTEMA NAKANO (actualizado)
     if (typeof sistemaNakano !== 'undefined') {
         sistemaNakano.registrarMazoCompletado(porcentaje);
-          // Sincronizar dinero primero
-        sistemaNakano.economia.saldo = sistemaEconomia.saldoTotal;
+        // Sincronizar dinero primero
+        if (sistemaNakano.economia && sistemaEconomia) {
+            sistemaNakano.economia.saldo = sistemaEconomia.saldoTotal;
+        }
     }
     
     if (porcentaje === 100) {
         // Registrar mazo completado para misiones diarias
-        misionesDiarias.registrarMazoCompletado();
+        if (typeof misionesDiarias !== 'undefined' && misionesDiarias.registrarMazoCompletado) {
+            misionesDiarias.registrarMazoCompletado();
+        }
         
         // IMPORTANTE: Solo registrar para evento diario si el evento está ACTIVO y ACEPTADO
-        if (eventosDiarios.estado.eventoActual && 
-            eventosDiarios.estado.aceptado && 
-            !eventosDiarios.estado.completado && 
-            !eventosDiarios.estado.fallado) {
+        if (typeof eventosDiarios !== 'undefined' && 
+            eventosDiarios.estado?.eventoActual && 
+            eventosDiarios.estado?.aceptado && 
+            !eventosDiarios.estado?.completado && 
+            !eventosDiarios.estado?.fallado) {
             
             const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
             eventosDiarios.registrarMazoCompletado();
@@ -530,30 +650,35 @@ function mostrarResultados() {
             if (eventoSeCompletoJustoAhora) {
                 // SOLUCIÓN: Si se completó el evento diario, SOLO mostrar el evento
                 console.log("🎁 Evento diario completado - Mostrando SOLO evento");
-                // El evento diario automáticamente mostrará su video
-                // NO mostramos el video del mazo
                 return; // ¡IMPORTANTE! Salir de la función aquí
             }
         }
         
         // Si NO se completó evento diario, mostrar video normal del mazo
         console.log("🎬 Mostrando video normal del mazo al 100%");
-        sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
+        if (typeof sistemaEconomia !== 'undefined') {
+            sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
+        }
         mostrarVideoRecompensa();
         
     } else if (porcentaje >= 80) {
         // Registrar mazo completado para misiones diarias (80% cuenta como completado)
-        misionesDiarias.registrarMazoCompletado();
+        if (typeof misionesDiarias !== 'undefined' && misionesDiarias.registrarMazoCompletado) {
+            misionesDiarias.registrarMazoCompletado();
+        }
         
         // Solo registrar evento si está activo y aceptado
-        if (eventosDiarios.estado.eventoActual && 
-            eventosDiarios.estado.aceptado && 
-            !eventosDiarios.estado.completado && 
-            !eventosDiarios.estado.fallado) {
+        if (typeof eventosDiarios !== 'undefined' && 
+            eventosDiarios.estado?.eventoActual && 
+            eventosDiarios.estado?.aceptado && 
+            !eventosDiarios.estado?.completado && 
+            !eventosDiarios.estado?.fallado) {
             eventosDiarios.registrarMazoCompletado();
         }
         
-        sistemaEconomia.agregarDinero(0.5, "Mazo completado al 80%");
+        if (typeof sistemaEconomia !== 'undefined') {
+            sistemaEconomia.agregarDinero(0.5, "Mazo completado al 80%");
+        }
         mostrarPantallaResultados(porcentaje);
         
     } else {
@@ -598,12 +723,12 @@ function mostrarPantallaResultados(porcentaje) {
 function mostrarVideoRecompensa() {
     const video = obtenerVideoAleatorio();
     
-    console.log("🎬 Mostrando video de recompensa normal del mazo:", video.titulo);
+    console.log("🎬 Mostrando video de recompensa normal del mazo:", video?.titulo);
     
     // Actualizar la pantalla de video con la información del video seleccionado
-    document.getElementById('titulo-video').textContent = video.titulo;
-    document.getElementById('video-recompensa').src = video.url;
-    document.getElementById('duracion-video').textContent = `Duración: ${video.duracion}`;
+    document.getElementById('titulo-video').textContent = video?.titulo || 'Recompensa';
+    document.getElementById('video-recompensa').src = video?.url || '';
+    document.getElementById('duracion-video').textContent = video?.duracion ? `Duración: ${video.duracion}` : '';
     document.getElementById('recompensa-mazo').textContent = '+1 S/. 💰';
     
     cambiarPantalla('pantalla-video-recompensa');
@@ -615,7 +740,7 @@ function mostrarVideoRecompensa() {
     videoElement.loop = true;
     
     // MUTEAR EL VIDEO PARA QUE NO INTERRUMPA TU ASMR/TWITCH
-    videoElement.muted = true;  // <-- ESTA ES LA LÍNEA CLAVE PARA MUTEAR
+    videoElement.muted = true;
     
     // QUITAR el evento onended para que no se cierre automáticamente
     videoElement.onended = null;
@@ -680,36 +805,12 @@ function repetirQuiz() {
 function mostrarResultadosPracticaEspecial(porcentaje) {
     const recompensa = 3; // 3 S/. por completar la práctica
     
-    if (porcentaje >= 80) {
+    if (porcentaje >= 80 && typeof sistemaEconomia !== 'undefined') {
         sistemaEconomia.agregarDinero(recompensa, "Práctica de palabras falladas completada");
         mostrarNotificacion(`🎉 ¡Práctica completada! +${recompensa} S/.`);
     }
     
     mostrarPantallaResultados(porcentaje);
-}
-
-// Función para mostrar notificación
-function mostrarNotificacion(mensaje) {
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #ff9800, #ff5722);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 1000;
-        animation: slideInRight 0.3s ease;
-    `;
-    notificacion.textContent = mensaje;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
 }
 
 // Sobrescribir mostrarResultados para detectar si es práctica especial
@@ -729,7 +830,9 @@ window.mostrarResultados = function() {
 // CORRECCIÓN: Función para repasar falladas desde pantalla de resultados
 function repetirFalladas() {
     // Llamar a la función de práctica de palabras falladas
-    practicarPalabrasFalladas();
+    if (typeof sistemaPalabrasFalladas !== 'undefined' && sistemaPalabrasFalladas.practicarPalabrasFalladas) {
+        sistemaPalabrasFalladas.practicarPalabrasFalladas();
+    }
 }
 
 // ============================================================================
@@ -749,6 +852,50 @@ function iniciarSistemaNakano() {
 }
 
 // ============================================================================
+// FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
+// ============================================================================
+
+function iniciarCalendarioFabrizio() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    if (typeof calendarioFabrizio !== 'undefined') {
+        calendarioFabrizio.actualizarInterfazCalendario();
+    } else {
+        console.error("⚠️ Calendario Fabrizio no cargado");
+        mostrarNotificacion("Error: Calendario no disponible");
+    }
+}
+
+// ============================================================================
+// FUNCIÓN PARA INICIAR COMIENZO DICIEMBRE 2025
+// ============================================================================
+
+function iniciarComienzoDiciembre2025() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    // Cambiar el título
+    const titulo = document.querySelector('#pantalla-calendario-meses .contador');
+    if (titulo) {
+        titulo.textContent = '🎄 Comienzo 2025 - Diciembre';
+    }
+    
+    // Mostrar los días (si la función existe)
+    if (typeof comienzoDiciembre2025 !== 'undefined' && comienzoDiciembre2025.mostrarDias) {
+        comienzoDiciembre2025.mostrarDias();
+    } else {
+        // Fallback si algo falla
+        document.getElementById('contenedor-meses').innerHTML = `
+            <div style="text-align: center; padding: 50px;">
+                <h2 style="color: #ffd700;">🎄 Comienzo 2025 - Diciembre</h2>
+                <p style="color: #cccccc;">Del 8 al 31 de diciembre</p>
+                <p style="color: #ff6b9d; margin-top: 20px; font-weight: bold;">¡5 fotos por cada día!</p>
+                <p style="color: #00ff88; margin-top: 30px;">Total: 24 días × 5 fotos = 120 fotos</p>
+            </div>
+        `;
+    }
+}
+
+// ============================================================================
 // INICIALIZACIÓN DEL SISTEMA - ACTUALIZADA PARA NAKANO
 // ============================================================================
 
@@ -757,14 +904,30 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("🚀 Aplicación cargada - Inicializando sistemas...");
     
     // Inicializar sistemas en orden
-    sistemaEconomia.inicializar();
-    misionesDiarias.inicializar();
-    eventosDiarios.inicializar();
-    sistemaPalabrasFalladas.inicializar();
+    if (typeof sistemaEconomia !== 'undefined' && sistemaEconomia.inicializar) {
+        sistemaEconomia.inicializar();
+    }
     
-    // Inicializar sistema NAKANO (reemplazó a rpgNovia)
+    if (typeof misionesDiarias !== 'undefined' && misionesDiarias.inicializar) {
+        misionesDiarias.inicializar();
+    }
+    
+    if (typeof eventosDiarios !== 'undefined' && eventosDiarios.inicializar) {
+        eventosDiarios.inicializar();
+    }
+    
+    if (typeof sistemaPalabrasFalladas !== 'undefined' && sistemaPalabrasFalladas.inicializar) {
+        sistemaPalabrasFalladas.inicializar();
+    }
+    
+    // Inicializar sistema NAKANO
     if (typeof sistemaNakano !== 'undefined' && sistemaNakano.inicializar) {
         sistemaNakano.inicializar();
+    }
+    
+    // Inicializar manga
+    if (typeof sistemaManga !== 'undefined' && sistemaManga.inicializar) {
+        sistemaManga.inicializar();
     }
     
     console.log("✅ Sistemas inicializados correctamente");
@@ -783,66 +946,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Función para forzar la aparición del evento diario (para testing)
 window.mostrarEventoDiarioForzado = function() {
-    eventosDiarios.reiniciarEventoDiario();
-    eventosDiarios.mostrarEventoDiario();
+    if (typeof eventosDiarios !== 'undefined') {
+        eventosDiarios.reiniciarEventoDiario();
+        eventosDiarios.mostrarEventoDiario();
+    }
 };
 
 // Función para reiniciar el sistema de eventos (para testing)
 window.reiniciarSistemaEventos = function() {
     localStorage.removeItem('eventosDiarios');
-    eventosDiarios.reiniciarEventoDiario();
+    if (typeof eventosDiarios !== 'undefined') {
+        eventosDiarios.reiniciarEventoDiario();
+    }
     location.reload();
 };
 
 // Función para agregar dinero (testing)
 window.agregarDinero = function(cantidad) {
-    sistemaEconomia.agregarDinero(cantidad, "Testing");
+    if (typeof sistemaEconomia !== 'undefined') {
+        sistemaEconomia.agregarDinero(cantidad, "Testing");
+    }
 };
 
 // Función para ver estado de sistemas (testing) - ACTUALIZADA
 window.verEstadoSistemas = function() {
     console.log("=== ESTADO DE SISTEMAS ===");
-    console.log("💰 Economía:", sistemaEconomia.saldoTotal);
-    console.log("🎯 Misiones:", misionesDiarias.misiones);
-    console.log("📅 Evento Diario:", eventosDiarios.estado);
-    console.log("📝 Palabras Falladas:", sistemaPalabrasFalladas.obtenerEstadisticas());
+    console.log("💰 Economía:", typeof sistemaEconomia !== 'undefined' ? sistemaEconomia.saldoTotal : "No cargado");
+    console.log("🎯 Misiones:", typeof misionesDiarias !== 'undefined' ? misionesDiarias.misiones : "No cargado");
+    console.log("📅 Evento Diario:", typeof eventosDiarios !== 'undefined' ? eventosDiarios.estado : "No cargado");
+    console.log("📝 Palabras Falladas:", typeof sistemaPalabrasFalladas !== 'undefined' ? sistemaPalabrasFalladas.obtenerEstadisticas() : "No cargado");
     
     // Estado Nakano
     if (typeof sistemaNakano !== 'undefined') {
         console.log("💕 Sistema Nakano:");
         console.log("- Novia seleccionada:", sistemaNakano.noviaSeleccionada);
-        console.log("- Saldo Nakano:", sistemaNakano.economia.saldo);
+        console.log("- Saldo Nakano:", sistemaNakano.economia?.saldo);
         console.log("- Quintillizas:", Object.keys(sistemaNakano.quintillizas).length);
     } else {
         console.log("❌ Sistema Nakano no cargado");
+    }
+    
+    // Estado Manga
+    if (typeof sistemaManga !== 'undefined') {
+        const stats = sistemaManga.obtenerEstadisticas();
+        console.log("📚 Sistema Manga:");
+        console.log("- Mangas completados:", stats.completados + "/" + stats.totalMangas);
     }
 };
 
 // Funciones de testing para palabras falladas
 window.verPalabrasFalladas = function() {
-    console.log("📝 Palabras falladas hoy:", sistemaPalabrasFalladas.palabrasFalladasHoy);
-    console.log("🔥 Más falladas hoy:", sistemaPalabrasFalladas.obtenerMasFalladasDelDia());
+    if (typeof sistemaPalabrasFalladas !== 'undefined') {
+        console.log("📝 Palabras falladas hoy:", sistemaPalabrasFalladas.palabrasFalladasHoy);
+        console.log("🔥 Más falladas hoy:", sistemaPalabrasFalladas.obtenerMasFalladasDelDia());
+    }
 };
 
 window.agregarPalabraFalladaTest = function() {
-    const palabrasTest = [
-        { japones: '難しい', lectura: 'muzukashii', opciones: ['Difícil', 'Fácil', 'Simple', 'Complejo'], respuesta: 0 },
-        { japones: '美しい', lectura: 'utsukushii', opciones: ['Hermoso', 'Feo', 'Normal', 'Extraño'], respuesta: 0 },
-        { japones: '速い', lectura: 'hayai', opciones: ['Rápido', 'Lento', 'Medio', 'Variable'], respuesta: 0 }
-    ];
-    
-    const palabra = palabrasTest[Math.floor(Math.random() * palabrasTest.length)];
-    const respuestaIncorrecta = palabra.opciones[Math.floor(Math.random() * 3) + 1];
-    
-    sistemaPalabrasFalladas.registrarPalabraFallada(
-        palabra.japones,
-        respuestaIncorrecta,
-        palabra.opciones[palabra.respuesta],
-        palabra.lectura,
-        palabra.opciones // Guardar opciones originales
-    );
-    
-    console.log("✅ Palabra fallada de test agregada");
+    if (typeof sistemaPalabrasFalladas !== 'undefined') {
+        const palabrasTest = [
+            { japones: '難しい', lectura: 'muzukashii', opciones: ['Difícil', 'Fácil', 'Simple', 'Complejo'], respuesta: 0 },
+            { japones: '美しい', lectura: 'utsukushii', opciones: ['Hermoso', 'Feo', 'Normal', 'Extraño'], respuesta: 0 },
+            { japones: '速い', lectura: 'hayai', opciones: ['Rápido', 'Lento', 'Medio', 'Variable'], respuesta: 0 }
+        ];
+        
+        const palabra = palabrasTest[Math.floor(Math.random() * palabrasTest.length)];
+        const respuestaIncorrecta = palabra.opciones[Math.floor(Math.random() * 3) + 1];
+        
+        sistemaPalabrasFalladas.registrarPalabraFallada(
+            palabra.japones,
+            respuestaIncorrecta,
+            palabra.opciones[palabra.respuesta],
+            palabra.lectura,
+            palabra.opciones
+        );
+        
+        console.log("✅ Palabra fallada de test agregada");
+    }
 };
 
 // Funciones de testing para SISTEMA NAKANO
@@ -856,13 +1036,13 @@ window.verEstadoNakano = function() {
     if (typeof sistemaNakano !== 'undefined') {
         const novia = sistemaNakano.obtenerNoviaActual();
         console.log("💕 Estado Nakano:");
-        console.log("- Novia actual:", novia.nombre);
-        console.log("- Nivel:", novia.nivel);
-        console.log("- Experiencia:", novia.experiencia);
-        console.log("- Experiencia Total:", novia.experienciaTotal);
-        console.log("- Humor:", novia.humorActual ? novia.humorActual.nombre : "N/A");
+        console.log("- Novia actual:", novia?.nombre || "Ninguna");
+        console.log("- Nivel:", novia?.nivel || "N/A");
+        console.log("- Experiencia:", novia?.experiencia || "N/A");
+        console.log("- Experiencia Total:", novia?.experienciaTotal || "N/A");
+        console.log("- Humor:", novia?.humorActual ? novia.humorActual.nombre : "N/A");
         console.log("- Quintillizas totales:", Object.keys(sistemaNakano.quintillizas).length);
-        console.log("- Items decoración:", sistemaNakano.habitacion.itemsComprados.length);
+        console.log("- Items decoración:", sistemaNakano.habitacion?.itemsComprados?.length || 0);
     } else {
         console.log("❌ Sistema Nakano no disponible");
     }
@@ -903,6 +1083,9 @@ window.resetearSistemaNakano = function() {
 // Función para añadir condones (testing)
 window.agregarCondones = function(cantidad) {
     if (typeof sistemaNakano !== 'undefined') {
+        if (!sistemaNakano.economia.inventario) {
+            sistemaNakano.economia.inventario = { condones: 0 };
+        }
         sistemaNakano.economia.inventario.condones += cantidad;
         sistemaNakano.guardarDatos();
         sistemaNakano.actualizarInterfazNakano();
@@ -926,51 +1109,80 @@ window.verTodasQuintillizas = function() {
 window.simularMazoCompletado = function(porcentaje) {
     if (typeof sistemaNakano !== 'undefined' && sistemaNakano.registrarMazoCompletado) {
         sistemaNakano.registrarMazoCompletado(porcentaje);
-        console.log(`📊 Mazo simulado al ${porcentaje}% para ${sistemaNakano.obtenerNoviaActual().nombre}`);
+        console.log(`📊 Mazo simulado al ${porcentaje}% para ${sistemaNakano.obtenerNoviaActual()?.nombre || "ninguna novia"}`);
         return true;
     }
     return false;
 };
+
+// Función para debuggear carga de mazos
+window.debugMazoClick = function(subcontenedorId, mazoId) {
+    console.log("🔍 DEBUG Mazo Click:");
+    console.log("- Subcontenedor actual:", subcontenedorActual);
+    console.log("- Contenedor actual:", contenedorActual);
+    console.log("- Mazo a cargar:", mazoId);
+    
+    const contenedor = estructura[contenedorActual];
+    const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
+    const mazo = subcontenedor.mazos[mazoId];
+    
+    console.log("- Mazo encontrado:", !!mazo);
+    if (mazo) {
+        console.log("- Nombre del mazo:", mazo.nombre);
+        console.log("- Número de palabras:", mazo.palabras ? mazo.palabras.length : 0);
+        console.log("- Primera palabra:", mazo.palabras ? mazo.palabras[0] : "N/A");
+    }
+    
+    return mazo;
+};
+
+// Función para testear sistema completo
+window.testearSistemaCompleto = function() {
+    console.log("🧪 TESTEANDO SISTEMA COMPLETO");
+    console.log("=============================");
+    
+    // 1. Test estructura
+    console.log("1. 📦 Estructura:", Object.keys(estructura).length, "contenedores");
+    
+    // 2. Test vocabulario
+    console.log("2. 📚 Vocabulario:", typeof vocabularioDatabase !== 'undefined' ? "Cargado" : "NO cargado");
+    
+    // 3. Test imágenes mazos
+    console.log("3. 🖼️ Imágenes mazos:", typeof imagenesMazos !== 'undefined' ? "Cargado" : "NO cargado");
+    
+    // 4. Test funciones principales
+    console.log("4. 🔧 Funciones principales:");
+    console.log("   - cargarMazo:", typeof cargarMazo);
+    console.log("   - obtenerImagenMazo:", typeof obtenerImagenMazo);
+    console.log("   - mostrarPregunta:", typeof mostrarPregunta);
+    
+    // 5. Probar un mazo específico
+    console.log("\n5. 🧪 Probando mazo sub1_1/mazo1:");
+    const mazoTest = debugMazoClick('sub1_1', 'mazo1');
+    
+    if (mazoTest && mazoTest.palabras) {
+        console.log("   ✅ Mazo tiene", mazoTest.palabras.length, "palabras");
+        console.log("   ✅ Primera palabra:", mazoTest.palabras[0].japones);
+    } else {
+        console.log("   ❌ Mazo no tiene palabras o no existe");
+    }
+};
+
 // ============================================================================
-// FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
+// EXPORTAR FUNCIONES PARA USO GLOBAL
 // ============================================================================
 
-function iniciarCalendarioFabrizio() {
-    cambiarPantalla('pantalla-calendario-meses');
-    
-    if (typeof calendarioFabrizio !== 'undefined') {
-        calendarioFabrizio.actualizarInterfazCalendario();
-    } else {
-        console.error("⚠️ Calendario Fabrizio no cargado");
-        mostrarNotificacion("Error: Calendario no disponible");
-    }
-}
-// ============================================================================
-// FUNCIÓN PARA INICIAR COMIENZO DICIEMBRE 2025
-// ============================================================================
+window.obtenerImagenMazo = obtenerImagenMazo;
+window.mostrarNotificacion = mostrarNotificacion;
 
-function iniciarComienzoDiciembre2025() {
-    cambiarPantalla('pantalla-calendario-meses');
-    
-    // Cambiar el título
-    const titulo = document.querySelector('#pantalla-calendario-meses .contador');
-    if (titulo) {
-        titulo.textContent = '🎄 Comienzo 2025 - Diciembre';
-    }
-    
-    // Mostrar los días (si la función existe)
-    if (typeof comienzoDiciembre2025 !== 'undefined' && comienzoDiciembre2025.mostrarDias) {
-        comienzoDiciembre2025.mostrarDias();
-    } else {
-        // Fallback si algo falla
-        document.getElementById('contenedor-meses').innerHTML = `
-            <div style="text-align: center; padding: 50px;">
-                <h2 style="color: #ffd700;">🎄 Comienzo 2025 - Diciembre</h2>
-                <p style="color: #cccccc;">Del 8 al 31 de diciembre</p>
-                <p style="color: #ff6b9d; margin-top: 20px; font-weight: bold;">¡5 fotos por cada día!</p>
-                <p style="color: #00ff88; margin-top: 30px;">Total: 24 días × 5 fotos = 120 fotos</p>
-            </div>
-        `;
-    }
-}
-// ← AQUÍ TERMINA TU ARCHIVO
+console.log("✅ 1main.js cargado correctamente");
+console.log("📁 Estructura cargada:", Object.keys(estructura).length, "contenedores");
+
+// Auto-test al cargar
+setTimeout(() => {
+    console.log("🔧 Sistema principal listo");
+    console.log("📊 Variables globales:");
+    console.log("- contenedorActual:", contenedorActual);
+    console.log("- subcontenedorActual:", subcontenedorActual);
+    console.log("- obtenerImagenMazo definida:", typeof obtenerImagenMazo !== 'undefined');
+}, 500);
