@@ -60,7 +60,7 @@ const estructura = {
             }
         }
     },
-    'contenedor2': {
+      'contenedor2': {
         nombre: 'The Last Summer 2',
         subcontenedores: {
             'sub2_1': { 
@@ -74,7 +74,11 @@ const estructura = {
             'sub2_3': { 
                 nombre: 'Sub-Contenedor 2.3', 
                 mazos: generarMazosEspecificos('sub2_3') 
-            }
+            },  // ← PONES COMA AQUÍ (QUITA EL ESPACIO VACÍO)
+            'sub2_4': { 
+                nombre: 'Sub-Contenedor 2.4', 
+                mazos: generarMazosEspecificos('sub2_4') 
+            }  // ← PONES ESTA LÍNEA NUEVA
         }
     },
     'contenedor3': {
