@@ -82,8 +82,8 @@ const calendarioFabrizio = {
     // URLs de las fotos (aquí pondrías tus URLs reales)
     fotos: {
         // Ejemplo: '1_1_1' = Mes1_Semana1_Foto1
-        '1_1_1': 'imagenes/calendario/enero/semana1/foto1.jpg',
-        '1_1_2': 'imagenes/calendario/enero/semana1/foto2.jpg',
+        '1_1_1': 'https://media.discordapp.net/attachments/1200278976225091684/1353548539031982120/IMG_20250323_205753.jpg?ex=69382b0f&is=6936d98f&hm=f982670f0ed1bf59b6b9fd0adc16df63669223fdb1196fc64c2284a00799898b&=&format=webp&width=414&height=552',
+        '1_1_2': 'https://pbs.twimg.com/media/G5RW6DzWgAA_UnX?format=jpg&name=4096x4096',
         '1_1_3': 'imagenes/calendario/enero/semana1/foto3.jpg',
         '1_1_4': 'imagenes/calendario/enero/semana1/foto4.jpg',
         '1_1_5': 'imagenes/calendario/enero/semana1/foto5.jpg',
