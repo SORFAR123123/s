@@ -386,7 +386,81 @@ const vocabularioDatabase = {
             { japones: 'レジャー', lectura: 'rejaa', opciones: ['Ocio', 'Trabajo', 'Estudio', 'Responsabilidad'], respuesta: 0 }
         ]
     },
-    
+        // Sub-contenedor 2.4 (NUEVO)
+    'sub2_4': {
+        1: [
+            { japones: 'あらすじ', lectura: 'arasuji', opciones: ['sinopsis', 'título', 'capítulo', 'final'], respuesta: 0 },
+            { japones: '親', lectura: 'oya', opciones: ['padre/madre', 'hijo', 'hermano', 'amigo'], respuesta: 0 },
+            { japones: '再婚', lectura: 'saikon', opciones: ['nuevo matrimonio', 'divorcio', 'separación', 'compromiso'], respuesta: 0 },
+            { japones: '北欧', lectura: 'hokuō', opciones: ['países nórdicos', 'Asia', 'América', 'África'], respuesta: 0 },
+            { japones: '義妹', lectura: 'gimai', opciones: ['hermanastra', 'hermana', 'prima', 'sobrina'], respuesta: 0 },
+            { japones: '家族', lectura: 'kazoku', opciones: ['familia', 'amigos', 'compañeros', 'vecinos'], respuesta: 0 },
+            { japones: '歩み寄る', lectura: 'ayumiyoru', opciones: ['acercarse buscar entendimiento', 'alejarse', 'ignorar', 'confrontar'], respuesta: 0 },
+            { japones: '健気', lectura: 'kenage', opciones: ['valiente', 'cobarde', 'débil', 'indiferente'], respuesta: 0 },
+            { japones: '義兄', lectura: 'gikei', opciones: ['hermanastro mayor', 'hermano', 'primo', 'tío'], respuesta: 0 },
+            { japones: '応える', lectura: 'kotaeru', opciones: ['responder', 'preguntar', 'ignorar', 'escuchar'], respuesta: 0 }
+        ],
+        2: [
+            { japones: '偶然', lectura: 'gūzen', opciones: ['casualidad', 'destino', 'plan', 'intención'], respuesta: 0 },
+            { japones: '裸', lectura: 'hadaka', opciones: ['desnudo', 'vestido', 'parcial', 'cubierto'], respuesta: 0 },
+            { japones: '理性', lectura: 'risei', opciones: ['razón', 'emoción', 'instinto', 'pasión'], respuesta: 0 },
+            { japones: '崩壊', lectura: 'hōkai', opciones: ['colapso', 'construcción', 'estabilidad', 'fortalecimiento'], respuesta: 0 },
+            { japones: 'ぽよん', lectura: 'poyon', opciones: ['onomatopeya de rebote', 'sonido de agua', 'sonido de viento', 'sonido de golpe'], respuesta: 0 },
+            { japones: 'とうとう', lectura: 'tōtō', opciones: ['finalmente', 'nunca', 'pronto', 'tarde'], respuesta: 0 },
+            { japones: 'がっつり', lectura: 'gattsuri', opciones: ['intensamente', 'ligeramente', 'suavemente', 'moderadamente'], respuesta: 0 },
+            { japones: '生ハメ交尾', lectura: 'namahame kōbi', opciones: ['sexo sin protección', 'sexo protegido', 'beso', 'abrazo'], respuesta: 0 },
+            { japones: 'お国柄', lectura: 'okunikara', opciones: ['costumbres nacionales', 'costumbres familiares', 'costumbres personales', 'costumbres modernas'], respuesta: 0 },
+            { japones: '意外', lectura: 'igai', opciones: ['inesperado', 'obvio', 'predecible', 'común'], respuesta: 0 }
+        ],
+        3: [
+            { japones: '寛容', lectura: 'kan\'yō', opciones: ['tolerante', 'intolerante', 'estricto', 'rígido'], respuesta: 0 },
+            { japones: '目を盗んで', lectura: 'me o nusunde', opciones: ['a escondidas', 'abiertamente', 'públicamente', 'honestamente'], respuesta: 0 },
+            { japones: '禁断', lectura: 'kindan', opciones: ['prohibido', 'permitido', 'recomendado', 'obligatorio'], respuesta: 0 },
+            { japones: '関係', lectura: 'kankei', opciones: ['relación', 'separación', 'indiferencia', 'oposición'], respuesta: 0 },
+            { japones: 'レジャー', lectura: 'rejā', opciones: ['recreación', 'trabajo', 'obligación', 'estudio'], respuesta: 0 },
+            { japones: '午前', lectura: 'gozen', opciones: ['mañana', 'tarde', 'noche', 'medianoche'], respuesta: 0 },
+            { japones: '空いてる', lectura: 'aiteru', opciones: ['estar vacío', 'estar lleno', 'estar ocupado', 'estar cerrado'], respuesta: 0 },
+            { japones: 'コーチ', lectura: 'kōchi', opciones: ['entrenador', 'alumno', 'jugador', 'árbitro'], respuesta: 0 },
+            { japones: 'タプン', lectura: 'tapun', opciones: ['onomatopeya de chapoteo', 'onomatopeya de golpe', 'onomatopeya de risa', 'onomatopeya de llanto'], respuesta: 0 },
+            { japones: '任せろ', lectura: 'makasero', opciones: ['¡déjamelo a mí!', 'no lo sé', 'pregunta a otro', 'me rindo'], respuesta: 0 }
+        ],
+        4: [
+            { japones: '昨晩', lectura: 'sakuban', opciones: ['anoche', 'esta mañana', 'mañana', 'hoy'], respuesta: 0 },
+            { japones: '来週', lectura: 'raishū', opciones: ['la próxima semana', 'esta semana', 'la semana pasada', 'hoy'], respuesta: 0 },
+            { japones: '体育', lectura: 'taiiku', opciones: ['educación física', 'matemáticas', 'historia', 'música'], respuesta: 0 },
+            { japones: '水泳', lectura: 'suiei', opciones: ['natación', 'correr', 'saltar', 'levantar pesas'], respuesta: 0 },
+            { japones: 'ユウウツ', lectura: 'yūutsu', opciones: ['melancolía', 'alegría', 'ira', 'sorpresa'], respuesta: 0 },
+            { japones: 'スウェーデン', lectura: 'Suwēden', opciones: ['Suecia', 'Noruega', 'Finlandia', 'Dinamarca'], respuesta: 0 },
+            { japones: '泳げません', lectura: 'oyogemasen', opciones: ['no puedo nadar', 'sé nadar', 'me gusta nadar', 'odio nadar'], respuesta: 0 },
+            { japones: '特訓する', lectura: 'tokkun suru', opciones: ['entrenar intensivamente', 'descansar', 'dormir', 'jugar'], respuesta: 0 },
+            { japones: '柔軟性', lectura: 'jūnansei', opciones: ['flexibilidad', 'rigidez', 'dureza', 'fragilidad'], respuesta: 0 },
+            { japones: '上達する', lectura: 'jōtatsu suru', opciones: ['mejorar', 'empeorar', 'mantener', 'estancar'], respuesta: 0 }
+        ],
+        5: [
+            { japones: '高校時代', lectura: 'kōkō jidai', opciones: ['época de secundaria', 'época de universidad', 'época de primaria', 'época de trabajo'], respuesta: 0 },
+            { japones: '競泳', lectura: 'kyōei', opciones: ['natación competitiva', 'natación recreativa', 'correr', 'saltar'], respuesta: 0 },
+            { japones: '泳ぎづらそう', lectura: 'oyogizurasō', opciones: ['parece difícil nadar', 'parece fácil nadar', 'nada bien', 'es experto'], respuesta: 0 },
+            { japones: '水着姿', lectura: 'mizugi sugata', opciones: ['apariencia en traje de baño', 'apariencia formal', 'apariencia casual', 'apariencia deportiva'], respuesta: 0 },
+            { japones: 'ポニテ', lectura: 'ponite', opciones: ['coleta alta / ponytail', 'cabello suelto', 'moño', 'trenzas'], respuesta: 0 },
+            { japones: '揉みしだきてえ', lectura: 'momishidakitee', opciones: ['quiero apretarlos', 'quiero soltarlos', 'no me interesan', 'son pequeños'], respuesta: 0 },
+            { japones: 'まずは', lectura: 'mazu wa', opciones: ['primero', 'último', 'después', 'nunca'], respuesta: 0 },
+            { japones: 'しっかり', lectura: 'shikkari', opciones: ['firmemente', 'débilmente', 'ligeramente', 'inseguramente'], respuesta: 0 },
+            { japones: '準備運動', lectura: 'junbi undō', opciones: ['calentamiento', 'enfriamiento', 'ejercicio principal', 'descanso'], respuesta: 0 },
+            { japones: '性欲', lectura: 'seiyoku', opciones: ['deseo sexual', 'hambre', 'sed', 'cansancio'], respuesta: 0 }
+        ],
+        6: [
+            { japones: '捨てろ', lectura: 'sutero', opciones: ['desecha', 'conserva', 'guarda', 'protege'], respuesta: 0 },
+            { japones: '取り除く', lectura: 'torinozoku', opciones: ['eliminar', 'añadir', 'incrementar', 'multiplicar'], respuesta: 0 },
+            { japones: '手ついて', lectura: 'te tsuite', opciones: ['apoyar las manos', 'levantar las manos', 'esconder las manos', 'cruzar las manos'], respuesta: 0 },
+            { japones: 'バタ足', lectura: 'bataashi', opciones: ['patada estilo crawl', 'patada estilo pecho', 'patada estilo mariposa', 'patada estilo espalda'], respuesta: 0 },
+            { japones: '抑える', lectura: 'osaeru', opciones: ['controlar', 'liberar', 'aumentar', 'acelerar'], respuesta: 0 },
+            { japones: '身体伸ばして', lectura: 'karada nobashite', opciones: ['estira el cuerpo', 'contrae el cuerpo', 'dobla el cuerpo', 'relaja el cuerpo'], respuesta: 0 },
+            { japones: '浮いてみ', lectura: 'uite mi', opciones: ['intenta flotar', 'intenta hundirte', 'intenta nadar', 'intenta respirar'], respuesta: 0 },
+            { japones: '吸い寄せられる', lectura: 'sui yoserareru', opciones: ['ser atraído', 'ser repelido', 'ser ignorado', 'ser rechazado'], respuesta: 0 },
+            { japones: 'もみ', lectura: 'momi', opciones: ['apretar', 'soltar', 'acariciar', 'golpear'], respuesta: 0 }
+            
+        ]
+    },
     // ================================================
     // YAMADA
     // ================================================
