@@ -54,13 +54,13 @@ const configImagenes = {
         'mazo4': 'imagenes/mazo4.jpg',
         'mazo5': 'imagenes/mazo5.jpg'
     },
-    // NUEVO: IMÁGENES DE LAS QUINTILLIZAS NAKANO
+    // AQUÍ ESTÁN LAS IMÁGENES DE LAS QUINTILLIZAS NAKANO (DENTRO DE configImagenes)
     nakano: {
-        'ichika': 'https://pbs.twimg.com/media/G7qfcGRWkAAV74w?format=png&name=small',
-        'nino': 'https://pbs.twimg.com/media/G7qfpGZXAAAib4A?format=png&name=small',
-        'miku': 'https://pbs.twimg.com/media/G7qfrrKWsAAv6ZT?format=png&name=small',
-        'yotsuba': 'https://pbs.twimg.com/media/G7qfupkXUAAX0aS?format=png&name=small',
-        'itsuki': 'https://pbs.twimg.com/media/G7qfxnsX0AIbJK1?format=png&name=small',
+        'ichika': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/9/9d/Ichika_Nakano_Manga_Profile.png',
+        'nino': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/e/eb/Nino_Nakano_Manga_Profile.png',
+        'miku': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0b/Miku_Nakano_Manga_Profile.png',
+        'yotsuba': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0f/Yotsuba_Nakano_Manga_Profile.png',
+        'itsuki': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/1/19/Itsuki_Nakano_Manga_Profile.png',
         'default': 'imagenes/nakano/default.jpg'
     }
 };
@@ -226,3 +226,31 @@ window.cambiarVideoRegalo = function(regaloId, nuevaUrl) {
 };
 
 window.obtenerImagenNakano = obtenerImagenNakano;
+
+// Función para actualizar imagen de quintilliza desde consola
+window.actualizarImagenNakano = function(idQuintilliza, nuevaUrl) {
+    if (configImagenes.nakano && configImagenes.nakano[idQuintilliza]) {
+        configImagenes.nakano[idQuintilliza] = nuevaUrl;
+        console.log(`✅ Imagen de ${idQuintilliza} actualizada a: ${nuevaUrl}`);
+        
+        // Si el sistema Nakano está activo, actualizar interfaz
+        if (typeof sistemaNakano !== 'undefined' && sistemaNakano.actualizarInterfazNakano) {
+            sistemaNakano.actualizarInterfazNakano();
+        }
+        return true;
+    }
+    console.log(`❌ Quintilliza ${idQuintilliza} no encontrada`);
+    return false;
+};
+
+// Función para ver todas las imágenes Nakano
+window.verImagenesNakano = function() {
+    console.log("🖼️ Imágenes Nakano configuradas:");
+    if (configImagenes.nakano) {
+        Object.entries(configImagenes.nakano).forEach(([nombre, url]) => {
+            console.log(`${nombre}: ${url}`);
+        });
+    } else {
+        console.log("❌ No hay imágenes Nakano configuradas");
+    }
+};
