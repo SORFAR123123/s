@@ -904,7 +904,7 @@ const eventosDiarios = {
         videoElement.controls = true;
         videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
-        
+    
         // QUITAR el evento onended para que no se cierre automáticamente
         videoElement.onended = null;
         
@@ -945,7 +945,7 @@ const eventosDiarios = {
         videoElement.controls = true;
         videoElement.muted = true; // IMPORTANTE: Mutear para evitar sonidos simultáneos
         videoElement.loop = true; // PONER EN BUCLE
-        
+    
         // QUITAR el evento onended para que no se cierre automáticamente
         videoElement.onended = null;
         
@@ -1794,6 +1794,8 @@ let mazoActual = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
+// NUEVA VARIABLE: Registrar palabras falladas de este mazo específico
+let palabrasFalladasEsteMazo = [];
 
 // Función para obtener la URL de una imagen
 function obtenerUrlImagen(tipo, id) {
@@ -1902,6 +1904,8 @@ function cargarMazo(idMazo) {
         preguntaActual = 0;
         respuestasCorrectas = 0;
         respuestasIncorrectas = 0;
+        // NUEVO: Resetear palabras falladas de este mazo
+        palabrasFalladasEsteMazo = [];
         
         mezclarPreguntas();
         cambiarPantalla('pantalla-quiz');
@@ -1986,13 +1990,22 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
         resultado.className = 'resultado incorrecto';
         respuestasIncorrectas++;
         
-        // REGISTRAR PALABRA FALLADA
+        // REGISTRAR PALABRA FALLADA EN EL SISTEMA GLOBAL
         sistemaPalabrasFalladas.registrarPalabraFallada(
             palabraActual,
             respuestaSeleccionada,
             respuestaCorrecta,
             lectura
         );
+        
+        // NUEVO: REGISTRAR PALABRA FALLADA PARA ESTE MAZO ESPECÍFICO
+        const palabraFalladaEsteMazo = {
+            japones: palabraActual,
+            lectura: lectura,
+            respuestaCorrecta: respuestaCorrecta,
+            respuestaSeleccionada: respuestaSeleccionada
+        };
+        palabrasFalladasEsteMazo.push(palabraFalladaEsteMazo);
         
         // Mostrar botón "Continuar" solo para respuestas incorrectas
         document.getElementById('boton-siguiente').style.display = 'block';
@@ -2005,6 +2018,68 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura) {
 function siguientePregunta() {
     preguntaActual++;
     mostrarPregunta();
+}
+
+// FUNCIÓN NUEVA: REPASAR SOLO LAS PALABRAS FALLADAS DE ESTE MAZO
+function repetirFalladas() {
+    // Verificar si hay palabras falladas para repasar
+    if (palabrasFalladasEsteMazo.length === 0) {
+        alert("🎉 ¡No hay palabras falladas para repasar!\nCompletaste todas correctamente.");
+        return;
+    }
+    
+    // Crear mazo especial con las palabras falladas
+    mazoActual = palabrasFalladasEsteMazo.map(palabra => ({
+        japones: palabra.japones,
+        lectura: palabra.lectura,
+        opciones: generarOpcionesEspeciales(palabra.respuestaCorrecta),
+        respuesta: 0 // La correcta siempre es la primera
+    }));
+    
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasIncorrectas = 0;
+    
+    // Mezclar preguntas
+    mezclarPreguntas();
+    
+    // Cambiar a pantalla de quiz
+    cambiarPantalla('pantalla-quiz');
+    
+    // Cambiar título para indicar que es repaso de falladas
+    document.getElementById('contador-preguntas').innerHTML = `
+        🔥 REPASO DE FALLADAS: <span id="numero-pregunta">1</span>/<span id="total-preguntas">${mazoActual.length}</span>
+    `;
+    
+    mostrarPregunta();
+}
+
+// FUNCIÓN AUXILIAR NUEVA: Generar opciones para repaso de falladas
+function generarOpcionesEspeciales(respuestaCorrecta) {
+    const opcionesComunes = [
+        'Palabra', 'Tiempo', 'Lugar', 'Persona', 'Cosa', 'Asunto', 'Mundo', 
+        'Vida', 'Trabajo', 'Familia', 'Escuela', 'Estudio', 'Arte', 'Música',
+        'Comida', 'Casa', 'Amor', 'Amistad', 'Paz', 'Guerra', 'Felicidad',
+        'Difícil', 'Hermoso', 'Rápido', 'Lento', 'Grande', 'Pequeño', 'Nuevo'
+    ];
+    
+    const opciones = [respuestaCorrecta];
+    
+    // Agregar 3 opciones aleatorias diferentes
+    while (opciones.length < 4) {
+        const opcionAleatoria = opcionesComunes[Math.floor(Math.random() * opcionesComunes.length)];
+        if (!opciones.includes(opcionAleatoria)) {
+            opciones.push(opcionAleatoria);
+        }
+    }
+    
+    // Mezclar opciones
+    for (let i = opciones.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
+    }
+    
+    return opciones;
 }
 
 // FUNCIÓN MEJORADA - SOLO EVENTO DIARIO CUANDO HAY DOBLE COMPLETACIÓN
@@ -2078,6 +2153,10 @@ function mostrarPantallaResultados(porcentaje) {
         ${porcentaje >= 80 ? '¡Excelente trabajo! 🎉' : 
           porcentaje >= 60 ? 'Buen trabajo, pero puedes mejorar 👍' : 
           'Sigue practicando, lo harás mejor la próxima vez 💪'}
+        
+        ${palabrasFalladasEsteMazo.length > 0 ? 
+          `\nPalabras que fallaste: ${palabrasFalladasEsteMazo.length}` : 
+          ''}
     `;
 }
 
@@ -2152,6 +2231,7 @@ function repetirQuiz() {
     preguntaActual = 0;
     respuestasCorrectas = 0;
     respuestasIncorrectas = 0;
+    palabrasFalladasEsteMazo = []; // NUEVO: Resetear palabras falladas
     mezclarPreguntas();
     cambiarPantalla('pantalla-quiz');
     mostrarPregunta();
