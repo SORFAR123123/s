@@ -1,4 +1,8 @@
 // ============================================================================
+// SISTEMA PRINCIPAL - CON RPG DE 5 QUINTILLIZAS
+// ============================================================================
+
+// ============================================================================
 // FUNCIÓN PARA GENERAR PALABRAS ESPECÍFICAS (USANDO VOCABULARIO EXTERNO)
 // ============================================================================
 
@@ -484,9 +488,11 @@ function mostrarResultados() {
         eventoAceptado: eventosDiarios.estado.aceptado
     });
     
-    // Registrar experiencia en RPG de novia
-    if (typeof rpgNovia !== 'undefined') {
-        rpgNovia.registrarMazoCompletado(porcentaje);
+    // ============================================================================
+    // CAMBIO IMPORTANTE: Registrar experiencia SOLO para la quintilliza activa
+    // ============================================================================
+    if (typeof rpgQuintillizas !== 'undefined') {
+        rpgQuintillizas.registrarMazoCompletado(porcentaje);
     }
     
     if (porcentaje === 100) {
@@ -717,7 +723,7 @@ function repetirFalladas() {
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA - MEJORADA
+// INICIALIZACIÓN DEL SISTEMA - MODIFICADA PARA QUINTILLIZAS
 // ============================================================================
 
 // Inicializar la aplicación cuando se carga la página
@@ -730,9 +736,11 @@ document.addEventListener('DOMContentLoaded', function() {
     eventosDiarios.inicializar();
     sistemaPalabrasFalladas.inicializar();
     
-    // Inicializar sistema RPG de novia
-    if (typeof rpgNovia !== 'undefined' && rpgNovia.inicializar) {
-        rpgNovia.inicializar();
+    // ============================================================================
+    // CAMBIO IMPORTANTE: Inicializar sistema RPG de QUINTILLIZAS
+    // ============================================================================
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.inicializar) {
+        rpgQuintillizas.inicializar();
     }
     
     console.log("✅ Sistemas inicializados correctamente");
@@ -744,6 +752,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
 });
+
+// ============================================================================
+// FUNCIONES DE RPG - ACTUALIZADAS PARA QUINTILLIZAS
+// ============================================================================
+
+// Función para iniciar el RPG de quintillizas (desde el botón del menú)
+function iniciarRPGQuintillizasDesdeMenu() {
+    // Verificar si el sistema está cargado
+    if (typeof rpgQuintillizas !== 'undefined') {
+        // Ir a la pantalla de selección primero
+        cambiarPantalla('pantalla-seleccion-novia');
+        
+        // Actualizar la pantalla de selección
+        if (typeof actualizarPantallaSeleccion !== 'undefined') {
+            actualizarPantallaSeleccion();
+        } else {
+            // Si no existe la función, ir directamente al RPG
+            cambiarPantalla('pantalla-rpg-quintillizas');
+            if (typeof actualizarInterfazRPG !== 'undefined') {
+                actualizarInterfazRPG();
+            }
+        }
+    } else {
+        alert("El sistema RPG de quintillizas no está cargado. Recarga la página.");
+        console.error("rpgQuintillizas no está definido");
+    }
+}
+
+// ============================================================================
+// FUNCIONES DE TESTING - ACTUALIZADAS PARA QUINTILLIZAS
+// ============================================================================
 
 // Función para forzar la aparición del evento diario (para testing)
 window.mostrarEventoDiarioForzado = function() {
@@ -770,7 +809,14 @@ window.verEstadoSistemas = function() {
     console.log("🎯 Misiones:", misionesDiarias.misiones);
     console.log("📅 Evento Diario:", eventosDiarios.estado);
     console.log("📝 Palabras Falladas:", sistemaPalabrasFalladas.obtenerEstadisticas());
-    console.log("💕 RPG Novia:", rpgNovia.estado);
+    console.log("💕 RPG Quintillizas:", rpgQuintillizas ? "Cargado" : "No cargado");
+    
+    // Mostrar info de quintillizas si está cargado
+    if (typeof rpgQuintillizas !== 'undefined') {
+        const noviaActiva = rpgQuintillizas.obtenerNoviaActiva();
+        console.log("🎯 Novia activa:", noviaActiva?.nombre || "Ninguna");
+        console.log("📊 Total quintillizas:", rpgQuintillizas.hermanas?.length || 0);
+    }
 };
 
 // Funciones de testing para palabras falladas
@@ -800,18 +846,212 @@ window.agregarPalabraFalladaTest = function() {
     console.log("✅ Palabra fallada de test agregada");
 };
 
-// Funciones de testing para RPG de novia
-window.agregarExperienciaNovia = function(cantidad) {
-    if (typeof rpgNovia !== 'undefined' && rpgNovia.agregarExperiencia) {
-        rpgNovia.agregarExperiencia(cantidad, "Testing");
+// ============================================================================
+// FUNCIONES DE TESTING PARA RPG DE QUINTILLIZAS - NUEVAS
+// ============================================================================
+
+window.agregarExperienciaQuintilliza = function(cantidad) {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.agregarExperiencia) {
+        const novia = rpgQuintillizas.obtenerNoviaActiva();
+        if (novia) {
+            rpgQuintillizas.agregarExperiencia(cantidad, "Testing");
+            console.log(`✅ +${cantidad} XP agregada a ${novia.nombre}`);
+        } else {
+            console.log("❌ No hay novia activa seleccionada");
+        }
     }
 };
 
-window.verEstadoNovia = function() {
-    console.log("💕 Estado Novia:");
-    console.log("- Nivel:", rpgNovia.estado.nivel);
-    console.log("- Experiencia:", rpgNovia.estado.experiencia);
-    console.log("- Experiencia Total:", rpgNovia.estado.experienciaTotal);
-    console.log("- Humor:", rpgNovia.estado.humorActual);
-    console.log("- Momentos desbloqueados:", rpgNovia.estado.momentosDesbloqueados);
+window.verEstadoQuintillizas = function() {
+    if (typeof rpgQuintillizas !== 'undefined') {
+        console.log("💕 ESTADO QUINTILLIZAS:");
+        
+        const noviaActiva = rpgQuintillizas.obtenerNoviaActiva();
+        console.log("🎯 Novia activa:", noviaActiva?.nombre || "Ninguna");
+        
+        if (rpgQuintillizas.hermanas) {
+            rpgQuintillizas.hermanas.forEach(hermana => {
+                console.log(`--- ${hermana.nombre} (${hermana.id}) ---`);
+                console.log("- Nivel:", hermana.nivel);
+                console.log("- Experiencia:", hermana.experiencia);
+                console.log("- Experiencia Total:", hermana.experienciaTotal);
+                console.log("- Afecto:", hermana.afecto);
+                console.log("- Humor:", hermana.humorActual?.nombre || "Normal");
+                console.log("- Momentos desbloqueados:", hermana.momentosDesbloqueados.length);
+                console.log("- Condones usados:", hermana.condonesUsados);
+                console.log("- Habitación nivel:", hermana.habitacion?.nivel);
+            });
+        }
+        
+        console.log("💰 Economía RPG:");
+        console.log("- Saldo:", rpgQuintillizas.economia?.saldo);
+        console.log("- Condones:", rpgQuintillizas.economia?.inventario?.condones);
+        console.log("- Flores:", rpgQuintillizas.economia?.inventario?.flores);
+        console.log("- Chocolates:", rpgQuintillizas.economia?.inventario?.chocolates);
+        console.log("- Joyas:", rpgQuintillizas.economia?.inventario?.joyas);
+        
+    } else {
+        console.log("❌ RPG de quintillizas no está cargado");
+    }
 };
+
+window.cambiarNoviaActivaTest = function(hermanaId) {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.cambiarNoviaActiva) {
+        const exito = rpgQuintillizas.cambiarNoviaActiva(hermanaId);
+        if (exito) {
+            const novia = rpgQuintillizas.obtenerNoviaActiva();
+            console.log(`✅ Novia activa cambiada a: ${novia.nombre}`);
+        } else {
+            console.log(`❌ No se pudo cambiar a ${hermanaId}`);
+        }
+    }
+};
+
+window.agregarCondonesTest = function(cantidad) {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.economia) {
+        rpgQuintillizas.economia.inventario.condones += cantidad;
+        rpgQuintillizas.guardarDatos();
+        console.log(`✅ +${cantidad} condones agregados. Total: ${rpgQuintillizas.economia.inventario.condones}`);
+    }
+};
+
+window.desbloquearTodosMomentos = function() {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.hermanas) {
+        rpgQuintillizas.hermanas.forEach(hermana => {
+            // Desbloquear todos los momentos para esta hermana
+            if (rpgQuintillizas.momentosIntimos && rpgQuintillizas.momentosIntimos[hermana.id]) {
+                const momentos = rpgQuintillizas.momentosIntimos[hermana.id];
+                momentos.forEach(momento => {
+                    if (!hermana.momentosDesbloqueados.includes(momento.id)) {
+                        hermana.momentosDesbloqueados.push(momento.id);
+                    }
+                });
+            }
+            // Subir nivel para acceder a todo
+            hermana.nivel = 10;
+            hermana.afecto = 100;
+        });
+        
+        rpgQuintillizas.guardarDatos();
+        console.log("✅ Todos los momentos desbloqueados y niveles maximizados");
+    }
+};
+
+window.comprarDecoracionTest = function(itemId) {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.comprarDecoracion) {
+        const novia = rpgQuintillizas.obtenerNoviaActiva();
+        if (novia) {
+            // Agregar dinero primero
+            sistemaEconomia.agregarDinero(200, "Testing decoración");
+            rpgQuintillizas.economia.saldo = sistemaEconomia.saldoTotal;
+            
+            // Comprar decoración
+            const exito = rpgQuintillizas.comprarDecoracion(itemId, novia.id);
+            if (exito) {
+                console.log(`✅ Decoración ${itemId} comprada para ${novia.nombre}`);
+            }
+        }
+    }
+};
+
+// Función para probar regalo recíproco
+window.probarRegaloReciproco = function(tipo) {
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.regalarItem) {
+        // Agregar dinero primero
+        sistemaEconomia.agregarDinero(50, "Testing regalo");
+        rpgQuintillizas.economia.saldo = sistemaEconomia.saldoTotal;
+        
+        // Agregar item al inventario
+        rpgQuintillizas.economia.inventario[tipo] = (rpgQuintillizas.economia.inventario[tipo] || 0) + 1;
+        
+        // Regalar
+        const exito = rpgQuintillizas.regalarItem(tipo);
+        console.log(`Regalo ${tipo}: ${exito ? '✅ Éxito' : '❌ Falló'}`);
+    }
+};
+
+// ============================================================================
+// FUNCIONES DE CONFIGURACIÓN RÁPIDA - NUEVAS
+// ============================================================================
+
+// Configuración rápida para testing
+window.configuracionRapidaTesting = function() {
+    console.log("⚡ Configuración rápida para testing...");
+    
+    // Agregar dinero
+    sistemaEconomia.agregarDinero(100, "Configuración testing");
+    
+    // Agregar condones
+    if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.economia) {
+        rpgQuintillizas.economia.inventario.condones += 10;
+        rpgQuintillizas.economia.inventario.flores += 5;
+        rpgQuintillizas.economia.inventario.chocolates += 5;
+        rpgQuintillizas.economia.inventario.joyas += 2;
+        
+        // Subir nivel de todas
+        if (rpgQuintillizas.hermanas) {
+            rpgQuintillizas.hermanas.forEach(hermana => {
+                hermana.nivel = 5;
+                hermana.afecto = 80;
+                hermana.experiencia = 0;
+            });
+        }
+        
+        rpgQuintillizas.guardarDatos();
+    }
+    
+    console.log("✅ Configuración rápida completada");
+    alert("✅ Configuración de testing aplicada:\n- 100 S/. agregados\n- 10 condones\n- Nivel 5 para todas\n- Afecto 80");
+};
+
+// Reiniciar todo el RPG
+window.reiniciarRPGQuintillizas = function() {
+    if (confirm("¿Estás seguro de reiniciar TODO el sistema RPG?\nSe perderán todos los progresos con las quintillizas.")) {
+        localStorage.removeItem('rpgQuintillizas');
+        location.reload();
+    }
+};
+
+// ============================================================================
+// FUNCIONES DE NAVEGACIÓN MEJORADAS
+// ============================================================================
+
+// Función para abrir el menú de RPG desde cualquier lugar
+function abrirMenuRPG() {
+    // Verificar si hay sistema de quintillizas
+    if (typeof rpgQuintillizas !== 'undefined') {
+        iniciarRPGQuintillizasDesdeMenu();
+    } else {
+        // Fallback al sistema antiguo si existe
+        if (typeof iniciarRPGNovia !== 'undefined') {
+            iniciarRPGNovia();
+        } else {
+            alert("El sistema RPG no está disponible");
+        }
+    }
+}
+
+// Función para abrir palabras falladas
+function abrirPalabrasFalladas() {
+    if (typeof mostrarPalabrasFalladas !== 'undefined') {
+        mostrarPalabrasFalladas();
+    } else {
+        alert("El sistema de palabras falladas no está disponible");
+    }
+}
+
+// ============================================================================
+// INICIALIZACIÓN EXTRA PARA COMPATIBILIDAD
+// ============================================================================
+
+// Mantener compatibilidad con código antiguo que pueda usar rpgNovia
+window.rpgNovia = window.rpgNovia || {
+    registrarMazoCompletado: function(porcentaje) {
+        // Redirigir al nuevo sistema si existe
+        if (typeof rpgQuintillizas !== 'undefined' && rpgQuintillizas.registrarMazoCompletado) {
+            rpgQuintillizas.registrarMazoCompletado(porcentaje);
+        }
+    }
+};
+
+console.log("✅ Sistema principal configurado para 5 quintillizas Nakano");
