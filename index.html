@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE RESULTADOS -->
+    <!-- PANTALLA DE RESULTADOS MODIFICADA -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
@@ -337,8 +337,14 @@
                 <!-- Los resultados se mostrarán aquí -->
             </div>
             
-            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
-            <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
+            <div class="botones-resultados">
+                <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
+                <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
+                <!-- NUEVO BOTÓN PARA REPASAR FALLADAS -->
+                <button class="boton-terciario" id="boton-repasar-falladas" onclick="repetirFalladas()">
+                    🔥 Repasar Falladas (+3 S/.)
+                </button>
+            </div>
         </div>
     </div>
 
@@ -476,14 +482,11 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE PALABRAS FALLADAS (SE CREA DINÁMICAMENTE) -->
-    <!-- Esta pantalla se crea en script.js cuando se necesita -->
+    <!-- NUEVA PANTALLA: PALABRAS FALLADAS -->
+    <div id="pantalla-palabras-falladas" class="pantalla" style="display: none;">
+        <!-- Esta pantalla se crea dinámicamente en script.js -->
+    </div>
 
-    <!-- ARCHIVOS JAVASCRIPT -->
-    <!-- VOCABULARIO SEPARADO (NUEVO) -->
-    <script src="vocabulario.js"></script>
-    
-    <!-- SCRIPT PRINCIPAL (LIMPIO) -->
     <script src="script.js"></script>
 </body>
 </html>
