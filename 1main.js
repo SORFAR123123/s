@@ -325,6 +325,9 @@ function cargarContenedor(idContenedor) {
 }
 
 function cargarSubcontenedor(idSubcontenedor) {
+    // Guardar para poder volver desde el manga ← NUEVA LÍNEA
+    window.subcontenedorActual = idSubcontenedor;
+    
     const contenedor = estructura[contenedorActual];
     if (contenedor && contenedor.subcontenedores[idSubcontenedor]) {
         subcontenedorActual = idSubcontenedor;
@@ -342,14 +345,21 @@ function cargarSubcontenedor(idSubcontenedor) {
             mazoDiv.className = 'mazo-card';
             mazoDiv.onclick = () => cargarMazo(key);
             
+            // USAR LAS NUEVAS IMÁGENES DE MAZOS ← CAMBIO IMPORTANTE
             mazoDiv.innerHTML = `
-            <img src="${obtenerImagenMazo(subcontenedorActual, key)}" alt="${mazo.nombre}" class="mazo-imagen">
+                <img src="${obtenerImagenMazo(subcontenedorActual, key)}" alt="${mazo.nombre}" class="mazo-imagen">
                 <div class="mazo-texto">${mazo.nombre}</div>
                 <div class="mazo-info">10 palabras</div>
             `;
             
             contenedorMazos.appendChild(mazoDiv);
         });
+        
+        // AGREGAR BOTÓN DE MANGA SI EXISTE ← NUEVO CÓDIGO
+        const botonMangaHTML = agregarBotonManga(idSubcontenedor);
+        if (botonMangaHTML) {
+            contenedorMazos.innerHTML += botonMangaHTML;
+        }
         
         cambiarPantalla('pantalla-mazos');
     }
