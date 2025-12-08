@@ -1059,11 +1059,11 @@ function usarMomentoIntimo(momentoId) {
 // Función para obtener imagen de quintilliza
 function obtenerImagenNakano(idQuintilliza) {
     const imagenes = {
-        'ichika': 'imagenes/nakano/ichika.jpg',
-        'nino': 'imagenes/nakano/nino.jpg',
-        'miku': 'imagenes/nakano/miku.jpg',
-        'yotsuba': 'imagenes/nakano/yotsuba.jpg',
-        'itsuki': 'imagenes/nakano/itsuki.jpg'
+        'ichika': 'https://pbs.twimg.com/media/G7qfcGRWkAAV74w?format=png&name=small',
+        'nino': 'https://pbs.twimg.com/media/G7qfpGZXAAAib4A?format=png&name=small',
+        'miku': 'https://pbs.twimg.com/media/G7qfrrKWsAAv6ZT?format=png&name=small',
+        'yotsuba': 'https://pbs.twimg.com/media/G7qfupkXUAAX0aS?format=png&name=small',
+        'itsuki': 'https://pbs.twimg.com/media/G7qfxnsX0AIbJK1?format=png&name=small'
     };
     return imagenes[idQuintilliza] || 'imagenes/nakano/default.jpg';
 }
