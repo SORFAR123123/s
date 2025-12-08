@@ -208,28 +208,28 @@ const sistemaManga = {
                     </div>
                     
                     <!-- CONTENEDOR PRINCIPAL DE LECTURA -->
-                    <div class="contenedor-lectura" onclick="sistemaManga.siguientePagina()">
-                        <!-- IMAGEN ACTUAL -->
-                        <div class="imagen-manga-container">
-                            <img src="${manga.imagenes[paginaActual]}" 
-                                 alt="Página ${paginaActual + 1}" 
-                                 class="imagen-manga"
-                                 id="imagen-manga-actual">
-                            <div class="indicador-click">
-                                <div class="icono-click">👉</div>
-                                <p>Haz clic en cualquier lado para continuar</p>
-                            </div>
-                        </div>
-                        
-                        <!-- NAVEGACIÓN RÁPIDA (OPCIONAL) -->
-                        <div class="navegacion-rapida">
-                            <button class="boton-nav" onclick="sistemaManga.paginaAnterior()">
-                                ← Anterior
-                            </button>
-                            <button class="boton-nav-principal" onclick="sistemaManga.siguientePagina()">
-                                Siguiente Página →
-                            </button>
-                        </div>
+<div class="contenedor-lectura" onclick="sistemaManga.siguientePagina()">
+    <!-- IMAGEN ACTUAL -->
+    <div class="imagen-manga-container">
+        <img src="${manga.imagenes[paginaActual]}" 
+             alt="Página ${paginaActual + 1}" 
+             class="imagen-manga"
+             id="imagen-manga-actual">
+        <div class="indicador-click">
+            <div class="icono-click">👉</div>
+            <p>Haz clic en cualquier lado para continuar</p>
+        </div>
+    </div>
+    
+    <!-- NAVEGACIÓN RÁPIDA (OPCIONAL) -->
+    <div class="navegacion-rapida">
+        <button class="boton-nav" onclick="sistemaManga.paginaAnterior(); event.stopPropagation();">
+            ← Anterior
+        </button>
+        <button class="boton-nav-principal" onclick="sistemaManga.siguientePagina(); event.stopPropagation();">
+            Siguiente Página →
+        </button>
+    </div>
                         
                         <!-- CONTROLES DE SALTO -->
                         <div class="controles-salto">
