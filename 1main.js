@@ -931,3 +931,32 @@ function iniciarCalendarioFabrizio() {
         mostrarNotificacion("Error: Calendario no disponible");
     }
 }
+// ============================================================================
+// FUNCIÓN PARA INICIAR COMIENZO DICIEMBRE 2025
+// ============================================================================
+
+function iniciarComienzoDiciembre2025() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    // Cambiar el título
+    const titulo = document.querySelector('#pantalla-calendario-meses .contador');
+    if (titulo) {
+        titulo.textContent = '🎄 Comienzo 2025 - Diciembre';
+    }
+    
+    // Mostrar los días (si la función existe)
+    if (typeof comienzoDiciembre2025 !== 'undefined' && comienzoDiciembre2025.mostrarDias) {
+        comienzoDiciembre2025.mostrarDias();
+    } else {
+        // Fallback si algo falla
+        document.getElementById('contenedor-meses').innerHTML = `
+            <div style="text-align: center; padding: 50px;">
+                <h2 style="color: #ffd700;">🎄 Comienzo 2025 - Diciembre</h2>
+                <p style="color: #cccccc;">Del 8 al 31 de diciembre</p>
+                <p style="color: #ff6b9d; margin-top: 20px; font-weight: bold;">¡5 fotos por cada día!</p>
+                <p style="color: #00ff88; margin-top: 30px;">Total: 24 días × 5 fotos = 120 fotos</p>
+            </div>
+        `;
+    }
+}
+// ← AQUÍ TERMINA TU ARCHIVO
