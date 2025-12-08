@@ -16,8 +16,8 @@ const mangaDatabase = {
         autor: 'Autor The Last Summer',
         capitulos: 1,
         paginas: [
-            'imagenes/manga/sub1_1/pagina1.jpg',
-            'imagenes/manga/sub1_1/pagina2.jpg',
+            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=small',
+            'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=small',
             'imagenes/manga/sub1_1/pagina3.jpg',
             'imagenes/manga/sub1_1/pagina4.jpg',
             'imagenes/manga/sub1_1/pagina5.jpg'
