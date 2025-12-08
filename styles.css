@@ -2822,3 +2822,58 @@ button:disabled {
         flex-wrap: wrap;
     }
 }
+/* ============================================================================
+   ESTILOS PARA FOTOS DEL CALENDARIO - MEJORADOS
+   ============================================================================ */
+
+.foto-card {
+    cursor: pointer; /* Manita para indicar que es clickeable */
+    transition: transform 0.3s ease; /* Animación suave */
+    position: relative;
+}
+
+.foto-card:hover {
+    transform: scale(1.02); /* Se agranda un poquito al pasar el mouse */
+}
+
+.foto-click {
+    font-size: 0.8rem;
+    color: #ff6b9d;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Botón de cerrar en la foto grande */
+.boton-cerrar-foto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b9d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.boton-cerrar-foto:hover {
+    background: #ff4081;
+    transform: scale(1.1);
+}
+
+/* Para pantallas móviles */
+@media (max-width: 768px) {
+    .foto-click {
+        font-size: 0.7rem;
+    }
+    
+    .boton-cerrar-foto {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
