@@ -3169,24 +3169,68 @@ button:disabled {
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
-/* Contenedor de imagen */
+/* Contenedor de imagen del manga - MODIFICADO PARA ZOOM */
 .contenedor-imagen-manga {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    padding: 20px;
+    width: 100vw;
+    height: calc(100vh - 200px); /* Resta espacio para controles */
+    overflow: auto;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    cursor: grab;
 }
 
 .manga-pagina {
-    max-width: 90%;
-    max-height: 70vh;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    width: auto;
+    height: auto;
+    max-width: none !important;
+    max-height: none !important;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+    object-position: top left;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
     opacity: 0;
     transition: opacity 0.5s ease;
+    display: block;
+    margin: 0;
+    padding: 0;
+    /* Forzar alta calidad en zoom */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Efecto de arrastre */
+.contenedor-imagen-manga.grabbing {
+    cursor: grabbing;
+}
+
+/* Áreas para cambiar página */
+.area-cambio-pagina {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 30%;
+    z-index: 10;
     cursor: pointer;
-    border: 3px solid rgba(255, 215, 0, 0.3);
+}
+
+.area-anterior {
+    left: 0;
+    background: linear-gradient(90deg, rgba(255,107,157,0.1), transparent);
+}
+
+.area-siguiente {
+    right: 0;
+    background: linear-gradient(270deg, rgba(255,107,157,0.1), transparent);
+}
+
+.area-cambio-pagina:hover {
+    background: linear-gradient(90deg, rgba(255,107,157,0.3), transparent);
 }
 
 .manga-pagina:hover {
