@@ -917,3 +917,17 @@ window.simularMazoCompletado = function(porcentaje) {
     }
     return false;
 };
+// ============================================================================
+// FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
+// ============================================================================
+
+function iniciarCalendarioFabrizio() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    if (typeof calendarioFabrizio !== 'undefined') {
+        calendarioFabrizio.actualizarInterfazCalendario();
+    } else {
+        console.error("⚠️ Calendario Fabrizio no cargado");
+        mostrarNotificacion("Error: Calendario no disponible");
+    }
+}
