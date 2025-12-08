@@ -2,7 +2,6 @@
 // CONFIGURACIÓN DE URLs DE IMÁGENES
 // ============================================================================
 
-// Aquí puedes cambiar las URLs de todas las imágenes
 const configImagenes = {
     contenedores: {
         'contenedor1': 'imagenes/contenedor1.jpg',
@@ -20,53 +19,33 @@ const configImagenes = {
         'sub1_1': 'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=large',
         'sub1_2': 'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=large',
         'sub1_3': 'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
-        'sub1_4': '',
-        'sub1_5': '',
         'sub2_1': 'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
         'sub2_2': 'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large',
         'sub2_3': 'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
-        'sub2_4': '',
-        'sub2_5': '',
         'sub3_1': 'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small',
         'sub3_2': 'imagenes/sub3_2.jpg',
         'sub3_3': 'imagenes/sub3_3.jpg',
-        'sub3_4': 'imagenes/sub3_4.jpg',
-        'sub3_5': 'imagenes/sub3_5.jpg',
         'sub4_1': 'imagenes/sub4_1.jpg',
         'sub4_2': 'imagenes/sub4_2.jpg',
         'sub4_3': 'imagenes/sub4_3.jpg',
-        'sub4_4': 'imagenes/sub4_4.jpg',
-        'sub4_5': 'imagenes/sub4_5.jpg',
         'sub5_1': 'imagenes/sub5_1.jpg',
         'sub5_2': 'imagenes/sub5_2.jpg',
         'sub5_3': 'imagenes/sub5_3.jpg',
-        'sub5_4': 'imagenes/sub5_5.jpg',
-        'sub5_5': 'imagenes/sub5_5.jpg',
         'sub6_1': 'imagenes/sub6_1.jpg',
         'sub6_2': 'imagenes/sub6_2.jpg',
         'sub6_3': 'imagenes/sub6_3.jpg',
-        'sub6_4': 'imagenes/sub6_4.jpg',
-        'sub6_5': 'imagenes/sub6_5.jpg',
         'sub7_1': 'imagenes/sub7_1.jpg',
         'sub7_2': 'imagenes/sub7_2.jpg',
         'sub7_3': 'imagenes/sub7_3.jpg',
-        'sub7_4': 'imagenes/sub7_4.jpg',
-        'sub7_5': 'imagenes/sub7_5.jpg',
         'sub8_1': 'imagenes/sub8_1.jpg',
         'sub8_2': 'imagenes/sub8_2.jpg',
         'sub8_3': 'imagenes/sub8_3.jpg',
-        'sub8_4': 'imagenes/sub8_4.jpg',
-        'sub8_5': 'imagenes/sub8_5.jpg',
         'sub9_1': 'imagenes/sub9_1.jpg',
         'sub9_2': 'imagenes/sub9_2.jpg',
         'sub9_3': 'imagenes/sub9_3.jpg',
-        'sub9_4': 'imagenes/sub9_4.jpg',
-        'sub9_5': 'imagenes/sub9_5.jpg',
         'sub10_1': 'imagenes/sub10_1.jpg',
         'sub10_2': 'imagenes/sub10_2.jpg',
-        'sub10_3': 'imagenes/sub10_3.jpg',
-        'sub10_4': 'imagenes/sub10_4.jpg',
-        'sub10_5': 'imagenes/sub10_5.jpg'
+        'sub10_3': 'imagenes/sub10_3.jpg'
     },
     mazos: {
         'mazo1': 'imagenes/mazo1.jpg',
@@ -75,12 +54,14 @@ const configImagenes = {
         'mazo4': 'imagenes/mazo4.jpg',
         'mazo5': 'imagenes/mazo5.jpg'
     },
-    rpg: {
-        novia: 'imagenes/novia.jpg',
-        fondo: 'imagenes/fondo-rpg.jpg',
-        iconoFlores: 'imagenes/flores.png',
-        iconoChocolates: 'imagenes/chocolates.png',
-        iconoJoyas: 'imagenes/joyas.png'
+    // NUEVO: IMÁGENES DE LAS QUINTILLIZAS NAKANO
+    nakano: {
+        'ichika': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/9/9d/Ichika_Nakano_Manga_Profile.png',
+        'nino': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/e/eb/Nino_Nakano_Manga_Profile.png',
+        'miku': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0b/Miku_Nakano_Manga_Profile.png',
+        'yotsuba': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/0/0f/Yotsuba_Nakano_Manga_Profile.png',
+        'itsuki': 'https://static.wikia.nocookie.net/5toubun-no-hanayome/images/1/19/Itsuki_Nakano_Manga_Profile.png',
+        'default': 'imagenes/nakano/default.jpg'
     }
 };
 
@@ -122,40 +103,75 @@ const videosRecompensa = [
 ];
 
 // ============================================================================
-// VIDEOS +18 PARA MOMENTOS ÍNTIMOS
+// VIDEOS +18 PARA MOMENTOS ÍNTIMOS (QUINTILLIZAS NAKANO)
 // ============================================================================
 
-const videosIntimos = {
-    beso: "https://assets.mixkit.co/videos/preview/mixkit-couple-kissing-on-the-bed-44463-large.mp4",
-    caricias: "https://assets.mixkit.co/videos/preview/mixkit-hands-caressing-a-woman-s-back-44462-large.mp4",
-    intimidad1: "https://assets.mixkit.co/videos/preview/mixkit-romantic-bedroom-scene-44461-large.mp4",
-    intimidad2: "https://assets.mixkit.co/videos/preview/mixkit-passionate-romantic-scene-44460-large.mp4"
+const videosIntimosNakano = {
+    // Ichika
+    'ichika_beso_ichika': 'videos/ichika_beso.mp4',
+    'ichika_escena_privada': 'videos/ichika_escena.mp4',
+    'ichika_noche_estrellas': 'videos/ichika_noche.mp4',
+    'ichika_maquillaje_intimo': 'videos/ichika_maquillaje.mp4',
+    
+    // Nino
+    'nino_beso_nino': 'videos/nino_beso.mp4',
+    'nino_cena_romantica': 'videos/nino_cena.mp4',
+    'nino_masaje_culinario': 'videos/nino_masaje.mp4',
+    'nino_noche_especias': 'videos/nino_especias.mp4',
+    
+    // Miku
+    'miku_beso_miku': 'videos/miku_beso.mp4',
+    'miku_leccion_historica': 'videos/miku_leccion.mp4',
+    'miku_musica_intima': 'videos/miku_musica.mp4',
+    'miku_noche_samurais': 'videos/miku_samurais.mp4',
+    
+    // Yotsuba
+    'yotsuba_beso_yotsuba': 'videos/yotsuba_beso.mp4',
+    'yotsuba_ducha_juntos': 'videos/yotsuba_ducha.mp4',
+    'yotsuba_masaje_deportivo': 'videos/yotsuba_masaje.mp4',
+    'yotsuba_noche_olimpica': 'videos/yotsuba_olimpica.mp4',
+    
+    // Itsuki
+    'itsuki_beso_itsuki': 'videos/itsuki_beso.mp4',
+    'itsuki_cena_romantica_itsuki': 'videos/itsuki_cena.mp4',
+    'itsuki_degustacion_intima': 'videos/itsuki_degustacion.mp4',
+    'itsuki_noche_chocolate': 'videos/itsuki_chocolate.mp4'
 };
 
-// Función para cambiar las URLs de videos íntimos
-function cambiarVideoIntimo(escenaId, nuevaUrl) {
-    if (videosIntimos[escenaId]) {
-        videosIntimos[escenaId] = nuevaUrl;
-        console.log(`Video de ${escenaId} actualizado a: ${nuevaUrl}`);
-        return true;
-    }
-    return false;
-}
+// ============================================================================
+// VIDEOS DE REGALOS RECÍPROCOS NAKANO
+// ============================================================================
 
-// Funciones globales para cambiar videos desde consola
-window.cambiarVideoIntimo = function(escenaId, nuevaUrl) {
-    return cambiarVideoIntimo(escenaId, nuevaUrl);
+const videosRegalosNakano = {
+    // Ichika
+    'ichika_microfono': 'videos/regalos/ichika_microfono.mp4',
+    'ichika_maquillaje': 'videos/regalos/ichika_maquillaje.mp4',
+    'ichika_guion': 'videos/regalos/ichika_guion.mp4',
+    
+    // Nino
+    'nino_utensilios_cocina': 'videos/regalos/nino_cocinando.mp4',
+    'nino_delantal': 'videos/regalos/nino_delantal.mp4',
+    'nino_libro_recetas': 'videos/regalos/nino_recetas.mp4',
+    
+    // Miku
+    'miku_audifonos': 'videos/regalos/miku_audifonos.mp4',
+    'miku_libro_historia': 'videos/regalos/miku_historia.mp4',
+    'miku_daimyou': 'videos/regalos/miku_daimyou.mp4',
+    
+    // Yotsuba
+    'yotsuba_balon': 'videos/regalos/yotsuba_balon.mp4',
+    'yotsuba_zapatos_deportivos': 'videos/regalos/yotsuba_corriendo.mp4',
+    'yotsuba_medalla': 'videos/regalos/yotsuba_medalla.mp4',
+    
+    // Itsuki
+    'itsuki_libro_cocina': 'videos/regalos/itsuki_cocinando.mp4',
+    'itsuki_comida_gourmet': 'videos/regalos/itsuki_comiendo.mp4',
+    'itsuki_postre_especial': 'videos/regalos/itsuki_postre.mp4'
 };
 
-window.cambiarTodosVideosIntimos = function(configuraciones) {
-    let exitosas = 0;
-    configuraciones.forEach(config => {
-        if (cambiarVideoIntimo(config.escena, config.url)) {
-            exitosas++;
-        }
-    });
-    return exitosas;
-};
+// ============================================================================
+// FUNCIONES GLOBALES
+// ============================================================================
 
 // Función para obtener la URL de una imagen
 function obtenerUrlImagen(tipo, id) {
@@ -166,8 +182,47 @@ function obtenerUrlImagen(tipo, id) {
     return 'imagenes/default.jpg';
 }
 
-// Función para obtener un video aleatorio
+// Función para obtener imagen de quintilliza Nakano
+function obtenerImagenNakano(idQuintilliza) {
+    if (configImagenes.nakano && configImagenes.nakano[idQuintilliza]) {
+        return configImagenes.nakano[idQuintilliza];
+    }
+    return configImagenes.nakano.default || 'imagenes/nakano/default.jpg';
+}
+
+// Función para obtener un video aleatorio de recompensa
 function obtenerVideoAleatorio() {
     const indiceAleatorio = Math.floor(Math.random() * videosRecompensa.length);
     return videosRecompensa[indiceAleatorio];
 }
+
+// Función para cambiar video íntimo (testing)
+function cambiarVideoIntimoNakano(escenaId, nuevaUrl) {
+    if (videosIntimosNakano[escenaId]) {
+        videosIntimosNakano[escenaId] = nuevaUrl;
+        console.log(`Video de ${escenaId} actualizado a: ${nuevaUrl}`);
+        return true;
+    }
+    return false;
+}
+
+// Función para cambiar video de regalo (testing)
+function cambiarVideoRegaloNakano(regaloId, nuevaUrl) {
+    if (videosRegalosNakano[regaloId]) {
+        videosRegalosNakano[regaloId] = nuevaUrl;
+        console.log(`Video de regalo ${regaloId} actualizado a: ${nuevaUrl}`);
+        return true;
+    }
+    return false;
+}
+
+// Funciones globales para testing desde consola
+window.cambiarVideoIntimo = function(escenaId, nuevaUrl) {
+    return cambiarVideoIntimoNakano(escenaId, nuevaUrl);
+};
+
+window.cambiarVideoRegalo = function(regaloId, nuevaUrl) {
+    return cambiarVideoRegaloNakano(regaloId, nuevaUrl);
+};
+
+window.obtenerImagenNakano = obtenerImagenNakano;
