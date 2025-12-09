@@ -1004,27 +1004,34 @@ function iniciarSistemaAnime() {
 // ============================================================================
 // FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS
 // ============================================================================
+// ============================================================================
+// FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS - VERSIÓN CORREGIDA
+// ============================================================================
 
 function iniciarGaleriaVideos() {
-    // Verificar si la galería está cargada
-    if (typeof iniciarGaleriaVideos !== 'undefined') {
-        cambiarPantalla('pantalla-galerias-videos');
-        
-        // Crear pantallas si no existen
-        if (typeof crearPantallasGaleriaVideos !== 'undefined') {
-            crearPantallasGaleriaVideos();
-        }
-        
-        // Cargar categorías con un pequeño delay
-        setTimeout(() => {
-            if (typeof cargarCategoriasVideos === 'function') {
-                cargarCategoriasVideos();
-            }
-        }, 100);
-        
-        console.log("🎬 Galería de videos iniciada");
-    } else {
-        console.error("❌ Galería de videos no cargada");
+    console.log("🎬 Iniciando galería de videos...");
+    
+    // 1. PRIMERO verificar que el sistema existe
+    if (typeof crearPantallasGaleriaVideos === 'undefined') {
+        console.error("❌ ERROR: Sistema de galería no cargado");
         mostrarNotificacion("Error: Galería de videos no disponible");
+        return; // Salir si no está cargado
     }
+    
+    // 2. CREAR las pantallas si no existen
+    crearPantallasGaleriaVideos();
+    console.log("✅ Pantallas creadas/verificadas");
+    
+    // 3. ESPERAR un momento para que el DOM se actualice
+    setTimeout(() => {
+        // 4. LUEGO cambiar a la pantalla
+        cambiarPantalla('pantalla-galerias-videos');
+        console.log("✅ Pantalla cambiada");
+        
+        // 5. FINALMENTE cargar las categorías
+        if (typeof cargarCategoriasVideos === 'function') {
+            cargarCategoriasVideos();
+            console.log("✅ Categorías cargadas");
+        }
+    }, 50); // Delay muy pequeño pero suficiente
 }
