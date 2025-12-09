@@ -975,4 +975,17 @@ function iniciarComienzoDiciembre2025() {
         `;
     }
 }
-// ← AQUÍ TERMINA TU ARCHIVO
+// ============================================================================
+// FUNCIÓN PARA INICIAR VIDEOS H
+// ============================================================================
+
+function iniciarVideosH() {
+    cambiarPantalla('pantalla-videos-h');
+    
+    if (typeof videosHSystem !== 'undefined') {
+        videosHSystem.cargarListaVideos();
+    } else {
+        console.error("⚠️ Sistema de Videos H no cargado");
+        mostrarNotificacion("Error: Videos H no disponibles");
+    }
+}
