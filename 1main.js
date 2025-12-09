@@ -140,10 +140,69 @@ function cargarSubcontenedor(idSubcontenedor) {
     
     cambiarPantalla('pantalla-mazos');
     
+    // ============================================================================
+    // AGREGAR BOTONES DE ANIME (SI HAY CONTENIDO DE ANIME PARA ESTE SUBCONTENEDOR)
+    // ============================================================================
     setTimeout(() => {
+        // Botones de manga
         window.agregarBotonesManga?.();
         console.log(window.agregarBotonesManga ? "✅ Botones manga añadidos" : "⚠️ mangaViewer no cargado");
-    }, 300);
+        
+        // Botones de anime
+        if (typeof animeSystem !== 'undefined' && animeSystem.database[idSubcontenedor]) {
+            const videoData = animeSystem.database[idSubcontenedor].video;
+            const mazosCount = Object.keys(animeSystem.database[idSubcontenedor].mazos).length;
+            
+            // Crear sección especial de anime
+            const seccionAnime = document.createElement('div');
+            seccionAnime.className = 'seccion-anime-especial';
+            seccionAnime.style.cssText = `
+                grid-column: 1 / -1;
+                background: linear-gradient(135deg, #1a237e, #311b92);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #7c4dff;
+            `;
+            
+            seccionAnime.innerHTML = `
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <div style="font-size: 2rem; margin-right: 15px;">📺</div>
+                    <div>
+                        <h3 style="margin: 0; color: #bb86fc;">CONTENIDO DE ANIME DISPONIBLE</h3>
+                        <p style="margin: 5px 0 0 0; color: #b0b0b0; font-size: 0.9rem;">
+                            ${videoData.titulo} • ${mazosCount} mazos • ${videoData.duracion}
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="boton-anime-principal" 
+                            onclick="animeSystem.mostrarVideos('${idSubcontenedor}')"
+                            style="background: linear-gradient(135deg, #ff6b9d, #c2185b);">
+                        📺 VER ANIME COMPLETO
+                    </button>
+                    
+                    <button class="boton-anime-secundario" 
+                            onclick="animeSystem.mostrarMazosDeVideo('${idSubcontenedor}')"
+                            style="background: linear-gradient(135deg, #4a90e2, #1565c0);">
+                        🎯 PRACTICAR MAZOS DE ANIME
+                    </button>
+                    
+                    <button class="boton-anime-info"
+                            onclick="alert('Este anime tiene ${mazosCount} mazos de 10 palabras cada uno. Mira el video primero para mejor aprendizaje.')"
+                            style="background: #333; color: #ccc;">
+                        ℹ️ INFORMACIÓN
+                    </button>
+                </div>
+            `;
+            
+            // Insertar al principio del contenedor de mazos
+            contenedorMazos.insertBefore(seccionAnime, contenedorMazos.firstChild);
+            
+            console.log("✅ Botones de anime agregados para", idSubcontenedor);
+        }
+    }, 100); // Pequeño delay para asegurar que el DOM esté listo
 }
 
 function cargarMazo(idMazo) {
@@ -352,6 +411,21 @@ function repetirQuiz() {
 function repetirFalladas() { practicarPalabrasFalladas?.(); }
 
 // ============================================================================
+// FUNCIÓN ESPECIAL PARA MOSTRAR RESULTADOS DE PRÁCTICA DE ANIME
+// ============================================================================
+
+function mostrarResultadosPracticaEspecial(porcentaje) {
+    const recompensa = 3; // 3 S/. por completar práctica de anime
+    
+    if (porcentaje >= 80) {
+        sistemaEconomia?.agregarDinero(recompensa, "Práctica de anime completada");
+        mostrarNotificacion(`🎉 ¡Práctica de anime completada! +${recompensa} S/.`);
+    }
+    
+    mostrarPantallaResultados(porcentaje);
+}
+
+// ============================================================================
 // SISTEMAS ADICIONALES
 // ============================================================================
 
@@ -386,19 +460,67 @@ function iniciarComienzoDiciembre2025() {
 }
 
 // ============================================================================
+// UTILIDADES
+// ============================================================================
+
+function mostrarNotificacion(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff9800, #ff5722);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideInRight 0.3s ease;
+    `;
+    notificacion.textContent = mensaje;
+    
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.remove();
+    }, 3000);
+}
+
+// Sobrescribir mostrarResultados para detectar si es práctica de anime
+const mostrarResultadosOriginal = mostrarResultados;
+window.mostrarResultados = function() {
+    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
+    
+    // Verificar si es práctica de anime (por el título)
+    const tituloElement = document.getElementById('contador-preguntas');
+    if (tituloElement && tituloElement.textContent.includes('ANIME')) {
+        mostrarResultadosPracticaEspecial(porcentaje);
+    } else {
+        mostrarResultadosOriginal();
+    }
+};
+
+// ============================================================================
 // INICIALIZACIÓN
 // ============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("🚀 Aplicación cargada");
+    console.log("🚀 Aplicación cargada - Inicializando sistemas...");
     
+    // Inicializar sistemas en orden
     sistemaEconomia?.inicializar();
     misionesDiarias?.inicializar();
     eventosDiarios?.inicializar();
     sistemaPalabrasFalladas?.inicializar();
     sistemaNakano?.inicializar?.();
     
-    console.log("✅ Sistemas inicializados");
+    // Inicializar sistema de anime si existe
+    if (typeof animeSystem !== 'undefined' && animeSystem.inicializar) {
+        animeSystem.inicializar();
+        console.log("✅ Sistema de Anime inicializado");
+    }
+    
+    console.log("✅ Todos los sistemas inicializados");
     
     setTimeout(() => {
         if (!document.querySelector('.pantalla.activa')) cambiarPantalla('pantalla-inicio');
@@ -410,18 +532,26 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================================
 
 Object.assign(window, {
+    // Sistema principal
     mostrarEventoDiarioForzado: () => { eventosDiarios?.reiniciarEventoDiario(); eventosDiarios?.mostrarEventoDiario(); },
     reiniciarSistemaEventos: () => { localStorage.removeItem('eventosDiarios'); eventosDiarios?.reiniciarEventoDiario(); location.reload(); },
     agregarDinero: (cantidad) => sistemaEconomia?.agregarDinero(cantidad, "Testing"),
+    
+    // Sistema de palabras falladas
     verEstadoSistemas: () => {
-        console.log("=== ESTADO ===");
+        console.log("=== ESTADO DE SISTEMAS ===");
         console.log("💰 Economía:", sistemaEconomia?.saldoTotal);
         console.log("🎯 Misiones:", misionesDiarias?.misiones);
         console.log("📅 Evento:", eventosDiarios?.estado);
         console.log("📝 Falladas:", sistemaPalabrasFalladas?.obtenerEstadisticas());
-        if (sistemaNakano) console.log("💕 Nakano:", sistemaNakano.noviaSeleccionada, sistemaNakano.economia.saldo);
+        console.log("🎬 Anime:", animeSystem ? "Cargado ✓" : "No cargado ✗");
+        if (sistemaNakano) {
+            console.log("💕 Nakano:", sistemaNakano.noviaSeleccionada, "Saldo:", sistemaNakano.economia.saldo);
+        }
     },
     verPalabrasFalladas: () => console.log("📝", sistemaPalabrasFalladas?.palabrasFalladasHoy),
+    
+    // Sistema Nakano
     agregarExperienciaNakano: (cantidad) => sistemaNakano?.agregarExperiencia?.(cantidad, "Testing"),
     verEstadoNakano: () => {
         const novia = sistemaNakano?.obtenerNoviaActual();
@@ -460,5 +590,64 @@ Object.assign(window, {
             return true;
         }
         return false;
+    },
+    
+    // Sistema de Anime (nuevo)
+    agregarVideoAnime: (subcontenedorId, titulo, url) => {
+        if (typeof animeSystem !== 'undefined' && animeSystem.agregarVideoTest) {
+            return animeSystem.agregarVideoTest(subcontenedorId, titulo, url);
+        }
+        console.error("⚠️ Sistema de Anime no cargado");
+        return false;
+    },
+    verAnimeDisponible: () => {
+        if (typeof animeSystem !== 'undefined' && animeSystem.verVideosDisponibles) {
+            animeSystem.verVideosDisponibles();
+        } else {
+            console.log("⚠️ Sistema de Anime no disponible");
+        }
+    },
+    cargarMazoAnime: (subcontenedorId, mazoId) => {
+        if (typeof animeSystem !== 'undefined' && animeSystem.cargarMazo) {
+            return animeSystem.cargarMazo(subcontenedorId, mazoId);
+        }
+        return false;
+    },
+    
+    // Sistema de manga
+    verImagenesManga: () => {
+        if (typeof mangaViewer !== 'undefined') {
+            console.log("📖 Subcontenedores con manga:");
+            Object.entries(mangaViewer.mangaDatabase).forEach(([subId, imagenes]) => {
+                if (imagenes.length > 0) {
+                    console.log(`${subId}: ${imagenes.length} páginas`);
+                }
+            });
+        } else {
+            console.log("⚠️ Sistema de Manga no disponible");
+        }
     }
 });
+
+// ============================================================================
+// CONFIGURACIÓN DE DEPENDENCIAS
+// ============================================================================
+
+// Asegurar que las dependencias necesarias existan
+if (typeof obtenerVideoAleatorio === 'undefined') {
+    console.warn("⚠️ obtenerVideoAleatorio no está definido. Usando función de respaldo.");
+    window.obtenerVideoAleatorio = function() {
+        return {
+            titulo: "Video de Prueba",
+            url: "https://via.placeholder.com/640x360/4a90e2/ffffff?text=Video+No+Disponible",
+            duracion: "5:00"
+        };
+    };
+}
+
+if (typeof obtenerUrlImagen === 'undefined') {
+    console.warn("⚠️ obtenerUrlImagen no está definido. Usando función de respaldo.");
+    window.obtenerUrlImagen = function(tipo, id) {
+        return `https://via.placeholder.com/300x200/333333/ffffff?text=${tipo}+${id}`;
+    };
+}
