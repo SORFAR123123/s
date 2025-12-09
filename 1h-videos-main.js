@@ -325,45 +325,82 @@ const videosHParaFabri = {
         });
     },
 
-    // Cargar un mazo específico del video (iniciar quiz)
+    // Cargar un mazo específico del video (iniciar quiz) - CORREGIDO
     cargarMazoVideo: function(mazoId, palabrasRef) {
-        console.log("📚 Cargando mazo Videos H:", mazoId, "ref:", palabrasRef);
+        console.log("📚 Cargando mazo de video H:", mazoId, "ref:", palabrasRef);
         
-        // Obtener palabras del vocabulario específico
+        // Obtener palabras del vocabulario específico de videos H
         let palabras = [];
         
         if (typeof vocabularioVideosH !== 'undefined' && 
-            vocabularioVideosH[palabrasRef]) {
+            vocabularioVideosH[palabrasRef] && 
+            Array.isArray(vocabularioVideosH[palabrasRef])) {
+            
             palabras = vocabularioVideosH[palabrasRef];
-            console.log(`✅ Encontradas ${palabras.length} palabras para ${palabrasRef}`);
+            console.log("✅ Palabras encontradas en vocabularioVideosH:", palabras.length);
+            
+            // DEBUG: Ver estructura de la primera palabra
+            if (palabras.length > 0) {
+                console.log("🔍 Estructura primera palabra:", {
+                    japones: palabras[0].japones,
+                    lectura: palabras[0].lectura,
+                    opciones: palabras[0].opciones,
+                    tieneOpciones: palabras[0].opciones && Array.isArray(palabras[0].opciones),
+                    longitudOpciones: palabras[0].opciones ? palabras[0].opciones.length : 0,
+                    respuesta: palabras[0].respuesta
+                });
+            }
         } else {
-            console.warn("⚠️ No se encontró vocabulario para:", palabrasRef);
-            console.log("🔍 Claves disponibles:", Object.keys(vocabularioVideosH || {}));
+            console.warn("⚠️ No se encontró vocabulario para:", palabrasRef, "usando palabras genéricas");
             // Usar palabras genéricas como fallback
-            palabras = generarPalabrasVideoH(10);
+            palabras = generarPalabras(10);
         }
 
-        // Configurar el sistema de quiz principal
-        mazoActual = [...palabras];
+        // Configurar el sistema de quiz principal CORRECTAMENTE
+        // Asegurarse de que cada palabra tenga la estructura correcta
+        mazoActual = palabras.map(palabra => {
+            // Verificar y asegurar la estructura correcta
+            if (!palabra.opciones || !Array.isArray(palabra.opciones)) {
+                console.warn("⚠️ Palabra sin opciones válidas, creando opciones por defecto:", palabra.japones);
+                palabra.opciones = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+            }
+            
+            return {
+                japones: palabra.japones || "Palabra no disponible",
+                lectura: palabra.lectura || "",
+                opciones: [...palabra.opciones], // Crear copia del array
+                respuesta: typeof palabra.respuesta === 'number' ? palabra.respuesta : 0
+            };
+        });
+        
         preguntaActual = 0;
         respuestasCorrectas = 0;
         respuestasIncorrectas = 0;
         
-        // Crear estructura del quiz si no existe
-        crearEstructuraQuizVideoH();
+        // DEBUG: Verificar estructura final
+        console.log("📋 Mazo final preparado:", {
+            cantidadPalabras: mazoActual.length,
+            primeraPalabra: mazoActual[0],
+            opcionesPrimera: mazoActual[0]?.opciones?.length || 0
+        });
         
         // Cambiar título para identificar que es práctica especial
-        const tituloElement = document.getElementById('contador-preguntas-video-h');
+        const tituloElement = document.getElementById('contador-preguntas');
         if (tituloElement) {
             const video = this.videos[this.estado.videoActual];
-            tituloElement.textContent = `VIDEO H: ${video.titulo} - Mazo ${mazoId}`;
+            tituloElement.textContent = `PRÁCTICA ESPECIAL: ${video.titulo} - ${mazoId}`;
         }
         
-        // Cambiar a pantalla de quiz
-        cambiarPantallaVideoH('pantalla-quiz-video-h');
+        // Mezclar las preguntas
+        mezclarPreguntas();
         
-        // Usar nuestra función especial para Videos H
-        mostrarPreguntaVideoH();
+        // Cambiar a pantalla de quiz
+        cambiarPantalla('pantalla-quiz');
+        
+        // Mostrar primera pregunta (con pequeño delay para asegurar que el DOM esté listo)
+        setTimeout(() => {
+            mostrarPregunta();
+        }, 100);
     },
 
     // Ver video completo en Google Drive
@@ -430,310 +467,25 @@ const videosHParaFabri = {
         Object.values(this.videos).forEach(video => {
             console.log(`- ${video.titulo}: ${video.videoDrive}`);
         });
+    },
+
+    // Ver estructura de mazos específicos (testing)
+    verEstructuraMazo: function(videoId, mazoId) {
+        const video = this.videos[videoId];
+        if (video && video.mazos[mazoId]) {
+            const mazo = video.mazos[mazoId];
+            console.log(`📊 Estructura de ${videoId} - ${mazoId}:`, {
+                nombre: mazo.nombre,
+                palabrasRef: mazo.palabrasRef,
+                existeEnVocabulario: vocabularioVideosH && vocabularioVideosH[mazo.palabrasRef] ? "Sí" : "No",
+                cantidadPalabras: vocabularioVideosH && vocabularioVideosH[mazo.palabrasRef] ? 
+                    vocabularioVideosH[mazo.palabrasRef].length : 0
+            });
+            return mazo;
+        }
+        return null;
     }
 };
-
-// ============================================================================
-// FUNCIONES AUXILIARES PARA VIDEOS H
-// ============================================================================
-
-// Función de respaldo para generar palabras genéricas
-function generarPalabrasVideoH(cantidad) {
-    const palabras = [];
-    const palabrasBase = [
-        { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
-        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
-        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
-        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
-        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 }
-    ];
-    
-    for (let i = 0; i < cantidad; i++) {
-        palabras.push({...palabrasBase[i % palabrasBase.length]});
-    }
-    return palabras;
-}
-
-// ============================================================================
-// FUNCIÓN ESPECIAL PARA VIDEOS H - REEMPLAZO DE mostrarPregunta
-// ============================================================================
-
-function mostrarPreguntaVideoH() {
-    if (preguntaActual < mazoActual.length) {
-        const pregunta = mazoActual[preguntaActual];
-        
-        // CORRECCIÓN: Asegurar que los elementos existen
-        const numPreguntaElem = document.getElementById('numero-pregunta-video-h');
-        const totalPreguntasElem = document.getElementById('total-preguntas-video-h');
-        const palabraJaponesElem = document.getElementById('palabra-japones-video-h');
-        const lecturaElem = document.getElementById('lectura-video-h');
-        const resultadoElem = document.getElementById('resultado-video-h');
-        const botonSiguienteElem = document.getElementById('boton-siguiente-video-h');
-        const contenedorOpcionesElem = document.getElementById('contenedor-opciones-video-h');
-        
-        if (!numPreguntaElem || !palabraJaponesElem || !contenedorOpcionesElem) {
-            console.error("❌ Elementos del quiz no encontrados. Creando estructura...");
-            crearEstructuraQuizVideoH();
-            // Volver a obtener los elementos después de crearlos
-            return mostrarPreguntaVideoH();
-        }
-        
-        // Actualizar elementos
-        numPreguntaElem.textContent = preguntaActual + 1;
-        if (totalPreguntasElem) {
-            totalPreguntasElem.textContent = mazoActual.length;
-        }
-        palabraJaponesElem.textContent = pregunta.japones;
-        if (lecturaElem) lecturaElem.textContent = '';
-        if (resultadoElem) {
-            resultadoElem.textContent = '';
-            resultadoElem.className = 'resultado';
-        }
-        if (botonSiguienteElem) {
-            botonSiguienteElem.style.display = 'none';
-        }
-        
-        // Limpiar opciones anteriores
-        contenedorOpcionesElem.innerHTML = '';
-        
-        // Mezclar opciones
-        const opcionesMezcladas = [...pregunta.opciones];
-        for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
-        }
-        
-        // Crear botones de opciones
-        opcionesMezcladas.forEach((opcion, index) => {
-            const botonOpcion = document.createElement('button');
-            botonOpcion.className = 'opcion';
-            botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuestaVideoH(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
-            contenedorOpcionesElem.appendChild(botonOpcion);
-        });
-    } else {
-        // Mostrar resultados finales
-        mostrarResultadosVideoH();
-    }
-}
-
-// ============================================================================
-// FUNCIÓN PARA VERIFICAR RESPUESTAS EN VIDEOS H
-// ============================================================================
-
-function verificarRespuestaVideoH(respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
-    const opcionesDOM = document.querySelectorAll('#contenedor-opciones-video-h .opcion');
-    const resultado = document.getElementById('resultado-video-h');
-    const lecturaElem = document.getElementById('lectura-video-h');
-    const palabraActual = document.getElementById('palabra-japones-video-h').textContent;
-    
-    // Deshabilitar botones
-    opcionesDOM.forEach(opcion => {
-        opcion.disabled = true;
-    });
-    
-    // Marcar respuestas correctas e incorrectas
-    opcionesDOM.forEach(opcion => {
-        if (opcion.textContent === respuestaCorrecta) {
-            opcion.classList.add('correcta');
-        } else if (opcion.textContent === respuestaSeleccionada && respuestaSeleccionada !== respuestaCorrecta) {
-            opcion.classList.add('incorrecta');
-        }
-    });
-    
-    // Mostrar pronunciación
-    if (lecturaElem) {
-        lecturaElem.textContent = `(${lectura})`;
-    }
-    
-    if (respuestaSeleccionada === respuestaCorrecta) {
-        if (resultado) {
-            resultado.textContent = '¡Correcto!';
-            resultado.className = 'resultado correcto';
-        }
-        respuestasCorrectas++;
-        
-        // Navegación automática para respuestas correctas
-        setTimeout(() => {
-            siguientePreguntaVideoH();
-        }, 1000);
-        
-    } else {
-        if (resultado) {
-            resultado.textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
-            resultado.className = 'resultado incorrecto';
-        }
-        respuestasIncorrectas++;
-        
-        // Registrar palabra fallada
-        if (typeof sistemaPalabrasFalladas !== 'undefined') {
-            sistemaPalabrasFalladas.registrarPalabraFallada(
-                palabraActual,
-                respuestaSeleccionada,
-                respuestaCorrecta,
-                lectura,
-                opciones
-            );
-        }
-        
-        // Mostrar botón "Continuar"
-        const botonSiguienteElem = document.getElementById('boton-siguiente-video-h');
-        if (botonSiguienteElem) {
-            botonSiguienteElem.style.display = 'block';
-        }
-    }
-}
-
-// ============================================================================
-// FUNCIONES AUXILIARES PARA VIDEOS H
-// ============================================================================
-
-function siguientePreguntaVideoH() {
-    preguntaActual++;
-    mostrarPreguntaVideoH();
-}
-
-function crearEstructuraQuizVideoH() {
-    console.log("🛠️ Creando estructura del quiz para Videos H...");
-    
-    // Verificar si la pantalla de quiz existe
-    let pantallaQuiz = document.getElementById('pantalla-quiz-video-h');
-    if (!pantallaQuiz) {
-        // Crear pantalla básica del quiz
-        pantallaQuiz = document.createElement('div');
-        pantallaQuiz.id = 'pantalla-quiz-video-h';
-        pantallaQuiz.className = 'pantalla';
-        pantallaQuiz.innerHTML = `
-            <div class="contenedor">
-                <div class="barra-superior">
-                    <div class="contador" id="contador-preguntas-video-h">
-                        PRÁCTICA VIDEOS H: <span id="numero-pregunta-video-h">1</span>/<span id="total-preguntas-video-h">10</span>
-                    </div>
-                    <div class="botones-superiores">
-                        <button class="boton-home" onclick="videosHParaFabri.volverASeleccion()">← Volver</button>
-                        <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
-                    </div>
-                </div>
-                
-                <div class="quiz-container" style="max-width: 600px; margin: 0 auto;">
-                    <div class="palabra-central" id="palabra-japones-video-h" style="font-size: 48px; text-align: center; margin: 30px 0;"></div>
-                    <div class="lectura" id="lectura-video-h" style="text-align: center; font-size: 20px; color: #666; margin-bottom: 30px;"></div>
-                    
-                    <div class="contenedor-opciones" id="contenedor-opciones-video-h" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0;">
-                        <!-- Las opciones se generarán aquí -->
-                    </div>
-                    
-                    <div class="resultado" id="resultado-video-h" style="text-align: center; font-size: 24px; margin: 20px 0; min-height: 40px;"></div>
-                    
-                    <div class="botones-quiz" style="text-align: center; margin-top: 30px;">
-                        <button class="boton-siguiente" id="boton-siguiente-video-h" onclick="siguientePreguntaVideoH()" style="display: none; padding: 15px 30px; font-size: 18px;">
-                            Continuar →
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(pantallaQuiz);
-        console.log("✅ Estructura del quiz para Videos H creada");
-    }
-}
-
-function mostrarResultadosVideoH() {
-    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
-    
-    // Crear pantalla de resultados
-    let pantallaResultados = document.getElementById('pantalla-resultados-video-h');
-    if (!pantallaResultados) {
-        pantallaResultados = document.createElement('div');
-        pantallaResultados.id = 'pantalla-resultados-video-h';
-        pantallaResultados.className = 'pantalla';
-        document.body.appendChild(pantallaResultados);
-    }
-    
-    pantallaResultados.innerHTML = `
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador">📊 RESULTADOS VIDEOS H</div>
-                <div class="botones-superiores">
-                    <button class="boton-home" onclick="videosHParaFabri.volverASeleccion()">← Volver a Videos</button>
-                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
-                </div>
-            </div>
-            
-            <div style="text-align: center; padding: 50px 20px;">
-                <h1 style="color: #ff6b9d; margin-bottom: 30px;">🎬 Quiz Completado!</h1>
-                
-                <div style="background: rgba(255, 107, 157, 0.1); border-radius: 20px; padding: 30px; max-width: 500px; margin: 0 auto;">
-                    <div style="font-size: 24px; margin-bottom: 20px;">📊 Tu puntuación:</div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 36px; color: #00ff88;">${respuestasCorrectas}</div>
-                            <div style="color: #888;">Correctas</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 36px; color: #ff4444;">${respuestasIncorrectas}</div>
-                            <div style="color: #888;">Incorrectas</div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 48px; color: ${porcentaje >= 80 ? '#00ff88' : porcentaje >= 60 ? '#ff9800' : '#ff4444'}; margin: 30px 0;">
-                        ${porcentaje}%
-                    </div>
-                    
-                    <div style="margin: 30px 0;">
-                        ${porcentaje === 100 ? '🎉 ¡Perfecto! ¡Eres un experto!' : 
-                          porcentaje >= 80 ? '👍 ¡Excelente trabajo!' : 
-                          porcentaje >= 60 ? '😊 Buen trabajo, sigue practicando' : 
-                          '💪 Sigue estudiando, mejorarás'}
-                    </div>
-                </div>
-                
-                <div style="margin-top: 40px; display: flex; gap: 15px; justify-content: center;">
-                    <button class="boton-principal" onclick="repetirQuizVideoH()" style="padding: 15px 30px;">
-                        🔄 Repetir Quiz
-                    </button>
-                    <button class="boton-secundario" onclick="videosHParaFabri.volverASeleccion()" style="padding: 15px 30px;">
-                        ← Volver a Videos
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    cambiarPantallaVideoH('pantalla-resultados-video-h');
-}
-
-function repetirQuizVideoH() {
-    preguntaActual = 0;
-    respuestasCorrectas = 0;
-    respuestasIncorrectas = 0;
-    
-    // Mezclar preguntas nuevamente
-    for (let i = mazoActual.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [mazoActual[i], mazoActual[j]] = [mazoActual[j], mazoActual[i]];
-    }
-    
-    cambiarPantallaVideoH('pantalla-quiz-video-h');
-    mostrarPreguntaVideoH();
-}
-
-function cambiarPantallaVideoH(idPantalla) {
-    // Ocultar todas las pantallas
-    document.querySelectorAll('.pantalla').forEach(pantalla => {
-        pantalla.classList.remove('activa');
-    });
-    
-    // Mostrar la pantalla solicitada
-    const pantalla = document.getElementById(idPantalla);
-    if (pantalla) {
-        pantalla.classList.add('activa');
-    } else {
-        console.error("❌ Pantalla no encontrada:", idPantalla);
-    }
-}
 
 // ============================================================================
 // FUNCIÓN GLOBAL PARA INICIAR DESDE EL MENÚ
@@ -744,31 +496,8 @@ function iniciarVideosHParaPapiFabri() {
         videosHParaFabri.iniciarDesdeMenu();
     } else {
         console.error("❌ Sistema Videos H no cargado");
-        mostrarNotificacionVideoH("Error: Sistema Videos H no disponible");
+        mostrarNotificacion("Error: Sistema Videos H no disponible");
     }
-}
-
-function mostrarNotificacionVideoH(mensaje) {
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #ff6b9d, #ff2e63);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 1000;
-        animation: slideInRight 0.3s ease;
-    `;
-    notificacion.textContent = mensaje;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
 }
 
 // ============================================================================
@@ -780,44 +509,28 @@ if (typeof videosHParaFabri !== 'undefined') {
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             videosHParaFabri.inicializar();
-            console.log("✅ Sistema Videos H listo");
+            console.log("🎬 Sistema Videos H listo para usar");
         }, 500);
     });
 }
 
 // ============================================================================
-// FUNCIONES DE TESTING DESDE CONSOLA
+// DEBUGGING: Función para testear desde consola
 // ============================================================================
 
-// Probar sistema Videos H
-window.testVideosH = function(videoId = 'video1', mazoId = 'mazo1') {
-    if (typeof videosHParaFabri !== 'undefined') {
-        console.log("🧪 Testing Videos H...");
-        videosHParaFabri.iniciarDesdeMenu();
+window.testVideoHMazo = function(videoId, mazoId) {
+    if (videosHParaFabri.videos[videoId]) {
+        videosHParaFabri.seleccionarVideo(videoId);
         
-        // Seleccionar video automáticamente después de un delay
         setTimeout(() => {
-            if (videosHParaFabri.videos[videoId]) {
-                videosHParaFabri.seleccionarVideo(videoId);
-                
-                // Seleccionar mazo después de otro delay
-                setTimeout(() => {
-                    const video = videosHParaFabri.videos[videoId];
-                    if (video && video.mazos[mazoId]) {
-                        const mazo = video.mazos[mazoId];
-                        videosHParaFabri.cargarMazoVideo(mazoId, mazo.palabrasRef);
-                    }
-                }, 1000);
+            const video = videosHParaFabri.videos[videoId];
+            if (video.mazos[mazoId]) {
+                videosHParaFabri.cargarMazoVideo(mazoId, video.mazos[mazoId].palabrasRef);
+                console.log("✅ Test iniciado para", videoId, "-", mazoId);
             }
         }, 500);
+        return true;
     }
-};
-
-// Ver estado del sistema Videos H
-window.verEstadoVideosH = function() {
-    console.log("📊 Estado Videos H:");
-    console.log("- Video actual:", videosHParaFabri.estado.videoActual);
-    console.log("- Pantalla actual:", videosHParaFabri.estado.pantallaActual);
-    console.log("- Videos disponibles:", Object.keys(videosHParaFabri.videos).length);
-    return videosHParaFabri.estado;
+    console.log("❌ Video no encontrado:", videoId);
+    return false;
 };
