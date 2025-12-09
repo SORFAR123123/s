@@ -2822,18 +2822,19 @@ button:disabled {
         flex-wrap: wrap;
     }
 }
+
 /* ============================================================================
    ESTILOS PARA FOTOS DEL CALENDARIO - MEJORADOS
    ============================================================================ */
 
 .foto-card {
-    cursor: pointer; /* Manita para indicar que es clickeable */
-    transition: transform 0.3s ease; /* Animación suave */
+    cursor: pointer;
+    transition: transform 0.3s ease;
     position: relative;
 }
 
 .foto-card:hover {
-    transform: scale(1.02); /* Se agranda un poquito al pasar el mouse */
+    transform: scale(1.02);
 }
 
 .foto-click {
@@ -2877,6 +2878,7 @@ button:disabled {
         font-size: 18px;
     }
 }
+
 /* ============================================================================
    ESTILOS PARA COMIENZO DICIEMBRE 2025 (5 FOTOS POR DÍA)
    ============================================================================ */
@@ -3044,6 +3046,7 @@ button:disabled {
         padding: 12px;
     }
 }
+
 /* ============================================================================
    ESTILOS PARA EL LECTOR DE MANGA
    ============================================================================ */
@@ -3162,41 +3165,225 @@ button:disabled {
     align-items: center;
 }
 
+/* ============================================================================
+   ESTILOS PARA ZOOM AUTOMÁTICO 240% nhentai
+   ============================================================================ */
+
+/* Contenedor de imagen con zoom automático 240% */
+.contenedor-imagen-zoom {
+    position: relative;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    cursor: grab;
+    width: 100%;
+    height: 75vh !important;
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    scroll-behavior: smooth;
+    background: #111;
+    border-radius: 10px;
+    border: 2px solid #333;
+}
+
+/* Imagen ampliada 240% por defecto */
 .imagen-manga {
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
-    transition: opacity 0.3s ease;
+    transition: width 0.3s ease;
+    width: 240% !important;
+    height: auto !important;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    pointer-events: auto;
+    flex-shrink: 0;
 }
 
-.imagen-manga:hover {
-    opacity: 0.95;
+/* Barra de scroll personalizada estilo nhentai */
+.contenedor-imagen-zoom::-webkit-scrollbar {
+    height: 14px;
 }
 
+.contenedor-imagen-zoom::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+.contenedor-imagen-zoom::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff6b9d, #ff4757);
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    min-height: 40px;
+}
+
+.contenedor-imagen-zoom::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ff4757, #ff3838);
+}
+
+/* Controles de zoom nhentai */
+.controles-zoom-nhentai {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    border: 2px solid #444;
+    max-width: 500px;
+}
+
+.boton-zoom-nhentai {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 50px;
+    font-weight: bold;
+}
+
+.boton-zoom-nhentai:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+/* Barra de progreso horizontal estilo nhentai */
+.barra-progreso-horizontal {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.barra-progreso-horizontal-container {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #444;
+}
+
+.barra-progreso-horizontal-fill {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b9d, #ff4757);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.indicador-posicion-horizontal {
+    position: absolute;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+    background: #00ff88;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    border: 3px solid white;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+    z-index: 2;
+    transition: left 0.3s ease;
+}
+
+.controles-horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.controles-horizontal button {
+    background: rgba(255, 107, 157, 0.2);
+    color: #ff6b9d;
+    border: 2px solid #ff6b9d;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    min-width: 60px;
+}
+
+.controles-horizontal button:hover {
+    background: rgba(255, 107, 157, 0.4);
+    transform: translateY(-2px);
+}
+
+.controles-horizontal span {
+    color: #ffd700;
+    font-weight: bold;
+    margin: 0 15px;
+}
+
+/* Animación de notificación de zoom */
+@keyframes fadeInOutZoom {
+    0% { 
+        opacity: 0; 
+        transform: translateY(-10px) translateX(10px);
+    }
+    15% { 
+        opacity: 1; 
+        transform: translateY(0) translateX(0);
+    }
+    85% { 
+        opacity: 1; 
+        transform: translateY(0) translateX(0);
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(-10px) translateX(10px);
+    }
+}
+
+.notificacion-zoom-nhentai {
+    animation: fadeInOutZoom 2s ease-in-out !important;
+}
+
+/* Indicador de instrucciones nhentai */
 .indicador-click {
     position: absolute;
     bottom: 20px;
     left: 0;
     right: 0;
     text-align: center;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 0 20px;
+    border: 2px solid #ffd700;
+}
+
+.indicador-click p {
+    margin: 5px 0;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.indicador-click p strong {
+    color: #00ff88;
+    font-size: 14px;
+}
+
+.indicador-click code {
+    background: rgba(255, 215, 0, 0.2);
     color: #ffd700;
-    font-size: 0.9rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
 }
 
 .icono-click {
     font-size: 1.5rem;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
 }
 
 /* Navegación rápida */
@@ -3377,7 +3564,61 @@ button:disabled {
     font-weight: bold;
 }
 
-/* Responsive */
+/* ============================================================================
+   ESTILOS ESPECIALES PARA MANGA MODE
+   ============================================================================ */
+
+/* Modo manga desactivado (zoom normal) */
+.contenedor-imagen-zoom.modo-normal {
+    overflow: hidden !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.contenedor-imagen-zoom.modo-normal .imagen-manga {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: auto !important;
+}
+
+/* Indicador de modo activo */
+.indicador-modo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 5;
+}
+
+/* Notificación flotante */
+.notificacion-flotante {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #ffd700;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 2px solid #ffd700;
+    z-index: 10000;
+    font-weight: bold;
+    font-size: 14px;
+    animation: fadeInOutZoom 2s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    max-width: 300px;
+    text-align: center;
+}
+
+/* ============================================================================
+   RESPONSIVE PARA MANGA READER
+   ============================================================================ */
+
 @media (max-width: 768px) {
     .info-manga {
         flex-direction: column;
@@ -3409,4 +3650,196 @@ button:disabled {
         flex-direction: column;
         gap: 15px;
     }
+    
+    /* Responsive para controles nhentai */
+    .controles-zoom-nhentai {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .boton-zoom-nhentai {
+        padding: 8px 12px;
+        font-size: 14px;
+        min-width: 40px;
+    }
+    
+    .barra-progreso-horizontal {
+        padding: 0 10px;
+    }
+    
+    .controles-horizontal {
+        flex-wrap: wrap;
+    }
+    
+    .indicador-click p {
+        font-size: 10px;
+    }
+    
+    .indicador-click p strong {
+        font-size: 12px;
+    }
+    
+    .imagen-manga-container {
+        padding: 10px;
+        min-height: 400px;
+    }
+    
+    .contenedor-imagen-zoom {
+        height: 65vh !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .controles-zoom-nhentai {
+        gap: 5px;
+    }
+    
+    .boton-zoom-nhentai {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 35px;
+    }
+    
+    .barra-progreso-horizontal-container {
+        height: 15px;
+    }
+    
+    .indicador-posicion-horizontal {
+        width: 25px;
+        height: 25px;
+        top: -7px;
+    }
+    
+    .controles-horizontal button {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 50px;
+    }
+    
+    .controles-horizontal span {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+    
+    .miniaturas-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .miniatura img {
+        height: 120px;
+    }
+    
+    .contenedor-imagen-zoom {
+        height: 60vh !important;
+    }
+    
+    .imagen-manga {
+        width: 220% !important;
+    }
+}
+
+/* ============================================================================
+   ANIMACIONES ESPECIALES PARA MANGA
+   ============================================================================ */
+
+@keyframes slideInPage {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.imagen-manga {
+    animation: slideInPage 0.3s ease-out;
+}
+
+/* Efecto de carga para manga */
+.loading-manga {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+.loading-manga::after {
+    content: '📖';
+    animation: pulse 2s infinite;
+    font-size: 3rem;
+}
+
+/* ============================================================================
+   ESTILOS PARA PANTALLA COMPLETA DE MANGA
+   ============================================================================ */
+
+#modal-pantalla-completa-nhentai img {
+    animation: slideInPage 0.3s ease-out;
+}
+
+#modal-pantalla-completa-nhentai .contenedor-imagen-zoom {
+    height: 85vh !important;
+}
+
+#modal-pantalla-completa-nhentai .imagen-manga {
+    width: 240% !important;
+}
+
+/* ============================================================================
+   ESTILOS PARA ERRORES DE CARGA
+   ============================================================================ */
+
+.error-carga-manga {
+    text-align: center;
+    padding: 50px 20px;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.error-carga-manga button {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #ff6b9d, #ff4757);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ============================================================================
+   ESTILOS FINALES DE OPTIMIZACIÓN
+   ============================================================================ */
+
+/* Mejorar rendimiento de animaciones */
+.contenedor-imagen-zoom,
+.imagen-manga,
+.barra-progreso-horizontal-fill,
+.indicador-posicion-horizontal {
+    will-change: transform, opacity;
+}
+
+/* Optimización para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .boton-zoom-nhentai,
+    .boton-nav,
+    .boton-salto {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .contenedor-imagen-zoom {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Suavizar transiciones */
+* {
+    -webkit-tap-highlight-color: transparent;
 }
