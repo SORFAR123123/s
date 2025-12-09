@@ -13,7 +13,7 @@ const animeConfig = {
             id: 'anime1',
             nombre: '✨ Quintillizas Nakano',
             imagen: 'https://pbs.twimg.com/media/G7fvMrtWcAA1Y-W?format=png&name=900x900',
-            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
             descripcion: 'Aprende japonés con las quintillizas',
             color: '#ff6b9d'
         },
@@ -57,11 +57,11 @@ const animeConfig = {
     
     // IDs reales de Google Drive (reemplazar con los tuyos)
     driveVideoIds: {
-        'anime1': 'TU_ID_REAL_QUINTILLIZAS',
-        'anime2': 'TU_ID_REAL_YAMADA',
-        'anime3': 'TU_ID_REAL_KIMETSU',
-        'anime4': 'TU_ID_REAL_JUJUTSU',
-        'anime5': 'TU_ID_REAL_SLAMDUNK'
+        'anime1': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+        'anime2': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+        'anime3': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+        'anime4': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+        'anime5': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R'
     }
 };
 
