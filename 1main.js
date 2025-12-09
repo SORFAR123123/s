@@ -60,7 +60,7 @@ const estructura = {
             }
         }
     },
-      'contenedor2': {
+    'contenedor2': {
         nombre: 'The Last Summer 2',
         subcontenedores: {
             'sub2_1': { 
@@ -74,11 +74,11 @@ const estructura = {
             'sub2_3': { 
                 nombre: 'Sub-Contenedor 2.3', 
                 mazos: generarMazosEspecificos('sub2_3') 
-            },  // ← PONES COMA AQUÍ (QUITA EL ESPACIO VACÍO)
+            },
             'sub2_4': { 
                 nombre: 'Sub-Contenedor 2.4', 
                 mazos: generarMazosEspecificos('sub2_4') 
-            }  // ← PONES ESTA LÍNEA NUEVA
+            }
         }
     },
     'contenedor3': {
@@ -371,10 +371,23 @@ function cargarMazo(idMazo) {
     const contenedor = estructura[contenedorActual];
     const subcontenedor = contenedor.subcontenedores[subcontenedorActual];
     if (subcontenedor && subcontenedor.mazos[idMazo]) {
-        mazoActual = [...subcontenedor.mazos[idMazo].palabras];
+        // Asegurarse de que la estructura de datos sea correcta
+        mazoActual = subcontenedor.mazos[idMazo].palabras.map(palabra => ({
+            japones: palabra.japones,
+            lectura: palabra.lectura,
+            opciones: [...palabra.opciones], // Crear copia del array
+            respuesta: palabra.respuesta
+        }));
+        
         preguntaActual = 0;
         respuestasCorrectas = 0;
         respuestasIncorrectas = 0;
+        
+        console.log("📚 Mazo cargado:", {
+            cantidad: mazoActual.length,
+            primeraPalabra: mazoActual[0],
+            opcionesDisponibles: mazoActual[0]?.opciones?.length || 0
+        });
         
         mezclarPreguntas();
         cambiarPantalla('pantalla-quiz');
@@ -394,6 +407,13 @@ function mostrarPregunta() {
     if (preguntaActual < mazoActual.length) {
         const pregunta = mazoActual[preguntaActual];
         
+        console.log("📝 Mostrando pregunta:", {
+            indice: preguntaActual,
+            palabra: pregunta.japones,
+            opciones: pregunta.opciones,
+            longitudOpciones: pregunta.opciones ? pregunta.opciones.length : 0
+        });
+        
         document.getElementById('numero-pregunta').textContent = preguntaActual + 1;
         document.getElementById('total-preguntas').textContent = mazoActual.length;
         document.getElementById('palabra-japones').textContent = pregunta.japones;
@@ -404,6 +424,13 @@ function mostrarPregunta() {
         
         const contenedorOpciones = document.getElementById('contenedor-opciones');
         contenedorOpciones.innerHTML = '';
+        
+        // Verificar y asegurar que las opciones existan
+        if (!pregunta.opciones || !Array.isArray(pregunta.opciones) || pregunta.opciones.length === 0) {
+            console.error("❌ ERROR: No hay opciones para esta pregunta:", pregunta);
+            // Crear opciones de emergencia
+            pregunta.opciones = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+        }
         
         const opcionesMezcladas = [...pregunta.opciones];
         for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
@@ -418,7 +445,10 @@ function mostrarPregunta() {
             botonOpcion.onclick = () => verificarRespuesta(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
             contenedorOpciones.appendChild(botonOpcion);
         });
+        
+        console.log("✅ Pregunta cargada, opciones generadas:", opcionesMezcladas.length);
     } else {
+        console.log("📊 Fin del mazo, mostrando resultados");
         mostrarResultados();
     }
 }
@@ -428,6 +458,12 @@ function verificarRespuesta(respuestaSeleccionada, respuestaCorrecta, lectura, o
     const opcionesDOM = document.querySelectorAll('.opcion');
     const resultado = document.getElementById('resultado');
     const palabraActual = document.getElementById('palabra-japones').textContent;
+    
+    console.log("✅ Verificando respuesta:", {
+        seleccionada: respuestaSeleccionada,
+        correcta: respuestaCorrecta,
+        opcionesDisponibles: opciones
+    });
     
     // CORRECCIÓN: Asegurar que todos los botones son clickeables
     opcionesDOM.forEach(opcion => {
@@ -503,7 +539,7 @@ function mostrarResultados() {
     // Registrar experiencia en SISTEMA NAKANO (actualizado)
     if (typeof sistemaNakano !== 'undefined') {
         sistemaNakano.registrarMazoCompletado(porcentaje);
-          // Sincronizar dinero primero
+        // Sincronizar dinero primero
         sistemaNakano.economia.saldo = sistemaEconomia.saldoTotal;
     }
     
@@ -751,6 +787,63 @@ function iniciarSistemaNakano() {
 }
 
 // ============================================================================
+// FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
+// ============================================================================
+
+function iniciarCalendarioFabrizio() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    if (typeof calendarioFabrizio !== 'undefined') {
+        calendarioFabrizio.actualizarInterfazCalendario();
+    } else {
+        console.error("⚠️ Calendario Fabrizio no cargado");
+        mostrarNotificacion("Error: Calendario no disponible");
+    }
+}
+
+// ============================================================================
+// FUNCIÓN PARA INICIAR COMIENZO DICIEMBRE 2025
+// ============================================================================
+
+function iniciarComienzoDiciembre2025() {
+    cambiarPantalla('pantalla-calendario-meses');
+    
+    // Cambiar el título
+    const titulo = document.querySelector('#pantalla-calendario-meses .contador');
+    if (titulo) {
+        titulo.textContent = '🎄 Comienzo 2025 - Diciembre';
+    }
+    
+    // Mostrar los días (si la función existe)
+    if (typeof comienzoDiciembre2025 !== 'undefined' && comienzoDiciembre2025.mostrarDias) {
+        comienzoDiciembre2025.mostrarDias();
+    } else {
+        // Fallback si algo falla
+        document.getElementById('contenedor-meses').innerHTML = `
+            <div style="text-align: center; padding: 50px;">
+                <h2 style="color: #ffd700;">🎄 Comienzo 2025 - Diciembre</h2>
+                <p style="color: #cccccc;">Del 8 al 31 de diciembre</p>
+                <p style="color: #ff6b9d; margin-top: 20px; font-weight: bold;">¡5 fotos por cada día!</p>
+                <p style="color: #00ff88; margin-top: 30px;">Total: 24 días × 5 fotos = 120 fotos</p>
+            </div>
+        `;
+    }
+}
+
+// ============================================================================
+// FUNCIÓN PARA INICIAR VIDEOS H PARA PAPI FABRI
+// ============================================================================
+
+function iniciarVideosHParaPapiFabri() {
+    if (typeof videosHParaFabri !== 'undefined') {
+        videosHParaFabri.iniciarDesdeMenu();
+    } else {
+        console.error("❌ Sistema Videos H no cargado");
+        mostrarNotificacion("Error: Sistema Videos H no disponible");
+    }
+}
+
+// ============================================================================
 // INICIALIZACIÓN DEL SISTEMA - ACTUALIZADA PARA NAKANO
 // ============================================================================
 
@@ -933,57 +1026,3 @@ window.simularMazoCompletado = function(porcentaje) {
     }
     return false;
 };
-// ============================================================================
-// FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
-// ============================================================================
-
-function iniciarCalendarioFabrizio() {
-    cambiarPantalla('pantalla-calendario-meses');
-    
-    if (typeof calendarioFabrizio !== 'undefined') {
-        calendarioFabrizio.actualizarInterfazCalendario();
-    } else {
-        console.error("⚠️ Calendario Fabrizio no cargado");
-        mostrarNotificacion("Error: Calendario no disponible");
-    }
-}
-// ============================================================================
-// FUNCIÓN PARA INICIAR COMIENZO DICIEMBRE 2025
-// ============================================================================
-
-function iniciarComienzoDiciembre2025() {
-    cambiarPantalla('pantalla-calendario-meses');
-    
-    // Cambiar el título
-    const titulo = document.querySelector('#pantalla-calendario-meses .contador');
-    if (titulo) {
-        titulo.textContent = '🎄 Comienzo 2025 - Diciembre';
-    }
-    
-    // Mostrar los días (si la función existe)
-    if (typeof comienzoDiciembre2025 !== 'undefined' && comienzoDiciembre2025.mostrarDias) {
-        comienzoDiciembre2025.mostrarDias();
-    } else {
-        // Fallback si algo falla
-        document.getElementById('contenedor-meses').innerHTML = `
-            <div style="text-align: center; padding: 50px;">
-                <h2 style="color: #ffd700;">🎄 Comienzo 2025 - Diciembre</h2>
-                <p style="color: #cccccc;">Del 8 al 31 de diciembre</p>
-                <p style="color: #ff6b9d; margin-top: 20px; font-weight: bold;">¡5 fotos por cada día!</p>
-                <p style="color: #00ff88; margin-top: 30px;">Total: 24 días × 5 fotos = 120 fotos</p>
-            </div>
-        `;
-    }
-}
-// ============================================================================
-// FUNCIÓN PARA INICIAR VIDEOS H PARA PAPI FABRI
-// ============================================================================
-
-function iniciarVideosHParaPapiFabri() {
-    if (typeof videosHParaFabri !== 'undefined') {
-        videosHParaFabri.iniciarDesdeMenu();
-    } else {
-        console.error("❌ Sistema Videos H no cargado");
-        mostrarNotificacion("Error: Sistema Videos H no disponible");
-    }
-}
