@@ -10,8 +10,8 @@ const galeriaVideosConfig = {
     categorias: {
         'musica': {
             id: 'musica',
-            nombre: '🎵 Música Relajante',
-            imagen: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400',
+            nombre: 'Quintillizas potonas',
+            imagen: 'https://pbs.twimg.com/media/GztU8Y3XsAA5Yzm?format=png&name=small',
             color: '#ff6b6b',
             descripcion: 'Música para estudiar y relajarse'
         },
@@ -86,29 +86,29 @@ const galeriaVideosConfig = {
         'musica': [
             {
                 id: 'video_musica_1',
-                nombre: 'Música Lo-Fi para estudiar',
+                nombre: 'Quintis potonas',
                 descripcion: 'Playlist de 1 hora de música lo-fi',
                 duracion: '60:00',
                 driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&fit=crop',
+                imagen: 'https://pbs.twimg.com/media/G7wfStPXUAA1Ra2?format=png&name=small',
                 favorito: true
             },
             {
                 id: 'video_musica_2',
-                nombre: 'Música clásica relajante',
-                descripcion: 'Las mejores piezas clásicas para concentración',
+                nombre: 'Nino mariposa potona',
+                descripcion: 'El mejor poto tsundere chupa enojada',
                 duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&fit=crop',
+                driveId: '11hBAFRHLV6hnaVLYZEuZPISvL-TvsJZO',
+                imagen: 'https://pbs.twimg.com/media/G7wgYR9XQAAwo0T?format=jpg&name=large',
                 favorito: false
             },
             {
                 id: 'video_musica_3',
-                nombre: 'Jazz suave para trabajar',
-                descripcion: 'Jazz instrumental sin distracciones',
+                nombre: 'Miku potona',
+                descripcion: 'El mejor poto timido',
                 duracion: '50:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&fit=crop',
+                driveId: '1n-U5gThXn-JIn17eDyyalAf2aelTbfEb',
+                imagen: 'https://pbs.twimg.com/media/G7wgF7aW4AAYsOQ?format=jpg&name=large',
                 favorito: false
             },
             {
