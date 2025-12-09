@@ -975,4 +975,29 @@ function iniciarComienzoDiciembre2025() {
         `;
     }
 }
-// ← AQUÍ TERMINA TU ARCHIVO
+// ============================================================================
+// FUNCIÓN PARA INICIAR SISTEMA ANIME
+// ============================================================================
+
+function iniciarSistemaAnime() {
+    // Verificar si el sistema anime está cargado
+    if (typeof crearPantallasAnime !== 'undefined') {
+        // Crear pantallas si no existen
+        crearPantallasAnime();
+        
+        // Cambiar a pantalla de selección
+        cambiarPantalla('pantalla-anime-seleccion');
+        
+        // Cargar lista de animes con un pequeño delay
+        setTimeout(() => {
+            if (typeof cargarListaAnimes === 'function') {
+                cargarListaAnimes();
+            }
+        }, 100);
+        
+        console.log("🎬 Sistema anime iniciado");
+    } else {
+        console.error("❌ Sistema anime no cargado");
+        mostrarNotificacion("Error: Sistema anime no disponible");
+    }
+}
