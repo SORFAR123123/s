@@ -204,7 +204,7 @@ const mangaViewer = {
         `;
         
         // ============================================================================
-        // ¡¡¡FIX DEL BOTÓN ANTERIOR AQUÍ!!!
+        // ¡¡¡BOTONES CON FUNCIONALIDAD CORREGIDA!!!
         // ============================================================================
         
         this.elementos.botones = document.createElement('div');
@@ -454,7 +454,7 @@ const mangaViewer = {
     },
     
     // ============================================================================
-    // NAVEGACIÓN - ¡VERSIÓN MEJORADA!
+    // NAVEGACIÓN - ¡VERSIÓN CORREGIDA!
     // ============================================================================
     
     imagenAnterior: function() {
@@ -469,7 +469,7 @@ const mangaViewer = {
         
         if (this.estado.imagenActual > 0) {
             this.estado.imagenActual--;
-            console.log("✅ Nueva imagen:", this.estado.imagenActual + 1);
+            console.log("✅ Nueva imagen:", this.estado.imagenActual);
             this.cargarImagenActual();
             this.resetZoom();
             
@@ -493,7 +493,7 @@ const mangaViewer = {
         
         if (this.estado.imagenActual < this.estado.imagenes.length - 1) {
             this.estado.imagenActual++;
-            console.log("✅ Nueva imagen:", this.estado.imagenActual + 1);
+            console.log("✅ Nueva imagen:", this.estado.imagenActual);
             this.cargarImagenActual();
             this.resetZoom();
             
@@ -791,6 +791,31 @@ const mangaViewer = {
     forzarActualizacionBotones: function() {
         this.agregarBotonesMangaATarjetas();
         return true;
+    },
+
+    // ============================================================================
+    // FUNCIONES DE UTILIDAD ADICIONALES
+    // ============================================================================
+    
+    obtenerTodosLosSubcontenedoresConManga: function() {
+        const resultado = [];
+        for (const [id, paginas] of Object.entries(this.mangaDatabase)) {
+            if (paginas && paginas.length > 0) {
+                resultado.push({
+                    id: id,
+                    paginas: paginas.length,
+                    imagenes: [...paginas]
+                });
+            }
+        }
+        return resultado;
+    },
+    
+    obtenerEstado: function() {
+        return {
+            ...this.estado,
+            totalSubcontenedoresConManga: this.obtenerTodosLosSubcontenedoresConManga().length
+        };
     }
 };
 
@@ -828,6 +853,13 @@ window.agregarBotonesManga = function() {
         return true;
     }
     return false;
+};
+
+window.agregarImagenesManga = function(subcontenedorId, urlsArray) {
+    if (mangaViewer && mangaViewer.agregarMangaASubcontenedor) {
+        return mangaViewer.agregarMangaASubcontenedor(subcontenedorId, urlsArray);
+    }
+    return 0;
 };
 
 // ============================================================================
@@ -889,11 +921,42 @@ window.testAnterior = function() {
     }
 };
 
+window.testSiguiente = function() {
+    console.log("🔧 Testeando botón siguiente...");
+    if (mangaViewer) {
+        console.log("Imagen actual:", mangaViewer.estado.imagenActual);
+        console.log("Total imágenes:", mangaViewer.estado.imagenes.length);
+        mangaViewer.imagenSiguiente();
+    }
+};
+
 window.testManga = function() {
     console.log("🔧 Testeando manga viewer...");
     if (window.mangaViewer) {
         console.log("✅ mangaViewer está disponible");
         console.log("Estado:", mangaViewer.estado);
+        
+        // Probar navegación
+        const testBtn = document.createElement('button');
+        testBtn.innerHTML = '🧪 Test Nav';
+        testBtn.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000000;
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        `;
+        testBtn.onclick = () => {
+            console.log("🧪 Iniciando test...");
+            window.mostrarManga('sub1_1');
+        };
+        document.body.appendChild(testBtn);
+        
         return true;
     }
     return false;
