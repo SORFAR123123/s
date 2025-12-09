@@ -1001,3 +1001,30 @@ function iniciarSistemaAnime() {
         mostrarNotificacion("Error: Sistema anime no disponible");
     }
 }
+// ============================================================================
+// FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS
+// ============================================================================
+
+function iniciarGaleriaVideos() {
+    // Verificar si la galería está cargada
+    if (typeof iniciarGaleriaVideos !== 'undefined') {
+        cambiarPantalla('pantalla-galerias-videos');
+        
+        // Crear pantallas si no existen
+        if (typeof crearPantallasGaleriaVideos !== 'undefined') {
+            crearPantallasGaleriaVideos();
+        }
+        
+        // Cargar categorías con un pequeño delay
+        setTimeout(() => {
+            if (typeof cargarCategoriasVideos === 'function') {
+                cargarCategoriasVideos();
+            }
+        }, 100);
+        
+        console.log("🎬 Galería de videos iniciada");
+    } else {
+        console.error("❌ Galería de videos no cargada");
+        mostrarNotificacion("Error: Galería de videos no disponible");
+    }
+}
