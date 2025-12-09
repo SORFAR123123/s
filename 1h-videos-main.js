@@ -8,8 +8,8 @@ const videosHParaFabri = {
         'video1': {
             id: 'video1',
             titulo: 'Anime H 1 - Tentación Escolar',
-            thumbnail: 'https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Video+H+1',
-            videoDrive: 'https://drive.google.com/file/d/VIDEO_ID_1/view', // Reemplaza con ID real
+            thumbnail: 'https://pbs.twimg.com/media/G7fvMrtWcAA1Y-W?format=png&name=900x900',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view', // Reemplaza con ID real
             descripcion: 'Estudiantes traviesas después de clases',
             mazos: {
                 'mazo1': { nombre: 'Vocabulario Básico', palabrasRef: 'video1_mazo1' },
@@ -22,8 +22,8 @@ const videosHParaFabri = {
         'video2': {
             id: 'video2',
             titulo: 'Anime H 2 - Hermana Mayor',
-            thumbnail: 'https://via.placeholder.com/300x200/9b6bff/ffffff?text=Video+H+2',
-            videoDrive: 'https://drive.google.com/file/d/VIDEO_ID_2/view',
+            thumbnail: 'https://pbs.twimg.com/media/G7fsiFCXQAAhtKq?format=png&name=900x900',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Hermana mayor cuida de su hermanito',
             mazos: {
                 'mazo1': { nombre: 'Familia y Parentesco', palabrasRef: 'video2_mazo1' },
