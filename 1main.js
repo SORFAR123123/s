@@ -140,69 +140,12 @@ function cargarSubcontenedor(idSubcontenedor) {
     
     cambiarPantalla('pantalla-mazos');
     
-    // ============================================================================
-    // AGREGAR BOTONES DE ANIME (SI HAY CONTENIDO DE ANIME PARA ESTE SUBCONTENEDOR)
-    // ============================================================================
+    // Agregar botones manga y videos después de cargar
     setTimeout(() => {
-        // Botones de manga
         window.agregarBotonesManga?.();
+        agregarBotonesVideosATarjetas();
         console.log(window.agregarBotonesManga ? "✅ Botones manga añadidos" : "⚠️ mangaViewer no cargado");
-        
-        // Botones de anime
-        if (typeof animeSystem !== 'undefined' && animeSystem.database[idSubcontenedor]) {
-            const videoData = animeSystem.database[idSubcontenedor].video;
-            const mazosCount = Object.keys(animeSystem.database[idSubcontenedor].mazos).length;
-            
-            // Crear sección especial de anime
-            const seccionAnime = document.createElement('div');
-            seccionAnime.className = 'seccion-anime-especial';
-            seccionAnime.style.cssText = `
-                grid-column: 1 / -1;
-                background: linear-gradient(135deg, #1a237e, #311b92);
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px 0;
-                border: 2px solid #7c4dff;
-            `;
-            
-            seccionAnime.innerHTML = `
-                <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                    <div style="font-size: 2rem; margin-right: 15px;">📺</div>
-                    <div>
-                        <h3 style="margin: 0; color: #bb86fc;">CONTENIDO DE ANIME DISPONIBLE</h3>
-                        <p style="margin: 5px 0 0 0; color: #b0b0b0; font-size: 0.9rem;">
-                            ${videoData.titulo} • ${mazosCount} mazos • ${videoData.duracion}
-                        </p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="boton-anime-principal" 
-                            onclick="animeSystem.mostrarVideos('${idSubcontenedor}')"
-                            style="background: linear-gradient(135deg, #ff6b9d, #c2185b);">
-                        📺 VER ANIME COMPLETO
-                    </button>
-                    
-                    <button class="boton-anime-secundario" 
-                            onclick="animeSystem.mostrarMazosDeVideo('${idSubcontenedor}')"
-                            style="background: linear-gradient(135deg, #4a90e2, #1565c0);">
-                        🎯 PRACTICAR MAZOS DE ANIME
-                    </button>
-                    
-                    <button class="boton-anime-info"
-                            onclick="alert('Este anime tiene ${mazosCount} mazos de 10 palabras cada uno. Mira el video primero para mejor aprendizaje.')"
-                            style="background: #333; color: #ccc;">
-                        ℹ️ INFORMACIÓN
-                    </button>
-                </div>
-            `;
-            
-            // Insertar al principio del contenedor de mazos
-            contenedorMazos.insertBefore(seccionAnime, contenedorMazos.firstChild);
-            
-            console.log("✅ Botones de anime agregados para", idSubcontenedor);
-        }
-    }, 100); // Pequeño delay para asegurar que el DOM esté listo
+    }, 300);
 }
 
 function cargarMazo(idMazo) {
@@ -411,21 +354,6 @@ function repetirQuiz() {
 function repetirFalladas() { practicarPalabrasFalladas?.(); }
 
 // ============================================================================
-// FUNCIÓN ESPECIAL PARA MOSTRAR RESULTADOS DE PRÁCTICA DE ANIME
-// ============================================================================
-
-function mostrarResultadosPracticaEspecial(porcentaje) {
-    const recompensa = 3; // 3 S/. por completar práctica de anime
-    
-    if (porcentaje >= 80) {
-        sistemaEconomia?.agregarDinero(recompensa, "Práctica de anime completada");
-        mostrarNotificacion(`🎉 ¡Práctica de anime completada! +${recompensa} S/.`);
-    }
-    
-    mostrarPantallaResultados(porcentaje);
-}
-
-// ============================================================================
 // SISTEMAS ADICIONALES
 // ============================================================================
 
@@ -460,95 +388,202 @@ function iniciarComienzoDiciembre2025() {
 }
 
 // ============================================================================
-// UTILIDADES
+// SISTEMA DE VIDEOS H
 // ============================================================================
 
-function mostrarNotificacion(mensaje) {
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #ff9800, #ff5722);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 1000;
-        animation: slideInRight 0.3s ease;
-    `;
-    notificacion.textContent = mensaje;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
+function iniciarVisorVideosH() {
+    cambiarPantalla('pantalla-visor-videos-h');
+    console.log("🎬 Navegando al visor de videos H");
 }
 
-// Sobrescribir mostrarResultados para detectar si es práctica de anime
-const mostrarResultadosOriginal = mostrarResultados;
-window.mostrarResultados = function() {
-    const porcentaje = Math.round((respuestasCorrectas / mazoActual.length) * 100);
-    
-    // Verificar si es práctica de anime (por el título)
-    const tituloElement = document.getElementById('contador-preguntas');
-    if (tituloElement && tituloElement.textContent.includes('ANIME')) {
-        mostrarResultadosPracticaEspecial(porcentaje);
-    } else {
-        mostrarResultadosOriginal();
+function cargarVideosColeccion(coleccionId, subcoleccionId) {
+    if (!videosViewer) {
+        console.error("❌ Sistema de videos no disponible");
+        alert("El sistema de videos no está disponible. Asegúrate de que 1videos-viewer.js está cargado.");
+        return;
     }
-};
+    
+    console.log(`🎬 Cargando videos: ${coleccionId} > ${subcoleccionId}`);
+    
+    // Ocultar todas las pantallas primero
+    document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+    
+    // Mostrar el visor de videos
+    const exito = videosViewer.mostrar(coleccionId, subcoleccionId);
+    
+    if (!exito) {
+        // Si no hay videos, volver a la pantalla principal
+        cambiarPantalla('pantalla-visor-videos-h');
+    }
+}
+
+function agregarBotonesVideosATarjetas() {
+    // Esta función agrega botones de video a las tarjetas de subcontenedores
+    const tarjetas = document.querySelectorAll('.subcontenedor-card');
+    
+    tarjetas.forEach(tarjeta => {
+        const subcontenedorId = tarjeta.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        if (!subcontenedorId) return;
+        
+        // Verificar si hay videos disponibles para este subcontenedor
+        const tieneVideos = verificarSiTieneVideos(subcontenedorId);
+        
+        if (tieneVideos) {
+            const botonVideo = document.createElement('button');
+            botonVideo.className = 'boton-video-tarjeta';
+            botonVideo.innerHTML = '🎬 Videos';
+            botonVideo.style.cssText = `
+                position: absolute; top: 10px; right: 10px;
+                background: linear-gradient(135deg, #ff6b9d, #ff4081);
+                color: white; border: none; border-radius: 8px;
+                padding: 5px 10px; font-size: 0.8rem; cursor: pointer;
+                z-index: 10; transition: all 0.3s ease;
+            `;
+            
+            botonVideo.onclick = (e) => {
+                e.stopPropagation();
+                abrirVideosSubcontenedor(subcontenedorId);
+            };
+            
+            tarjeta.style.position = 'relative';
+            tarjeta.appendChild(botonVideo);
+        }
+    });
+}
+
+function verificarSiTieneVideos(subcontenedorId) {
+    // Esta función verifica si un subcontenedor tiene videos asociados
+    // Puedes personalizar esta lógica según tu estructura de datos
+    if (!videosViewer) return false;
+    
+    // Mapeo de subcontenedores a colecciones/subcolecciones
+    const mapeoVideos = {
+        'sub1_1': ['coleccion1', 'subcoleccion1'],
+        'sub2_1': ['coleccion1', 'subcoleccion2'],
+        'sub2_4': ['coleccion1', 'subcoleccion3'],
+        'sub3_1': ['coleccion2', 'subcoleccion1'],
+        // Agrega más mapeos según sea necesario
+    };
+    
+    return mapeoVideos[subcontenedorId] !== undefined;
+}
+
+function abrirVideosSubcontenedor(subcontenedorId) {
+    // Mapear subcontenedor a colección/subcolección
+    const mapeoVideos = {
+        'sub1_1': ['coleccion1', 'subcoleccion1'],
+        'sub2_1': ['coleccion1', 'subcoleccion2'],
+        'sub2_4': ['coleccion1', 'subcoleccion3'],
+        'sub3_1': ['coleccion2', 'subcoleccion1'],
+    };
+    
+    const [coleccion, subcoleccion] = mapeoVideos[subcontenedorId] || [];
+    
+    if (coleccion && subcoleccion) {
+        cargarVideosColeccion(coleccion, subcoleccion);
+    } else {
+        console.log(`⚠️ No hay videos mapeados para ${subcontenedorId}`);
+        alert('No hay videos disponibles para este subcontenedor.');
+    }
+}
+
+// ============================================================================
+// FUNCIONES AUXILIARES
+// ============================================================================
+
+function obtenerUrlImagen(tipo, id) {
+    // Función para obtener URLs de imágenes
+    const rutas = {
+        'subcontenedores': {
+            'sub1_1': 'https://via.placeholder.com/150/ff6b9d/ffffff?text=Sub1.1',
+            'sub2_1': 'https://via.placeholder.com/150/4a90e2/ffffff?text=Sub2.1',
+            'sub2_4': 'https://via.placeholder.com/150/00ff88/ffffff?text=Sub2.4',
+            'sub3_1': 'https://via.placeholder.com/150/ffd700/000000?text=Sub3.1',
+        },
+        'mazos': {
+            'mazo1': 'https://via.placeholder.com/120/ff6b9d/ffffff?text=M1',
+            'mazo2': 'https://via.placeholder.com/120/4a90e2/ffffff?text=M2',
+            'mazo3': 'https://via.placeholder.com/120/00ff88/ffffff?text=M3',
+            'mazo4': 'https://via.placeholder.com/120/ffd700/000000?text=M4',
+            'mazo5': 'https://via.placeholder.com/120/9c27b0/ffffff?text=M5',
+        }
+    };
+    
+    return rutas[tipo]?.[id] || `https://via.placeholder.com/150/cccccc/333333?text=${id}`;
+}
+
+function obtenerVideoAleatorio() {
+    const videos = [
+        { titulo: '¡Felicidades!', url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', duracion: '10s' },
+        { titulo: 'Recompensa Especial', url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', duracion: '15s' },
+        { titulo: '¡Excelente Trabajo!', url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', duracion: '12s' }
+    ];
+    
+    return videos[Math.floor(Math.random() * videos.length)];
+}
 
 // ============================================================================
 // INICIALIZACIÓN
 // ============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("🚀 Aplicación cargada - Inicializando sistemas...");
+    console.log("🚀 Aplicación cargada");
     
-    // Inicializar sistemas en orden
+    // Inicializar sistemas
     sistemaEconomia?.inicializar();
     misionesDiarias?.inicializar();
     eventosDiarios?.inicializar();
     sistemaPalabrasFalladas?.inicializar();
     sistemaNakano?.inicializar?.();
+    videosViewer?.inicializar();
     
-    // Inicializar sistema de anime si existe
-    if (typeof animeSystem !== 'undefined' && animeSystem.inicializar) {
-        animeSystem.inicializar();
-        console.log("✅ Sistema de Anime inicializado");
-    }
+    console.log("✅ Sistemas inicializados:");
+    console.log("- 💰 Economía:", sistemaEconomia ? "✓" : "✗");
+    console.log("- 🎯 Misiones:", misionesDiarias ? "✓" : "✗");
+    console.log("- 🎁 Eventos:", eventosDiarios ? "✓" : "✗");
+    console.log("- 📝 Falladas:", sistemaPalabrasFalladas ? "✓" : "✗");
+    console.log("- 💕 Nakano:", sistemaNakano ? "✓" : "✗");
+    console.log("- 🎬 Videos H:", videosViewer ? "✓" : "✗");
     
-    console.log("✅ Todos los sistemas inicializados");
-    
+    // Verificar si estamos en la pantalla correcta
     setTimeout(() => {
-        if (!document.querySelector('.pantalla.activa')) cambiarPantalla('pantalla-inicio');
+        if (!document.querySelector('.pantalla.activa')) {
+            cambiarPantalla('pantalla-inicio');
+        }
+        
+        // Mostrar evento diario si existe
+        if (eventosDiarios?.estado?.eventoActual && !eventosDiarios.estado.aceptado) {
+            setTimeout(() => {
+                eventosDiarios.mostrarEventoDiario();
+            }, 500);
+        }
     }, 100);
 });
 
 // ============================================================================
-// TESTING
+// FUNCIONES DE TESTING Y DESARROLLO
 // ============================================================================
 
 Object.assign(window, {
-    // Sistema principal
+    // Eventos diarios
     mostrarEventoDiarioForzado: () => { eventosDiarios?.reiniciarEventoDiario(); eventosDiarios?.mostrarEventoDiario(); },
     reiniciarSistemaEventos: () => { localStorage.removeItem('eventosDiarios'); eventosDiarios?.reiniciarEventoDiario(); location.reload(); },
+    
+    // Economía
     agregarDinero: (cantidad) => sistemaEconomia?.agregarDinero(cantidad, "Testing"),
     
-    // Sistema de palabras falladas
+    // Estado de sistemas
     verEstadoSistemas: () => {
         console.log("=== ESTADO DE SISTEMAS ===");
         console.log("💰 Economía:", sistemaEconomia?.saldoTotal);
         console.log("🎯 Misiones:", misionesDiarias?.misiones);
         console.log("📅 Evento:", eventosDiarios?.estado);
         console.log("📝 Falladas:", sistemaPalabrasFalladas?.obtenerEstadisticas());
-        console.log("🎬 Anime:", animeSystem ? "Cargado ✓" : "No cargado ✗");
-        if (sistemaNakano) {
-            console.log("💕 Nakano:", sistemaNakano.noviaSeleccionada, "Saldo:", sistemaNakano.economia.saldo);
-        }
+        if (sistemaNakano) console.log("💕 Nakano:", sistemaNakano.noviaSeleccionada, sistemaNakano.economia.saldo);
+        if (videosViewer) console.log("🎬 Videos:", videosViewer.estado);
     },
+    
+    // Palabras falladas
     verPalabrasFalladas: () => console.log("📝", sistemaPalabrasFalladas?.palabrasFalladasHoy),
     
     // Sistema Nakano
@@ -583,6 +618,8 @@ Object.assign(window, {
             );
         }
     },
+    
+    // Mazos
     simularMazoCompletado: (porcentaje) => {
         if (sistemaNakano?.registrarMazoCompletado) {
             sistemaNakano.registrarMazoCompletado(porcentaje);
@@ -592,62 +629,54 @@ Object.assign(window, {
         return false;
     },
     
-    // Sistema de Anime (nuevo)
-    agregarVideoAnime: (subcontenedorId, titulo, url) => {
-        if (typeof animeSystem !== 'undefined' && animeSystem.agregarVideoTest) {
-            return animeSystem.agregarVideoTest(subcontenedorId, titulo, url);
-        }
-        console.error("⚠️ Sistema de Anime no cargado");
-        return false;
-    },
-    verAnimeDisponible: () => {
-        if (typeof animeSystem !== 'undefined' && animeSystem.verVideosDisponibles) {
-            animeSystem.verVideosDisponibles();
-        } else {
-            console.log("⚠️ Sistema de Anime no disponible");
+    // Sistema de Videos H
+    cargarVideoAleatorio: (coleccionId, subcoleccionId) => {
+        if (videosViewer) {
+            videosViewer.mostrar(coleccionId || 'coleccion1', subcoleccionId || 'subcoleccion1');
         }
     },
-    cargarMazoAnime: (subcontenedorId, mazoId) => {
-        if (typeof animeSystem !== 'undefined' && animeSystem.cargarMazo) {
-            return animeSystem.cargarMazo(subcontenedorId, mazoId);
+    verVideosDisponibles: () => {
+        if (videosViewer) {
+            console.log("🎬 Videos disponibles:", videosViewer.videosDatabase);
         }
-        return false;
+    },
+    activarModoQuizVideos: () => {
+        if (videosViewer) {
+            videosViewer.iniciarQuiz();
+        }
     },
     
-    // Sistema de manga
-    verImagenesManga: () => {
-        if (typeof mangaViewer !== 'undefined') {
-            console.log("📖 Subcontenedores con manga:");
-            Object.entries(mangaViewer.mangaDatabase).forEach(([subId, imagenes]) => {
-                if (imagenes.length > 0) {
-                    console.log(`${subId}: ${imagenes.length} páginas`);
-                }
-            });
-        } else {
-            console.log("⚠️ Sistema de Manga no disponible");
+    // Navegación rápida
+    irAVideosH: () => iniciarVisorVideosH(),
+    irANakano: () => iniciarSistemaNakano(),
+    irACalendario: () => iniciarCalendarioFabrizio(),
+    
+    // Reset general
+    resetearTodo: () => {
+        if (confirm("¿Resetear TODOS los datos de la aplicación?")) {
+            localStorage.clear();
+            location.reload();
         }
     }
 });
 
 // ============================================================================
-// CONFIGURACIÓN DE DEPENDENCIAS
+// COMPATIBILIDAD Y POLYFILLS
 // ============================================================================
 
-// Asegurar que las dependencias necesarias existan
-if (typeof obtenerVideoAleatorio === 'undefined') {
-    console.warn("⚠️ obtenerVideoAleatorio no está definido. Usando función de respaldo.");
-    window.obtenerVideoAleatorio = function() {
-        return {
-            titulo: "Video de Prueba",
-            url: "https://via.placeholder.com/640x360/4a90e2/ffffff?text=Video+No+Disponible",
-            duracion: "5:00"
-        };
+// Asegurar que las funciones esenciales existan
+if (typeof mostrarPalabrasFalladas === 'undefined') {
+    window.mostrarPalabrasFalladas = function() {
+        console.log("⚠️ Sistema de palabras falladas no disponible");
+        alert("El sistema de palabras falladas no está disponible.");
     };
 }
 
-if (typeof obtenerUrlImagen === 'undefined') {
-    console.warn("⚠️ obtenerUrlImagen no está definido. Usando función de respaldo.");
-    window.obtenerUrlImagen = function(tipo, id) {
-        return `https://via.placeholder.com/300x200/333333/ffffff?text=${tipo}+${id}`;
+if (typeof practicarPalabrasFalladas === 'undefined') {
+    window.practicarPalabrasFalladas = function() {
+        console.log("⚠️ Práctica de palabras falladas no disponible");
+        alert("El sistema de práctica de palabras falladas no está disponible.");
     };
 }
+
+console.log("🚀 1main.js cargado completamente");
