@@ -100,7 +100,7 @@ const mangaViewer = {
     },
     
     // ============================================================================
-    // CREAR ESTRUCTURA HTML - VERSIÓN SIMPLIFICADA
+    // CREAR ESTRUCTURA HTML
     // ============================================================================
     
     crearEstructuraHTML: function() {
@@ -145,7 +145,7 @@ const mangaViewer = {
             image-rendering: crisp-edges;
         `;
         
-        // Crear controles (SIMPLIFICADO)
+        // Crear controles
         this.crearControles();
         
         // Loader
@@ -172,7 +172,7 @@ const mangaViewer = {
     },
     
     // ============================================================================
-    // CREAR CONTROLES - VERSIÓN MEJORADA
+    // CREAR CONTROLES - ¡ESTA ES LA PARTE MÁS IMPORTANTE!
     // ============================================================================
     
     crearControles: function() {
@@ -203,67 +203,154 @@ const mangaViewer = {
             text-align: center;
         `;
         
-        // Botones - AHORA CON onclick DIRECTAMENTE
+        // ============================================================================
+        // ¡¡¡FIX DEL BOTÓN ANTERIOR AQUÍ!!!
+        // ============================================================================
+        
         this.elementos.botones = document.createElement('div');
         this.elementos.botones.style.cssText = `display: flex; gap: 10px;`;
         
-        this.elementos.botones.innerHTML = `
-            <button onclick="window.mangaViewer.imagenAnterior()" 
-                    id="manga-prev" 
-                    title="Imagen anterior (←)" 
-                    style="background: #ff6b9d; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                ◀ Anterior
-            </button>
-            <button onclick="window.mangaViewer.imagenSiguiente()" 
-                    id="manga-next" 
-                    title="Imagen siguiente (→)" 
-                    style="background: #4a90e2; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                Siguiente ▶
-            </button>
-            <button onclick="window.mangaViewer.zoomIn()" 
-                    id="manga-zoom-in" 
-                    title="Acercar (Ctrl + +)" 
-                    style="background: #00cc6a; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                ➕
-            </button>
-            <button onclick="window.mangaViewer.zoomOut()" 
-                    id="manga-zoom-out" 
-                    title="Alejar (Ctrl + -)" 
-                    style="background: #ff9800; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                ➖
-            </button>
-            <button onclick="window.mangaViewer.resetZoom()" 
-                    id="manga-zoom-reset" 
-                    title="Restaurar zoom (0)" 
-                    style="background: #7b68ee; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                ↺
-            </button>
-            <button onclick="window.mangaViewer.ocultar()" 
-                    id="manga-close" 
-                    title="Cerrar (ESC)" 
-                    style="background: #ff4444; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">
-                ✕ Cerrar
-            </button>
-            <button onclick="window.mangaViewer.togglePantallaCompleta()" 
-                    id="manga-fullscreen" 
-                    title="Pantalla completa (F)" 
-                    style="background: #9c27b0; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; font-weight: bold; font-size: 1.2rem;">
-                ⛶
-            </button>
+        // Crear botón ANTERIOR con onclick directo
+        const prevBtn = document.createElement('button');
+        prevBtn.id = 'manga-prev';
+        prevBtn.title = 'Imagen anterior (←)';
+        prevBtn.innerHTML = '◀ Anterior';
+        prevBtn.style.cssText = `
+            background: #ff6b9d; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
         `;
+        // ¡AQUÍ ESTÁ EL FIX! onclick directo
+        prevBtn.onclick = () => {
+            console.log("🎯 Botón ANTERIOR clickeado directamente");
+            this.imagenAnterior();
+        };
+        
+        // Crear botón SIGUIENTE con onclick directo
+        const nextBtn = document.createElement('button');
+        nextBtn.id = 'manga-next';
+        nextBtn.title = 'Imagen siguiente (→)';
+        nextBtn.innerHTML = 'Siguiente ▶';
+        nextBtn.style.cssText = `
+            background: #4a90e2; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        `;
+        nextBtn.onclick = () => {
+            console.log("🎯 Botón SIGUIENTE clickeado directamente");
+            this.imagenSiguiente();
+        };
+        
+        // Botón Zoom In
+        const zoomInBtn = document.createElement('button');
+        zoomInBtn.id = 'manga-zoom-in';
+        zoomInBtn.title = 'Acercar (Ctrl + +)';
+        zoomInBtn.innerHTML = '➕';
+        zoomInBtn.style.cssText = `
+            background: #00cc6a; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        `;
+        zoomInBtn.onclick = () => this.zoomIn();
+        
+        // Botón Zoom Out
+        const zoomOutBtn = document.createElement('button');
+        zoomOutBtn.id = 'manga-zoom-out';
+        zoomOutBtn.title = 'Alejar (Ctrl + -)';
+        zoomOutBtn.innerHTML = '➖';
+        zoomOutBtn.style.cssText = `
+            background: #ff9800; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        `;
+        zoomOutBtn.onclick = () => this.zoomOut();
+        
+        // Botón Reset Zoom
+        const resetZoomBtn = document.createElement('button');
+        resetZoomBtn.id = 'manga-zoom-reset';
+        resetZoomBtn.title = 'Restaurar zoom (0)';
+        resetZoomBtn.innerHTML = '↺';
+        resetZoomBtn.style.cssText = `
+            background: #7b68ee; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        `;
+        resetZoomBtn.onclick = () => this.resetZoom();
+        
+        // Botón Cerrar
+        const closeBtn = document.createElement('button');
+        closeBtn.id = 'manga-close';
+        closeBtn.title = 'Cerrar (ESC)';
+        closeBtn.innerHTML = '✕ Cerrar';
+        closeBtn.style.cssText = `
+            background: #ff4444; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            font-weight: bold;
+        `;
+        closeBtn.onclick = () => this.ocultar();
+        
+        // Botón Pantalla Completa
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.id = 'manga-fullscreen';
+        fullscreenBtn.title = 'Pantalla completa (F)';
+        fullscreenBtn.innerHTML = '⛶';
+        fullscreenBtn.style.cssText = `
+            background: #9c27b0; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 8px 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1.2rem;
+        `;
+        fullscreenBtn.onclick = () => this.togglePantallaCompleta();
+        
+        // Añadir todos los botones
+        this.elementos.botones.appendChild(prevBtn);
+        this.elementos.botones.appendChild(nextBtn);
+        this.elementos.botones.appendChild(zoomInBtn);
+        this.elementos.botones.appendChild(zoomOutBtn);
+        this.elementos.botones.appendChild(resetZoomBtn);
+        this.elementos.botones.appendChild(closeBtn);
+        this.elementos.botones.appendChild(fullscreenBtn);
         
         this.elementos.controles.appendChild(this.elementos.contador);
         this.elementos.controles.appendChild(this.elementos.botones);
     },
     
     // ============================================================================
-    // CONFIGURAR EVENTOS - VERSIÓN SIMPLIFICADA
+    // CONFIGURAR EVENTOS - ¡SIMPLIFICADO!
     // ============================================================================
     
     configurarEventos: function() {
         console.log("🔧 Configurando eventos del manga viewer...");
         
-        // Configurar eventos de teclado
+        // Eventos de teclado
         document.addEventListener('keydown', (e) => this.manejarTeclado(e));
         
         // Eventos en la imagen
@@ -367,7 +454,7 @@ const mangaViewer = {
     },
     
     // ============================================================================
-    // NAVEGACIÓN - VERSIÓN CORREGIDA
+    // NAVEGACIÓN - ¡VERSIÓN MEJORADA!
     // ============================================================================
     
     imagenAnterior: function() {
@@ -743,7 +830,65 @@ window.agregarBotonesManga = function() {
     return false;
 };
 
-// Función para test desde consola
+// ============================================================================
+// FUNCIONES DE TESTING
+// ============================================================================
+
+window.ejemploManga = function() {
+    mostrarManga('sub1_1');
+    console.log("📖 Ejemplo: Mostrando manga de sub1_1");
+};
+
+window.agregarPaginasManga = function(subcontenedorId) {
+    const urls = prompt("Introduce URLs separadas por comas:");
+    if (urls) {
+        const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
+        if (urlsArray.length > 0) {
+            const total = agregarImagenesManga(subcontenedorId, urlsArray);
+            console.log(`✅ ${urlsArray.length} páginas añadidas a ${subcontenedorId}. Total: ${total}`);
+        }
+    }
+};
+
+window.verSubcontenedoresConManga = function() {
+    if (mangaViewer) {
+        const subcontenedores = mangaViewer.obtenerTodosLosSubcontenedoresConManga();
+        console.log("📚 Subcontenedores con manga:");
+        subcontenedores.forEach(sub => {
+            console.log(`- ${sub.id}: ${sub.paginas} páginas`);
+        });
+        return subcontenedores;
+    }
+    return [];
+};
+
+window.verEstadoMangaViewer = function() {
+    if (mangaViewer) {
+        const estado = mangaViewer.obtenerEstado();
+        console.log("📊 Estado MangaViewer:", estado);
+        return estado;
+    }
+    return null;
+};
+
+window.cargarMangaDesdeArray = function(subcontenedorId, arrayUrls) {
+    if (mangaViewer && arrayUrls && arrayUrls.length > 0) {
+        mangaViewer.agregarMangaASubcontenedor(subcontenedorId, arrayUrls);
+        console.log(`📚 ${arrayUrls.length} páginas cargadas en ${subcontenedorId}`);
+        return true;
+    }
+    return false;
+};
+
+window.testAnterior = function() {
+    console.log("🔧 Testeando botón anterior...");
+    if (mangaViewer) {
+        console.log("Imagen actual:", mangaViewer.estado.imagenActual);
+        console.log("Total imágenes:", mangaViewer.estado.imagenes.length);
+        mangaViewer.imagenAnterior();
+    }
+};
+
 window.testManga = function() {
     console.log("🔧 Testeando manga viewer...");
     if (window.mangaViewer) {
