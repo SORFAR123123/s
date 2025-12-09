@@ -3044,3 +3044,231 @@ button:disabled {
         padding: 12px;
     }
 }
+/* ============================================================================
+   ESTILOS PARA SISTEMA DE ANIME
+   ============================================================================ */
+
+/* Botones de anime */
+.boton-anime-principal, 
+.boton-anime-secundario,
+.boton-anime-info {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 200px;
+}
+
+.boton-anime-principal:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.boton-anime-secundario:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.boton-anime-info:hover {
+    background: #444 !important;
+}
+
+/* Pantalla de video anime */
+.contenido-anime {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.video-anime {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.controles-video {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.boton-video {
+    background: linear-gradient(135deg, #ff6b9d, #c2185b);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.boton-video:hover {
+    transform: translateY(-2px);
+}
+
+.boton-video.secundario {
+    background: linear-gradient(135deg, #4a90e2, #1565c0);
+}
+
+/* Pantalla de mazos anime */
+.contenido-mazos-anime {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.mazo-anime-card {
+    background: linear-gradient(135deg, #1a237e, #311b92);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+    border: 2px solid #7c4dff;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.mazo-anime-card:hover {
+    transform: translateY(-3px);
+    border-color: #bb86fc;
+    box-shadow: 0 10px 20px rgba(123, 77, 255, 0.3);
+}
+
+.mazo-anime-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.mazo-numero {
+    background: #ff6b9d;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.mazo-info {
+    flex: 1;
+}
+
+.mazo-titulo {
+    margin: 0;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.mazo-details {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.mazo-detail {
+    background: rgba(255,255,255,0.1);
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: #bb86fc;
+}
+
+.mazo-action .boton-cargar-mazo {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mazo-preview {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+.preview-label {
+    color: #bb86fc;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.preview-words {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.preview-word {
+    background: rgba(187, 134, 252, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* Instrucciones */
+.instrucciones {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.instrucciones li {
+    margin: 10px 0;
+    color: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mazo-anime-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .mazo-action {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .boton-cargar-mazo {
+        width: 100%;
+    }
+    
+    .boton-anime-principal,
+    .boton-anime-secundario {
+        min-width: 100%;
+        margin-bottom: 10px;
+    }
+}
