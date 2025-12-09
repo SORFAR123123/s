@@ -25,7 +25,7 @@ const galeriaVideosConfig = {
         'asmr': {
             id: 'asmr',
             nombre: 'Potonas Reales',
-            imagen: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400',
+            imagen: 'https://pbs.twimg.com/media/G7wjg6vW8AAhxc0?format=png&name=900x900',
             color: '#6c5ce7',
             descripcion: 'Sonidos relajantes y susurros'
         },
