@@ -14,8 +14,8 @@ const sistemaManga = {
             id: 'sub1_1',
             titulo: "The Last Summer - Capítulo 1",
             imagenes: [
-                "https://via.placeholder.com/800x1200/FF6B9D/FFFFFF?text=P%C3%A1gina+1",
-                "https://via.placeholder.com/800x1200/4A90E2/FFFFFF?text=P%C3%A1gina+2",
+                "https://pbs.twimg.com/media/G7m3cP9WsAAhwzb?format=jpg&name=large",
+                "https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=large",
                 "https://via.placeholder.com/800x1200/00FF88/000000?text=P%C3%A1gina+3",
                 "https://via.placeholder.com/800x1200/FFD700/000000?text=P%C3%A1gina+4",
                 "https://via.placeholder.com/800x1200/FF9800/FFFFFF?text=P%C3%A1gina+5"
