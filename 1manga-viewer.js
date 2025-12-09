@@ -1,4 +1,3 @@
-
 // ============================================================================
 // SISTEMA DE VISOR DE MANGA/IMÁGENES - COMO NHENTAI
 // ============================================================================
@@ -11,25 +10,22 @@ const mangaViewer = {
     mangaDatabase: {
         // THE LAST SUMMER 1
         'sub1_1': [
-            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
+            'https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=small',
             'https://pbs.twimg.com/media/G7rPFZ_WMAAfTgv?format=png&name=small',
             'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
-            'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
+            'https://pbs.twimg.com/media/G7fxkYUXUAAtCCz?format=png&name=small',
             'https://pbs.twimg.com/media/G7fxbA5WsAAMcky?format=png&name=small'
             // AÑADE MÁS URLs AQUÍ...
         ],
         
         'sub1_2': [
             'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
-            'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large',
-            'https://example.com/manga/lastsummer1-2/pagina3.jpg'
+            'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large'
             // AÑADE MÁS URLs AQUÍ...
         ],
         
         'sub1_3': [
-            'https://example.com/manga/lastsummer1-3/pagina1.jpg',
-            'https://example.com/manga/lastsummer1-3/pagina2.jpg'
-            // AÑADE MÁS URLs AQUÍ...
+            // AÑADE URLs AQUÍ...
         ],
         
         // TOONO ESUKE 2  
@@ -132,6 +128,27 @@ const mangaViewer = {
         this.cargarEstado();
         
         console.log("✅ Visor de manga listo");
+        
+        // ¡ARREGLADO! Llamar a agregarBotonesManga inmediatamente
+        this.verificarYAgregarBotones();
+        
+        // También configurar intervalo para verificar cada 500ms (por si las dudas)
+        setInterval(() => this.verificarYAgregarBotones(), 500);
+    },
+    
+    // ============================================================================
+    // NUEVO: VERIFICAR Y AGREGAR BOTONES INMEDIATAMENTE
+    // ============================================================================
+    
+    verificarYAgregarBotones: function() {
+        // Verificar si estamos en la pantalla de subcontenedores
+        const pantallaSubcontenedores = document.getElementById('pantalla-subcontenedores');
+        if (pantallaSubcontenedores && pantallaSubcontenedores.classList.contains('activa')) {
+            // Esperar un poco para asegurar que el DOM esté listo
+            setTimeout(() => {
+                this.agregarBotonesMangaATarjetas();
+            }, 50);
+        }
     },
     
     // ============================================================================
@@ -293,8 +310,16 @@ const mangaViewer = {
     // ============================================================================
     
     configurarEventos: function() {
-        document.getElementById('manga-prev').addEventListener('click', () => this.imagenAnterior());
-        document.getElementById('manga-next').addEventListener('click', () => this.imagenSiguiente());
+        // ¡ARREGLADO! Usar event delegation para botones que se crean dinámicamente
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'manga-prev') {
+                this.imagenAnterior();
+            } else if (e.target && e.target.id === 'manga-next') {
+                this.imagenSiguiente();
+            }
+        });
+        
+        // Los otros botones se pueden configurar normalmente
         document.getElementById('manga-zoom-in').addEventListener('click', () => this.zoomIn());
         document.getElementById('manga-zoom-out').addEventListener('click', () => this.zoomOut());
         document.getElementById('manga-zoom-reset').addEventListener('click', () => this.resetZoom());
@@ -406,6 +431,9 @@ const mangaViewer = {
             this.estado.imagenActual--;
             this.cargarImagenActual();
             this.resetZoom();
+            console.log("◀ Imagen anterior - Ahora en:", this.estado.imagenActual + 1);
+        } else {
+            console.log("⚠️ Ya estás en la primera imagen");
         }
     },
     
@@ -414,6 +442,9 @@ const mangaViewer = {
             this.estado.imagenActual++;
             this.cargarImagenActual();
             this.resetZoom();
+            console.log("▶ Imagen siguiente - Ahora en:", this.estado.imagenActual + 1);
+        } else {
+            console.log("⚠️ Ya estás en la última imagen");
         }
     },
     
@@ -521,8 +552,14 @@ const mangaViewer = {
         event.preventDefault();
         
         switch(event.key) {
-            case 'ArrowLeft': case 'a': case 'A': this.imagenAnterior(); break;
-            case 'ArrowRight': case 'd': case 'D': this.imagenSiguiente(); break;
+            case 'ArrowLeft': case 'a': case 'A': 
+                console.log("← Tecla izquierda presionada");
+                this.imagenAnterior(); 
+                break;
+            case 'ArrowRight': case 'd': case 'D': 
+                console.log("→ Tecla derecha presionada");
+                this.imagenSiguiente(); 
+                break;
             case '+': case '=': if (event.ctrlKey) this.zoomIn(); break;
             case '-': case '_': if (event.ctrlKey) this.zoomOut(); break;
             case '0': this.resetZoom(); break;
@@ -572,6 +609,9 @@ const mangaViewer = {
         
         this.mangaDatabase[subcontenedorId].push(...urlsImagenes);
         console.log("➕ Manga añadido a", subcontenedorId, "Total:", this.mangaDatabase[subcontenedorId].length, "páginas");
+        
+        // Actualizar botones si ya existen
+        this.agregarBotonesMangaATarjetas();
         
         return this.mangaDatabase[subcontenedorId].length;
     },
@@ -640,58 +680,87 @@ const mangaViewer = {
     },
     
     // ============================================================================
-    // INTEGRACIÓN CON LA INTERFAZ DE SUBCONTENEDORES
+    // ¡¡¡FIX IMPORTANTE!!! - AGREGAR BOTONES DE MANGA MEJORADO
     // ============================================================================
     
     agregarBotonesMangaATarjetas: function() {
         // Esto se llamará después de que se carguen los subcontenedores
         const tarjetas = document.querySelectorAll('.subcontenedor-card');
         
-        tarjetas.forEach(tarjeta => {
+        console.log("🔍 Buscando tarjetas de subcontenedores... Encontradas:", tarjetas.length);
+        
+        tarjetas.forEach((tarjeta, index) => {
             const texto = tarjeta.querySelector('.subcontenedor-texto');
-            if (!texto) return;
+            if (!texto) {
+                console.log("⚠️ Tarjeta", index, "no tiene texto");
+                return;
+            }
             
             // Extraer ID del subcontenedor del texto (ej: "Sub-Contenedor 1.1" → "sub1_1")
-            const match = texto.textContent.match(/(\d+)\.(\d+)/);
-            if (!match) return;
+            const textoCompleto = texto.textContent;
+            const match = textoCompleto.match(/(\d+)\.(\d+)/);
+            
+            if (!match) {
+                console.log("⚠️ No se pudo extraer ID de:", textoCompleto);
+                return;
+            }
             
             const subId = `sub${match[1]}_${match[2]}`;
             const tieneManga = this.mangaDatabase[subId] && this.mangaDatabase[subId].length > 0;
             
-            // Si ya tiene botón, no hacer nada
-            if (tarjeta.querySelector('.boton-manga')) return;
+            console.log("📝 Procesando tarjeta:", subId, "Tiene manga:", tieneManga);
             
-            // Crear botón
+            // Remover botón existente si hay
+            const botonExistente = tarjeta.querySelector('.boton-manga');
+            if (botonExistente) {
+                botonExistente.remove();
+            }
+            
+            // Crear botón NUEVO - con estilos mejorados para que sea más visible
             const botonManga = document.createElement('button');
             botonManga.className = 'boton-manga';
-            botonManga.innerHTML = tieneManga ? '📖 Leer Manga' : '➕ Añadir Manga';
+            botonManga.innerHTML = tieneManga ? 
+                `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)` : 
+                '➕ Añadir Manga';
             botonManga.style.cssText = `
                 background: linear-gradient(135deg, ${tieneManga ? '#9C27B0, #673AB7' : '#4a90e2, #7b68ee'});
                 color: white;
                 border: none;
-                border-radius: 10px;
-                padding: 10px 15px;
-                margin-top: 10px;
+                border-radius: 15px;
+                padding: 12px 20px;
+                margin-top: 15px;
                 cursor: pointer;
                 font-weight: bold;
                 width: 100%;
                 transition: all 0.3s ease;
+                font-size: 1rem;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                border: 2px solid ${tieneManga ? '#ff6b9d' : '#4a90e2'};
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
             `;
             
+            // Efecto hover
             botonManga.onmouseover = function() {
-                this.style.transform = 'translateY(-2px)';
+                this.style.transform = 'translateY(-3px)';
                 this.style.boxShadow = tieneManga ? 
-                    '0 5px 15px rgba(156, 39, 176, 0.4)' : 
-                    '0 5px 15px rgba(74, 144, 226, 0.4)';
+                    '0 8px 20px rgba(156, 39, 176, 0.5)' : 
+                    '0 8px 20px rgba(74, 144, 226, 0.5)';
             };
             
             botonManga.onmouseout = function() {
                 this.style.transform = 'translateY(0)';
-                this.style.boxShadow = 'none';
+                this.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
             };
             
+            // Click handler
             botonManga.onclick = (e) => {
-                e.stopPropagation(); // Prevenir que se active el click del subcontenedor
+                e.stopPropagation(); // ¡IMPORTANTE! Prevenir que se active el click del subcontenedor
+                e.preventDefault();
+                
+                console.log("🎯 Click en botón de manga para:", subId);
+                
                 if (tieneManga) {
                     this.mostrarMangaDeSubcontenedor(subId);
                 } else {
@@ -704,18 +773,31 @@ const mangaViewer = {
                         const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
                         if (urlsArray.length > 0) {
                             this.agregarMangaASubcontenedor(subId, urlsArray);
-                            botonManga.innerHTML = '📖 Leer Manga';
+                            botonManga.innerHTML = `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)`;
                             botonManga.style.background = 'linear-gradient(135deg, #9C27B0, #673AB7)';
-                            alert(`✅ ${urlsArray.length} páginas añadidas a ${subId}`);
+                            botonManga.style.border = '2px solid #ff6b9d';
+                            alert(`✅ ${urlsArray.length} páginas añadidas a ${subId}. ¡Ahora puedes leer el manga!`);
                         }
                     }
                 }
             };
             
+            // Añadir el botón a la tarjeta
             tarjeta.appendChild(botonManga);
+            console.log("✅ Botón añadido a tarjeta:", subId);
         });
         
-        console.log("✅ Botones de manga añadidos a", tarjetas.length, "tarjetas");
+        console.log("🎉 Botones de manga procesados para", tarjetas.length, "tarjetas");
+    },
+    
+    // ============================================================================
+    // FUNCIÓN ESPECIAL PARA EJECUTAR DESDE OTROS ARCHIVOS
+    // ============================================================================
+    
+    forzarActualizacionBotones: function() {
+        console.log("🔄 Forzando actualización de botones de manga...");
+        this.agregarBotonesMangaATarjetas();
+        return true;
     }
 };
 
@@ -728,6 +810,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.mangaViewer = mangaViewer;
     
     console.log("📖 Manga Viewer cargado y listo");
+    
+    // También ejecutar después de que todo cargue
+    setTimeout(() => {
+        mangaViewer.verificarYAgregarBotones();
+    }, 1000);
 });
 
 // ============================================================================
@@ -759,10 +846,23 @@ window.agregarImagenesManga = function(subcontenedorId, urlsImagenes) {
     return false;
 };
 
-// Función para añadir botones a tarjetas (llamar después de cargar subcontenedores)
+// ¡¡¡FIX IMPORTANTE!!! - LLAMAR A ESTA FUNCIÓN DESDE EL ARCHIVO PRINCIPAL
 window.agregarBotonesManga = function() {
+    console.log("🚀 Llamando a agregarBotonesManga desde main.js");
     if (mangaViewer && mangaViewer.agregarBotonesMangaATarjetas) {
-        mangaViewer.agregarBotonesMangaATarjetas();
+        // Esperar un momento para asegurar que el DOM esté listo
+        setTimeout(() => {
+            mangaViewer.agregarBotonesMangaATarjetas();
+        }, 100);
+        return true;
+    }
+    return false;
+};
+
+// Función para forzar actualización (útil cuando cambias de pantalla)
+window.actualizarBotonesManga = function() {
+    if (mangaViewer && mangaViewer.forzarActualizacionBotones) {
+        mangaViewer.forzarActualizacionBotones();
         return true;
     }
     return false;
@@ -823,3 +923,12 @@ window.cargarMangaDesdeArray = function(subcontenedorId, arrayUrls) {
     return false;
 };
 
+// Testear botón anterior
+window.testAnterior = function() {
+    console.log("🔧 Testeando botón anterior...");
+    if (mangaViewer) {
+        console.log("Imagen actual:", mangaViewer.estado.imagenActual);
+        console.log("Total imágenes:", mangaViewer.estado.imagenes.length);
+        mangaViewer.imagenAnterior();
+    }
+};
