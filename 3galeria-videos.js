@@ -1,5 +1,5 @@
 // ============================================================================
-// GALERÍA DE VIDEOS PURA (SIN MAZOS) - CON IMÁGENES POR VIDEO
+// GALERÍA DE VIDEOS PURA (SIN MAZOS) - VERSIÓN MEJORADA
 // ============================================================================
 
 // ============================================================================
@@ -80,7 +80,7 @@ const galeriaVideosConfig = {
         }
     },
     
-    // BASE DE DATOS DE VIDEOS (IDs de Google Drive) - CON IMÁGENES POR VIDEO
+    // BASE DE DATOS DE VIDEOS (URLs múltiples: Drive, Twitter, YouTube, etc.)
     videos: {
         // CATEGORÍA: MÚSICA
         'musica': [
@@ -89,8 +89,8 @@ const galeriaVideosConfig = {
                 nombre: 'Música Lo-Fi para estudiar',
                 descripcion: 'Playlist de 1 hora de música lo-fi',
                 duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -98,8 +98,8 @@ const galeriaVideosConfig = {
                 nombre: 'Música clásica relajante',
                 descripcion: 'Las mejores piezas clásicas para concentración',
                 duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -107,8 +107,8 @@ const galeriaVideosConfig = {
                 nombre: 'Jazz suave para trabajar',
                 descripcion: 'Jazz instrumental sin distracciones',
                 duracion: '50:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -116,8 +116,8 @@ const galeriaVideosConfig = {
                 nombre: 'Sonidos de piano para dormir',
                 descripcion: 'Melodías suaves de piano nocturno',
                 duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -125,8 +125,8 @@ const galeriaVideosConfig = {
                 nombre: 'Música ambiente electrónica',
                 descripcion: 'Sintetizadores y paisajes sonoros',
                 duracion: '75:20',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             }
         ],
@@ -138,8 +138,8 @@ const galeriaVideosConfig = {
                 nombre: 'Bosque en otoño',
                 descripcion: 'Paseo por un bosque con hojas cayendo',
                 duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -147,8 +147,8 @@ const galeriaVideosConfig = {
                 nombre: 'Cascadas y ríos',
                 descripcion: 'Sonidos de agua corriente y cascadas',
                 duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -156,8 +156,8 @@ const galeriaVideosConfig = {
                 nombre: 'Amanecer en la montaña',
                 descripcion: 'Timelapse de un amanecer montañoso',
                 duracion: '10:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -165,8 +165,8 @@ const galeriaVideosConfig = {
                 nombre: 'Fuego crepitante',
                 descripcion: 'Sonido de leña ardiendo en una fogata',
                 duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -174,8 +174,8 @@ const galeriaVideosConfig = {
                 nombre: 'Océano y olas',
                 descripcion: 'Sonidos relajantes del mar',
                 duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             }
         ],
@@ -187,8 +187,8 @@ const galeriaVideosConfig = {
                 nombre: 'Susurros para dormir',
                 descripcion: 'Susurros suaves en español',
                 duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -196,8 +196,8 @@ const galeriaVideosConfig = {
                 nombre: 'Tapping en objetos',
                 descripcion: 'Sonidos de golpecitos en distintas superficies',
                 duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -205,8 +205,8 @@ const galeriaVideosConfig = {
                 nombre: 'Cepillado de micrófono',
                 descripcion: 'Sonidos de cepillos y texturas',
                 duracion: '20:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -214,8 +214,8 @@ const galeriaVideosConfig = {
                 nombre: 'ASMR de manos',
                 descripcion: 'Movimientos y sonidos con las manos',
                 duracion: '25:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -223,8 +223,8 @@ const galeriaVideosConfig = {
                 nombre: 'Desencuadernación de libros',
                 descripcion: 'Sonidos de páginas y libros antiguos',
                 duracion: '35:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             }
         ],
@@ -236,8 +236,8 @@ const galeriaVideosConfig = {
                 nombre: 'Opening de Quintillizas',
                 descripcion: 'Opening completo HD',
                 duracion: '1:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -245,8 +245,8 @@ const galeriaVideosConfig = {
                 nombre: 'Momentos épicos de Kimetsu',
                 descripcion: 'Compilación de mejores batallas',
                 duracion: '15:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -254,8 +254,8 @@ const galeriaVideosConfig = {
                 nombre: 'Edits de romance',
                 descripcion: 'Mejores momentos románticos de animes',
                 duracion: '10:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             },
             {
@@ -263,8 +263,8 @@ const galeriaVideosConfig = {
                 nombre: 'AMV - Anime Music Video',
                 descripcion: 'Edit con música épica',
                 duracion: '3:45',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: false
             },
             {
@@ -272,133 +272,40 @@ const galeriaVideosConfig = {
                 nombre: 'Comedia anime',
                 descripcion: 'Los momentos más graciosos',
                 duracion: '20:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
+                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                tipo: 'drive',
                 favorito: true
             }
         ],
         
-        // CATEGORÍA: MEMES
+        // CATEGORÍA: MEMES (EJEMPLOS CON DIFERENTES TIPOS)
         'memes': [
             {
-                id: 'video_memes_1',
-                nombre: 'Memes virales del mes',
-                descripcion: 'Los memes más graciosos de internet',
-                duracion: '25:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400&fit=crop',
+                id: 'video_meme_twitter_1',
+                nombre: 'Meme viral de Twitter',
+                descripcion: 'Lo más viral de esta semana',
+                duracion: '0:22',
+                url: 'https://video.twimg.com/amplify_video/1789945684354752512/vid/avc1/1280x720/6K4I-31TRjE32-7B.mp4?tag=16',
+                tipo: 'twitter',
                 favorito: true
             },
             {
-                id: 'video_memes_2',
-                nombre: 'Fails graciosos',
-                descripcion: 'Los mejores fails y caídas divertidas',
-                duracion: '18:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&fit=crop',
+                id: 'video_meme_youtube_1',
+                nombre: 'Compilación graciosa YouTube',
+                descripcion: 'Los mejores fails del mes',
+                duracion: '5:30',
+                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                tipo: 'youtube',
                 favorito: false
             },
             {
-                id: 'video_memes_3',
-                nombre: 'Animales graciosos',
-                descripcion: 'Los animales más divertidos de internet',
-                duracion: '22:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: GAMING
-        'gaming': [
-            {
-                id: 'video_gaming_1',
-                nombre: 'Momento épico en Fortnite',
-                descripcion: 'Victoria épica contra el squad',
-                duracion: '5:45',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_gaming_2',
-                nombre: 'Clutch en Valorant',
-                descripcion: 'Ace en la última ronda',
-                duracion: '3:20',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&fit=crop',
+                id: 'video_meme_direct_1',
+                nombre: 'GIF animado viral',
+                descripcion: 'Directo desde servidor',
+                duracion: '0:05',
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                tipo: 'direct',
                 favorito: false
-            },
-            {
-                id: 'video_gaming_3',
-                nombre: 'Speedrun de Mario 64',
-                descripcion: 'Récord mundial en 120 estrellas',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: COCINA
-        'cocina': [
-            {
-                id: 'video_cocina_1',
-                nombre: 'ASMR de cocina japonesa',
-                descripcion: 'Preparación de sushi con sonidos crujientes',
-                duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_cocina_2',
-                nombre: 'Corte de vegetales ASMR',
-                descripcion: 'Sonidos satisfactorios de corte',
-                duracion: '25:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_cocina_3',
-                nombre: 'Batido de bebida burbujeante',
-                descripcion: 'Sonidos de burbujas y mezclado',
-                duracion: '18:40',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: LLUVIA
-        'lluvia': [
-            {
-                id: 'video_lluvia_1',
-                nombre: 'Lluvia en el bosque',
-                descripcion: 'Sonido de lluvia en un bosque denso',
-                duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_lluvia_2',
-                nombre: 'Tormenta eléctrica',
-                descripcion: 'Truenos y relámpagos con lluvia intensa',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_lluvia_3',
-                nombre: 'Lluvia en la ventana',
-                descripcion: 'Gotas golpeando suavemente el cristal',
-                duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
-                favorito: true
             }
         ]
     }
@@ -425,7 +332,7 @@ function iniciarGaleriaVideos() {
     // Cargar categorías
     cargarCategoriasVideos();
     
-    console.log("🎬 Galería de videos iniciada");
+    console.log("🎬 Galería de videos iniciada - Ahora soporta: Google Drive, Twitter, YouTube, URLs directas");
 }
 
 // Función para cargar las categorías
@@ -495,30 +402,28 @@ function cargarVideosPorCategoria(categoriaId) {
     videos.forEach((video, index) => {
         const div = document.createElement('div');
         div.className = 'video-item-card';
-        div.style.borderLeftColor = categoria.color;
         div.onclick = () => reproducirVideo(video);
         
+        // Obtener icono según tipo
+        const tipoIcono = obtenerIconoTipoVideo(video.tipo);
+        const tipoClase = obtenerClaseTipoVideo(video.tipo);
+        const tipoTexto = obtenerTextoAmigableTipo(video.tipo);
+        
         div.innerHTML = `
-            <div class="video-item-imagen-container">
-                <img src="${video.imagen || categoria.imagen}" 
-                     alt="${video.nombre}" 
-                     class="video-item-imagen"
-                     onerror="this.src='${categoria.imagen}'">
-                <div class="video-item-overlay">
-                    <div class="video-play-button">▶️</div>
+            <div class="video-item-header">
+                <span class="video-numero">${index + 1}</span>
+                <div class="video-tipo-container">
+                    <span class="video-favorito">${video.favorito ? '⭐' : ''}</span>
+                    <span class="video-tipo-badge ${tipoClase}" title="${tipoTexto}">
+                        ${tipoIcono}
+                    </span>
                 </div>
             </div>
-            <div class="video-item-content">
-                <div class="video-item-header">
-                    <span class="video-numero">${index + 1}</span>
-                    <span class="video-favorito">${video.favorito ? '⭐' : ''}</span>
-                </div>
-                <div class="video-item-nombre">${video.nombre}</div>
-                <div class="video-item-desc">${video.descripcion}</div>
-                <div class="video-item-footer">
-                    <span class="video-duracion">⏱️ ${video.duracion}</span>
-                    <span class="video-play">▶️ Reproducir</span>
-                </div>
+            <div class="video-item-nombre">${video.nombre}</div>
+            <div class="video-item-desc">${video.descripcion}</div>
+            <div class="video-item-footer">
+                <span class="video-duracion">⏱️ ${video.duracion}</span>
+                <span class="video-play">▶️ Reproducir</span>
             </div>
         `;
         
@@ -528,35 +433,121 @@ function cargarVideosPorCategoria(categoriaId) {
     cambiarPantalla('pantalla-lista-videos');
 }
 
-// Función para reproducir un video
+// Función para reproducir un video (VERSIÓN MEJORADA MULTIPLATAFORMA)
 function reproducirVideo(video) {
     videoActual = video;
     
-    const videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
+    let videoUrl = '';
+    let esIframe = true;
+    let tipoVideo = video.tipo || 'drive'; // Por defecto drive
+    
+    // DETECTAR TIPO DE VIDEO SI NO ESTÁ ESPECIFICADO
+    if (!video.tipo && video.url) {
+        tipoVideo = detectarTipoVideo(video.url);
+    }
+    
+    // CONSTRUIR URL SEGÚN TIPO
+    switch (tipoVideo) {
+        case 'drive':
+            // Extraer ID de Drive de la URL
+            const match = video.url.match(/\/d\/([^\/]+)/);
+            if (match && match[1]) {
+                videoUrl = `https://drive.google.com/file/d/${match[1]}/preview`;
+            } else {
+                videoUrl = video.url;
+            }
+            esIframe = true;
+            break;
+            
+        case 'twitter':
+            videoUrl = video.url;
+            esIframe = false; // Twitter usa video directo
+            break;
+            
+        case 'youtube':
+            // Convertir a embed
+            if (video.url.includes('embed')) {
+                videoUrl = video.url;
+            } else if (video.url.includes('youtu.be/')) {
+                const id = video.url.split('youtu.be/')[1]?.split('?')[0];
+                videoUrl = `https://www.youtube.com/embed/${id}`;
+            } else if (video.url.includes('v=')) {
+                const id = video.url.split('v=')[1]?.split('&')[0];
+                videoUrl = `https://www.youtube.com/embed/${id}`;
+            } else {
+                videoUrl = video.url;
+            }
+            esIframe = true;
+            break;
+            
+        case 'vimeo':
+            if (video.url.includes('player.vimeo.com')) {
+                videoUrl = video.url;
+            } else {
+                const id = video.url.split('vimeo.com/')[1]?.split('?')[0];
+                videoUrl = `https://player.vimeo.com/video/${id}`;
+            }
+            esIframe = true;
+            break;
+            
+        default: // 'direct' o cualquier otro
+            videoUrl = video.url;
+            esIframe = false;
+    }
     
     // Actualizar interfaz
     const tituloElement = document.getElementById('titulo-video-reproductor');
     const descElement = document.getElementById('descripcion-video-reproductor');
-    const imagenElement = document.getElementById('imagen-video-reproductor');
+    const tipoTexto = obtenerTextoAmigableTipo(tipoVideo);
     
     if (tituloElement) tituloElement.textContent = video.nombre;
     if (descElement) descElement.innerHTML = `
-        <div class="descripcion-contenido">
-            <p><strong>Duración:</strong> ${video.duracion}</p>
-            <p><strong>Categoría:</strong> ${galeriaVideosConfig.categorias[categoriaActual].nombre}</p>
-            <p><strong>Descripción:</strong> ${video.descripcion}</p>
-        </div>
+        <strong>Duración:</strong> ${video.duracion}<br>
+        <strong>Categoría:</strong> ${galeriaVideosConfig.categorias[categoriaActual].nombre}<br>
+        <strong>Origen:</strong> ${tipoTexto}<br>
+        <strong>Descripción:</strong> ${video.descripcion}
     `;
-    if (imagenElement) {
-        imagenElement.src = video.imagen || galeriaVideosConfig.categorias[categoriaActual].imagen;
-        imagenElement.alt = video.nombre;
+    
+    // Cargar el video según el tipo
+    const iframeElement = document.getElementById('iframe-video-reproductor');
+    const videoElement = document.getElementById('video-directo-reproductor');
+    const tipoInfoElement = document.getElementById('tipo-video-info');
+    
+    if (esIframe) {
+        // Usar iframe para Google Drive, YouTube, Vimeo, etc.
+        if (iframeElement) {
+            iframeElement.src = videoUrl;
+            iframeElement.style.display = 'block';
+            iframeElement.title = `Reproduciendo: ${video.nombre}`;
+        }
+        if (videoElement) {
+            videoElement.style.display = 'none';
+            videoElement.src = ''; // Limpiar
+        }
+    } else {
+        // Usar elemento <video> para URLs directas (Twitter, MP4, etc.)
+        if (videoElement) {
+            videoElement.src = videoUrl;
+            videoElement.style.display = 'block';
+            videoElement.controls = true;
+            videoElement.title = `Reproduciendo: ${video.nombre}`;
+            
+            // Intentar reproducir automáticamente (con mute para evitar bloqueos)
+            videoElement.muted = true;
+            videoElement.play().catch(e => {
+                console.log("Autoplay bloqueado, usuario debe hacer clic");
+            });
+        }
+        if (iframeElement) {
+            iframeElement.style.display = 'none';
+            iframeElement.src = ''; // Limpiar
+        }
     }
     
-    // Cargar iframe de video
-    const iframeElement = document.getElementById('iframe-video-reproductor');
-    if (iframeElement) {
-        iframeElement.src = videoUrl;
-        iframeElement.title = `Reproduciendo: ${video.nombre}`;
+    // Mostrar información del tipo
+    if (tipoInfoElement) {
+        tipoInfoElement.textContent = `Tipo: ${tipoTexto}`;
+        tipoInfoElement.className = `tipo-info ${tipoVideo}-info`;
     }
     
     cambiarPantalla('pantalla-reproductor-video');
@@ -608,7 +599,8 @@ function crearPantallasGaleriaVideos() {
                         <p>📚 ${Object.keys(galeriaVideosConfig.videos).reduce((total, cat) => 
                             total + (galeriaVideosConfig.videos[cat] ? galeriaVideosConfig.videos[cat].length : 0), 0)} 
                             videos organizados por categorías</p>
-                        <p>🎬 Solo videos, sin mazos ni quizzes</p>
+                        <p>🎬 Soporta: Google Drive, Twitter, YouTube, URLs directas</p>
+                        <p>🔧 Usa <strong>agregarVideoAGaleria()</strong> desde consola</p>
                     </div>
                 </div>
             </div>
@@ -632,7 +624,7 @@ function crearPantallasGaleriaVideos() {
                 </div>
             </div>
             
-            <!-- PANTALLA DE REPRODUCTOR DE VIDEO -->
+            <!-- PANTALLA DE REPRODUCTOR DE VIDEO (VERSIÓN MEJORADA) -->
             <div id="pantalla-reproductor-video" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
@@ -646,25 +638,36 @@ function crearPantallasGaleriaVideos() {
                     <div class="reproductor-container">
                         <h2>🎬 Video en Reproducción</h2>
                         
-                        <div class="video-header-container">
-                            <img id="imagen-video-reproductor" src="" alt="Miniatura del video" class="video-thumbnail">
-                            <div class="video-header-info">
-                                <h3 id="descripcion-video-reproductor">Información del video</h3>
-                            </div>
+                        <div class="video-tipo-indicator">
+                            <span id="tipo-video-info" class="tipo-info">Cargando...</span>
                         </div>
                         
                         <div class="iframe-video-container">
+                            <!-- Iframe para Google Drive, YouTube, Vimeo -->
                             <iframe id="iframe-video-reproductor" 
                                     width="100%" 
                                     height="500"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
-                                    title="Reproductor de video">
+                                    title="Reproductor de video"
+                                    style="display: none;">
                             </iframe>
+                            
+                            <!-- Video directo para Twitter, MP4s, WebM, etc. -->
+                            <video id="video-directo-reproductor" 
+                                   width="100%" 
+                                   height="500"
+                                   controls
+                                   style="display: none;"
+                                   class="video-reproductor-directo">
+                                Tu navegador no soporta el elemento de video.
+                            </video>
                         </div>
                         
                         <div class="video-info-container">
+                            <h3 id="descripcion-video-reproductor">Información del video</h3>
+                            
                             <div class="controles-video">
                                 <button class="boton-principal" onclick="marcarComoFavorito()">
                                     ⭐ Marcar como Favorito
@@ -675,7 +678,15 @@ function crearPantallasGaleriaVideos() {
                             </div>
                             
                             <div class="nota-importante">
-                                <p>💡 <strong>Nota:</strong> Los videos se cargan desde Google Drive. Si no se reproduce, verifica que el ID sea correcto.</p>
+                                <p>💡 <strong>Nota:</strong> La galería soporta múltiples plataformas:</p>
+                                <ul class="plataformas-lista">
+                                    <li>✅ Google Drive (iframe)</li>
+                                    <li>✅ Twitter (video directo .mp4)</li>
+                                    <li>✅ YouTube (embed)</li>
+                                    <li>✅ URLs directas (.mp4, .webm, .ogg)</li>
+                                    <li>✅ Vimeo (embed)</li>
+                                </ul>
+                                <p>Para agregar videos desde consola: <code>agregarVideoAGaleria('categoria', datosVideo)</code></p>
                             </div>
                         </div>
                     </div>
@@ -754,88 +765,43 @@ function agregarEstilosGaleria() {
                 margin: 30px 0;
             }
             
-            /* LISTA DE VIDEOS - CON IMÁGENES */
+            /* LISTA DE VIDEOS - MEJORADA */
             .contenedor-lista-videos {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
                 margin: 20px 0;
+                max-height: 500px;
+                overflow-y: auto;
                 padding: 10px;
             }
             
             .video-item-card {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
                 border-radius: 15px;
+                padding: 20px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 border-left: 5px solid;
-                overflow: hidden;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border-left-color: ${galeriaVideosConfig.categorias[categoriaActual] ? galeriaVideosConfig.categorias[categoriaActual].color : '#4a90e2'};
             }
             
             .video-item-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+                transform: translateX(10px);
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
-            }
-            
-            .video-item-imagen-container {
-                position: relative;
-                width: 100%;
-                height: 200px;
-                overflow: hidden;
-            }
-            
-            .video-item-imagen {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.3s ease;
-            }
-            
-            .video-item-card:hover .video-item-imagen {
-                transform: scale(1.1);
-            }
-            
-            .video-item-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.4);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            .video-item-card:hover .video-item-overlay {
-                opacity: 1;
-            }
-            
-            .video-play-button {
-                background: rgba(255, 107, 157, 0.8);
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.5rem;
-                color: white;
-                animation: pulse 1.5s infinite;
-            }
-            
-            .video-item-content {
-                padding: 15px;
             }
             
             .video-item-header {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 margin-bottom: 10px;
+            }
+            
+            .video-tipo-container {
+                display: flex;
+                align-items: center;
+                gap: 8px;
             }
             
             .video-numero {
@@ -855,17 +821,27 @@ function agregarEstilosGaleria() {
                 font-size: 1.2rem;
             }
             
+            .video-tipo-badge {
+                display: inline-block;
+                padding: 4px 10px;
+                border-radius: 12px;
+                font-size: 0.8rem;
+                font-weight: bold;
+                color: white;
+                cursor: help;
+            }
+            
+            .video-tipo-badge.drive { background: #4285F4; }
+            .video-tipo-badge.twitter { background: #1DA1F2; }
+            .video-tipo-badge.youtube { background: #FF0000; }
+            .video-tipo-badge.direct { background: #00C851; }
+            .video-tipo-badge.vimeo { background: #1ab7ea; }
+            
             .video-item-nombre {
                 font-size: 1.2rem;
                 font-weight: bold;
                 color: white;
                 margin-bottom: 8px;
-                height: 50px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
             }
             
             .video-item-desc {
@@ -873,20 +849,12 @@ function agregarEstilosGaleria() {
                 color: #cccccc;
                 margin-bottom: 15px;
                 line-height: 1.4;
-                height: 40px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
             }
             
             .video-item-footer {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding-top: 10px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .video-duracion {
@@ -902,50 +870,30 @@ function agregarEstilosGaleria() {
                 border-radius: 10px;
             }
             
-            /* REPRODUCTOR */
+            /* REPRODUCTOR MEJORADO */
             .reproductor-container {
                 max-width: 900px;
                 margin: 0 auto;
             }
             
-            .video-header-container {
-                display: flex;
-                gap: 20px;
-                margin-bottom: 20px;
-                background: rgba(255, 255, 255, 0.05);
+            .video-tipo-indicator {
+                text-align: center;
+                margin: 10px 0;
+            }
+            
+            .tipo-info {
+                display: inline-block;
+                padding: 5px 15px;
                 border-radius: 15px;
-                padding: 20px;
-                border: 2px solid #4a90e2;
-                align-items: center;
-            }
-            
-            .video-thumbnail {
-                width: 150px;
-                height: 100px;
-                border-radius: 10px;
-                object-fit: cover;
-                border: 3px solid #ff6b9d;
-                flex-shrink: 0;
-            }
-            
-            .video-header-info {
-                flex: 1;
-            }
-            
-            .video-header-info h3 {
+                font-weight: bold;
                 color: white;
-                margin-bottom: 10px;
-                line-height: 1.6;
             }
             
-            .descripcion-contenido p {
-                margin: 5px 0;
-                color: #cccccc;
-            }
-            
-            .descripcion-contenido strong {
-                color: #ff6b9d;
-            }
+            .drive-info { background: #4285F4; }
+            .twitter-info { background: #1DA1F2; }
+            .youtube-info { background: #FF0000; }
+            .direct-info { background: #00C851; }
+            .vimeo-info { background: #1ab7ea; }
             
             .iframe-video-container {
                 background: #000;
@@ -954,6 +902,20 @@ function agregarEstilosGaleria() {
                 margin: 20px 0;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
                 border: 3px solid #4a90e2;
+                min-height: 500px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .video-reproductor-directo {
+                border-radius: 15px;
+                background: #000;
+                border: 3px solid #4a90e2;
+                width: 100%;
+                max-width: 800px;
+                margin: 0 auto;
+                display: block;
             }
             
             .video-info-container {
@@ -962,6 +924,12 @@ function agregarEstilosGaleria() {
                 padding: 20px;
                 margin: 20px 0;
                 border: 2px solid #ff6b9d;
+            }
+            
+            .video-info-container h3 {
+                color: white;
+                margin-bottom: 20px;
+                line-height: 1.6;
             }
             
             .controles-video {
@@ -981,7 +949,18 @@ function agregarEstilosGaleria() {
             
             .nota-importante p {
                 color: #ffd700;
-                margin: 0;
+                margin: 5px 0;
+                font-size: 0.9rem;
+            }
+            
+            .plataformas-lista {
+                margin: 10px 0;
+                padding-left: 20px;
+            }
+            
+            .plataformas-lista li {
+                color: #ffffff;
+                margin: 5px 0;
                 font-size: 0.9rem;
             }
             
@@ -1021,13 +1000,6 @@ function agregarEstilosGaleria() {
                 font-weight: bold;
             }
             
-            /* ANIMACIÓN PULSE */
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-                100% { transform: scale(1); }
-            }
-            
             /* RESPONSIVE */
             @media (max-width: 768px) {
                 .galeria-categoria-card {
@@ -1035,24 +1007,14 @@ function agregarEstilosGaleria() {
                     max-width: 300px;
                 }
                 
-                .contenedor-lista-videos {
-                    grid-template-columns: 1fr;
-                }
-                
-                .iframe-video-container iframe {
+                .iframe-video-container,
+                .video-reproductor-directo {
                     height: 300px;
                 }
                 
-                .video-header-container {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                
-                .video-thumbnail {
-                    width: 100%;
-                    max-width: 250px;
-                    height: 150px;
-                    margin: 0 auto;
+                .iframe-video-container iframe,
+                .video-reproductor-directo {
+                    height: 300px;
                 }
                 
                 .controles-video {
@@ -1062,21 +1024,25 @@ function agregarEstilosGaleria() {
                 .controles-video button {
                     width: 100%;
                 }
+                
+                .video-tipo-badge {
+                    font-size: 0.7rem;
+                    padding: 3px 8px;
+                }
             }
             
             @media (max-width: 480px) {
-                .video-item-imagen-container {
-                    height: 150px;
+                .iframe-video-container,
+                .video-reproductor-directo {
+                    height: 250px;
+                }
+                
+                .video-item-card {
+                    padding: 15px;
                 }
                 
                 .video-item-nombre {
                     font-size: 1.1rem;
-                    height: 40px;
-                }
-                
-                .video-item-desc {
-                    font-size: 0.85rem;
-                    height: 35px;
                 }
             }
         </style>
@@ -1140,13 +1106,62 @@ function mostrarNotificacionGaleria(mensaje) {
 }
 
 // ============================================================================
-// 7. FUNCIONES DE TESTING PARA DESARROLLO
+// 7. FUNCIONES DE UTILIDAD PARA TIPOS DE VIDEO
 // ============================================================================
 
-// Agregar un video a una categoría desde consola
+function detectarTipoVideo(url) {
+    if (!url) return 'unknown';
+    
+    if (url.includes('drive.google.com')) return 'drive';
+    if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+    if (url.includes('twitter.com') || url.includes('twimg.com') || url.includes('twvideo.com')) return 'twitter';
+    if (url.includes('vimeo.com')) return 'vimeo';
+    if (url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg') || 
+        url.endsWith('.mov') || url.endsWith('.avi') || url.includes('video/')) {
+        return 'direct';
+    }
+    return 'unknown';
+}
+
+function obtenerIconoTipoVideo(tipo) {
+    switch(tipo) {
+        case 'drive': return '📁';
+        case 'twitter': return '🐦';
+        case 'youtube': return '📺';
+        case 'vimeo': return '🎬';
+        case 'direct': return '🔗';
+        default: return '❓';
+    }
+}
+
+function obtenerClaseTipoVideo(tipo) {
+    return tipo || 'unknown';
+}
+
+function obtenerTextoAmigableTipo(tipo) {
+    switch(tipo) {
+        case 'drive': return 'Google Drive';
+        case 'twitter': return 'Twitter';
+        case 'youtube': return 'YouTube';
+        case 'vimeo': return 'Vimeo';
+        case 'direct': return 'URL Directa';
+        default: return 'Desconocido';
+    }
+}
+
+// ============================================================================
+// 8. FUNCIONES DE TESTING Y MANEJO DESDE CONSOLA
+// ============================================================================
+
+// Agregar un video a una categoría desde consola (VERSIÓN MEJORADA)
 window.agregarVideoAGaleria = function(categoriaId, videoData) {
     if (!galeriaVideosConfig.videos[categoriaId]) {
         galeriaVideosConfig.videos[categoriaId] = [];
+    }
+    
+    // Detectar tipo automáticamente si no se especifica
+    if (!videoData.tipo && videoData.url) {
+        videoData.tipo = detectarTipoVideo(videoData.url);
     }
     
     // Asegurarse de que tenga un ID único
@@ -1154,13 +1169,19 @@ window.agregarVideoAGaleria = function(categoriaId, videoData) {
         videoData.id = `video_${categoriaId}_${Date.now()}`;
     }
     
-    // Asegurarse de que tenga una imagen por defecto si no se especifica
-    if (!videoData.imagen && galeriaVideosConfig.categorias[categoriaId]) {
-        videoData.imagen = galeriaVideosConfig.categorias[categoriaId].imagen;
+    // Asegurarse de que tenga duración
+    if (!videoData.duracion) {
+        videoData.duracion = '0:00';
+    }
+    
+    // Asegurarse de que tenga favorito
+    if (videoData.favorito === undefined) {
+        videoData.favorito = false;
     }
     
     galeriaVideosConfig.videos[categoriaId].push(videoData);
     console.log(`✅ Video agregado a categoría "${categoriaId}":`, videoData.nombre);
+    console.log(`   Tipo: ${videoData.tipo}, URL: ${videoData.url}`);
     
     // Si esta categoría está actualmente cargada, actualizar
     if (categoriaActual === categoriaId && 
@@ -1168,7 +1189,83 @@ window.agregarVideoAGaleria = function(categoriaId, videoData) {
         cargarVideosPorCategoria(categoriaId);
     }
     
-    return true;
+    return videoData.id;
+};
+
+// Función especial para agregar videos de Twitter
+window.agregarVideoTwitter = function(categoriaId, nombre, urlTwitter, descripcion = "", duracion = "0:00") {
+    const videoData = {
+        id: `twitter_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        nombre: nombre,
+        descripcion: descripcion,
+        duracion: duracion,
+        url: urlTwitter,
+        tipo: 'twitter',
+        favorito: false
+    };
+    
+    return window.agregarVideoAGaleria(categoriaId, videoData);
+};
+
+// Función especial para agregar videos de YouTube
+window.agregarVideoYouTube = function(categoriaId, nombre, urlYouTube, descripcion = "", duracion = "0:00") {
+    const videoData = {
+        id: `youtube_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        nombre: nombre,
+        descripcion: descripcion,
+        duracion: duracion,
+        url: urlYouTube,
+        tipo: 'youtube',
+        favorito: false
+    };
+    
+    return window.agregarVideoAGaleria(categoriaId, videoData);
+};
+
+// Función especial para agregar videos directos (MP4, etc.)
+window.agregarVideoDirecto = function(categoriaId, nombre, urlDirecta, descripcion = "", duracion = "0:00") {
+    const videoData = {
+        id: `direct_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        nombre: nombre,
+        descripcion: descripcion,
+        duracion: duracion,
+        url: urlDirecta,
+        tipo: 'direct',
+        favorito: false
+    };
+    
+    return window.agregarVideoAGaleria(categoriaId, videoData);
+};
+
+// Convertir videos antiguos (driveId) al nuevo formato (url + tipo)
+window.actualizarVideosAnteriores = function() {
+    let actualizados = 0;
+    
+    Object.keys(galeriaVideosConfig.videos).forEach(categoria => {
+        galeriaVideosConfig.videos[categoria].forEach(video => {
+            if (video.driveId && !video.url) {
+                // Convertir driveId a url
+                video.url = `https://drive.google.com/file/d/${video.driveId}/preview`;
+                video.tipo = 'drive';
+                delete video.driveId;
+                actualizados++;
+            }
+            // También actualizar si tiene url pero no tipo
+            else if (video.url && !video.tipo) {
+                video.tipo = detectarTipoVideo(video.url);
+                actualizados++;
+            }
+        });
+    });
+    
+    console.log(`✅ ${actualizados} videos actualizados al nuevo formato`);
+    
+    // Recargar si hay categoría actual
+    if (categoriaActual) {
+        cargarVideosPorCategoria(categoriaActual);
+    }
+    
+    return actualizados;
 };
 
 // Ver estado de la galería
@@ -1176,16 +1273,35 @@ window.verEstadoGaleria = function() {
     console.log("🎬 ESTADO DE LA GALERÍA DE VIDEOS:");
     console.log("- Categorías disponibles:", Object.keys(galeriaVideosConfig.categorias).length);
     console.log("- Categoría actual:", categoriaActual);
-    console.log("- Video actual:", videoActual ? videoActual.nombre : "Ninguno");
+    console.log("- Video actual:", videoActual ? `${videoActual.nombre} (${videoActual.tipo})` : "Ninguno");
     
-    // Contar videos por categoría
+    // Contar videos por categoría y tipo
+    let totalVideos = 0;
     Object.keys(galeriaVideosConfig.videos).forEach(catId => {
-        console.log(`  ${catId}: ${galeriaVideosConfig.videos[catId].length} videos`);
+        const videos = galeriaVideosConfig.videos[catId];
+        if (videos && videos.length > 0) {
+            console.log(`  📁 ${catId}: ${videos.length} videos`);
+            
+            // Contar por tipo
+            const tipos = {};
+            videos.forEach(video => {
+                const tipo = video.tipo || 'unknown';
+                tipos[tipo] = (tipos[tipo] || 0) + 1;
+            });
+            
+            Object.keys(tipos).forEach(tipo => {
+                console.log(`    ↳ ${tipo}: ${tipos[tipo]}`);
+            });
+            
+            totalVideos += videos.length;
+        }
     });
+    
+    console.log(`- Total videos en sistema: ${totalVideos}`);
 };
 
-// Cambiar ID de Google Drive de un video
-window.cambiarDriveIdVideo = function(categoriaId, videoId, nuevoDriveId) {
+// Cambiar URL de un video
+window.cambiarUrlVideo = function(categoriaId, videoId, nuevaUrl) {
     const videos = galeriaVideosConfig.videos[categoriaId];
     if (!videos) {
         console.log(`❌ Categoría ${categoriaId} no encontrada`);
@@ -1198,51 +1314,18 @@ window.cambiarDriveIdVideo = function(categoriaId, videoId, nuevoDriveId) {
         return false;
     }
     
-    video.driveId = nuevoDriveId;
-    console.log(`✅ ID de Drive actualizado para ${video.nombre}: ${nuevoDriveId}`);
+    const viejaUrl = video.url;
+    video.url = nuevaUrl;
+    video.tipo = detectarTipoVideo(nuevaUrl);
+    
+    console.log(`✅ URL actualizada para ${video.nombre}:`);
+    console.log(`   Vieja: ${viejaUrl}`);
+    console.log(`   Nueva: ${nuevaUrl}`);
+    console.log(`   Tipo detectado: ${video.tipo}`);
     
     // Si este video está actualmente reproduciéndose, actualizar
     if (videoActual && videoActual.id === videoId) {
-        const iframe = document.getElementById('iframe-video-reproductor');
-        if (iframe) {
-            iframe.src = `https://drive.google.com/file/d/${nuevoDriveId}/preview`;
-        }
-    }
-    
-    return true;
-};
-
-// Cambiar imagen de un video
-window.cambiarImagenVideo = function(categoriaId, videoId, nuevaImagen) {
-    const videos = galeriaVideosConfig.videos[categoriaId];
-    if (!videos) {
-        console.log(`❌ Categoría ${categoriaId} no encontrada`);
-        return false;
-    }
-    
-    const video = videos.find(v => v.id === videoId);
-    if (!video) {
-        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
-        return false;
-    }
-    
-    video.imagen = nuevaImagen;
-    console.log(`✅ Imagen actualizada para ${video.nombre}: ${nuevaImagen}`);
-    
-    // Si este video está actualmente visible, actualizar
-    if ((videoActual && videoActual.id === videoId) || categoriaActual === categoriaId) {
-        // Recargar la lista si estamos en esa categoría
-        if (categoriaActual === categoriaId && 
-            document.getElementById('pantalla-lista-videos').classList.contains('activa')) {
-            cargarVideosPorCategoria(categoriaId);
-        }
-        // Actualizar miniatura en el reproductor
-        if (videoActual && videoActual.id === videoId) {
-            const imgElement = document.getElementById('imagen-video-reproductor');
-            if (imgElement) {
-                imgElement.src = nuevaImagen;
-            }
-        }
+        reproducirVideo(video);
     }
     
     return true;
@@ -1256,19 +1339,46 @@ window.verVideosCategoria = function(categoriaId) {
         return;
     }
     
-    console.log(`🎬 Videos en ${categoriaId}:`);
+    console.log(`🎬 Videos en ${categoriaId} (${videos.length}):`);
     videos.forEach((video, index) => {
         console.log(`  ${index + 1}. ${video.nombre} (${video.duracion})`);
-        console.log(`     ID Drive: ${video.driveId}`);
-        console.log(`     Imagen: ${video.imagen || 'Usa imagen por defecto'}`);
+        console.log(`     Tipo: ${video.tipo || 'N/A'}`);
+        console.log(`     URL: ${video.url}`);
         console.log(`     Favorito: ${video.favorito ? '⭐' : 'No'}`);
+        console.log(`     Desc: ${video.descripcion}`);
+        console.log('');
+    });
+};
+
+// Probar diferentes tipos de URLs
+window.probarTiposVideo = function() {
+    console.log("🧪 PROBANDO DETECCIÓN DE TIPOS:");
+    
+    const ejemplos = [
+        { url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview', tipo: 'drive' },
+        { url: 'https://video.twimg.com/amplify_video/123456789.mp4', tipo: 'twitter' },
+        { url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', tipo: 'youtube' },
+        { url: 'https://youtu.be/dQw4w9WgXcQ', tipo: 'youtube' },
+        { url: 'https://vimeo.com/123456789', tipo: 'vimeo' },
+        { url: 'https://ejemplo.com/video.mp4', tipo: 'direct' },
+        { url: 'https://ejemplo.com/video.webm', tipo: 'direct' },
+        { url: 'https://ejemplo.com/video.ogg', tipo: 'direct' }
+    ];
+    
+    ejemplos.forEach(ejemplo => {
+        const detectado = detectarTipoVideo(ejemplo.url);
+        const correcto = detectado === ejemplo.tipo;
+        console.log(`${correcto ? '✅' : '❌'} ${ejemplo.url} -> ${detectado} (esperado: ${ejemplo.tipo})`);
     });
 };
 
 // Reiniciar galería (testing)
 window.reiniciarGaleriaVideos = function() {
     if (confirm("¿Estás seguro de reiniciar TODA la galería de videos?\nSe perderán los videos agregados manualmente.")) {
-        // Solo vaciar los videos, manteniendo la estructura
+        // Guardar la estructura original
+        const categoriasOriginales = { ...galeriaVideosConfig.categorias };
+        
+        // Limpiar videos (mantener estructura básica)
         Object.keys(galeriaVideosConfig.videos).forEach(cat => {
             galeriaVideosConfig.videos[cat] = [];
         });
@@ -1282,39 +1392,23 @@ window.reiniciarGaleriaVideos = function() {
     }
 };
 
-// Función para obtener una imagen aleatoria de Unsplash por categoría
-window.obtenerImagenAleatoriaPorCategoria = function(categoriaId) {
-    const categoriasImagenes = {
-        'musica': [
-            'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&fit=crop'
-        ],
-        'naturaleza': [
-            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&fit=crop'
-        ],
-        'anime': [
-            'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop'
-        ],
-        'asmr': [
-            'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&fit=crop'
-        ]
+// Ejemplo rápido para agregar video de prueba
+window.agregarVideoPrueba = function() {
+    const categoria = 'memes';
+    const videoData = {
+        nombre: 'Video de prueba Twitter',
+        descripcion: 'Este es un video de prueba agregado desde consola',
+        duracion: '0:30',
+        url: 'https://video.twimg.com/amplify_video/1789945684354752512/vid/avc1/1280x720/6K4I-31TRjE32-7B.mp4?tag=16',
+        tipo: 'twitter',
+        favorito: true
     };
     
-    const imagenes = categoriasImagenes[categoriaId] || [galeriaVideosConfig.categorias[categoriaId]?.imagen || 'https://via.placeholder.com/400x200'];
-    return imagenes[Math.floor(Math.random() * imagenes.length)];
+    return window.agregarVideoAGaleria(categoria, videoData);
 };
 
 // ============================================================================
-// 8. EXPORTAR FUNCIONES PARA USO GLOBAL
+// 9. EXPORTAR FUNCIONES PARA USO GLOBAL
 // ============================================================================
 
 // Hacer funciones disponibles globalmente
@@ -1327,14 +1421,34 @@ window.volverAListaVideos = volverAListaVideos;
 window.marcarComoFavorito = marcarComoFavorito;
 window.crearPantallasGaleriaVideos = crearPantallasGaleriaVideos;
 
-console.log("✅ Galería de videos pura cargada correctamente");
+console.log("✅ Galería de videos MULTIPLATAFORMA cargada correctamente");
 console.log("🎥 Usa iniciarGaleriaVideos() para comenzar");
-console.log("🖼️ Ahora cada video tiene su propia imagen");
 console.log("🔧 Funciones de testing disponibles desde consola:");
 console.log("   - agregarVideoAGaleria(categoriaId, videoData)");
+console.log("   - agregarVideoTwitter(categoriaId, nombre, url, descripcion, duracion)");
+console.log("   - agregarVideoYouTube(categoriaId, nombre, url, descripcion, duracion)");
+console.log("   - agregarVideoDirecto(categoriaId, nombre, url, descripcion, duracion)");
+console.log("   - actualizarVideosAnteriores() - Para migrar videos antiguos");
 console.log("   - verEstadoGaleria()");
-console.log("   - cambiarDriveIdVideo(categoriaId, videoId, nuevoDriveId)");
-console.log("   - cambiarImagenVideo(categoriaId, videoId, nuevaImagen)");
+console.log("   - cambiarUrlVideo(categoriaId, videoId, nuevaUrl)");
 console.log("   - verVideosCategoria(categoriaId)");
-console.log("   - obtenerImagenAleatoriaPorCategoria(categoriaId)");
+console.log("   - probarTiposVideo()");
+console.log("   - agregarVideoPrueba() - Agrega un video de Twitter de prueba");
 console.log("   - reiniciarGaleriaVideos()");
+
+// Inicializar automáticamente la migración si hay videos antiguos
+setTimeout(() => {
+    let tieneVideosAntiguos = false;
+    Object.keys(galeriaVideosConfig.videos).forEach(cat => {
+        galeriaVideosConfig.videos[cat].forEach(video => {
+            if (video.driveId && !video.url) {
+                tieneVideosAntiguos = true;
+            }
+        });
+    });
+    
+    if (tieneVideosAntiguos) {
+        console.log("🔄 Se detectaron videos en formato antiguo (driveId)");
+        console.log("💡 Usa actualizarVideosAnteriores() para migrarlos al nuevo formato");
+    }
+}, 1000);
