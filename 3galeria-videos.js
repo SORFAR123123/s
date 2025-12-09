@@ -1,9 +1,9 @@
 // ============================================================================
-// GALERÍA DE VIDEOS PURA (SIN MAZOS) - CON IMÁGENES POR VIDEO
+// GALERÍA DE VIDEOS PURA (SIN MAZOS) - CON IMÁGENES POR VIDEO Y TIMESTAMPS
 // ============================================================================
 
 // ============================================================================
-// 1. CONFIGURACIÓN - BASE DE DATOS DE VIDEOS POR CATEGORÍAS
+// 1. CONFIGURACIÓN - BASE DE DATOS DE VIDEOS POR CATEGORÍAS (CON TIMESTAMPS)
 // ============================================================================
 
 const galeriaVideosConfig = {
@@ -17,7 +17,7 @@ const galeriaVideosConfig = {
         },
         'naturaleza': {
             id: 'naturaleza',
-            nombre: '🦊  Yae kitsune potona 🦊 ',
+            nombre: '🦊 Yae kitsune potona 🦊',
             imagen: 'https://pbs.twimg.com/media/G7whSr6WQAASlUq?format=jpg&name=small',
             color: '#00b894',
             descripcion: 'Paisajes y sonidos de la naturaleza'
@@ -80,9 +80,9 @@ const galeriaVideosConfig = {
         }
     },
     
-    // BASE DE DATOS DE VIDEOS (IDs de Google Drive) - CON IMÁGENES POR VIDEO
+    // BASE DE DATOS DE VIDEOS (IDs de Google Drive) - CON IMÁGENES POR VIDEO Y TIMESTAMPS
     videos: {
-        // CATEGORÍA: MÚSICA
+        // CATEGORÍA: MÚSICA (CON TIMESTAMPS DE EJEMPLO)
         'musica': [
             {
                 id: 'video_musica_1',
@@ -91,7 +91,13 @@ const galeriaVideosConfig = {
                 duracion: '60:00',
                 driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
                 imagen: 'https://pbs.twimg.com/media/G7wfStPXUAA1Ra2?format=png&name=small',
-                favorito: true
+                favorito: true,
+                timestamps: [
+                    { tiempo: '0:30', descripcion: 'Inicio suave', segundos: 30 },
+                    { tiempo: '2:15', descripcion: 'Drop principal', segundos: 135 },
+                    { tiempo: '5:40', descripcion: 'Solo de piano', segundos: 340 },
+                    { tiempo: '10:20', descripcion: 'Mejor parte', segundos: 620 }
+                ]
             },
             {
                 id: 'video_musica_2',
@@ -100,7 +106,12 @@ const galeriaVideosConfig = {
                 duracion: '45:30',
                 driveId: '11hBAFRHLV6hnaVLYZEuZPISvL-TvsJZO',
                 imagen: 'https://pbs.twimg.com/media/G7wgYR9XQAAwo0T?format=jpg&name=large',
-                favorito: false
+                favorito: false,
+                timestamps: [
+                    { tiempo: '0:45', descripcion: 'Introducción', segundos: 45 },
+                    { tiempo: '3:20', descripcion: 'Parte principal', segundos: 200 },
+                    { tiempo: '8:15', descripcion: 'Clímax', segundos: 495 }
+                ]
             },
             {
                 id: 'video_musica_3',
@@ -131,7 +142,7 @@ const galeriaVideosConfig = {
             }
         ],
         
-        // CATEGORÍA: NATURALEZA
+        // CATEGORÍA: NATURALEZA (CON TIMESTAMPS DE EJEMPLO)
         'naturaleza': [
             {
                 id: 'video_naturaleza_1',
@@ -140,11 +151,16 @@ const galeriaVideosConfig = {
                 duracion: '30:00',
                 driveId: '1i90Pj3BMSfc63lQXguevklfB6yV84PSX',
                 imagen: 'https://pbs.twimg.com/media/G7whKvWXkAAhMuQ?format=png&name=small',
-                favorito: true
+                favorito: true,
+                timestamps: [
+                    { tiempo: '0:20', descripcion: 'Entrada al bosque', segundos: 20 },
+                    { tiempo: '5:45', descripcion: 'Caída de hojas', segundos: 345 },
+                    { tiempo: '12:30', descripcion: 'Amanecer', segundos: 750 }
+                ]
             },
             {
                 id: 'video_naturaleza_2',
-                nombre: ' Yae potona sweetiefox',
+                nombre: 'Yae potona sweetiefox',
                 descripcion: 'Sonidos de agua corriente y cascadas',
                 duracion: '45:00',
                 driveId: '1YS1Dn1BFFmD9Zv0jNVGtFB9G2lqLwOQl',
@@ -158,7 +174,13 @@ const galeriaVideosConfig = {
                 duracion: '10:00',
                 driveId: '1Scu-K-FxU5qIhk8EWGtRDYPyiTnrFwzW',
                 imagen: 'https://pbs.twimg.com/media/G7wh28DXMAAw3CG?format=jpg&name=small',
-                favorito: true
+                favorito: true,
+                timestamps: [
+                    { tiempo: '0:00', descripcion: 'Comienzo del timelapse', segundos: 0 },
+                    { tiempo: '3:20', descripcion: 'Primeros rayos de sol', segundos: 200 },
+                    { tiempo: '6:45', descripcion: 'Amanecer completo', segundos: 405 },
+                    { tiempo: '9:30', descripcion: 'Final espectacular', segundos: 570 }
+                ]
             },
             {
                 id: 'video_naturaleza_4',
@@ -233,12 +255,17 @@ const galeriaVideosConfig = {
         'anime': [
             {
                 id: 'video_anime_1',
-                nombre: ' Hidori rose potona DUo con amiga potona keching y ganyu',
+                nombre: 'Hidori rose potona DUo con amiga potona keching y ganyu',
                 descripcion: 'Opening completo HD',
                 duracion: '1:30',
                 driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
                 imagen: 'https://pbs.twimg.com/media/G7wkBDjWEAAPM8B?format=png&name=small',
-                favorito: true
+                favorito: true,
+                timestamps: [
+                    { tiempo: '0:15', descripcion: 'Intro animada', segundos: 15 },
+                    { tiempo: '0:45', descripcion: 'Primer coro', segundos: 45 },
+                    { tiempo: '1:10', descripcion: 'Mejor escena', segundos: 70 }
+                ]
             },
             {
                 id: 'video_anime_2',
@@ -276,130 +303,6 @@ const galeriaVideosConfig = {
                 imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
                 favorito: true
             }
-        ],
-        
-        // CATEGORÍA: MEMES
-        'memes': [
-            {
-                id: 'video_memes_1',
-                nombre: 'Memes virales del mes',
-                descripcion: 'Los memes más graciosos de internet',
-                duracion: '25:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_memes_2',
-                nombre: 'Fails graciosos',
-                descripcion: 'Los mejores fails y caídas divertidas',
-                duracion: '18:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_memes_3',
-                nombre: 'Animales graciosos',
-                descripcion: 'Los animales más divertidos de internet',
-                duracion: '22:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: GAMING
-        'gaming': [
-            {
-                id: 'video_gaming_1',
-                nombre: 'Momento épico en Fortnite',
-                descripcion: 'Victoria épica contra el squad',
-                duracion: '5:45',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_gaming_2',
-                nombre: 'Clutch en Valorant',
-                descripcion: 'Ace en la última ronda',
-                duracion: '3:20',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_gaming_3',
-                nombre: 'Speedrun de Mario 64',
-                descripcion: 'Récord mundial en 120 estrellas',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: COCINA
-        'cocina': [
-            {
-                id: 'video_cocina_1',
-                nombre: 'ASMR de cocina japonesa',
-                descripcion: 'Preparación de sushi con sonidos crujientes',
-                duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_cocina_2',
-                nombre: 'Corte de vegetales ASMR',
-                descripcion: 'Sonidos satisfactorios de corte',
-                duracion: '25:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_cocina_3',
-                nombre: 'Batido de bebida burbujeante',
-                descripcion: 'Sonidos de burbujas y mezclado',
-                duracion: '18:40',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: LLUVIA
-        'lluvia': [
-            {
-                id: 'video_lluvia_1',
-                nombre: 'Lluvia en el bosque',
-                descripcion: 'Sonido de lluvia en un bosque denso',
-                duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_lluvia_2',
-                nombre: 'Tormenta eléctrica',
-                descripcion: 'Truenos y relámpagos con lluvia intensa',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_lluvia_3',
-                nombre: 'Lluvia en la ventana',
-                descripcion: 'Gotas golpeando suavemente el cristal',
-                duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
-                favorito: true
-            }
         ]
     }
 };
@@ -425,7 +328,7 @@ function iniciarGaleriaVideos() {
     // Cargar categorías
     cargarCategoriasVideos();
     
-    console.log("🎬 Galería de videos iniciada");
+    console.log("🎬 Galería de videos iniciada (con timestamps)");
 }
 
 // Función para cargar las categorías
@@ -498,6 +401,11 @@ function cargarVideosPorCategoria(categoriaId) {
         div.style.borderLeftColor = categoria.color;
         div.onclick = () => reproducirVideo(video);
         
+        // Mostrar indicador de timestamps si el video los tiene
+        const tieneTimestamps = video.timestamps && video.timestamps.length > 0;
+        const timestampsBadge = tieneTimestamps ? 
+            '<span class="video-timestamps-badge" title="Tiene timestamps">⏱️</span>' : '';
+        
         div.innerHTML = `
             <div class="video-item-imagen-container">
                 <img src="${video.imagen || categoria.imagen}" 
@@ -512,6 +420,7 @@ function cargarVideosPorCategoria(categoriaId) {
                 <div class="video-item-header">
                     <span class="video-numero">${index + 1}</span>
                     <span class="video-favorito">${video.favorito ? '⭐' : ''}</span>
+                    ${timestampsBadge}
                 </div>
                 <div class="video-item-nombre">${video.nombre}</div>
                 <div class="video-item-desc">${video.descripcion}</div>
@@ -528,7 +437,10 @@ function cargarVideosPorCategoria(categoriaId) {
     cambiarPantalla('pantalla-lista-videos');
 }
 
-// Función para reproducir un video
+// ============================================================================
+// FUNCIÓN PARA REPRODUCIR VIDEO CON TIMESTAMPS
+// ============================================================================
+
 function reproducirVideo(video) {
     videoActual = video;
     
@@ -545,6 +457,9 @@ function reproducirVideo(video) {
             <p><strong>Duración:</strong> ${video.duracion}</p>
             <p><strong>Categoría:</strong> ${galeriaVideosConfig.categorias[categoriaActual].nombre}</p>
             <p><strong>Descripción:</strong> ${video.descripcion}</p>
+            ${video.timestamps && video.timestamps.length > 0 ? 
+                `<p><strong>⏱️ Timestamps:</strong> ${video.timestamps.length} puntos destacados</p>` : 
+                ''}
         </div>
     `;
     if (imagenElement) {
@@ -559,7 +474,114 @@ function reproducirVideo(video) {
         iframeElement.title = `Reproduciendo: ${video.nombre}`;
     }
     
+    // MOSTRAR TIMESTAMPS
+    mostrarTimestampsEnReproductor(video);
+    
     cambiarPantalla('pantalla-reproductor-video');
+}
+
+// ============================================================================
+// FUNCIONES DE TIMESTAMPS
+// ============================================================================
+
+function mostrarTimestampsEnReproductor(video) {
+    const contenedorTimestamps = document.getElementById('contenedor-timestamps');
+    if (!contenedorTimestamps) return;
+    
+    if (!video.timestamps || video.timestamps.length === 0) {
+        contenedorTimestamps.innerHTML = `
+            <div class="sin-timestamps">
+                <p>📝 Este video no tiene timestamps configurados</p>
+                <button class="boton-pequeno" onclick="agregarTimestampsDesdeConsola()">
+                    ⚡ Agregar desde consola
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '<div class="timestamps-header">⏱️ Puntos destacados:</div>';
+    
+    video.timestamps.forEach((ts, index) => {
+        html += `
+            <div class="timestamp-item" onclick="saltarATimestamp(${ts.segundos})">
+                <span class="timestamp-tiempo">${ts.tiempo}</span>
+                <span class="timestamp-desc">${ts.descripcion}</span>
+                <span class="timestamp-saltar">▶️ Ir</span>
+            </div>
+        `;
+    });
+    
+    // Agregar botón para agregar más timestamps desde consola
+    html += `
+        <div class="timestamps-footer">
+            <button class="boton-pequeno" onclick="agregarTimestampActual()">
+                ➕ Agregar timestamp actual
+            </button>
+            <button class="boton-pequeno" onclick="editarTimestampsDesdeConsola()">
+                ✏️ Editar desde consola
+            </button>
+        </div>
+    `;
+    
+    contenedorTimestamps.innerHTML = html;
+}
+
+// Función para saltar a un timestamp específico
+function saltarATimestamp(segundos) {
+    const iframe = document.getElementById('iframe-video-reproductor');
+    if (!iframe) return;
+    
+    // Actualizar la URL del iframe con el timestamp
+    const urlBase = iframe.src.split('#')[0];
+    iframe.src = `${urlBase}#t=${segundos}`;
+    
+    // Mostrar notificación
+    const minutos = Math.floor(segundos / 60);
+    const segs = segundos % 60;
+    const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
+    mostrarNotificacionGaleria(`⏱️ Saltando a ${tiempoFormateado}`);
+    
+    // Enfocar el iframe
+    iframe.focus();
+}
+
+// Función para agregar timestamp desde la posición actual (simulada)
+function agregarTimestampActual() {
+    if (!videoActual) {
+        mostrarNotificacionGaleria("❌ No hay video actual");
+        return;
+    }
+    
+    // Simulamos que estamos en un tiempo aleatorio (en realidad necesitarías obtener el tiempo actual del video)
+    const tiempoAleatorio = Math.floor(Math.random() * 3600); // Entre 0 y 3600 segundos (1 hora)
+    const minutos = Math.floor(tiempoAleatorio / 60);
+    const segundos = tiempoAleatorio % 60;
+    const tiempoFormateado = `${minutos}:${segundos.toString().padStart(2, '0')}`;
+    
+    // Pedir descripción al usuario
+    const descripcion = prompt(`Agregar timestamp en ${tiempoFormateado}\nDescripción:`, "Punto destacado");
+    
+    if (descripcion) {
+        if (!videoActual.timestamps) {
+            videoActual.timestamps = [];
+        }
+        
+        const nuevoTimestamp = {
+            tiempo: tiempoFormateado,
+            descripcion: descripcion,
+            segundos: tiempoAleatorio
+        };
+        
+        videoActual.timestamps.push(nuevoTimestamp);
+        mostrarTimestampsEnReproductor(videoActual);
+        
+        mostrarNotificacionGaleria(`✅ Timestamp agregado: ${tiempoFormateado} - ${descripcion}`);
+        
+        // Mostrar comando para guardar permanentemente
+        console.log(`💾 Para guardar permanentemente este timestamp, ejecuta:`);
+        console.log(`   agregarTimestampAVideo('${categoriaActual}', '${videoActual.id}', ${tiempoAleatorio}, '${descripcion}')`);
+    }
 }
 
 // ============================================================================
@@ -579,7 +601,7 @@ function volverAListaVideos() {
 }
 
 // ============================================================================
-// 5. CREAR PANTALLAS DINÁMICAMENTE
+// 5. CREAR PANTALLAS DINÁMICAMENTE (ACTUALIZADA CON TIMESTAMPS)
 // ============================================================================
 
 function crearPantallasGaleriaVideos() {
@@ -590,7 +612,7 @@ function crearPantallasGaleriaVideos() {
             <div id="pantalla-galerias-videos" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
-                        <div class="contador">🎥 GALERÍA DE VIDEOS</div>
+                        <div class="contador">🎥 GALERÍA DE VIDEOS CON TIMESTAMPS</div>
                         <div class="botones-superiores">
                             <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
                             <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
@@ -598,7 +620,7 @@ function crearPantallasGaleriaVideos() {
                     </div>
                     
                     <h1>🎥 Galería de Videos</h1>
-                    <p class="subtitulo">Selecciona una categoría para ver los videos</p>
+                    <p class="subtitulo">Selecciona una categoría para ver los videos ⏱️</p>
                     
                     <div class="contenedor-categorias-videos" id="contenedor-categorias-videos">
                         <!-- Las categorías se cargan aquí dinámicamente -->
@@ -608,6 +630,7 @@ function crearPantallasGaleriaVideos() {
                         <p>📚 ${Object.keys(galeriaVideosConfig.videos).reduce((total, cat) => 
                             total + (galeriaVideosConfig.videos[cat] ? galeriaVideosConfig.videos[cat].length : 0), 0)} 
                             videos organizados por categorías</p>
+                        <p>⏱️ Ahora con timestamps clicables</p>
                         <p>🎬 Solo videos, sin mazos ni quizzes</p>
                     </div>
                 </div>
@@ -632,7 +655,7 @@ function crearPantallasGaleriaVideos() {
                 </div>
             </div>
             
-            <!-- PANTALLA DE REPRODUCTOR DE VIDEO -->
+            <!-- PANTALLA DE REPRODUCTOR DE VIDEO (ACTUALIZADA CON TIMESTAMPS) -->
             <div id="pantalla-reproductor-video" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
@@ -644,7 +667,7 @@ function crearPantallasGaleriaVideos() {
                     </div>
                     
                     <div class="reproductor-container">
-                        <h2>🎬 Video en Reproducción</h2>
+                        <h2>🎬 Video en Reproducción ⏱️</h2>
                         
                         <div class="video-header-container">
                             <img id="imagen-video-reproductor" src="" alt="Miniatura del video" class="video-thumbnail">
@@ -664,6 +687,11 @@ function crearPantallasGaleriaVideos() {
                             </iframe>
                         </div>
                         
+                        <!-- CONTENEDOR DE TIMESTAMPS (NUEVO) -->
+                        <div class="timestamps-container" id="contenedor-timestamps">
+                            <!-- Los timestamps se cargarán aquí dinámicamente -->
+                        </div>
+                        
                         <div class="video-info-container">
                             <div class="controles-video">
                                 <button class="boton-principal" onclick="marcarComoFavorito()">
@@ -676,6 +704,7 @@ function crearPantallasGaleriaVideos() {
                             
                             <div class="nota-importante">
                                 <p>💡 <strong>Nota:</strong> Los videos se cargan desde Google Drive. Si no se reproduce, verifica que el ID sea correcto.</p>
+                                <p>⏱️ <strong>Timestamps:</strong> Haz clic en cualquier timestamp para saltar a esa parte del video.</p>
                             </div>
                         </div>
                     </div>
@@ -684,14 +713,14 @@ function crearPantallasGaleriaVideos() {
         `;
         
         document.body.insertAdjacentHTML('beforeend', pantallasHTML);
-        console.log("✅ Pantallas de galería de videos creadas dinámicamente");
+        console.log("✅ Pantallas de galería de videos creadas dinámicamente (con timestamps)");
         
         // Agregar estilos específicos si no están en el CSS principal
         agregarEstilosGaleria();
     }
 }
 
-// Función para agregar estilos específicos
+// Función para agregar estilos específicos (ACTUALIZADA CON TIMESTAMPS)
 function agregarEstilosGaleria() {
     // Verificar si los estilos ya existen
     if (document.getElementById('estilos-galeria-videos')) return;
@@ -754,7 +783,7 @@ function agregarEstilosGaleria() {
                 margin: 30px 0;
             }
             
-            /* LISTA DE VIDEOS - CON IMÁGENES */
+            /* LISTA DE VIDEOS - CON IMÁGENES Y BADGE DE TIMESTAMPS */
             .contenedor-lista-videos {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -853,6 +882,12 @@ function agregarEstilosGaleria() {
             .video-favorito {
                 color: #ffd700;
                 font-size: 1.2rem;
+            }
+            
+            .video-timestamps-badge {
+                color: #00ff88;
+                font-size: 1rem;
+                cursor: help;
             }
             
             .video-item-nombre {
@@ -956,6 +991,106 @@ function agregarEstilosGaleria() {
                 border: 3px solid #4a90e2;
             }
             
+            /* TIMESTAMPS CONTAINER (NUEVO) */
+            .timestamps-container {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #00ff88;
+            }
+            
+            .timestamps-header {
+                color: #00ff88;
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .timestamp-item {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                padding: 12px 15px;
+                margin: 8px 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                border-left: 3px solid #00ff88;
+            }
+            
+            .timestamp-item:hover {
+                background: rgba(0, 255, 136, 0.2);
+                transform: translateX(5px);
+            }
+            
+            .timestamp-tiempo {
+                color: #00ff88;
+                font-weight: bold;
+                min-width: 50px;
+                font-family: monospace;
+            }
+            
+            .timestamp-desc {
+                color: #ffffff;
+                flex: 1;
+                margin: 0 15px;
+            }
+            
+            .timestamp-saltar {
+                color: #ff6b9d;
+                font-weight: bold;
+                background: rgba(255, 107, 157, 0.1);
+                padding: 5px 10px;
+                border-radius: 5px;
+                transition: all 0.2s ease;
+                font-size: 0.9rem;
+            }
+            
+            .timestamp-item:hover .timestamp-saltar {
+                background: rgba(255, 107, 157, 0.3);
+            }
+            
+            .timestamps-footer {
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            
+            .boton-pequeno {
+                background: rgba(255, 107, 157, 0.2);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
+                padding: 8px 15px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                transition: all 0.2s ease;
+            }
+            
+            .boton-pequeno:hover {
+                background: rgba(255, 107, 157, 0.4);
+                transform: translateY(-2px);
+            }
+            
+            .sin-timestamps {
+                color: #cccccc;
+                text-align: center;
+                padding: 20px;
+                font-style: italic;
+            }
+            
+            .sin-timestamps p {
+                margin-bottom: 10px;
+            }
+            
             .video-info-container {
                 background: rgba(255, 255, 255, 0.05);
                 border-radius: 15px;
@@ -981,7 +1116,7 @@ function agregarEstilosGaleria() {
             
             .nota-importante p {
                 color: #ffd700;
-                margin: 0;
+                margin: 5px 0;
                 font-size: 0.9rem;
             }
             
@@ -1062,6 +1197,20 @@ function agregarEstilosGaleria() {
                 .controles-video button {
                     width: 100%;
                 }
+                
+                .timestamps-footer {
+                    flex-direction: column;
+                }
+                
+                .timestamp-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 5px;
+                }
+                
+                .timestamp-tiempo, .timestamp-desc, .timestamp-saltar {
+                    width: 100%;
+                }
             }
             
             @media (max-width: 480px) {
@@ -1140,7 +1289,171 @@ function mostrarNotificacionGaleria(mensaje) {
 }
 
 // ============================================================================
-// 7. FUNCIONES DE TESTING PARA DESARROLLO
+// 7. FUNCIONES DE TIMESTAMPS PARA CONSOLA (TESTING Y ADMINISTRACIÓN)
+// ============================================================================
+
+// Agregar timestamp a un video desde consola
+window.agregarTimestampAVideo = function(categoriaId, videoId, segundos, descripcion) {
+    const videos = galeriaVideosConfig.videos[categoriaId];
+    if (!videos) {
+        console.log(`❌ Categoría ${categoriaId} no encontrada`);
+        return false;
+    }
+    
+    const video = videos.find(v => v.id === videoId);
+    if (!video) {
+        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
+        return false;
+    }
+    
+    // Crear array de timestamps si no existe
+    if (!video.timestamps) {
+        video.timestamps = [];
+    }
+    
+    // Formatear tiempo
+    const minutos = Math.floor(segundos / 60);
+    const segs = segundos % 60;
+    const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
+    
+    // Agregar timestamp
+    video.timestamps.push({
+        tiempo: tiempoFormateado,
+        descripcion: descripcion,
+        segundos: segundos
+    });
+    
+    console.log(`✅ Timestamp agregado a "${video.nombre}":`);
+    console.log(`   ⏱️ ${tiempoFormateado} - ${descripcion}`);
+    
+    // Si este video está actualmente reproduciéndose, actualizar
+    if (videoActual && videoActual.id === videoId) {
+        mostrarTimestampsEnReproductor(videoActual);
+    }
+    
+    return true;
+};
+
+// Ver timestamps de un video
+window.verTimestampsVideo = function(categoriaId, videoId) {
+    const videos = galeriaVideosConfig.videos[categoriaId];
+    if (!videos) {
+        console.log(`❌ Categoría ${categoriaId} no encontrada`);
+        return;
+    }
+    
+    const video = videos.find(v => v.id === videoId);
+    if (!video) {
+        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
+        return;
+    }
+    
+    if (!video.timestamps || video.timestamps.length === 0) {
+        console.log(`📝 "${video.nombre}" no tiene timestamps`);
+        return;
+    }
+    
+    console.log(`⏱️ Timestamps de "${video.nombre}":`);
+    video.timestamps.forEach((ts, index) => {
+        console.log(`   ${index + 1}. ${ts.tiempo} - ${ts.descripcion} (${ts.segundos}s)`);
+    });
+};
+
+// Eliminar timestamp de un video
+window.eliminarTimestampVideo = function(categoriaId, videoId, index) {
+    const videos = galeriaVideosConfig.videos[categoriaId];
+    if (!videos) {
+        console.log(`❌ Categoría ${categoriaId} no encontrada`);
+        return false;
+    }
+    
+    const video = videos.find(v => v.id === videoId);
+    if (!video) {
+        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
+        return false;
+    }
+    
+    if (!video.timestamps || video.timestamps.length === 0) {
+        console.log(`❌ El video no tiene timestamps`);
+        return false;
+    }
+    
+    if (index < 0 || index >= video.timestamps.length) {
+        console.log(`❌ Índice ${index} fuera de rango`);
+        return false;
+    }
+    
+    const timestampEliminado = video.timestamps.splice(index, 1)[0];
+    console.log(`🗑️ Timestamp eliminado de "${video.nombre}":`);
+    console.log(`   ⏱️ ${timestampEliminado.tiempo} - ${timestampEliminado.descripcion}`);
+    
+    // Si este video está actualmente reproduciéndose, actualizar
+    if (videoActual && videoActual.id === videoId) {
+        mostrarTimestampsEnReproductor(videoActual);
+    }
+    
+    return true;
+};
+
+// Agregar timestamps desde consola (interfaz amigable)
+window.agregarTimestampsDesdeConsola = function() {
+    if (!videoActual) {
+        console.log("❌ No hay video seleccionado");
+        return;
+    }
+    
+    console.log("⚡ AGREGAR TIMESTAMPS DESDE CONSOLA");
+    console.log(`Video: ${videoActual.nombre}`);
+    console.log(`Categoría: ${categoriaActual}`);
+    console.log(`ID Video: ${videoActual.id}`);
+    console.log("");
+    console.log("📝 Ejemplos de comandos:");
+    console.log(`1. agregarTimestampAVideo('${categoriaActual}', '${videoActual.id}', 30, 'Inicio suave')`);
+    console.log(`2. agregarTimestampAVideo('${categoriaActual}', '${videoActual.id}', 135, 'Drop principal')`);
+    console.log(`3. agregarTimestampAVideo('${categoriaActual}', '${videoActual.id}', 340, 'Solo de piano')`);
+    console.log("");
+    console.log("🔧 Otras funciones útiles:");
+    console.log(`- verTimestampsVideo('${categoriaActual}', '${videoActual.id}')`);
+    console.log(`- eliminarTimestampVideo('${categoriaActual}', '${videoActual.id}', 0) // Elimina el primer timestamp`);
+    
+    // Crear array de timestamps si no existe
+    if (!videoActual.timestamps) {
+        videoActual.timestamps = [];
+        console.log("✅ Array de timestamps creado para este video");
+    }
+};
+
+// Editar timestamps desde consola
+window.editarTimestampsDesdeConsola = function() {
+    if (!videoActual) {
+        console.log("❌ No hay video seleccionado");
+        return;
+    }
+    
+    console.log("✏️ EDITAR TIMESTAMPS DESDE CONSOLA");
+    console.log(`Video: ${videoActual.nombre}`);
+    
+    if (!videoActual.timestamps || videoActual.timestamps.length === 0) {
+        console.log("❌ Este video no tiene timestamps");
+        console.log("💡 Usa: agregarTimestampsDesdeConsola()");
+        return;
+    }
+    
+    console.log("");
+    console.log("📋 Timestamps actuales:");
+    videoActual.timestamps.forEach((ts, index) => {
+        console.log(`   [${index}] ${ts.tiempo} - ${ts.descripcion} (${ts.segundos}s)`);
+    });
+    
+    console.log("");
+    console.log("🔧 Comandos disponibles:");
+    console.log(`1. videoActual.timestamps[0].descripcion = 'Nueva descripción'`);
+    console.log(`2. videoActual.timestamps[0].segundos = 45 // Cambia el tiempo`);
+    console.log(`3. mostrarTimestampsEnReproductor(videoActual) // Refrescar`);
+};
+
+// ============================================================================
+// 8. FUNCIONES DE TESTING PARA DESARROLLO
 // ============================================================================
 
 // Agregar un video a una categoría desde consola
@@ -1178,9 +1491,14 @@ window.verEstadoGaleria = function() {
     console.log("- Categoría actual:", categoriaActual);
     console.log("- Video actual:", videoActual ? videoActual.nombre : "Ninguno");
     
+    if (videoActual && videoActual.timestamps) {
+        console.log(`- Timestamps del video actual: ${videoActual.timestamps.length}`);
+    }
+    
     // Contar videos por categoría
     Object.keys(galeriaVideosConfig.videos).forEach(catId => {
-        console.log(`  ${catId}: ${galeriaVideosConfig.videos[catId].length} videos`);
+        const videosConTimestamps = galeriaVideosConfig.videos[catId].filter(v => v.timestamps && v.timestamps.length > 0).length;
+        console.log(`  ${catId}: ${galeriaVideosConfig.videos[catId].length} videos (${videosConTimestamps} con timestamps)`);
     });
 };
 
@@ -1262,6 +1580,7 @@ window.verVideosCategoria = function(categoriaId) {
         console.log(`     ID Drive: ${video.driveId}`);
         console.log(`     Imagen: ${video.imagen || 'Usa imagen por defecto'}`);
         console.log(`     Favorito: ${video.favorito ? '⭐' : 'No'}`);
+        console.log(`     Timestamps: ${video.timestamps ? video.timestamps.length + ' puntos' : 'No tiene'}`);
     });
 };
 
@@ -1314,7 +1633,7 @@ window.obtenerImagenAleatoriaPorCategoria = function(categoriaId) {
 };
 
 // ============================================================================
-// 8. EXPORTAR FUNCIONES PARA USO GLOBAL
+// 9. EXPORTAR FUNCIONES PARA USO GLOBAL
 // ============================================================================
 
 // Hacer funciones disponibles globalmente
@@ -1326,11 +1645,21 @@ window.volverACategorias = volverACategorias;
 window.volverAListaVideos = volverAListaVideos;
 window.marcarComoFavorito = marcarComoFavorito;
 window.crearPantallasGaleriaVideos = crearPantallasGaleriaVideos;
+window.mostrarTimestampsEnReproductor = mostrarTimestampsEnReproductor;
+window.saltarATimestamp = saltarATimestamp;
+window.agregarTimestampActual = agregarTimestampActual;
 
-console.log("✅ Galería de videos pura cargada correctamente");
+console.log("✅ Galería de videos con TIMESTAMPS cargada correctamente");
 console.log("🎥 Usa iniciarGaleriaVideos() para comenzar");
-console.log("🖼️ Ahora cada video tiene su propia imagen");
-console.log("🔧 Funciones de testing disponibles desde consola:");
+console.log("⏱️ Los timestamps ahora son clicables y te llevan a partes específicas del video");
+console.log("🖼️ Cada video tiene su propia imagen");
+console.log("🔧 Funciones de timestamps disponibles desde consola:");
+console.log("   - agregarTimestampAVideo(categoriaId, videoId, segundos, descripcion)");
+console.log("   - verTimestampsVideo(categoriaId, videoId)");
+console.log("   - eliminarTimestampVideo(categoriaId, videoId, index)");
+console.log("   - agregarTimestampsDesdeConsola()");
+console.log("   - editarTimestampsDesdeConsola()");
+console.log("🔧 Funciones generales:");
 console.log("   - agregarVideoAGaleria(categoriaId, videoData)");
 console.log("   - verEstadoGaleria()");
 console.log("   - cambiarDriveIdVideo(categoriaId, videoId, nuevoDriveId)");
