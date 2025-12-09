@@ -21,7 +21,7 @@ const configImagenes = {
         'sub1_3': 'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
         'sub2_1': 'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
         'sub2_2': 'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large',
-        'sub2_3': 'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
+        'sub2_3': 'https://pbs.twimg.com/media/G7S0YZNacAAmPj4?format=jpg&name=large',
         'sub2_4': 'https://pbs.twimg.com/media/G7rKvyBXEAA81vi?format=png&name=small',
         'sub3_1': 'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small',
         'sub3_2': 'imagenes/sub3_2.jpg',
