@@ -621,17 +621,25 @@
     </div>
 
 <!-- ARCHIVOS JS (IMPORTANTE: ORDEN CORRECTO) -->
-<script src="1vocabulario.js"></script>
-<script src="1config.js"></script>
-<script src="1systems.js"></script>
+<!-- 1. CONFIGURACIÓN BASE -->
+<script src="1config.js"></script> <!-- Variables globales -->
+<script src="1systems.js"></script> <!-- Sistema base -->
+
+<!-- 2. MAIN.JS (¡DEBE IR ANTES!) -->
+<script src="1main.js"></script> <!-- Contiene cambiarPantalla y otras funciones -->
+
+<!-- 3. DATOS -->
+<script src="1vocabulario.js"></script> <!-- Solo datos, no funciones -->
+
+<!-- 4. MÓDULOS QUE USAN FUNCIONES DE MAIN -->
 <script src="1failed-words.js"></script>
 <script src="1events.js"></script>
 <script src="1rpg_nakano.js"></script>
-<script src="1calendario.js"></script> <!-- ¡NUEVO ARCHIVO! -->
+<script src="1calendario.js"></script>
 <script src="1manga-viewer.js"></script>
 <script src="1h_videos.js"></script>
 <script src="1h_videos_viewer.js"></script>
-<script src="1main.js"></script>
+
 
 </body>
 </html>
