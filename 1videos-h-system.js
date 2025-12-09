@@ -482,21 +482,54 @@ const sistemaVideosH = {
     },
     
     cargarMazo: function(mazoId) {
-        const palabras = obtenerMazoColeccion(this.estado.coleccionActual, mazoId);
-        
-        if (!palabras || palabras.length === 0) {
-            console.error("No se pudieron cargar las palabras del mazo");
-            return;
+    const coleccionId = this.estado.coleccionActual;
+    const palabras = obtenerMazoColeccion(coleccionId, mazoId);
+    
+    if (!palabras || palabras.length === 0) {
+        console.error("No se pudieron cargar las palabras del mazo");
+        return;
+    }
+    
+    // GUARDAR EN VARIABLES GLOBALES DEL SISTEMA PRINCIPAL
+    window.mazoActual = [...palabras];
+    window.preguntaActual = 0;
+    window.respuestasCorrectas = 0;
+    window.respuestasIncorrectas = 0;
+    
+    // Mezclar preguntas
+    for (let i = window.mazoActual.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [window.mazoActual[i], window.mazoActual[j]] = [window.mazoActual[j], window.mazoActual[i]];
+    }
+    
+    console.log("🎬 Mazo de Videos H cargado:", window.mazoActual.length, "palabras");
+    
+    // INTEGRACIÓN 1: Usar cambiarPantalla del sistema principal
+    if (typeof cambiarPantalla === 'function') {
+        cambiarPantalla('pantalla-quiz');
+    } else {
+        // Fallback manual
+        document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+        document.getElementById('pantalla-quiz').classList.add('activa');
+    }
+    
+    // INTEGRACIÓN 2: Cambiar título para identificar que es de Videos H
+    setTimeout(() => {
+        const contador = document.getElementById('contador-preguntas');
+        if (contador) {
+            contador.innerHTML = `
+                🎬 VIDEOS H: <span id="numero-pregunta">1</span>/<span id="total-preguntas">${window.mazoActual.length}</span>
+            `;
         }
         
-        this.estado.mazoActual = [...palabras];
-        this.estado.preguntaActual = 0;
-        this.estado.respuestasCorrectas = 0;
-        this.estado.respuestasIncorrectas = 0;
-        
-        // Usar el sistema de quiz existente
-        this.iniciarQuiz();
-    },
+        // INTEGRACIÓN 3: Llamar a mostrarPregunta del sistema principal
+        if (typeof mostrarPregunta === 'function') {
+            mostrarPregunta();
+        } else {
+            console.error("❌ Error: función mostrarPregunta no encontrada");
+        }
+    }, 100);
+}
     
     iniciarQuiz: function() {
         // Configurar variables globales para el quiz
