@@ -16,7 +16,7 @@ const sistemaManga = {
             imagenes: [
                 "https://pbs.twimg.com/media/G7m3cP9WsAAhwzb?format=jpg&name=large",
                 "https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=large",
-                "https://via.placeholder.com/800x1200/00FF88/000000?text=P%C3%A1gina+3",
+                "https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=large",
                 "https://via.placeholder.com/800x1200/FFD700/000000?text=P%C3%A1gina+4",
                 "https://via.placeholder.com/800x1200/FF9800/FFFFFF?text=P%C3%A1gina+5"
             ],
