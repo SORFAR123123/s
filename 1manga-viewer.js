@@ -10,8 +10,8 @@ const mangaViewer = {
     mangaDatabase: {
         // THE LAST SUMMER 1
         'sub1_1': [
-            'https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=small',
-            'https://pbs.twimg.com/media/G7rPFZ_WMAAfTgv?format=png&name=small',
+            'https://pbs.twimg.com/media/G7rOyUmWAAAXB8W?format=png&name=large',
+            'https://pbs.twimg.com/media/G7rO_QLXsAAYpHB?format=png&name=large',
             'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
             'https://pbs.twimg.com/media/G7fxkYUXUAAtCCz?format=png&name=small',
             'https://pbs.twimg.com/media/G7fxbA5WsAAMcky?format=png&name=small'
