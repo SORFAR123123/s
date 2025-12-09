@@ -3044,3 +3044,225 @@ button:disabled {
         padding: 12px;
     }
 }
+/* ============================================================================
+   ESTILOS PARA VIDEOS H PARA PAPI FABRI
+   ============================================================================ */
+
+/* Pantalla de selección de videos */
+#pantalla-videos-h-seleccion {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+}
+
+.contenedor-videos-h {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+    padding: 20px;
+}
+
+.video-h-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    height: 250px;
+}
+
+.video-h-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(255, 107, 157, 0.3);
+}
+
+.video-h-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.video-h-card:hover .video-h-thumbnail {
+    transform: scale(1.1);
+}
+
+.video-h-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 20px;
+    color: white;
+}
+
+.video-h-titulo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #ff6b9d;
+}
+
+.video-h-descripcion {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.video-h-info {
+    font-size: 0.8rem;
+    color: #00ff88;
+    font-weight: bold;
+}
+
+.info-videos-h {
+    background: rgba(255, 107, 157, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.info-videos-h p {
+    margin: 5px 0;
+    color: #cccccc;
+}
+
+/* Pantalla específica del video */
+#pantalla-video-h-especifico {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+}
+
+.seccion-ver-video-h {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(255, 107, 157, 0.1);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 107, 157, 0.3);
+}
+
+.boton-ver-video-grande {
+    background: linear-gradient(135deg, #ff6b9d, #ff2e63);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.boton-ver-video-grande:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 107, 157, 0.6);
+}
+
+.info-video-h {
+    font-size: 1rem;
+    color: #cccccc;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Mazos del video específico */
+.contenedor-mazos-video-h {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.mazo-video-h-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 5px solid #ff6b9d;
+}
+
+.mazo-video-h-card:hover {
+    background: rgba(255, 107, 157, 0.15);
+    transform: translateX(10px);
+}
+
+.mazo-video-h-icono {
+    font-size: 2rem;
+    margin-right: 20px;
+    color: #ff6b9d;
+}
+
+.mazo-video-h-contenido {
+    flex-grow: 1;
+}
+
+.mazo-video-h-nombre {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.mazo-video-h-info {
+    font-size: 0.9rem;
+    color: #00ff88;
+}
+
+.mazo-video-h-flecha {
+    font-size: 1.5rem;
+    color: #ff6b9d;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.mazo-video-h-card:hover .mazo-video-h-flecha {
+    opacity: 1;
+}
+
+.info-mazos-video-h {
+    background: rgba(0, 255, 136, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 25px;
+    text-align: center;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.info-mazos-video-h p {
+    margin: 5px 0;
+    color: #cccccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contenedor-videos-h {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .boton-ver-video-grande {
+        padding: 15px 25px;
+        font-size: 1.2rem;
+    }
+    
+    .mazo-video-h-card {
+        padding: 15px;
+    }
+    
+    .mazo-video-h-icono {
+        font-size: 1.5rem;
+        margin-right: 15px;
+    }
+}
