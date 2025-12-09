@@ -32,7 +32,7 @@ const galeriaVideosConfig = {
         'anime': {
             id: 'anime',
             nombre: '🎬 Cosplay potonas ricas',
-            imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+            imagen: 'https://pbs.twimg.com/media/G7wkBDjWEAAPM8B?format=png&name=small',
             color: '#fd79a8',
             descripcion: 'Opening, endings y momentos especiales'
         },
@@ -233,11 +233,11 @@ const galeriaVideosConfig = {
         'anime': [
             {
                 id: 'video_anime_1',
-                nombre: 'Opening de Quintillizas',
+                nombre: ' Hidori rose potona DUo con amiga potona keching y ganyu',
                 descripcion: 'Opening completo HD',
                 duracion: '1:30',
                 driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                imagen: 'https://pbs.twimg.com/media/G7wkBDjWEAAPM8B?format=png&name=small',
                 favorito: true
             },
             {
