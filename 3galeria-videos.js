@@ -97,7 +97,7 @@ const galeriaVideosConfig = {
                 descripcion: 'Playlist de 1 hora de música lo-fi desde X',
                 duracion: '1:00:00',
                 plataforma: 'x',
-                url: 'https://twitter.com/LofiGirl/status/1518839108951257088',
+                url: 'https://x.com/i/status/1987332070730047737',
                 favorito: true
             },
             {
@@ -106,7 +106,7 @@ const galeriaVideosConfig = {
                 descripcion: 'Stream de jazz en vivo desde X',
                 duracion: '2:00:00',
                 plataforma: 'x',
-                url: 'https://twitter.com/JazzStream/status/example123',
+                url: 'https://x.com/i/status/1987332070730047737',
                 favorito: false
             }
         ],
