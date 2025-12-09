@@ -1033,5 +1033,18 @@ function iniciarGaleriaVideos() {
             cargarCategoriasVideos();
             console.log("✅ Categorías cargadas");
         }
+        
+ // ===============================================
+        // ¡¡¡NUEVO: AÑADIR INFO SOBRE TIPOS DE VIDEO!!!
+        // ===============================================
+        const infoElement = document.querySelector('.info-galeria');
+        if (infoElement) {
+            infoElement.innerHTML += `
+                <p>🔗 Ahora soporta: Google Drive, Twitter, YouTube, MP4 directos</p>
+                <p>🎯 Usa <strong>agregarVideoAGaleria()</strong> desde consola</p>
+            `;
+        }
+        // ===============================================
+        
     }, 50); // Delay muy pequeño pero suficiente
 }
