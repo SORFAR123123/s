@@ -12,16 +12,16 @@ const animeConfig = {
         'anime1': {
             id: 'anime1',
             nombre: '✨ Quintillizas Nakano',
-            imagen: 'https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096',
-            videoDrive: 'https://drive.google.com/file/d/TU_ID_QUINTILLIZAS/preview',
+            imagen: 'https://pbs.twimg.com/media/G7fvMrtWcAA1Y-W?format=png&name=900x900',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Aprende japonés con las quintillizas',
             color: '#ff6b9d'
         },
         'anime2': {
             id: 'anime2',
             nombre: '🏫 Yamada Lv999',
-            imagen: 'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small',
-            videoDrive: 'https://drive.google.com/file/d/TU_ID_YAMADA/preview',
+            imagen: 'https://pbs.twimg.com/media/G7fsiFCXQAAhtKq?format=png&name=900x900',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Vocabulario de romance escolar',
             color: '#00b4d8'
         },
@@ -29,7 +29,7 @@ const animeConfig = {
             id: 'anime3',
             nombre: '🌙 Kimetsu no Yaiba',
             imagen: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400',
-            videoDrive: 'https://drive.google.com/file/d/TU_ID_KIMETSU/preview',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Vocabulario de acción y fantasía',
             color: '#ff6d00'
         },
@@ -37,7 +37,7 @@ const animeConfig = {
             id: 'anime4',
             nombre: '⚔️ Jujutsu Kaisen',
             imagen: 'https://images.unsplash.com/photo-1639322537502-9e1f6bf2c3a5?w-400',
-            videoDrive: 'https://drive.google.com/file/d/TU_ID_JUJUTSU/preview',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Términos de hechicería y batallas',
             color: '#7209b7'
         },
@@ -45,7 +45,7 @@ const animeConfig = {
             id: 'anime5',
             nombre: '🏀 Slam Dunk',
             imagen: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400',
-            videoDrive: 'https://drive.google.com/file/d/TU_ID_SLAMDUNK/preview',
+            videoDrive: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/view?usp=sharing',
             descripcion: 'Vocabulario deportivo y escolar',
             color: '#ff006e'
         }
