@@ -89,8 +89,8 @@ const galeriaVideosConfig = {
                 nombre: 'Música Lo-Fi para estudiar',
                 descripcion: 'Playlist de 1 hora de música lo-fi',
                 duracion: '60:00',
-                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
-                tipo: 'drive',
+                url: 'https://x.com/i/status/1987332070730047737',
+                tipo: 'twitter',
                 favorito: true
             },
             {
@@ -98,7 +98,7 @@ const galeriaVideosConfig = {
                 nombre: 'Música clásica relajante',
                 descripcion: 'Las mejores piezas clásicas para concentración',
                 duracion: '45:30',
-                url: 'https://drive.google.com/file/d/1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R/preview',
+                url: 'https://x.com/i/status/1987332070730047737',
                 tipo: 'drive',
                 favorito: false
             },
