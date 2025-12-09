@@ -975,4 +975,15 @@ function iniciarComienzoDiciembre2025() {
         `;
     }
 }
-// ← AQUÍ TERMINA TU ARCHIVO
+// ============================================================================
+// FUNCIÓN PARA INICIAR VIDEOS H PARA PAPI FABRI
+// ============================================================================
+
+function iniciarVideosHParaPapiFabri() {
+    if (typeof videosHParaFabri !== 'undefined') {
+        videosHParaFabri.iniciarDesdeMenu();
+    } else {
+        console.error("❌ Sistema Videos H no cargado");
+        mostrarNotificacion("Error: Sistema Videos H no disponible");
+    }
+}
