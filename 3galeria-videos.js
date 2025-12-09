@@ -256,9 +256,9 @@ const galeriaVideosConfig = {
             {
                 id: 'video_anime_1',
                 nombre: 'Hidori rose potona DUo con amiga potona keching y ganyu',
-                descripcion: 'Opening completo HD',
+                descripcion: 'POTOS EN LA OFICINA',
                 duracion: '1:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                driveId: '1X6qhQxLNemXus_5WjLlMIWOAsHsJSsRS',
                 imagen: 'https://pbs.twimg.com/media/G7wkBDjWEAAPM8B?format=png&name=small',
                 favorito: true,
                 timestamps: [
