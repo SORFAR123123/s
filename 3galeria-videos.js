@@ -1,9 +1,9 @@
 // ============================================================================
-// GALERÍA DE VIDEOS PURA (SIN MAZOS) - CON IMÁGENES POR VIDEO
+// GALERÍA DE VIDEOS PURA (SOLO X/TWITTER)
 // ============================================================================
 
 // ============================================================================
-// 1. CONFIGURACIÓN - BASE DE DATOS DE VIDEOS POR CATEGORÍAS
+// 1. CONFIGURACIÓN - BASE DE DATOS DE VIDEOS POR CATEGORÍAS (SOLO X)
 // ============================================================================
 
 const galeriaVideosConfig = {
@@ -77,155 +77,37 @@ const galeriaVideosConfig = {
             imagen: 'https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=400',
             color: '#ff7675',
             descripcion: 'Animaciones y cortometrajes'
+        },
+        'fabrizio': {
+            id: 'fabrizio',
+            nombre: '😎 Fabrizio',
+            imagen: 'https://pbs.twimg.com/profile_images/1777001206605565952/smP9wJjU_400x400.jpg',
+            color: '#1DA1F2',
+            descripcion: 'Videos especiales de Fabrizio'
         }
     },
     
-    // BASE DE DATOS DE VIDEOS (IDs de Google Drive) - CON IMÁGENES POR VIDEO
+    // BASE DE DATOS DE VIDEOS (SOLO LINKS DE X/TWITTER)
     videos: {
         // CATEGORÍA: MÚSICA
         'musica': [
             {
                 id: 'video_musica_1',
                 nombre: 'Música Lo-Fi para estudiar',
-                descripcion: 'Playlist de 1 hora de música lo-fi',
-                duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&fit=crop',
+                descripcion: 'Playlist de 1 hora de música lo-fi desde X',
+                duracion: '1:00:00',
+                plataforma: 'x',
+                url: 'https://twitter.com/LofiGirl/status/1518839108951257088',
                 favorito: true
             },
             {
                 id: 'video_musica_2',
-                nombre: 'Música clásica relajante',
-                descripcion: 'Las mejores piezas clásicas para concentración',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&fit=crop',
+                nombre: 'Jazz relajante',
+                descripcion: 'Stream de jazz en vivo desde X',
+                duracion: '2:00:00',
+                plataforma: 'x',
+                url: 'https://twitter.com/JazzStream/status/example123',
                 favorito: false
-            },
-            {
-                id: 'video_musica_3',
-                nombre: 'Jazz suave para trabajar',
-                descripcion: 'Jazz instrumental sin distracciones',
-                duracion: '50:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_musica_4',
-                nombre: 'Sonidos de piano para dormir',
-                descripcion: 'Melodías suaves de piano nocturno',
-                duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_musica_5',
-                nombre: 'Música ambiente electrónica',
-                descripcion: 'Sintetizadores y paisajes sonoros',
-                duracion: '75:20',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&fit=crop',
-                favorito: false
-            }
-        ],
-        
-        // CATEGORÍA: NATURALEZA
-        'naturaleza': [
-            {
-                id: 'video_naturaleza_1',
-                nombre: 'Bosque en otoño',
-                descripcion: 'Paseo por un bosque con hojas cayendo',
-                duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_naturaleza_2',
-                nombre: 'Cascadas y ríos',
-                descripcion: 'Sonidos de agua corriente y cascadas',
-                duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_naturaleza_3',
-                nombre: 'Amanecer en la montaña',
-                descripcion: 'Timelapse de un amanecer montañoso',
-                duracion: '10:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_naturaleza_4',
-                nombre: 'Fuego crepitante',
-                descripcion: 'Sonido de leña ardiendo en una fogata',
-                duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_naturaleza_5',
-                nombre: 'Océano y olas',
-                descripcion: 'Sonidos relajantes del mar',
-                duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: ASMR
-        'asmr': [
-            {
-                id: 'video_asmr_1',
-                nombre: 'Susurros para dormir',
-                descripcion: 'Susurros suaves en español',
-                duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_asmr_2',
-                nombre: 'Tapping en objetos',
-                descripcion: 'Sonidos de golpecitos en distintas superficies',
-                duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_asmr_3',
-                nombre: 'Cepillado de micrófono',
-                descripcion: 'Sonidos de cepillos y texturas',
-                duracion: '20:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_asmr_4',
-                nombre: 'ASMR de manos',
-                descripcion: 'Movimientos y sonidos con las manos',
-                duracion: '25:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_asmr_5',
-                nombre: 'Desencuadernación de libros',
-                descripcion: 'Sonidos de páginas y libros antiguos',
-                duracion: '35:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&fit=crop',
-                favorito: true
             }
         ],
         
@@ -233,48 +115,21 @@ const galeriaVideosConfig = {
         'anime': [
             {
                 id: 'video_anime_1',
-                nombre: 'Opening de Quintillizas',
-                descripcion: 'Opening completo HD',
+                nombre: 'Opening Quintillizas',
+                descripcion: 'Opening completo HD desde X',
                 duracion: '1:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                plataforma: 'x',
+                url: 'https://twitter.com/animetv_jp/status/1767777777777777777',
                 favorito: true
             },
             {
                 id: 'video_anime_2',
-                nombre: 'Momentos épicos de Kimetsu',
-                descripcion: 'Compilación de mejores batallas',
-                duracion: '15:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_anime_3',
-                nombre: 'Edits de romance',
-                descripcion: 'Mejores momentos románticos de animes',
-                duracion: '10:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_anime_4',
                 nombre: 'AMV - Anime Music Video',
-                descripcion: 'Edit con música épica',
+                descripcion: 'Edit épico con música',
                 duracion: '3:45',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
+                plataforma: 'x',
+                url: 'https://twitter.com/AMV_Edits/status/1888888888888888888',
                 favorito: false
-            },
-            {
-                id: 'video_anime_5',
-                nombre: 'Comedia anime',
-                descripcion: 'Los momentos más graciosos',
-                duracion: '20:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
-                favorito: true
             }
         ],
         
@@ -282,122 +137,42 @@ const galeriaVideosConfig = {
         'memes': [
             {
                 id: 'video_memes_1',
-                nombre: 'Memes virales del mes',
-                descripcion: 'Los memes más graciosos de internet',
-                duracion: '25:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400&fit=crop',
+                nombre: 'Memes del día',
+                descripcion: 'Compilación de memes virales',
+                duracion: '5:20',
+                plataforma: 'x',
+                url: 'https://twitter.com/MemesDaily/status/1999999999999999999',
                 favorito: true
             },
             {
                 id: 'video_memes_2',
-                nombre: 'Fails graciosos',
-                descripcion: 'Los mejores fails y caídas divertidas',
-                duracion: '18:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&fit=crop',
+                nombre: 'Fails divertidos',
+                descripcion: 'Los mejores fails de la semana',
+                duracion: '4:15',
+                plataforma: 'x',
+                url: 'https://twitter.com/FailArmy/status/1777777777777777777',
                 favorito: false
-            },
-            {
-                id: 'video_memes_3',
-                nombre: 'Animales graciosos',
-                descripcion: 'Los animales más divertidos de internet',
-                duracion: '22:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&fit=crop',
-                favorito: true
             }
         ],
         
-        // CATEGORÍA: GAMING
-        'gaming': [
+        // CATEGORÍA: FABRIZIO (NUEVA)
+        'fabrizio': [
             {
-                id: 'video_gaming_1',
-                nombre: 'Momento épico en Fortnite',
-                descripcion: 'Victoria épica contra el squad',
-                duracion: '5:45',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop',
+                id: 'video_fabrizio_1',
+                nombre: 'Fabrizio - Video 1',
+                descripcion: 'Video especial de Fabrizio',
+                duracion: '0:30',
+                plataforma: 'x',
+                url: 'https://twitter.com/FabrizioFan/status/1666666666666666666',
                 favorito: true
             },
             {
-                id: 'video_gaming_2',
-                nombre: 'Clutch en Valorant',
-                descripcion: 'Ace en la última ronda',
-                duracion: '3:20',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_gaming_3',
-                nombre: 'Speedrun de Mario 64',
-                descripcion: 'Récord mundial en 120 estrellas',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: COCINA
-        'cocina': [
-            {
-                id: 'video_cocina_1',
-                nombre: 'ASMR de cocina japonesa',
-                descripcion: 'Preparación de sushi con sonidos crujientes',
-                duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_cocina_2',
-                nombre: 'Corte de vegetales ASMR',
-                descripcion: 'Sonidos satisfactorios de corte',
-                duracion: '25:15',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_cocina_3',
-                nombre: 'Batido de bebida burbujeante',
-                descripcion: 'Sonidos de burbujas y mezclado',
-                duracion: '18:40',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&fit=crop',
-                favorito: true
-            }
-        ],
-        
-        // CATEGORÍA: LLUVIA
-        'lluvia': [
-            {
-                id: 'video_lluvia_1',
-                nombre: 'Lluvia en el bosque',
-                descripcion: 'Sonido de lluvia en un bosque denso',
-                duracion: '60:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
-                favorito: true
-            },
-            {
-                id: 'video_lluvia_2',
-                nombre: 'Tormenta eléctrica',
-                descripcion: 'Truenos y relámpagos con lluvia intensa',
-                duracion: '45:30',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=400&fit=crop',
-                favorito: false
-            },
-            {
-                id: 'video_lluvia_3',
-                nombre: 'Lluvia en la ventana',
-                descripcion: 'Gotas golpeando suavemente el cristal',
-                duracion: '90:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=400&fit=crop',
+                id: 'video_fabrizio_2',
+                nombre: 'Fabrizio - Video 2',
+                descripcion: 'Otro video increíble',
+                duracion: '0:45',
+                plataforma: 'x',
+                url: 'https://twitter.com/FabrizioFan/status/1777777777777777777',
                 favorito: true
             }
         ]
@@ -405,181 +180,134 @@ const galeriaVideosConfig = {
 };
 
 // ============================================================================
-// 2. VARIABLES GLOBALES DEL SISTEMA
+// 2. FUNCIONES PARA X/TWITTER
 // ============================================================================
 
-let categoriaActual = '';
-let videoActual = null;
-
-// ============================================================================
-// 3. FUNCIONES PRINCIPALES DEL SISTEMA
-// ============================================================================
-
-// Función para iniciar la galería desde el menú principal
-function iniciarGaleriaVideos() {
-    cambiarPantalla('pantalla-galerias-videos');
-    
-    // Crear pantallas si no existen
-    crearPantallasGaleriaVideos();
-    
-    // Cargar categorías
-    cargarCategoriasVideos();
-    
-    console.log("🎬 Galería de videos iniciada");
-}
-
-// Función para cargar las categorías
-function cargarCategoriasVideos() {
-    const contenedor = document.getElementById('contenedor-categorias-videos');
-    if (!contenedor) return;
-    
-    contenedor.innerHTML = '';
-    
-    Object.keys(galeriaVideosConfig.categorias).forEach(categoriaId => {
-        const categoria = galeriaVideosConfig.categorias[categoriaId];
-        const div = document.createElement('div');
-        div.className = 'galeria-categoria-card';
-        div.style.borderColor = categoria.color;
-        div.onclick = () => cargarVideosPorCategoria(categoriaId);
-        
-        // Verificar si hay videos en esta categoría
-        const tieneVideos = galeriaVideosConfig.videos[categoriaId] && 
-                           galeriaVideosConfig.videos[categoriaId].length > 0;
-        const cantidadVideos = tieneVideos ? galeriaVideosConfig.videos[categoriaId].length : 0;
-        
-        div.innerHTML = `
-            <img src="${categoria.imagen}" alt="${categoria.nombre}" class="galeria-imagen"
-                 onerror="this.src='https://via.placeholder.com/300x200/333333/ffffff?text=${categoria.nombre}'">
-            <div class="galeria-texto">${categoria.nombre}</div>
-            <div class="galeria-info">${cantidadVideos} videos</div>
-            <div class="galeria-desc">${categoria.descripcion}</div>
-        `;
-        
-        contenedor.appendChild(div);
-    });
-}
-
-// Función para cargar videos de una categoría
-function cargarVideosPorCategoria(categoriaId) {
-    categoriaActual = categoriaId;
-    const categoria = galeriaVideosConfig.categorias[categoriaId];
-    const videos = galeriaVideosConfig.videos[categoriaId] || [];
-    
-    // Actualizar interfaz
-    const tituloElement = document.getElementById('titulo-categoria-videos');
-    const contadorElement = document.getElementById('contador-videos-categoria');
-    
-    if (tituloElement) tituloElement.textContent = categoria.nombre;
-    if (contadorElement) contadorElement.textContent = `${videos.length} videos disponibles`;
-    
-    // Cargar lista de videos
-    const contenedor = document.getElementById('contenedor-lista-videos');
-    if (!contenedor) return;
-    
-    contenedor.innerHTML = '';
-    
-    if (videos.length === 0) {
-        contenedor.innerHTML = `
-            <div class="mensaje-vacio">
-                <h3>🎬 Sin videos aún</h3>
-                <p>Esta categoría está vacía.</p>
-                <p>¡Agrega videos usando la consola!</p>
-                <button class="boton-principal" onclick="volverACategorias()">
-                    ← Volver a Categorías
-                </button>
-            </div>
-        `;
-        return;
+// Función para obtener tweet ID desde URL de X
+function obtenerTweetId(url) {
+    try {
+        // Extraer ID del tweet de varias formas posibles
+        const match = url.match(/\/(\d+)(?:\?|$)/);
+        return match ? match[1] : null;
+    } catch (e) {
+        console.error('Error obteniendo tweet ID:', e);
+        return null;
     }
-    
-    videos.forEach((video, index) => {
-        const div = document.createElement('div');
-        div.className = 'video-item-card';
-        div.style.borderLeftColor = categoria.color;
-        div.onclick = () => reproducirVideo(video);
-        
-        div.innerHTML = `
-            <div class="video-item-imagen-container">
-                <img src="${video.imagen || categoria.imagen}" 
-                     alt="${video.nombre}" 
-                     class="video-item-imagen"
-                     onerror="this.src='${categoria.imagen}'">
-                <div class="video-item-overlay">
-                    <div class="video-play-button">▶️</div>
-                </div>
-            </div>
-            <div class="video-item-content">
-                <div class="video-item-header">
-                    <span class="video-numero">${index + 1}</span>
-                    <span class="video-favorito">${video.favorito ? '⭐' : ''}</span>
-                </div>
-                <div class="video-item-nombre">${video.nombre}</div>
-                <div class="video-item-desc">${video.descripcion}</div>
-                <div class="video-item-footer">
-                    <span class="video-duracion">⏱️ ${video.duracion}</span>
-                    <span class="video-play">▶️ Reproducir</span>
-                </div>
-            </div>
-        `;
-        
-        contenedor.appendChild(div);
-    });
-    
-    cambiarPantalla('pantalla-lista-videos');
 }
 
-// Función para reproducir un video
-function reproducirVideo(video) {
+// Función para reproducir video de X
+function reproducirVideoX(video) {
     videoActual = video;
     
-    const videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
+    const tweetId = obtenerTweetId(video.url);
     
     // Actualizar interfaz
     const tituloElement = document.getElementById('titulo-video-reproductor');
     const descElement = document.getElementById('descripcion-video-reproductor');
-    const imagenElement = document.getElementById('imagen-video-reproductor');
     
     if (tituloElement) tituloElement.textContent = video.nombre;
     if (descElement) descElement.innerHTML = `
-        <div class="descripcion-contenido">
-            <p><strong>Duración:</strong> ${video.duracion}</p>
-            <p><strong>Categoría:</strong> ${galeriaVideosConfig.categorias[categoriaActual].nombre}</p>
-            <p><strong>Descripción:</strong> ${video.descripcion}</p>
-        </div>
+        <strong>Duración:</strong> ${video.duracion}<br>
+        <strong>Categoría:</strong> ${galeriaVideosConfig.categorias[categoriaActual].nombre}<br>
+        <strong>Plataforma:</strong> X (Twitter)<br>
+        <strong>Descripción:</strong> ${video.descripcion}
     `;
-    if (imagenElement) {
-        imagenElement.src = video.imagen || galeriaVideosConfig.categorias[categoriaActual].imagen;
-        imagenElement.alt = video.nombre;
-    }
     
-    // Cargar iframe de video
-    const iframeElement = document.getElementById('iframe-video-reproductor');
-    if (iframeElement) {
-        iframeElement.src = videoUrl;
-        iframeElement.title = `Reproduciendo: ${video.nombre}`;
+    // Contenedor de video
+    const contenedorVideo = document.getElementById('contenedor-video-dinamico');
+    if (!contenedorVideo) return;
+    
+    // Limpiar contenedor
+    contenedorVideo.innerHTML = '';
+    
+    if (tweetId) {
+        // Usar Twitter Embed API
+        contenedorVideo.innerHTML = `
+            <div class="twitter-embed-container" style="width: 100%; max-width: 550px; margin: 0 auto;">
+                <blockquote class="twitter-tweet">
+                    <a href="${video.url}"></a>
+                </blockquote>
+            </div>
+        `;
+        
+        // Cargar widget de Twitter
+        cargarTwitterWidget();
+    } else {
+        // Mostrar enlace directo como alternativa
+        contenedorVideo.innerHTML = `
+            <div class="twitter-link-fallback">
+                <h3>🔗 Enlace directo al tweet:</h3>
+                <a href="${video.url}" target="_blank" class="twitter-link">
+                    ${video.url}
+                </a>
+                <p class="twitter-nota">Abre este enlace en una nueva pestaña para ver el video</p>
+            </div>
+        `;
     }
     
     cambiarPantalla('pantalla-reproductor-video');
 }
 
-// ============================================================================
-// 4. FUNCIONES DE NAVEGACIÓN
-// ============================================================================
-
-function volverACategorias() {
-    cambiarPantalla('pantalla-galerias-videos');
-}
-
-function volverAListaVideos() {
-    if (categoriaActual) {
-        cargarVideosPorCategoria(categoriaActual);
-    } else {
-        volverACategorias();
+// Función para cargar widget de Twitter
+function cargarTwitterWidget() {
+    // Eliminar script existente si hay
+    const scriptExistente = document.querySelector('script[src*="twitter.com/widgets.js"]');
+    if (scriptExistente) {
+        scriptExistente.remove();
     }
+    
+    // Crear nuevo script
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    
+    script.onload = function() {
+        console.log('✅ Widget de Twitter cargado');
+        if (window.twttr && window.twttr.widgets) {
+            window.twttr.widgets.load();
+        }
+    };
+    
+    script.onerror = function() {
+        console.error('❌ Error cargando widget de Twitter');
+        mostrarFallbackTwitter();
+    };
+    
+    document.head.appendChild(script);
+}
+
+// Fallback si Twitter widget falla
+function mostrarFallbackTwitter() {
+    const contenedorVideo = document.getElementById('contenedor-video-dinamico');
+    if (!contenedorVideo || !videoActual) return;
+    
+    contenedorVideo.innerHTML = `
+        <div class="twitter-fallback" style="text-align: center; padding: 40px;">
+            <h3>🐦 Video de X (Twitter)</h3>
+            <p>No se pudo cargar el widget embebido, pero puedes ver el video directamente:</p>
+            <a href="${videoActual.url}" target="_blank" 
+               style="display: inline-block; margin: 20px; padding: 15px 30px; 
+                      background: #1DA1F2; color: white; border-radius: 10px; 
+                      text-decoration: none; font-weight: bold;">
+                👉 Ver video en X
+            </a>
+            <p><small>Se abrirá en una nueva pestaña</small></p>
+        </div>
+    `;
 }
 
 // ============================================================================
-// 5. CREAR PANTALLAS DINÁMICAMENTE
+// 3. FUNCIONES PRINCIPALES MODIFICADAS
+// ============================================================================
+
+// Función para reproducir video (ahora solo X)
+function reproducirVideo(video) {
+    reproducirVideoX(video);
+}
+
+// ============================================================================
+// 4. MODIFICAR PANTALLAS PARA MOSTRAR ICONO DE X
 // ============================================================================
 
 function crearPantallasGaleriaVideos() {
@@ -590,25 +318,30 @@ function crearPantallasGaleriaVideos() {
             <div id="pantalla-galerias-videos" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
-                        <div class="contador">🎥 GALERÍA DE VIDEOS</div>
+                        <div class="contador">🐦 VIDEOS DE X (TWITTER)</div>
                         <div class="botones-superiores">
                             <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
                             <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
                         </div>
                     </div>
                     
-                    <h1>🎥 Galería de Videos</h1>
-                    <p class="subtitulo">Selecciona una categoría para ver los videos</p>
+                    <h1>🐦 Galería de Videos de X</h1>
+                    <p class="subtitulo">Videos embebidos directamente desde Twitter/X</p>
+                    
+                    <div class="info-plataforma" style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(29, 161, 242, 0.1); border-radius: 10px;">
+                        <p style="color: #1DA1F2; font-weight: bold;">📱 Todos los videos provienen de X (Twitter)</p>
+                        <p style="color: #8899A6; font-size: 0.9rem;">Se reproducen directamente en la app</p>
+                    </div>
                     
                     <div class="contenedor-categorias-videos" id="contenedor-categorias-videos">
                         <!-- Las categorías se cargan aquí dinámicamente -->
                     </div>
                     
                     <div class="info-galeria">
-                        <p>📚 ${Object.keys(galeriaVideosConfig.videos).reduce((total, cat) => 
+                        <p>📊 ${Object.keys(galeriaVideosConfig.videos).reduce((total, cat) => 
                             total + (galeriaVideosConfig.videos[cat] ? galeriaVideosConfig.videos[cat].length : 0), 0)} 
-                            videos organizados por categorías</p>
-                        <p>🎬 Solo videos, sin mazos ni quizzes</p>
+                            videos disponibles</p>
+                        <p>🎬 Solo videos de X, sin descargas ni mazos</p>
                     </div>
                 </div>
             </div>
@@ -624,7 +357,12 @@ function crearPantallasGaleriaVideos() {
                         </div>
                     </div>
                     
-                    <h2 id="contador-videos-categoria">Videos disponibles</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
+                        <h2 id="contador-videos-categoria" style="margin: 0;">Videos disponibles</h2>
+                        <span style="background: #1DA1F2; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            🐦 X
+                        </span>
+                    </div>
                     
                     <div class="contenedor-lista-videos" id="contenedor-lista-videos">
                         <!-- Los videos se cargan aquí dinámicamente -->
@@ -636,7 +374,7 @@ function crearPantallasGaleriaVideos() {
             <div id="pantalla-reproductor-video" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
-                        <div class="contador" id="titulo-video-reproductor">Reproduciendo Video</div>
+                        <div class="contador" id="titulo-video-reproductor">Reproduciendo Video de X</div>
                         <div class="botones-superiores">
                             <button class="boton-home" onclick="volverAListaVideos()">← Volver a Lista</button>
                             <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
@@ -644,27 +382,20 @@ function crearPantallasGaleriaVideos() {
                     </div>
                     
                     <div class="reproductor-container">
-                        <h2>🎬 Video en Reproducción</h2>
-                        
-                        <div class="video-header-container">
-                            <img id="imagen-video-reproductor" src="" alt="Miniatura del video" class="video-thumbnail">
-                            <div class="video-header-info">
-                                <h3 id="descripcion-video-reproductor">Información del video</h3>
-                            </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                            <h2 style="margin: 0;">🎬 Video de X</h2>
+                            <span style="background: #1DA1F2; color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
+                                🐦 X (Twitter)
+                            </span>
                         </div>
                         
-                        <div class="iframe-video-container">
-                            <iframe id="iframe-video-reproductor" 
-                                    width="100%" 
-                                    height="500"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                    title="Reproductor de video">
-                            </iframe>
+                        <div id="contenedor-video-dinamico" style="min-height: 500px;">
+                            <!-- Aquí se carga dinámicamente el video de X -->
                         </div>
                         
                         <div class="video-info-container">
+                            <h3 id="descripcion-video-reproductor">Información del video</h3>
+                            
                             <div class="controles-video">
                                 <button class="boton-principal" onclick="marcarComoFavorito()">
                                     ⭐ Marcar como Favorito
@@ -672,10 +403,15 @@ function crearPantallasGaleriaVideos() {
                                 <button class="boton-secundario" onclick="volverAListaVideos()">
                                     ← Ver Más Videos
                                 </button>
+                                <button class="boton-terciario" onclick="abrirEnTwitter()" 
+                                        style="background: #1DA1F2; color: white;">
+                                    🐦 Abrir en X
+                                </button>
                             </div>
                             
                             <div class="nota-importante">
-                                <p>💡 <strong>Nota:</strong> Los videos se cargan desde Google Drive. Si no se reproduce, verifica que el ID sea correcto.</p>
+                                <p>💡 <strong>Nota:</strong> Los videos se cargan directamente desde X (Twitter). Necesitas conexión a internet.</p>
+                                <p>📱 Si el video no se carga, usa el botón "Abrir en X" para verlo directamente.</p>
                             </div>
                         </div>
                     </div>
@@ -684,23 +420,22 @@ function crearPantallasGaleriaVideos() {
         `;
         
         document.body.insertAdjacentHTML('beforeend', pantallasHTML);
-        console.log("✅ Pantallas de galería de videos creadas dinámicamente");
+        console.log("✅ Pantallas de galería de videos de X creadas dinámicamente");
         
-        // Agregar estilos específicos si no están en el CSS principal
-        agregarEstilosGaleria();
+        // Agregar estilos específicos para X
+        agregarEstilosGaleriaX();
     }
 }
 
-// Función para agregar estilos específicos
-function agregarEstilosGaleria() {
-    // Verificar si los estilos ya existen
-    if (document.getElementById('estilos-galeria-videos')) return;
+// Función para agregar estilos específicos para X
+function agregarEstilosGaleriaX() {
+    if (document.getElementById('estilos-galeria-x')) return;
     
     const estilos = `
-        <style id="estilos-galeria-videos">
-            /* ESTILOS PARA GALERÍA DE VIDEOS */
+        <style id="estilos-galeria-x">
+            /* ESTILOS ESPECÍFICOS PARA X */
             .galeria-categoria-card {
-                background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+                background: linear-gradient(135deg, #15202b, #1c2938);
                 border-radius: 20px;
                 padding: 20px;
                 text-align: center;
@@ -710,374 +445,108 @@ function agregarEstilosGaleria() {
                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
                 margin: 10px;
                 width: 280px;
+                position: relative;
             }
             
             .galeria-categoria-card:hover {
                 transform: translateY(-8px);
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 12px 30px rgba(29, 161, 242, 0.3);
+                border-color: #1DA1F2;
             }
             
-            .galeria-imagen {
-                width: 100%;
-                height: 180px;
+            .galeria-categoria-card::before {
+                content: '🐦';
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 1.2rem;
+                opacity: 0.7;
+            }
+            
+            .twitter-embed-container {
+                margin: 20px auto;
                 border-radius: 15px;
-                object-fit: cover;
-                border: 3px solid white;
-                margin-bottom: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                background: #15202b;
             }
             
-            .galeria-texto {
-                font-size: 1.3rem;
+            .twitter-link-fallback {
+                background: #15202b;
+                border-radius: 15px;
+                padding: 30px;
+                text-align: center;
+                border: 2px solid #1DA1F2;
+            }
+            
+            .twitter-link {
+                display: block;
+                color: #1DA1F2;
+                text-decoration: none;
                 font-weight: bold;
-                color: white;
-                margin-bottom: 8px;
-            }
-            
-            .galeria-info {
-                font-size: 1rem;
-                color: #ffd700;
-                font-weight: bold;
-                margin-bottom: 8px;
-            }
-            
-            .galeria-desc {
-                font-size: 0.9rem;
-                color: #cccccc;
-                font-style: italic;
-            }
-            
-            .contenedor-categorias-videos {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-                margin: 30px 0;
-            }
-            
-            /* LISTA DE VIDEOS - CON IMÁGENES */
-            .contenedor-lista-videos {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 20px;
                 margin: 20px 0;
-                padding: 10px;
+                padding: 15px;
+                background: rgba(29, 161, 242, 0.1);
+                border-radius: 10px;
+                word-break: break-all;
             }
             
-            .video-item-card {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            .twitter-link:hover {
+                background: rgba(29, 161, 242, 0.2);
+            }
+            
+            .twitter-nota {
+                color: #8899A6;
+                font-size: 0.9rem;
+                margin-top: 10px;
+            }
+            
+            .twitter-fallback {
+                background: #15202b;
                 border-radius: 15px;
+                padding: 40px;
+                border: 2px solid #1DA1F2;
+            }
+            
+            /* Mejorar estilos de lista de videos para X */
+            .video-item-card {
+                background: linear-gradient(135deg, rgba(29, 161, 242, 0.1), rgba(29, 161, 242, 0.05));
+                border-radius: 15px;
+                padding: 20px;
                 cursor: pointer;
                 transition: all 0.3s ease;
-                border-left: 5px solid;
-                overflow: hidden;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border-left: 5px solid #1DA1F2;
+                position: relative;
             }
             
             .video-item-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+                transform: translateX(10px);
+                background: linear-gradient(135deg, rgba(29, 161, 242, 0.15), rgba(29, 161, 242, 0.1));
+                box-shadow: 0 5px 15px rgba(29, 161, 242, 0.2);
             }
             
-            .video-item-imagen-container {
-                position: relative;
-                width: 100%;
-                height: 200px;
-                overflow: hidden;
-            }
-            
-            .video-item-imagen {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.3s ease;
-            }
-            
-            .video-item-card:hover .video-item-imagen {
-                transform: scale(1.1);
-            }
-            
-            .video-item-overlay {
+            .video-item-card::before {
+                content: '🐦';
                 position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.4);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: opacity 0.3s ease;
+                top: 10px;
+                right: 10px;
+                opacity: 0.5;
             }
             
-            .video-item-card:hover .video-item-overlay {
-                opacity: 1;
-            }
-            
-            .video-play-button {
-                background: rgba(255, 107, 157, 0.8);
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.5rem;
+            .boton-twitter {
+                background: #1DA1F2;
                 color: white;
-                animation: pulse 1.5s infinite;
-            }
-            
-            .video-item-content {
-                padding: 15px;
-            }
-            
-            .video-item-header {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-            
-            .video-numero {
-                background: #ff6b9d;
-                color: white;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-            }
-            
-            .video-favorito {
-                color: #ffd700;
-                font-size: 1.2rem;
-            }
-            
-            .video-item-nombre {
-                font-size: 1.2rem;
-                font-weight: bold;
-                color: white;
-                margin-bottom: 8px;
-                height: 50px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-            }
-            
-            .video-item-desc {
-                font-size: 0.9rem;
-                color: #cccccc;
-                margin-bottom: 15px;
-                line-height: 1.4;
-                height: 40px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-            }
-            
-            .video-item-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-top: 10px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .video-duracion {
-                color: #4a90e2;
-                font-weight: bold;
-            }
-            
-            .video-play {
-                color: #00ff88;
-                font-weight: bold;
-                background: rgba(0, 255, 136, 0.1);
-                padding: 5px 10px;
+                border: none;
                 border-radius: 10px;
-            }
-            
-            /* REPRODUCTOR */
-            .reproductor-container {
-                max-width: 900px;
-                margin: 0 auto;
-            }
-            
-            .video-header-container {
-                display: flex;
-                gap: 20px;
-                margin-bottom: 20px;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 15px;
-                padding: 20px;
-                border: 2px solid #4a90e2;
-                align-items: center;
-            }
-            
-            .video-thumbnail {
-                width: 150px;
-                height: 100px;
-                border-radius: 10px;
-                object-fit: cover;
-                border: 3px solid #ff6b9d;
-                flex-shrink: 0;
-            }
-            
-            .video-header-info {
-                flex: 1;
-            }
-            
-            .video-header-info h3 {
-                color: white;
-                margin-bottom: 10px;
-                line-height: 1.6;
-            }
-            
-            .descripcion-contenido p {
-                margin: 5px 0;
-                color: #cccccc;
-            }
-            
-            .descripcion-contenido strong {
-                color: #ff6b9d;
-            }
-            
-            .iframe-video-container {
-                background: #000;
-                border-radius: 15px;
-                overflow: hidden;
-                margin: 20px 0;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-                border: 3px solid #4a90e2;
-            }
-            
-            .video-info-container {
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px 0;
-                border: 2px solid #ff6b9d;
-            }
-            
-            .controles-video {
-                display: flex;
-                gap: 15px;
-                margin: 20px 0;
-                flex-wrap: wrap;
-            }
-            
-            .nota-importante {
-                background: rgba(255, 215, 0, 0.1);
-                border-left: 4px solid #ffd700;
-                padding: 10px 15px;
-                border-radius: 5px;
-                margin-top: 20px;
-            }
-            
-            .nota-importante p {
-                color: #ffd700;
-                margin: 0;
-                font-size: 0.9rem;
-            }
-            
-            /* MENSAJE VACÍO */
-            .mensaje-vacio {
-                text-align: center;
-                padding: 50px 20px;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 15px;
-                border: 2px dashed #4a90e2;
-            }
-            
-            .mensaje-vacio h3 {
-                color: #4a90e2;
-                margin-bottom: 15px;
-                font-size: 1.5rem;
-            }
-            
-            .mensaje-vacio p {
-                color: #cccccc;
-                margin-bottom: 10px;
-                font-size: 1rem;
-            }
-            
-            .info-galeria {
-                text-align: center;
-                margin: 30px 0;
-                padding: 15px;
-                background: rgba(255, 107, 157, 0.1);
-                border-radius: 10px;
-                border-left: 4px solid #ff6b9d;
-            }
-            
-            .info-galeria p {
-                color: #ff6b9d;
-                margin: 5px 0;
+                padding: 10px 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
                 font-weight: bold;
             }
             
-            /* ANIMACIÓN PULSE */
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-                100% { transform: scale(1); }
-            }
-            
-            /* RESPONSIVE */
-            @media (max-width: 768px) {
-                .galeria-categoria-card {
-                    width: 100%;
-                    max-width: 300px;
-                }
-                
-                .contenedor-lista-videos {
-                    grid-template-columns: 1fr;
-                }
-                
-                .iframe-video-container iframe {
-                    height: 300px;
-                }
-                
-                .video-header-container {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                
-                .video-thumbnail {
-                    width: 100%;
-                    max-width: 250px;
-                    height: 150px;
-                    margin: 0 auto;
-                }
-                
-                .controles-video {
-                    flex-direction: column;
-                }
-                
-                .controles-video button {
-                    width: 100%;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .video-item-imagen-container {
-                    height: 150px;
-                }
-                
-                .video-item-nombre {
-                    font-size: 1.1rem;
-                    height: 40px;
-                }
-                
-                .video-item-desc {
-                    font-size: 0.85rem;
-                    height: 35px;
-                }
+            .boton-twitter:hover {
+                background: #1a91da;
+                transform: translateY(-2px);
             }
         </style>
     `;
@@ -1086,255 +555,120 @@ function agregarEstilosGaleria() {
 }
 
 // ============================================================================
-// 6. FUNCIONES ADICIONALES
+// 5. FUNCIONES ADICIONALES PARA X
 // ============================================================================
 
-function marcarComoFavorito() {
-    if (!videoActual || !categoriaActual) return;
-    
-    const videosCategoria = galeriaVideosConfig.videos[categoriaActual];
-    if (!videosCategoria) return;
-    
-    const videoIndex = videosCategoria.findIndex(v => v.id === videoActual.id);
-    if (videoIndex === -1) return;
-    
-    // Cambiar estado de favorito
-    videosCategoria[videoIndex].favorito = !videosCategoria[videoIndex].favorito;
-    videoActual.favorito = videosCategoria[videoIndex].favorito;
-    
-    // Mostrar mensaje
-    const mensaje = videoActual.favorito ? 
-        '⭐ Video marcado como favorito' : 
-        '📝 Video quitado de favoritos';
-    
-    mostrarNotificacionGaleria(mensaje);
-    
-    // Actualizar interfaz si estamos en la lista
-    if (document.getElementById('pantalla-lista-videos').classList.contains('activa')) {
-        cargarVideosPorCategoria(categoriaActual);
+function abrirEnTwitter() {
+    if (videoActual && videoActual.url) {
+        window.open(videoActual.url, '_blank');
     }
 }
 
-function mostrarNotificacionGaleria(mensaje) {
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #ff6b9d, #ff4081);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        box-shadow: 0 5px 15px rgba(255, 107, 157, 0.5);
-    `;
-    notificacion.textContent = mensaje;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
-}
-
 // ============================================================================
-// 7. FUNCIONES DE TESTING PARA DESARROLLO
+// 6. FUNCIONES DE TESTING MEJORADAS PARA X
 // ============================================================================
 
-// Agregar un video a una categoría desde consola
-window.agregarVideoAGaleria = function(categoriaId, videoData) {
+// Agregar un video de X desde consola
+window.agregarVideoX = function(categoriaId, nombre, descripcion, urlTwitter, duracion = '1:00') {
     if (!galeriaVideosConfig.videos[categoriaId]) {
         galeriaVideosConfig.videos[categoriaId] = [];
     }
     
-    // Asegurarse de que tenga un ID único
-    if (!videoData.id) {
-        videoData.id = `video_${categoriaId}_${Date.now()}`;
-    }
+    const nuevoVideo = {
+        id: `video_${categoriaId}_${Date.now()}`,
+        nombre: nombre,
+        descripcion: descripcion,
+        duracion: duracion,
+        plataforma: 'x',
+        url: urlTwitter,
+        favorito: false
+    };
     
-    // Asegurarse de que tenga una imagen por defecto si no se especifica
-    if (!videoData.imagen && galeriaVideosConfig.categorias[categoriaId]) {
-        videoData.imagen = galeriaVideosConfig.categorias[categoriaId].imagen;
-    }
+    galeriaVideosConfig.videos[categoriaId].push(nuevoVideo);
+    console.log(`✅ Video de X agregado a "${categoriaId}":`, nombre);
+    console.log(`🔗 URL: ${urlTwitter}`);
     
-    galeriaVideosConfig.videos[categoriaId].push(videoData);
-    console.log(`✅ Video agregado a categoría "${categoriaId}":`, videoData.nombre);
-    
-    // Si esta categoría está actualmente cargada, actualizar
-    if (categoriaActual === categoriaId && 
-        document.getElementById('pantalla-lista-videos').classList.contains('activa')) {
+    // Actualizar si esta categoría está activa
+    if (categoriaActual === categoriaId) {
         cargarVideosPorCategoria(categoriaId);
     }
     
-    return true;
+    return nuevoVideo;
 };
 
-// Ver estado de la galería
-window.verEstadoGaleria = function() {
-    console.log("🎬 ESTADO DE LA GALERÍA DE VIDEOS:");
-    console.log("- Categorías disponibles:", Object.keys(galeriaVideosConfig.categorias).length);
-    console.log("- Categoría actual:", categoriaActual);
-    console.log("- Video actual:", videoActual ? videoActual.nombre : "Ninguno");
+// Verificar URLs de X
+window.verificarVideosX = function() {
+    console.log("🔍 Verificando videos de X:");
     
-    // Contar videos por categoría
     Object.keys(galeriaVideosConfig.videos).forEach(catId => {
-        console.log(`  ${catId}: ${galeriaVideosConfig.videos[catId].length} videos`);
-    });
-};
-
-// Cambiar ID de Google Drive de un video
-window.cambiarDriveIdVideo = function(categoriaId, videoId, nuevoDriveId) {
-    const videos = galeriaVideosConfig.videos[categoriaId];
-    if (!videos) {
-        console.log(`❌ Categoría ${categoriaId} no encontrada`);
-        return false;
-    }
-    
-    const video = videos.find(v => v.id === videoId);
-    if (!video) {
-        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
-        return false;
-    }
-    
-    video.driveId = nuevoDriveId;
-    console.log(`✅ ID de Drive actualizado para ${video.nombre}: ${nuevoDriveId}`);
-    
-    // Si este video está actualmente reproduciéndose, actualizar
-    if (videoActual && videoActual.id === videoId) {
-        const iframe = document.getElementById('iframe-video-reproductor');
-        if (iframe) {
-            iframe.src = `https://drive.google.com/file/d/${nuevoDriveId}/preview`;
-        }
-    }
-    
-    return true;
-};
-
-// Cambiar imagen de un video
-window.cambiarImagenVideo = function(categoriaId, videoId, nuevaImagen) {
-    const videos = galeriaVideosConfig.videos[categoriaId];
-    if (!videos) {
-        console.log(`❌ Categoría ${categoriaId} no encontrada`);
-        return false;
-    }
-    
-    const video = videos.find(v => v.id === videoId);
-    if (!video) {
-        console.log(`❌ Video ${videoId} no encontrado en ${categoriaId}`);
-        return false;
-    }
-    
-    video.imagen = nuevaImagen;
-    console.log(`✅ Imagen actualizada para ${video.nombre}: ${nuevaImagen}`);
-    
-    // Si este video está actualmente visible, actualizar
-    if ((videoActual && videoActual.id === videoId) || categoriaActual === categoriaId) {
-        // Recargar la lista si estamos en esa categoría
-        if (categoriaActual === categoriaId && 
-            document.getElementById('pantalla-lista-videos').classList.contains('activa')) {
-            cargarVideosPorCategoria(categoriaId);
-        }
-        // Actualizar miniatura en el reproductor
-        if (videoActual && videoActual.id === videoId) {
-            const imgElement = document.getElementById('imagen-video-reproductor');
-            if (imgElement) {
-                imgElement.src = nuevaImagen;
-            }
-        }
-    }
-    
-    return true;
-};
-
-// Ver todos los videos de una categoría
-window.verVideosCategoria = function(categoriaId) {
-    const videos = galeriaVideosConfig.videos[categoriaId];
-    if (!videos) {
-        console.log(`❌ Categoría ${categoriaId} no encontrada`);
-        return;
-    }
-    
-    console.log(`🎬 Videos en ${categoriaId}:`);
-    videos.forEach((video, index) => {
-        console.log(`  ${index + 1}. ${video.nombre} (${video.duracion})`);
-        console.log(`     ID Drive: ${video.driveId}`);
-        console.log(`     Imagen: ${video.imagen || 'Usa imagen por defecto'}`);
-        console.log(`     Favorito: ${video.favorito ? '⭐' : 'No'}`);
-    });
-};
-
-// Reiniciar galería (testing)
-window.reiniciarGaleriaVideos = function() {
-    if (confirm("¿Estás seguro de reiniciar TODA la galería de videos?\nSe perderán los videos agregados manualmente.")) {
-        // Solo vaciar los videos, manteniendo la estructura
-        Object.keys(galeriaVideosConfig.videos).forEach(cat => {
-            galeriaVideosConfig.videos[cat] = [];
+        console.log(`\n📂 Categoría: ${catId}`);
+        galeriaVideosConfig.videos[catId].forEach((video, idx) => {
+            const tweetId = obtenerTweetId(video.url);
+            console.log(`  ${idx + 1}. ${video.nombre}`);
+            console.log(`     URL: ${video.url}`);
+            console.log(`     Tweet ID: ${tweetId || 'No detectado'}`);
+            console.log(`     Plataforma: ${video.plataforma}`);
         });
-        
-        console.log("🔄 Galería de videos reiniciada");
-        
-        // Recargar si está activa
-        if (categoriaActual) {
-            cargarVideosPorCategoria(categoriaActual);
-        }
-    }
+    });
 };
 
-// Función para obtener una imagen aleatoria de Unsplash por categoría
-window.obtenerImagenAleatoriaPorCategoria = function(categoriaId) {
-    const categoriasImagenes = {
-        'musica': [
-            'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&fit=crop'
-        ],
-        'naturaleza': [
-            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&fit=crop'
-        ],
-        'anime': [
-            'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop'
-        ],
-        'asmr': [
-            'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&fit=crop',
-            'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&fit=crop'
-        ]
-    };
+// Buscar videos por palabra clave
+window.buscarVideosX = function(palabraClave) {
+    const resultados = [];
     
-    const imagenes = categoriasImagenes[categoriaId] || [galeriaVideosConfig.categorias[categoriaId]?.imagen || 'https://via.placeholder.com/400x200'];
-    return imagenes[Math.floor(Math.random() * imagenes.length)];
+    Object.keys(galeriaVideosConfig.videos).forEach(catId => {
+        galeriaVideosConfig.videos[catId].forEach(video => {
+            if (video.nombre.toLowerCase().includes(palabraClave.toLowerCase()) ||
+                video.descripcion.toLowerCase().includes(palabraClave.toLowerCase())) {
+                resultados.push({
+                    categoria: catId,
+                    video: video
+                });
+            }
+        });
+    });
+    
+    console.log(`🔎 Resultados para "${palabraClave}":`, resultados.length);
+    resultados.forEach((r, idx) => {
+        console.log(`${idx + 1}. [${r.categoria}] ${r.video.nombre}`);
+        console.log(`   ${r.video.url}`);
+    });
+    
+    return resultados;
 };
 
 // ============================================================================
-// 8. EXPORTAR FUNCIONES PARA USO GLOBAL
+// 7. INICIALIZACIÓN MEJORADA
 // ============================================================================
 
-// Hacer funciones disponibles globalmente
-window.iniciarGaleriaVideos = iniciarGaleriaVideos;
-window.cargarCategoriasVideos = cargarCategoriasVideos;
-window.cargarVideosPorCategoria = cargarVideosPorCategoria;
-window.reproducirVideo = reproducirVideo;
-window.volverACategorias = volverACategorias;
-window.volverAListaVideos = volverAListaVideos;
-window.marcarComoFavorito = marcarComoFavorito;
-window.crearPantallasGaleriaVideos = crearPantallasGaleriaVideos;
+// Modificar la función de inicio para mostrar info de X
+function iniciarGaleriaVideos() {
+    cambiarPantalla('pantalla-galerias-videos');
+    
+    // Crear pantallas si no existen
+    crearPantallasGaleriaVideos();
+    
+    // Cargar categorías
+    cargarCategoriasVideos();
+    
+    console.log("🐦 Galería de videos de X iniciada");
+    console.log("📱 Todos los videos son de Twitter/X");
+    console.log("🔧 Comandos disponibles desde consola:");
+    console.log("   - agregarVideoX(categoria, nombre, desc, url, duracion)");
+    console.log("   - verificarVideosX()");
+    console.log("   - buscarVideosX(palabraClave)");
+}
 
-console.log("✅ Galería de videos pura cargada correctamente");
-console.log("🎥 Usa iniciarGaleriaVideos() para comenzar");
-console.log("🖼️ Ahora cada video tiene su propia imagen");
-console.log("🔧 Funciones de testing disponibles desde consola:");
-console.log("   - agregarVideoAGaleria(categoriaId, videoData)");
-console.log("   - verEstadoGaleria()");
-console.log("   - cambiarDriveIdVideo(categoriaId, videoId, nuevoDriveId)");
-console.log("   - cambiarImagenVideo(categoriaId, videoId, nuevaImagen)");
-console.log("   - verVideosCategoria(categoriaId)");
-console.log("   - obtenerImagenAleatoriaPorCategoria(categoriaId)");
-console.log("   - reiniciarGaleriaVideos()");
+// ============================================================================
+// 8. EXPORTAR FUNCIONES
+// ============================================================================
+
+window.iniciarGaleriaVideos = iniciarGaleriaVideos;
+window.reproducirVideo = reproducirVideo;
+window.abrirEnTwitter = abrirEnTwitter;
+window.agregarVideoX = agregarVideoX;
+window.verificarVideosX = verificarVideosX;
+window.buscarVideosX = buscarVideosX;
+
+console.log("✅ Galería de videos de X cargada correctamente");
+console.log("🐦 Usa iniciarGaleriaVideos() para comenzar");
