@@ -17,21 +17,21 @@ const galeriaVideosConfig = {
         },
         'naturaleza': {
             id: 'naturaleza',
-            nombre: '🌿 Naturaleza',
-            imagen: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400',
+            nombre: '🦊  Yae kitsune potona 🦊 ',
+            imagen: 'https://pbs.twimg.com/media/G7whSr6WQAASlUq?format=jpg&name=small',
             color: '#00b894',
             descripcion: 'Paisajes y sonidos de la naturaleza'
         },
         'asmr': {
             id: 'asmr',
-            nombre: '🎧 ASMR',
+            nombre: 'Potonas Reales',
             imagen: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400',
             color: '#6c5ce7',
             descripcion: 'Sonidos relajantes y susurros'
         },
         'anime': {
             id: 'anime',
-            nombre: '🎬 Anime',
+            nombre: '🎬 Cosplay potonas ricas',
             imagen: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
             color: '#fd79a8',
             descripcion: 'Opening, endings y momentos especiales'
@@ -135,29 +135,29 @@ const galeriaVideosConfig = {
         'naturaleza': [
             {
                 id: 'video_naturaleza_1',
-                nombre: 'Bosque en otoño',
+                nombre: 'Yae potona sweet darling',
                 descripcion: 'Paseo por un bosque con hojas cayendo',
                 duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
+                driveId: '1i90Pj3BMSfc63lQXguevklfB6yV84PSX',
+                imagen: 'https://pbs.twimg.com/media/G7whKvWXkAAhMuQ?format=png&name=small',
                 favorito: true
             },
             {
                 id: 'video_naturaleza_2',
-                nombre: 'Cascadas y ríos',
+                nombre: ' Yae potona sweetiefox',
                 descripcion: 'Sonidos de agua corriente y cascadas',
                 duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&fit=crop',
+                driveId: '1YS1Dn1BFFmD9Zv0jNVGtFB9G2lqLwOQl',
+                imagen: 'https://pbs.twimg.com/media/G7whSr6WQAASlUq?format=jpg&name=small',
                 favorito: false
             },
             {
                 id: 'video_naturaleza_3',
-                nombre: 'Amanecer en la montaña',
+                nombre: 'Yae y raiden potonas',
                 descripcion: 'Timelapse de un amanecer montañoso',
                 duracion: '10:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&fit=crop',
+                driveId: '1Scu-K-FxU5qIhk8EWGtRDYPyiTnrFwzW',
+                imagen: 'https://pbs.twimg.com/media/G7wh28DXMAAw3CG?format=jpg&name=small',
                 favorito: true
             },
             {
@@ -184,20 +184,20 @@ const galeriaVideosConfig = {
         'asmr': [
             {
                 id: 'video_asmr_1',
-                nombre: 'Susurros para dormir',
+                nombre: 'Potona 1 cyberlycrush',
                 descripcion: 'Susurros suaves en español',
                 duracion: '45:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=400&fit=crop',
+                driveId: '1gZiqaAgR5eA5Og1CO5CIfESd3QUY2Tmy',
+                imagen: 'https://pbs.twimg.com/media/G7wi-5vXwAACmBr?format=png&name=small',
                 favorito: true
             },
             {
                 id: 'video_asmr_2',
-                nombre: 'Tapping en objetos',
+                nombre: 'Vanebp19 potona argentina',
                 descripcion: 'Sonidos de golpecitos en distintas superficies',
                 duracion: '30:00',
-                driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
-                imagen: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&fit=crop',
+                driveId: '1CSwJaxMgxKFkYGFspgcbSC6BuS8QA-0_',
+                imagen: 'https://pbs.twimg.com/media/G7wjg6vW8AAhxc0?format=png&name=small',
                 favorito: false
             },
             {
