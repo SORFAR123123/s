@@ -1,13 +1,9 @@
 // ============================================================================
 // SISTEMA DE VISOR DE MANGA/IMÁGENES - COMO NHENTAI
-// VERSIÓN CORREGIDA - BOTÓN ANTERIOR FUNCIONA
+// VERSIÓN COMPLETA + FIX DEFINITIVO DEL BOTÓN ANTERIOR
 // ============================================================================
 
 const mangaViewer = {
-    // ============================================================================
-    // BASE DE DATOS DE IMÁGENES DE MANGA POR SUBCONTENEDOR
-    // ============================================================================
-    
     mangaDatabase: {
         'sub1_1': [
             'https://pbs.twimg.com/media/G7rvtWAWcAAohDK?format=png&name=small',
@@ -41,7 +37,7 @@ const mangaViewer = {
         'sub9_1': [], 'sub9_2': [], 'sub9_3': [],
         'sub10_1': [], 'sub10_2': [], 'sub10_3': []
     },
-    
+
     config: {
         maxWidth: '100vw',
         maxHeight: 'auto',
@@ -53,7 +49,7 @@ const mangaViewer = {
         autoHideControls: false,
         backgroundColor: '#000000'
     },
-    
+
     estado: {
         imagenes: [],
         imagenActual: 0,
@@ -63,7 +59,7 @@ const mangaViewer = {
         cargando: false,
         subcontenedorActual: ''
     },
-    
+
     elementos: {
         contenedor: null,
         imagen: null,
@@ -72,892 +68,356 @@ const mangaViewer = {
         contador: null,
         botones: null
     },
-    
-    // ============================================================================
-    // INICIALIZACIÓN
-    // ============================================================================
-    
+
     inicializar: function() {
-        console.log("📖 Inicializando visor de manga...");
-        
         this.crearEstructuraHTML();
         this.configurarEventos();
         this.cargarEstado();
-        
-        console.log("✅ Visor de manga listo");
-        
         this.verificarYAgregarBotones();
         setInterval(() => this.verificarYAgregarBotones(), 500);
     },
-    
+
     verificarYAgregarBotones: function() {
         const pantallaSubcontenedores = document.getElementById('pantalla-subcontenedores');
         if (pantallaSubcontenedores && pantallaSubcontenedores.classList.contains('activa')) {
-            setTimeout(() => {
-                this.agregarBotonesMangaATarjetas();
-            }, 50);
+            setTimeout(() => this.agregarBotonesMangaATarjetas(), 50);
         }
     },
-    
-    // ============================================================================
-    // CREAR ESTRUCTURA HTML
-    // ============================================================================
-    
+
     crearEstructuraHTML: function() {
-        // Contenedor principal
         this.elementos.contenedor = document.createElement('div');
         this.elementos.contenedor.id = 'visor-manga';
         this.elementos.contenedor.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: ${this.config.backgroundColor};
-            z-index: 99999;
-            display: none;
-            overflow-y: auto;
-            overflow-x: hidden;
+            z-index: 99999; display: none; overflow-y: auto; overflow-x: hidden;
         `;
-        
-        // Contenedor de imagen
+
         const imagenContainer = document.createElement('div');
         imagenContainer.style.cssText = `
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 20px 0;
-            position: relative;
-            z-index: 0;
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh; padding: 20px 0; position: relative; z-index: 0;
         `;
-        
-        // Elemento de imagen
+
         this.elementos.imagen = document.createElement('img');
         this.elementos.imagen.id = 'imagen-manga-actual';
         this.elementos.imagen.style.cssText = `
-            max-width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.2s ease;
-            cursor: zoom-in;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            max-width: 100%; height: auto; display: block;
+            transition: transform 0.2s ease; cursor: zoom-in;
         `;
-        
-        // Crear controles
+
         this.crearControles();
-        
-        // Loader
+
         const loader = document.createElement('div');
         loader.id = 'manga-loader';
         loader.innerHTML = '🔄';
         loader.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            z-index: 10;
-            display: none;
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 3rem;
+            z-index: 10; display: none;
         `;
-        
-        // Ensamblar
+
         imagenContainer.appendChild(this.elementos.imagen);
         this.elementos.contenedor.appendChild(loader);
         this.elementos.contenedor.appendChild(imagenContainer);
         this.elementos.contenedor.appendChild(this.elementos.controles);
-        
+
         document.body.appendChild(this.elementos.contenedor);
     },
-    
-    // ============================================================================
-    // CREAR CONTROLES - ¡ESTA ES LA PARTE MÁS IMPORTANTE!
-    // ============================================================================
-    
+
     crearControles: function() {
         this.elementos.controles = document.createElement('div');
         this.elementos.controles.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 10px 20px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            z-index: 2;
-            transition: opacity 0.3s ease;
-            pointer-events: auto;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.7); border-radius: 10px; padding: 10px 20px;
+            display: flex; gap: 15px; align-items: center; z-index: 2;
         `;
-        
-        // Contador
+
         this.elementos.contador = document.createElement('div');
-        this.elementos.contador.id = 'contador-manga';
-        this.elementos.contador.style.cssText = `
-            color: white;
-            font-weight: bold;
-            min-width: 100px;
-            text-align: center;
-        `;
-        
-        // ============================================================================
-        // ¡¡¡BOTONES CON FUNCIONALIDAD CORREGIDA!!!
-        // ============================================================================
-        
+        this.elementos.contador.style = "color:white;font-weight:bold;min-width:100px;text-align:center";
+
         this.elementos.botones = document.createElement('div');
-        this.elementos.botones.style.cssText = `display: flex; gap: 10px;`;
-        
-        // Crear botón ANTERIOR con onclick directo
-        const prevBtn = document.createElement('button');
-        prevBtn.id = 'manga-prev';
-        prevBtn.title = 'Imagen anterior (←)';
-        prevBtn.innerHTML = '◀ Anterior';
-        prevBtn.style.cssText = `
-            background: #ff6b9d; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        // ¡AQUÍ ESTÁ EL FIX! onclick directo
-        prevBtn.onclick = () => {
-            console.log("🎯 Botón ANTERIOR clickeado directamente");
-            this.imagenAnterior();
+        this.elementos.botones.style = "display:flex;gap:10px;";
+
+        const btn = (id, txt, color, fn) => {
+            const b = document.createElement('button');
+            b.id = id;
+            b.innerHTML = txt;
+            b.style.cssText = `
+                background:${color};color:white;border:none;border-radius:5px;
+                padding:8px 15px;cursor:pointer;font-weight:bold;
+            `;
+            b.onclick = fn;
+            return b;
         };
-        
-        // Crear botón SIGUIENTE con onclick directo
-        const nextBtn = document.createElement('button');
-        nextBtn.id = 'manga-next';
-        nextBtn.title = 'Imagen siguiente (→)';
-        nextBtn.innerHTML = 'Siguiente ▶';
-        nextBtn.style.cssText = `
-            background: #4a90e2; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        nextBtn.onclick = () => {
-            console.log("🎯 Botón SIGUIENTE clickeado directamente");
-            this.imagenSiguiente();
-        };
-        
-        // Botón Zoom In
-        const zoomInBtn = document.createElement('button');
-        zoomInBtn.id = 'manga-zoom-in';
-        zoomInBtn.title = 'Acercar (Ctrl + +)';
-        zoomInBtn.innerHTML = '➕';
-        zoomInBtn.style.cssText = `
-            background: #00cc6a; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        zoomInBtn.onclick = () => this.zoomIn();
-        
-        // Botón Zoom Out
-        const zoomOutBtn = document.createElement('button');
-        zoomOutBtn.id = 'manga-zoom-out';
-        zoomOutBtn.title = 'Alejar (Ctrl + -)';
-        zoomOutBtn.innerHTML = '➖';
-        zoomOutBtn.style.cssText = `
-            background: #ff9800; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        zoomOutBtn.onclick = () => this.zoomOut();
-        
-        // Botón Reset Zoom
-        const resetZoomBtn = document.createElement('button');
-        resetZoomBtn.id = 'manga-zoom-reset';
-        resetZoomBtn.title = 'Restaurar zoom (0)';
-        resetZoomBtn.innerHTML = '↺';
-        resetZoomBtn.style.cssText = `
-            background: #7b68ee; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        resetZoomBtn.onclick = () => this.resetZoom();
-        
-        // Botón Cerrar
-        const closeBtn = document.createElement('button');
-        closeBtn.id = 'manga-close';
-        closeBtn.title = 'Cerrar (ESC)';
-        closeBtn.innerHTML = '✕ Cerrar';
-        closeBtn.style.cssText = `
-            background: #ff4444; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-weight: bold;
-        `;
-        closeBtn.onclick = () => this.ocultar();
-        
-        // Botón Pantalla Completa
-        const fullscreenBtn = document.createElement('button');
-        fullscreenBtn.id = 'manga-fullscreen';
-        fullscreenBtn.title = 'Pantalla completa (F)';
-        fullscreenBtn.innerHTML = '⛶';
-        fullscreenBtn.style.cssText = `
-            background: #9c27b0; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            padding: 8px 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 1.2rem;
-        `;
-        fullscreenBtn.onclick = () => this.togglePantallaCompleta();
-        
-        // Añadir todos los botones
-        this.elementos.botones.appendChild(prevBtn);
-        this.elementos.botones.appendChild(nextBtn);
-        this.elementos.botones.appendChild(zoomInBtn);
-        this.elementos.botones.appendChild(zoomOutBtn);
-        this.elementos.botones.appendChild(resetZoomBtn);
-        this.elementos.botones.appendChild(closeBtn);
-        this.elementos.botones.appendChild(fullscreenBtn);
-        
+
+        this.elementos.botones.appendChild(btn("manga-prev", "◀ Anterior", "#ff6b9d", () => this.imagenAnterior()));
+        this.elementos.botones.appendChild(btn("manga-next", "Siguiente ▶", "#4a90e2", () => this.imagenSiguiente()));
+
+        this.elementos.botones.appendChild(btn("manga-zoom-in", "➕", "#00cc6a", () => this.zoomIn()));
+        this.elementos.botones.appendChild(btn("manga-zoom-out", "➖", "#ff9800", () => this.zoomOut()));
+        this.elementos.botones.appendChild(btn("manga-zoom-reset", "↺", "#7b68ee", () => this.resetZoom()));
+        this.elementos.botones.appendChild(btn("manga-close", "✕ Cerrar", "#ff4444", () => this.ocultar()));
+        this.elementos.botones.appendChild(btn("manga-fullscreen", "⛶", "#9c27b0", () => this.togglePantallaCompleta()));
+
         this.elementos.controles.appendChild(this.elementos.contador);
         this.elementos.controles.appendChild(this.elementos.botones);
     },
-    
-    // ============================================================================
-    // CONFIGURAR EVENTOS - ¡SIMPLIFICADO!
-    // ============================================================================
-    
+
     configurarEventos: function() {
-        console.log("🔧 Configurando eventos del manga viewer...");
-        
-        // Eventos de teclado
         document.addEventListener('keydown', (e) => this.manejarTeclado(e));
-        
-        // Eventos en la imagen
+
         this.elementos.imagen.addEventListener('click', (e) => {
             if (e.ctrlKey) this.zoomIn();
             else if (e.shiftKey) this.zoomOut();
-            else {
-                // Mostrar/ocultar controles
-                this.elementos.controles.style.opacity = 
-                    this.elementos.controles.style.opacity === '0' ? '1' : '0';
-            }
+            else this.elementos.controles.style.opacity =
+                this.elementos.controles.style.opacity === "0" ? "1" : "0";
         });
-        
-        // Zoom con rueda
-        this.elementos.contenedor.addEventListener('wheel', (e) => {
+
+        this.elementos.contenedor.addEventListener("wheel", (e) => {
             if (e.ctrlKey) {
                 e.preventDefault();
                 e.deltaY < 0 ? this.zoomIn() : this.zoomOut();
             }
         }, { passive: false });
-        
-        // Doble click para resetear zoom
-        this.elementos.imagen.addEventListener('dblclick', () => this.resetZoom());
-        
-        console.log("✅ Eventos configurados");
+
+        this.elementos.imagen.addEventListener("dblclick", () => this.resetZoom());
     },
-    
-    // ============================================================================
-    // FUNCIONES PRINCIPALES
-    // ============================================================================
-    
+
     mostrar: function(imagenes, indiceInicial = 0, subcontenedorId = '') {
-        console.log("📖 Mostrando manga:", imagenes.length, "páginas");
-        
         this.estado.imagenes = [...imagenes];
         this.estado.imagenActual = indiceInicial;
         this.estado.zoomActual = this.config.zoomDefault;
         this.estado.pantallaVisible = true;
         this.estado.subcontenedorActual = subcontenedorId;
-        
-        this.elementos.contenedor.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        
+
+        this.elementos.contenedor.style.display = "block";
+        document.body.style.overflow = "hidden";
+
         this.cargarImagenActual();
         this.actualizarControles();
         this.guardarEstado();
     },
-    
+
     ocultar: function() {
         this.estado.pantallaVisible = false;
-        this.elementos.contenedor.style.display = 'none';
-        document.body.style.overflow = '';
-        this.elementos.imagen.src = '';
-        console.log("📖 Visor ocultado");
+        this.elementos.contenedor.style.display = "none";
+        document.body.style.overflow = "";
+        this.elementos.imagen.src = "";
     },
-    
-    // ============================================================================
-    // CARGA DE IMÁGENES
-    // ============================================================================
-    
+
     cargarImagenActual: function() {
-        if (this.estado.imagenes.length === 0) {
-            console.error("❌ No hay imágenes");
-            return;
-        }
-        
-        const indice = this.estado.imagenActual;
-        const url = this.estado.imagenes[indice];
-        
-        document.getElementById('manga-loader').style.display = 'block';
+        if (!this.estado.imagenes.length) return;
+
+        const loader = document.getElementById("manga-loader");
+        loader.style.display = "block";
         this.estado.cargando = true;
-        
+
+        const url = this.estado.imagenes[this.estado.imagenActual];
         const img = new Image();
+
         img.onload = () => {
             this.elementos.imagen.src = url;
             this.aplicarZoom();
-            document.getElementById('manga-loader').style.display = 'none';
+            loader.style.display = "none";
             this.estado.cargando = false;
             this.actualizarContador();
             this.preloadSiguiente();
         };
-        
+
         img.onerror = () => {
-            console.error("❌ Error cargando:", url);
-            document.getElementById('manga-loader').style.display = 'none';
+            loader.style.display = "none";
             this.estado.cargando = false;
-            this.elementos.imagen.src = '';
-            this.elementos.imagen.alt = 'Error cargando imagen';
-            this.elementos.imagen.style.backgroundColor = '#333';
+            this.elementos.imagen.src = "";
         };
-        
+
         img.src = url;
     },
-    
+
     preloadSiguiente: function() {
-        const siguienteIndice = this.estado.imagenActual + 1;
-        if (siguienteIndice < this.estado.imagenes.length) {
-            const img = new Image();
-            img.src = this.estado.imagenes[siguienteIndice];
+        const i = this.estado.imagenActual + 1;
+        if (i < this.estado.imagenes.length) {
+            new Image().src = this.estado.imagenes[i];
         }
     },
-    
+
     // ============================================================================
-    // NAVEGACIÓN - ¡VERSIÓN CORREGIDA!
+    // 🔥 FIX DEFINITIVO AQUÍ → actualizarControles() después de cada cambio
     // ============================================================================
-    
+
     imagenAnterior: function() {
-        console.log("🔄 imagenAnterior() llamado");
-        console.log("Imagen actual:", this.estado.imagenActual);
-        console.log("Total imágenes:", this.estado.imagenes.length);
-        
-        if (this.estado.cargando) {
-            console.log("⚠️ Está cargando, espera...");
-            return;
-        }
-        
+        if (this.estado.cargando) return;
+
         if (this.estado.imagenActual > 0) {
             this.estado.imagenActual--;
-            console.log("✅ Nueva imagen:", this.estado.imagenActual);
             this.cargarImagenActual();
             this.resetZoom();
-            
-            // Feedback visual
-            this.mostrarFeedback(`Página ${this.estado.imagenActual + 1} de ${this.estado.imagenes.length}`);
-        } else {
-            console.log("⚠️ Ya estás en la primera imagen");
-            this.mostrarFeedback("✨ ¡Primera página!");
         }
+
+        this.actualizarControles();  // ← FIX
     },
-    
+
     imagenSiguiente: function() {
-        console.log("🔄 imagenSiguiente() llamado");
-        console.log("Imagen actual:", this.estado.imagenActual);
-        console.log("Total imágenes:", this.estado.imagenes.length);
-        
-        if (this.estado.cargando) {
-            console.log("⚠️ Está cargando, espera...");
-            return;
-        }
-        
+        if (this.estado.cargando) return;
+
         if (this.estado.imagenActual < this.estado.imagenes.length - 1) {
             this.estado.imagenActual++;
-            console.log("✅ Nueva imagen:", this.estado.imagenActual);
             this.cargarImagenActual();
             this.resetZoom();
-            
-            // Feedback visual
-            this.mostrarFeedback(`Página ${this.estado.imagenActual + 1} de ${this.estado.imagenes.length}`);
-        } else {
-            console.log("⚠️ Ya estás en la última imagen");
-            this.mostrarFeedback("🎉 ¡Última página!");
         }
+
+        this.actualizarControles();  // ← FIX
     },
-    
-    // ============================================================================
-    // ZOOM
-    // ============================================================================
-    
+
     zoomIn: function() {
-        const nuevoZoom = this.estado.zoomActual + this.config.zoomStep;
-        if (nuevoZoom <= this.config.maxZoom) {
-            this.estado.zoomActual = nuevoZoom;
+        const z = this.estado.zoomActual + this.config.zoomStep;
+        if (z <= this.config.maxZoom) {
+            this.estado.zoomActual = z;
             this.aplicarZoom();
         }
     },
-    
+
     zoomOut: function() {
-        const nuevoZoom = this.estado.zoomActual - this.config.zoomStep;
-        if (nuevoZoom >= this.config.minZoom) {
-            this.estado.zoomActual = nuevoZoom;
+        const z = this.estado.zoomActual - this.config.zoomStep;
+        if (z >= this.config.minZoom) {
+            this.estado.zoomActual = z;
             this.aplicarZoom();
         }
     },
-    
+
     resetZoom: function() {
         this.estado.zoomActual = this.config.zoomDefault;
         this.aplicarZoom();
     },
-    
+
     aplicarZoom: function() {
         this.elementos.imagen.style.transform = `scale(${this.estado.zoomActual})`;
-        this.elementos.imagen.style.cursor = this.estado.zoomActual > 1.0 ? 'zoom-out' : 'zoom-in';
     },
-    
-    // ============================================================================
-    // PANTALLA COMPLETA
-    // ============================================================================
-    
+
     togglePantallaCompleta: function() {
         if (!this.estado.modoPantallaCompleta) {
-            this.entrarPantallaCompleta();
+            this.elementos.contenedor.requestFullscreen();
         } else {
-            this.salirPantallaCompleta();
+            document.exitFullscreen();
         }
+        this.estado.modoPantallaCompleta = !this.estado.modoPantallaCompleta;
     },
-    
-    entrarPantallaCompleta: function() {
-        const elem = this.elementos.contenedor;
-        if (elem.requestFullscreen) elem.requestFullscreen();
-        else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-        this.estado.modoPantallaCompleta = true;
-    },
-    
-    salirPantallaCompleta: function() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        this.estado.modoPantallaCompleta = false;
-    },
-    
-    // ============================================================================
-    // INTERFAZ
-    // ============================================================================
-    
+
     actualizarContador: function() {
-        if (this.elementos.contador) {
-            this.elementos.contador.innerHTML = `
-                <span style="color: #ff6b9d">${this.estado.imagenActual + 1}</span>
-                <span style="color: #cccccc"> / </span>
-                <span style="color: #4a90e2">${this.estado.imagenes.length}</span>
-            `;
-        }
+        this.elementos.contador.innerHTML = `
+            <span style="color:#ff6b9d">${this.estado.imagenActual + 1}</span>
+            <span style="color:#ccc"> / </span>
+            <span style="color:#4a90e2">${this.estado.imagenes.length}</span>
+        `;
     },
-    
+
     actualizarControles: function() {
-        const prevBtn = document.getElementById('manga-prev');
-        const nextBtn = document.getElementById('manga-next');
-        
-        if (prevBtn) {
-            prevBtn.disabled = this.estado.imagenActual === 0;
-            prevBtn.style.opacity = prevBtn.disabled ? '0.5' : '1';
-        }
-        
-        if (nextBtn) {
-            nextBtn.disabled = this.estado.imagenActual === this.estado.imagenes.length - 1;
-            nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
-        }
-        
+        const prev = document.getElementById("manga-prev");
+        const next = document.getElementById("manga-next");
+
+        prev.disabled = this.estado.imagenActual === 0;
+        next.disabled = this.estado.imagenActual === this.estado.imagenes.length - 1;
+
+        prev.style.opacity = prev.disabled ? "0.5" : "1";
+        next.style.opacity = next.disabled ? "0.5" : "1";
+
         this.actualizarContador();
     },
-    
-    // ============================================================================
-    // MANEJO DE TECLADO
-    // ============================================================================
-    
-    manejarTeclado: function(event) {
+
+    manejarTeclado: function(e) {
         if (!this.estado.pantallaVisible) return;
-        
-        switch(event.key) {
-            case 'ArrowLeft': case 'a': case 'A': 
-                this.imagenAnterior(); 
-                break;
-            case 'ArrowRight': case 'd': case 'D': 
-                this.imagenSiguiente(); 
-                break;
-            case '+': case '=': if (event.ctrlKey) this.zoomIn(); break;
-            case '-': case '_': if (event.ctrlKey) this.zoomOut(); break;
-            case '0': this.resetZoom(); break;
-            case 'Escape': 
-                if (this.estado.modoPantallaCompleta) this.salirPantallaCompleta();
-                else this.ocultar();
-                break;
-            case 'f': case 'F': this.togglePantallaCompleta(); break;
+
+        switch(e.key) {
+            case "ArrowLeft": this.imagenAnterior(); break;
+            case "ArrowRight": this.imagenSiguiente(); break;
+            case "Escape": this.ocultar(); break;
         }
     },
-    
-    // ============================================================================
-    // FEEDBACK VISUAL
-    // ============================================================================
-    
-    mostrarFeedback: function(mensaje) {
-        let feedback = document.getElementById('manga-feedback');
-        if (!feedback) {
-            feedback = document.createElement('div');
-            feedback.id = 'manga-feedback';
-            feedback.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.8);
-                color: white;
-                padding: 10px 20px;
-                border-radius: 10px;
-                font-weight: bold;
-                z-index: 100000;
-                display: none;
-            `;
-            document.body.appendChild(feedback);
-        }
-        
-        feedback.textContent = mensaje;
-        feedback.style.display = 'block';
-        
-        setTimeout(() => {
-            feedback.style.display = 'none';
-        }, 1500);
-    },
-    
-    // ============================================================================
-    // PERSISTENCIA
-    // ============================================================================
-    
+
     guardarEstado: function() {
-        try {
-            localStorage.setItem('mangaViewerState', JSON.stringify({
-                zoomActual: this.estado.zoomActual,
-                ultimoSubcontenedor: this.estado.subcontenedorActual
-            }));
-        } catch (e) {
-            console.error("Error guardando estado:", e);
-        }
+        localStorage.setItem("mangaViewerState", JSON.stringify({
+            zoomActual: this.estado.zoomActual,
+            ultimoSubcontenedor: this.estado.subcontenedorActual
+        }));
     },
-    
+
     cargarEstado: function() {
-        try {
-            const datos = localStorage.getItem('mangaViewerState');
-            if (datos) {
-                const estado = JSON.parse(datos);
-                this.estado.zoomActual = estado.zoomActual || this.config.zoomDefault;
-            }
-        } catch (e) {
-            console.error("Error cargando estado:", e);
-        }
+        const data = localStorage.getItem("mangaViewerState");
+        if (!data) return;
+
+        const s = JSON.parse(data);
+        this.estado.zoomActual = s.zoomActual ?? this.config.zoomDefault;
     },
-    
-    // ============================================================================
-    // AGREGAR BOTONES DE MANGA
-    // ============================================================================
-    
+
     agregarBotonesMangaATarjetas: function() {
         const tarjetas = document.querySelectorAll('.subcontenedor-card');
-        
-        tarjetas.forEach((tarjeta) => {
-            const texto = tarjeta.querySelector('.subcontenedor-texto');
+
+        tarjetas.forEach((t) => {
+            const texto = t.querySelector('.subcontenedor-texto');
             if (!texto) return;
-            
-            const textoCompleto = texto.textContent;
-            const match = textoCompleto.match(/(\d+)\.(\d+)/);
-            if (!match) return;
-            
-            const subId = `sub${match[1]}_${match[2]}`;
-            const tieneManga = this.mangaDatabase[subId] && this.mangaDatabase[subId].length > 0;
-            
-            const botonExistente = tarjeta.querySelector('.boton-manga');
-            if (botonExistente) botonExistente.remove();
-            
-            const botonManga = document.createElement('button');
-            botonManga.className = 'boton-manga';
-            botonManga.innerHTML = tieneManga ? 
-                `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)` : 
-                '➕ Añadir Manga';
-            botonManga.style.cssText = `
-                background: linear-gradient(135deg, ${tieneManga ? '#9C27B0, #673AB7' : '#4a90e2, #7b68ee'});
-                color: white;
-                border: none;
-                border-radius: 15px;
-                padding: 12px 20px;
-                margin-top: 15px;
-                cursor: pointer;
-                font-weight: bold;
-                width: 100%;
-                transition: all 0.3s ease;
-                font-size: 1rem;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-                border: 2px solid ${tieneManga ? '#ff6b9d' : '#4a90e2'};
-                display: block !important;
+
+            const m = texto.textContent.match(/(\d+)\.(\d+)/);
+            if (!m) return;
+
+            const subId = `sub${m[1]}_${m[2]}`;
+            const tiene = this.mangaDatabase[subId]?.length > 0;
+
+            const old = t.querySelector('.boton-manga');
+            if (old) old.remove();
+
+            const btn = document.createElement("button");
+            btn.className = "boton-manga";
+            btn.innerHTML = tiene
+                ? `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)`
+                : "➕ Añadir Manga";
+
+            btn.style.cssText = `
+                background:linear-gradient(135deg,${tiene ? "#9C27B0,#673AB7" : "#4a90e2,#7b68ee"});
+                color:white;border:none;border-radius:15px;padding:12px 20px;
+                margin-top:15px;cursor:pointer;font-weight:bold;width:100%;
+                border:2px solid ${tiene ? "#ff6b9d" : "#4a90e2"};
             `;
-            
-            botonManga.onmouseover = function() {
-                this.style.transform = 'translateY(-3px)';
-                this.style.boxShadow = tieneManga ? 
-                    '0 8px 20px rgba(156, 39, 176, 0.5)' : 
-                    '0 8px 20px rgba(74, 144, 226, 0.5)';
-            };
-            
-            botonManga.onmouseout = function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
-            };
-            
-            botonManga.onclick = (e) => {
+
+            btn.onclick = (e) => {
                 e.stopPropagation();
-                e.preventDefault();
-                
-                if (tieneManga) {
-                    this.mostrarMangaDeSubcontenedor(subId);
-                } else {
-                    const urls = prompt(
-                        `Introduce las URLs de las páginas del manga para ${subId} (separadas por comas):`,
-                        'https://ejemplo.com/pag1.jpg, https://ejemplo.com/pag2.jpg'
-                    );
-                    
-                    if (urls) {
-                        const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
-                        if (urlsArray.length > 0) {
-                            this.agregarMangaASubcontenedor(subId, urlsArray);
-                            botonManga.innerHTML = `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)`;
-                            botonManga.style.background = 'linear-gradient(135deg, #9C27B0, #673AB7)';
-                            botonManga.style.border = '2px solid #ff6b9d';
-                            alert(`✅ ${urlsArray.length} páginas añadidas a ${subId}`);
-                        }
-                    }
-                }
+                if (tiene) return this.mostrarMangaDeSubcontenedor(subId);
+
+                const urls = prompt("Introduce URLs separadas por comas:");
+                if (!urls) return;
+
+                const arr = urls.split(",").map(x => x.trim()).filter(Boolean);
+                if (!arr.length) return;
+
+                this.agregarMangaASubcontenedor(subId, arr);
+                btn.innerHTML = `📖 Leer Manga (${this.mangaDatabase[subId].length} páginas)`;
             };
-            
-            tarjeta.appendChild(botonManga);
+
+            t.appendChild(btn);
         });
     },
-    
-    agregarMangaASubcontenedor: function(subcontenedorId, urlsImagenes) {
-        if (!this.mangaDatabase[subcontenedorId]) {
-            this.mangaDatabase[subcontenedorId] = [];
-        }
-        
-        this.mangaDatabase[subcontenedorId].push(...urlsImagenes);
-        console.log("➕ Manga añadido a", subcontenedorId, "Total:", this.mangaDatabase[subcontenedorId].length, "páginas");
-        
+
+    agregarMangaASubcontenedor: function(id, urls) {
+        if (!this.mangaDatabase[id]) this.mangaDatabase[id] = [];
+        this.mangaDatabase[id].push(...urls);
         this.agregarBotonesMangaATarjetas();
-        return this.mangaDatabase[subcontenedorId].length;
     },
-    
-    obtenerMangaDeSubcontenedor: function(subcontenedorId) {
-        return this.mangaDatabase[subcontenedorId] || [];
+
+    obtenerMangaDeSubcontenedor: function(id) {
+        return this.mangaDatabase[id] || [];
     },
-    
-    mostrarMangaDeSubcontenedor: function(subcontenedorId, indiceInicial = 0) {
-        const imagenes = this.obtenerMangaDeSubcontenedor(subcontenedorId);
-        
-        if (imagenes.length === 0) {
-            alert(`No hay páginas de manga disponibles para ${subcontenedorId}.`);
+
+    mostrarMangaDeSubcontenedor: function(id, idx = 0) {
+        const imgs = this.obtenerMangaDeSubcontenedor(id);
+        if (!imgs.length) {
+            alert(`No hay páginas para ${id}`);
             return false;
         }
-        
-        this.mostrar(imagenes, indiceInicial, subcontenedorId);
+        this.mostrar(imgs, idx, id);
         return true;
-    },
-    
-    forzarActualizacionBotones: function() {
-        this.agregarBotonesMangaATarjetas();
-        return true;
-    },
-
-    // ============================================================================
-    // FUNCIONES DE UTILIDAD ADICIONALES
-    // ============================================================================
-    
-    obtenerTodosLosSubcontenedoresConManga: function() {
-        const resultado = [];
-        for (const [id, paginas] of Object.entries(this.mangaDatabase)) {
-            if (paginas && paginas.length > 0) {
-                resultado.push({
-                    id: id,
-                    paginas: paginas.length,
-                    imagenes: [...paginas]
-                });
-            }
-        }
-        return resultado;
-    },
-    
-    obtenerEstado: function() {
-        return {
-            ...this.estado,
-            totalSubcontenedoresConManga: this.obtenerTodosLosSubcontenedoresConManga().length
-        };
     }
 };
 
-// ============================================================================
-// INICIALIZACIÓN AUTOMÁTICA
-// ============================================================================
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", () => {
     mangaViewer.inicializar();
     window.mangaViewer = mangaViewer;
-    
-    console.log("📖 Manga Viewer cargado y listo");
-    
-    setTimeout(() => {
-        mangaViewer.verificarYAgregarBotones();
-    }, 1000);
 });
-
-// ============================================================================
-// FUNCIONES GLOBALES
-// ============================================================================
-
-window.mostrarManga = function(subcontenedorId, indiceInicial = 0) {
-    if (mangaViewer && mangaViewer.mostrarMangaDeSubcontenedor) {
-        return mangaViewer.mostrarMangaDeSubcontenedor(subcontenedorId, indiceInicial);
-    }
-    return false;
-};
-
-window.agregarBotonesManga = function() {
-    if (mangaViewer && mangaViewer.agregarBotonesMangaATarjetas) {
-        setTimeout(() => {
-            mangaViewer.agregarBotonesMangaATarjetas();
-        }, 100);
-        return true;
-    }
-    return false;
-};
-
-window.agregarImagenesManga = function(subcontenedorId, urlsArray) {
-    if (mangaViewer && mangaViewer.agregarMangaASubcontenedor) {
-        return mangaViewer.agregarMangaASubcontenedor(subcontenedorId, urlsArray);
-    }
-    return 0;
-};
-
-// ============================================================================
-// FUNCIONES DE TESTING
-// ============================================================================
-
-window.ejemploManga = function() {
-    mostrarManga('sub1_1');
-    console.log("📖 Ejemplo: Mostrando manga de sub1_1");
-};
-
-window.agregarPaginasManga = function(subcontenedorId) {
-    const urls = prompt("Introduce URLs separadas por comas:");
-    if (urls) {
-        const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
-        if (urlsArray.length > 0) {
-            const total = agregarImagenesManga(subcontenedorId, urlsArray);
-            console.log(`✅ ${urlsArray.length} páginas añadidas a ${subcontenedorId}. Total: ${total}`);
-        }
-    }
-};
-
-window.verSubcontenedoresConManga = function() {
-    if (mangaViewer) {
-        const subcontenedores = mangaViewer.obtenerTodosLosSubcontenedoresConManga();
-        console.log("📚 Subcontenedores con manga:");
-        subcontenedores.forEach(sub => {
-            console.log(`- ${sub.id}: ${sub.paginas} páginas`);
-        });
-        return subcontenedores;
-    }
-    return [];
-};
-
-window.verEstadoMangaViewer = function() {
-    if (mangaViewer) {
-        const estado = mangaViewer.obtenerEstado();
-        console.log("📊 Estado MangaViewer:", estado);
-        return estado;
-    }
-    return null;
-};
-
-window.cargarMangaDesdeArray = function(subcontenedorId, arrayUrls) {
-    if (mangaViewer && arrayUrls && arrayUrls.length > 0) {
-        mangaViewer.agregarMangaASubcontenedor(subcontenedorId, arrayUrls);
-        console.log(`📚 ${arrayUrls.length} páginas cargadas en ${subcontenedorId}`);
-        return true;
-    }
-    return false;
-};
-
-window.testAnterior = function() {
-    console.log("🔧 Testeando botón anterior...");
-    if (mangaViewer) {
-        console.log("Imagen actual:", mangaViewer.estado.imagenActual);
-        console.log("Total imágenes:", mangaViewer.estado.imagenes.length);
-        mangaViewer.imagenAnterior();
-    }
-};
-
-window.testSiguiente = function() {
-    console.log("🔧 Testeando botón siguiente...");
-    if (mangaViewer) {
-        console.log("Imagen actual:", mangaViewer.estado.imagenActual);
-        console.log("Total imágenes:", mangaViewer.estado.imagenes.length);
-        mangaViewer.imagenSiguiente();
-    }
-};
-
-window.testManga = function() {
-    console.log("🔧 Testeando manga viewer...");
-    if (window.mangaViewer) {
-        console.log("✅ mangaViewer está disponible");
-        console.log("Estado:", mangaViewer.estado);
-        
-        // Probar navegación
-        const testBtn = document.createElement('button');
-        testBtn.innerHTML = '🧪 Test Nav';
-        testBtn.style.cssText = `
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000000;
-            background: #ff6b9d;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        `;
-        testBtn.onclick = () => {
-            console.log("🧪 Iniciando test...");
-            window.mostrarManga('sub1_1');
-        };
-        document.body.appendChild(testBtn);
-        
-        return true;
-    }
-    return false;
-};
