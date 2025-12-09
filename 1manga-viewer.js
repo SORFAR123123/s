@@ -1,5 +1,4 @@
-[file name]: 1manga-viewer.js  
-[file content begin]
+
 // ============================================================================
 // SISTEMA DE VISOR DE MANGA/IMÁGENES - COMO NHENTAI
 // ============================================================================
@@ -823,4 +822,4 @@ window.cargarMangaDesdeArray = function(subcontenedorId, arrayUrls) {
     }
     return false;
 };
-[file content end]
+
