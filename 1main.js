@@ -352,6 +352,18 @@ function cargarSubcontenedor(idSubcontenedor) {
         });
         
         cambiarPantalla('pantalla-mazos');
+        
+        // ============================================================================
+        // ¡¡¡NUEVO: AÑADIR BOTONES DE MANGA DESPUÉS DE CARGAR LOS MAZOS!!!
+        // ============================================================================
+        setTimeout(() => {
+            if (window.agregarBotonesManga) {
+                agregarBotonesManga();
+                console.log("✅ Botones de manga añadidos automáticamente");
+            } else {
+                console.log("⚠️ mangaViewer no está cargado aún");
+            }
+        }, 300); // Pequeño delay para asegurar que el DOM esté listo
     }
 }
 
