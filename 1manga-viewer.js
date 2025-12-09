@@ -1,33 +1,116 @@
-
+[file name]: 1manga-viewer.js  
+[file content begin]
 // ============================================================================
 // SISTEMA DE VISOR DE MANGA/IMÁGENES - COMO NHENTAI
 // ============================================================================
 
 const mangaViewer = {
-    // Configuración del visor
+    // ============================================================================
+    // BASE DE DATOS DE IMÁGENES DE MANGA POR SUBCONTENEDOR
+    // ============================================================================
+    
+    mangaDatabase: {
+        // THE LAST SUMMER 1
+        'sub1_1': [
+            'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=large',
+            'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=large',
+            'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large',
+            'https://example.com/manga/lastsummer1/pagina4.jpg',
+            'https://example.com/manga/lastsummer1/pagina5.jpg'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        'sub1_2': [
+            'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
+            'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large',
+            'https://example.com/manga/lastsummer1-2/pagina3.jpg'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        'sub1_3': [
+            'https://example.com/manga/lastsummer1-3/pagina1.jpg',
+            'https://example.com/manga/lastsummer1-3/pagina2.jpg'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        // TOONO ESUKE 2  
+        'sub2_1': [
+            'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
+            'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        'sub2_2': [
+            'https://pbs.twimg.com/media/G7rKvyBXEAA81vi?format=png&name=small'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        'sub2_3': [
+            // AÑADE URLs AQUÍ...
+        ],
+        
+        'sub2_4': [
+            // AÑADE URLs AQUÍ...
+        ],
+        
+        // YAMADA
+        'sub3_1': [
+            'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small'
+            // AÑADE MÁS URLs AQUÍ...
+        ],
+        
+        'sub3_2': [
+            // AÑADE URLs AQUÍ...
+        ],
+        
+        'sub3_3': [
+            // AÑADE URLs AQUÍ...
+        ],
+        
+        // LOS DEMÁS SUBCONTENEDORES (inicialmente vacíos)
+        'sub4_1': [], 'sub4_2': [], 'sub4_3': [],
+        'sub5_1': [], 'sub5_2': [], 'sub5_3': [],
+        'sub6_1': [], 'sub6_2': [], 'sub6_3': [],
+        'sub7_1': [], 'sub7_2': [], 'sub7_3': [],
+        'sub8_1': [], 'sub8_2': [], 'sub8_3': [],
+        'sub9_1': [], 'sub9_2': [], 'sub9_3': [],
+        'sub10_1': [], 'sub10_2': [], 'sub10_3': []
+    },
+    
+    // ============================================================================
+    // CONFIGURACIÓN DEL VISOR
+    // ============================================================================
+    
     config: {
-        maxWidth: '100vw',        // Ocupar todo el ancho
-        maxHeight: 'auto',        // Altura automática
-        zoomDefault: 1.0,         // Zoom por defecto
-        zoomStep: 0.2,            // Incremento de zoom
-        minZoom: 0.5,             // Zoom mínimo
-        maxZoom: 3.0,             // Zoom máximo
-        showNavigation: true,     // Mostrar navegación
-        autoHideControls: false,  // Ocultar controles automáticamente
-        backgroundColor: '#000000' // Fondo negro como nhentai
+        maxWidth: '100vw',
+        maxHeight: 'auto',
+        zoomDefault: 1.0,
+        zoomStep: 0.2,
+        minZoom: 0.5,
+        maxZoom: 3.0,
+        showNavigation: true,
+        autoHideControls: false,
+        backgroundColor: '#000000'
     },
     
-    // Estado del visor
+    // ============================================================================
+    // ESTADO DEL VISOR
+    // ============================================================================
+    
     estado: {
-        imagenes: [],             // Array de URLs de imágenes
-        imagenActual: 0,          // Índice de la imagen actual
-        zoomActual: 1.0,          // Zoom actual
-        pantallaVisible: false,   // Si el visor está visible
+        imagenes: [],
+        imagenActual: 0,
+        zoomActual: 1.0,
+        pantallaVisible: false,
         modoPantallaCompleta: false,
-        cargando: false
+        cargando: false,
+        subcontenedorActual: ''
     },
     
-    // Elementos DOM
+    // ============================================================================
+    // ELEMENTOS DOM
+    // ============================================================================
+    
     elementos: {
         contenedor: null,
         imagen: null,
@@ -43,22 +126,21 @@ const mangaViewer = {
     
     inicializar: function() {
         console.log("📖 Inicializando visor de manga...");
+        console.log("📚 Manga database cargada:", Object.keys(this.mangaDatabase).length, "subcontenedores");
         
-        // Crear la estructura HTML del visor
         this.crearEstructuraHTML();
-        
-        // Configurar eventos
         this.configurarEventos();
-        
-        // Cargar estado guardado si existe
         this.cargarEstado();
         
         console.log("✅ Visor de manga listo");
     },
     
-    // Crear la estructura HTML del visor
+    // ============================================================================
+    // CREAR ESTRUCTURA HTML
+    // ============================================================================
+    
     crearEstructuraHTML: function() {
-        // Crear contenedor principal
+        // Contenedor principal
         this.elementos.contenedor = document.createElement('div');
         this.elementos.contenedor.id = 'visor-manga';
         this.elementos.contenedor.style.cssText = `
@@ -74,7 +156,7 @@ const mangaViewer = {
             overflow-x: hidden;
         `;
         
-        // Crear overlay para controles
+        // Overlay para controles
         this.elementos.overlay = document.createElement('div');
         this.elementos.overlay.style.cssText = `
             position: fixed;
@@ -86,7 +168,7 @@ const mangaViewer = {
             pointer-events: none;
         `;
         
-        // Crear contenedor de imagen
+        // Contenedor de imagen
         const imagenContainer = document.createElement('div');
         imagenContainer.style.cssText = `
             display: flex;
@@ -98,7 +180,7 @@ const mangaViewer = {
             z-index: 0;
         `;
         
-        // Crear elemento de imagen
+        // Elemento de imagen
         this.elementos.imagen = document.createElement('img');
         this.elementos.imagen.id = 'imagen-manga-actual';
         this.elementos.imagen.style.cssText = `
@@ -114,7 +196,7 @@ const mangaViewer = {
         // Crear controles
         this.crearControles();
         
-        // Crear indicador de carga
+        // Crear loader
         const loader = document.createElement('div');
         loader.id = 'manga-loader';
         loader.innerHTML = '🔄';
@@ -128,7 +210,7 @@ const mangaViewer = {
             display: none;
         `;
         
-        // Ensamblar todo
+        // Ensamblar
         imagenContainer.appendChild(this.elementos.imagen);
         this.elementos.contenedor.appendChild(loader);
         this.elementos.contenedor.appendChild(imagenContainer);
@@ -139,7 +221,10 @@ const mangaViewer = {
         document.body.appendChild(this.elementos.contenedor);
     },
     
-    // Crear controles del visor
+    // ============================================================================
+    // CREAR CONTROLES
+    // ============================================================================
+    
     crearControles: function() {
         this.elementos.controles = document.createElement('div');
         this.elementos.controles.style.cssText = `
@@ -158,7 +243,7 @@ const mangaViewer = {
             pointer-events: auto;
         `;
         
-        // Contador de imágenes
+        // Contador
         this.elementos.contador = document.createElement('div');
         this.elementos.contador.id = 'contador-manga';
         this.elementos.contador.style.cssText = `
@@ -168,14 +253,10 @@ const mangaViewer = {
             text-align: center;
         `;
         
-        // Contenedor de botones
+        // Botones
         this.elementos.botones = document.createElement('div');
-        this.elementos.botones.style.cssText = `
-            display: flex;
-            gap: 10px;
-        `;
+        this.elementos.botones.style.cssText = `display: flex; gap: 10px;`;
         
-        // Botones básicos
         const botonesHTML = `
             <button id="manga-prev" title="Imagen anterior (←)" style="background: #ff6b9d; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">◀ Anterior</button>
             <button id="manga-next" title="Imagen siguiente (→)" style="background: #4a90e2; color: white; border: none; border-radius: 5px; padding: 8px 15px; cursor: pointer; font-weight: bold;">Siguiente ▶</button>
@@ -187,11 +268,7 @@ const mangaViewer = {
         
         this.elementos.botones.innerHTML = botonesHTML;
         
-        // Añadir elementos a controles
-        this.elementos.controles.appendChild(this.elementos.contador);
-        this.elementos.controles.appendChild(this.elementos.botones);
-        
-        // Botón de pantalla completa (opcional)
+        // Botón pantalla completa
         const fullscreenBtn = document.createElement('button');
         fullscreenBtn.id = 'manga-fullscreen';
         fullscreenBtn.title = 'Pantalla completa (F)';
@@ -206,12 +283,17 @@ const mangaViewer = {
             font-weight: bold;
             font-size: 1.2rem;
         `;
+        
         this.elementos.botones.appendChild(fullscreenBtn);
+        this.elementos.controles.appendChild(this.elementos.contador);
+        this.elementos.controles.appendChild(this.elementos.botones);
     },
     
-    // Configurar eventos
+    // ============================================================================
+    // CONFIGURAR EVENTOS
+    // ============================================================================
+    
     configurarEventos: function() {
-        // Eventos de botones
         document.getElementById('manga-prev').addEventListener('click', () => this.imagenAnterior());
         document.getElementById('manga-next').addEventListener('click', () => this.imagenSiguiente());
         document.getElementById('manga-zoom-in').addEventListener('click', () => this.zoomIn());
@@ -220,35 +302,22 @@ const mangaViewer = {
         document.getElementById('manga-close').addEventListener('click', () => this.ocultar());
         document.getElementById('manga-fullscreen').addEventListener('click', () => this.togglePantallaCompleta());
         
-        // Eventos de teclado
         document.addEventListener('keydown', (e) => this.manejarTeclado(e));
         
-        // Eventos de la imagen
         this.elementos.imagen.addEventListener('click', (e) => {
-            if (e.ctrlKey) {
-                this.zoomIn();
-            } else if (e.shiftKey) {
-                this.zoomOut();
-            } else {
-                // Click simple: alternar controles
-                this.elementos.controles.style.opacity = 
-                    this.elementos.controles.style.opacity === '0' ? '1' : '0';
-            }
+            if (e.ctrlKey) this.zoomIn();
+            else if (e.shiftKey) this.zoomOut();
+            else this.elementos.controles.style.opacity = 
+                this.elementos.controles.style.opacity === '0' ? '1' : '0';
         });
         
-        // Evento de rueda del mouse para zoom
         this.elementos.contenedor.addEventListener('wheel', (e) => {
             if (e.ctrlKey) {
                 e.preventDefault();
-                if (e.deltaY < 0) {
-                    this.zoomIn();
-                } else {
-                    this.zoomOut();
-                }
+                e.deltaY < 0 ? this.zoomIn() : this.zoomOut();
             }
         }, { passive: false });
         
-        // Doble click para resetear zoom
         this.elementos.imagen.addEventListener('dblclick', () => this.resetZoom());
     },
     
@@ -256,46 +325,38 @@ const mangaViewer = {
     // FUNCIONES PRINCIPALES
     // ============================================================================
     
-    // Mostrar visor con imágenes
-    mostrar: function(imagenes, indiceInicial = 0) {
-        console.log("📖 Mostrando visor de manga con", imagenes.length, "imágenes");
+    mostrar: function(imagenes, indiceInicial = 0, subcontenedorId = '') {
+        console.log("📖 Mostrando manga:", imagenes.length, "páginas");
         
-        // Guardar imágenes
         this.estado.imagenes = [...imagenes];
         this.estado.imagenActual = indiceInicial;
         this.estado.zoomActual = this.config.zoomDefault;
         this.estado.pantallaVisible = true;
+        this.estado.subcontenedorActual = subcontenedorId;
         
-        // Mostrar contenedor
         this.elementos.contenedor.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Ocultar scroll del body
+        document.body.style.overflow = 'hidden';
         
-        // Cargar primera imagen
         this.cargarImagenActual();
-        
-        // Actualizar controles
         this.actualizarControles();
-        
-        // Guardar estado
         this.guardarEstado();
     },
     
-    // Ocultar visor
     ocultar: function() {
         this.estado.pantallaVisible = false;
         this.elementos.contenedor.style.display = 'none';
-        document.body.style.overflow = ''; // Restaurar scroll
-        
-        // Limpiar imagen
+        document.body.style.overflow = '';
         this.elementos.imagen.src = '';
-        
-        console.log("📖 Visor de manga ocultado");
+        console.log("📖 Visor ocultado");
     },
     
-    // Cargar imagen actual
+    // ============================================================================
+    // CARGA DE IMÁGENES
+    // ============================================================================
+    
     cargarImagenActual: function() {
         if (this.estado.imagenes.length === 0) {
-            console.error("❌ No hay imágenes para mostrar");
+            console.error("❌ No hay imágenes");
             return;
         }
         
@@ -304,38 +365,23 @@ const mangaViewer = {
         
         console.log("🖼️ Cargando imagen", indice + 1, "de", this.estado.imagenes.length);
         
-        // Mostrar loader
         document.getElementById('manga-loader').style.display = 'block';
         this.estado.cargando = true;
         
-        // Precargar imagen
         const img = new Image();
         img.onload = () => {
-            // Asignar URL a la imagen del visor
             this.elementos.imagen.src = url;
-            
-            // Aplicar zoom actual
             this.aplicarZoom();
-            
-            // Ocultar loader
             document.getElementById('manga-loader').style.display = 'none';
             this.estado.cargando = false;
-            
-            console.log("✅ Imagen cargada:", url);
-            
-            // Actualizar contador
             this.actualizarContador();
-            
-            // Intentar precargar siguiente imagen
             this.preloadSiguiente();
         };
         
         img.onerror = () => {
-            console.error("❌ Error cargando imagen:", url);
+            console.error("❌ Error cargando:", url);
             document.getElementById('manga-loader').style.display = 'none';
             this.estado.cargando = false;
-            
-            // Mostrar mensaje de error
             this.elementos.imagen.src = '';
             this.elementos.imagen.alt = 'Error cargando imagen';
             this.elementos.imagen.style.backgroundColor = '#333';
@@ -344,7 +390,6 @@ const mangaViewer = {
         img.src = url;
     },
     
-    // Precargar siguiente imagen
     preloadSiguiente: function() {
         const siguienteIndice = this.estado.imagenActual + 1;
         if (siguienteIndice < this.estado.imagenes.length) {
@@ -361,9 +406,7 @@ const mangaViewer = {
         if (this.estado.imagenActual > 0) {
             this.estado.imagenActual--;
             this.cargarImagenActual();
-            this.resetZoom(); // Resetear zoom al cambiar de imagen
-        } else {
-            console.log("📖 Ya estás en la primera imagen");
+            this.resetZoom();
         }
     },
     
@@ -371,9 +414,7 @@ const mangaViewer = {
         if (this.estado.imagenActual < this.estado.imagenes.length - 1) {
             this.estado.imagenActual++;
             this.cargarImagenActual();
-            this.resetZoom(); // Resetear zoom al cambiar de imagen
-        } else {
-            console.log("📖 Ya estás en la última imagen");
+            this.resetZoom();
         }
     },
     
@@ -412,11 +453,7 @@ const mangaViewer = {
     
     aplicarZoom: function() {
         this.elementos.imagen.style.transform = `scale(${this.estado.zoomActual})`;
-        
-        // Actualizar cursor según zoom
-        this.elementos.imagen.style.cursor = this.estado.zoomActual > 1.0 
-            ? 'zoom-out' 
-            : 'zoom-in';
+        this.elementos.imagen.style.cursor = this.estado.zoomActual > 1.0 ? 'zoom-out' : 'zoom-in';
     },
     
     // ============================================================================
@@ -433,27 +470,14 @@ const mangaViewer = {
     
     entrarPantallaCompleta: function() {
         const elem = this.elementos.contenedor;
-        
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-            elem.msRequestFullscreen();
-        }
-        
+        if (elem.requestFullscreen) elem.requestFullscreen();
+        else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
         this.estado.modoPantallaCompleta = true;
     },
     
     salirPantallaCompleta: function() {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-            document.msExitFullscreen();
-        }
-        
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
         this.estado.modoPantallaCompleta = false;
     },
     
@@ -472,7 +496,6 @@ const mangaViewer = {
     },
     
     actualizarControles: function() {
-        // Actualizar estado de botones
         const prevBtn = document.getElementById('manga-prev');
         const nextBtn = document.getElementById('manga-next');
         
@@ -494,55 +517,21 @@ const mangaViewer = {
     // ============================================================================
     
     manejarTeclado: function(event) {
-        // Solo si el visor está visible
         if (!this.estado.pantallaVisible) return;
         
-        // Prevenir comportamiento por defecto
         event.preventDefault();
         
         switch(event.key) {
-            case 'ArrowLeft':
-            case 'a':
-            case 'A':
-                this.imagenAnterior();
+            case 'ArrowLeft': case 'a': case 'A': this.imagenAnterior(); break;
+            case 'ArrowRight': case 'd': case 'D': this.imagenSiguiente(); break;
+            case '+': case '=': if (event.ctrlKey) this.zoomIn(); break;
+            case '-': case '_': if (event.ctrlKey) this.zoomOut(); break;
+            case '0': this.resetZoom(); break;
+            case 'Escape': 
+                if (this.estado.modoPantallaCompleta) this.salirPantallaCompleta();
+                else this.ocultar();
                 break;
-                
-            case 'ArrowRight':
-            case 'd':
-            case 'D':
-                this.imagenSiguiente();
-                break;
-                
-            case '+':
-            case '=':
-                if (event.ctrlKey) {
-                    this.zoomIn();
-                }
-                break;
-                
-            case '-':
-            case '_':
-                if (event.ctrlKey) {
-                    this.zoomOut();
-                }
-                break;
-                
-            case '0':
-                this.resetZoom();
-                break;
-                
-            case 'Escape':
-                if (this.estado.modoPantallaCompleta) {
-                    this.salirPantallaCompleta();
-                } else {
-                    this.ocultar();
-                }
-                break;
-                
-            case 'f':
-            case 'F':
-                this.togglePantallaCompleta();
-                break;
+            case 'f': case 'F': this.togglePantallaCompleta(); break;
         }
     },
     
@@ -554,10 +543,10 @@ const mangaViewer = {
         try {
             localStorage.setItem('mangaViewerState', JSON.stringify({
                 zoomActual: this.estado.zoomActual,
-                ultimasImagenes: this.estado.imagenes.slice(0, 10) // Guardar últimas 10
+                ultimoSubcontenedor: this.estado.subcontenedorActual
             }));
         } catch (e) {
-            console.error("Error guardando estado del visor:", e);
+            console.error("Error guardando estado:", e);
         }
     },
     
@@ -569,85 +558,116 @@ const mangaViewer = {
                 this.estado.zoomActual = estado.zoomActual || this.config.zoomDefault;
             }
         } catch (e) {
-            console.error("Error cargando estado del visor:", e);
+            console.error("Error cargando estado:", e);
         }
     },
     
     // ============================================================================
-    // API PÚBLICA - FUNCIONES PARA USAR DESDE OTROS ARCHIVOS
+    // GESTIÓN DE LA BASE DE DATOS DE MANGA
     // ============================================================================
     
-    // Mostrar una sola imagen
-    mostrarImagen: function(urlImagen) {
+    agregarMangaASubcontenedor: function(subcontenedorId, urlsImagenes) {
+        if (!this.mangaDatabase[subcontenedorId]) {
+            this.mangaDatabase[subcontenedorId] = [];
+        }
+        
+        this.mangaDatabase[subcontenedorId].push(...urlsImagenes);
+        console.log("➕ Manga añadido a", subcontenedorId, "Total:", this.mangaDatabase[subcontenedorId].length, "páginas");
+        
+        return this.mangaDatabase[subcontenedorId].length;
+    },
+    
+    obtenerMangaDeSubcontenedor: function(subcontenedorId) {
+        return this.mangaDatabase[subcontenedorId] || [];
+    },
+    
+    obtenerTodosLosSubcontenedoresConManga: function() {
+        const subcontenedores = [];
+        Object.keys(this.mangaDatabase).forEach(key => {
+            if (this.mangaDatabase[key] && this.mangaDatabase[key].length > 0) {
+                subcontenedores.push({
+                    id: key,
+                    paginas: this.mangaDatabase[key].length
+                });
+            }
+        });
+        return subcontenedores;
+    },
+    
+    // ============================================================================
+    // API PÚBLICA
+    // ============================================================================
+    
+    mostrarMangaDeSubcontenedor: function(subcontenedorId, indiceInicial = 0) {
+        const imagenes = this.obtenerMangaDeSubcontenedor(subcontenedorId);
+        
+        if (imagenes.length === 0) {
+            console.error("❌ No hay manga para", subcontenedorId);
+            alert(`No hay páginas de manga disponibles para ${subcontenedorId}.\n\nPuedes añadir URLs usando:\n\nmangaViewer.agregarMangaASubcontenedor('${subcontenedorId}', ['url1.jpg', 'url2.jpg'])`);
+            return false;
+        }
+        
+        this.mostrar(imagenes, indiceInicial, subcontenedorId);
+        return true;
+    },
+    
+    mostrarImagenIndividual: function(urlImagen) {
         this.mostrar([urlImagen], 0);
     },
     
-    // Mostrar múltiples imágenes
-    mostrarImagenes: function(urlsImagenes, indiceInicial = 0) {
-        this.mostrar(urlsImagenes, indiceInicial);
-    },
-    
-    // Añadir imágenes al final (para actualización dinámica)
     agregarImagenes: function(urlsImagenes) {
-        this.estado.imagenes.push(...urlsImagenes);
-        console.log("➕ Imágenes añadidas. Total:", this.estado.imagenes.length);
-        
-        // Si el visor está visible, actualizar controles
-        if (this.estado.pantallaVisible) {
+        if (this.estado.subcontenedorActual) {
+            return this.agregarMangaASubcontenedor(this.estado.subcontenedorActual, urlsImagenes);
+        } else {
+            this.estado.imagenes.push(...urlsImagenes);
             this.actualizarControles();
+            return this.estado.imagenes.length;
         }
     },
     
-    // Limpiar todas las imágenes
     limpiarImagenes: function() {
         this.estado.imagenes = [];
         this.estado.imagenActual = 0;
-        console.log("🧹 Todas las imágenes eliminadas");
     },
     
-    // Obtener información del estado actual
     obtenerEstado: function() {
         return {
             totalImagenes: this.estado.imagenes.length,
             imagenActual: this.estado.imagenActual + 1,
             zoomActual: this.estado.zoomActual,
-            visible: this.estado.pantallaVisible
+            visible: this.estado.pantallaVisible,
+            subcontenedorActual: this.estado.subcontenedorActual
         };
-    }
-};
-
-// ============================================================================
-// INICIALIZACIÓN AUTOMÁTICA
-// ============================================================================
-
-// Inicializar cuando se cargue la página
-document.addEventListener('DOMContentLoaded', function() {
-    mangaViewer.inicializar();
+    },
     
-    // Hacerlo disponible globalmente
-    window.mangaViewer = mangaViewer;
+    // ============================================================================
+    // INTEGRACIÓN CON LA INTERFAZ DE SUBCONTENEDORES
+    // ============================================================================
     
-    console.log("📖 Manga Viewer cargado y listo");
-});
-
-// ============================================================================
-// FUNCIÓN GLOBAL PARA INTEGRAR CON TUS SUBCONTENEDORES
-// ============================================================================
-
-// Función para agregar botón "Leer Manga" a los subcontenedores
-function agregarBotonMangaASubcontenedor(subcontenedorId, urlsImagenes) {
-    // Buscar la tarjeta del subcontenedor
-    const tarjetas = document.querySelectorAll('.subcontenedor-card');
-    
-    tarjetas.forEach(tarjeta => {
-        // Verificar si es la tarjeta correcta (por el texto o atributo)
-        const texto = tarjeta.querySelector('.subcontenedor-texto');
-        if (texto && texto.textContent.includes(subcontenedorId.replace('_', '.'))) {
-            // Crear botón de manga
+    agregarBotonesMangaATarjetas: function() {
+        // Esto se llamará después de que se carguen los subcontenedores
+        const tarjetas = document.querySelectorAll('.subcontenedor-card');
+        
+        tarjetas.forEach(tarjeta => {
+            const texto = tarjeta.querySelector('.subcontenedor-texto');
+            if (!texto) return;
+            
+            // Extraer ID del subcontenedor del texto (ej: "Sub-Contenedor 1.1" → "sub1_1")
+            const match = texto.textContent.match(/(\d+)\.(\d+)/);
+            if (!match) return;
+            
+            const subId = `sub${match[1]}_${match[2]}`;
+            const tieneManga = this.mangaDatabase[subId] && this.mangaDatabase[subId].length > 0;
+            
+            // Si ya tiene botón, no hacer nada
+            if (tarjeta.querySelector('.boton-manga')) return;
+            
+            // Crear botón
             const botonManga = document.createElement('button');
-            botonManga.innerHTML = '📖 Leer Manga';
+            botonManga.className = 'boton-manga';
+            botonManga.innerHTML = tieneManga ? '📖 Leer Manga' : '➕ Añadir Manga';
             botonManga.style.cssText = `
-                background: linear-gradient(135deg, #9C27B0, #673AB7);
+                background: linear-gradient(135deg, ${tieneManga ? '#9C27B0, #673AB7' : '#4a90e2, #7b68ee'});
                 color: white;
                 border: none;
                 border-radius: 10px;
@@ -661,7 +681,9 @@ function agregarBotonMangaASubcontenedor(subcontenedorId, urlsImagenes) {
             
             botonManga.onmouseover = function() {
                 this.style.transform = 'translateY(-2px)';
-                this.style.boxShadow = '0 5px 15px rgba(156, 39, 176, 0.4)';
+                this.style.boxShadow = tieneManga ? 
+                    '0 5px 15px rgba(156, 39, 176, 0.4)' : 
+                    '0 5px 15px rgba(74, 144, 226, 0.4)';
             };
             
             botonManga.onmouseout = function() {
@@ -669,73 +691,120 @@ function agregarBotonMangaASubcontenedor(subcontenedorId, urlsImagenes) {
                 this.style.boxShadow = 'none';
             };
             
-            botonManga.onclick = function() {
-                mangaViewer.mostrarImagenes(urlsImagenes);
+            botonManga.onclick = (e) => {
+                e.stopPropagation(); // Prevenir que se active el click del subcontenedor
+                if (tieneManga) {
+                    this.mostrarMangaDeSubcontenedor(subId);
+                } else {
+                    const urls = prompt(
+                        `Introduce las URLs de las páginas del manga para ${subId} (separadas por comas):\n\nEjemplo:\nhttps://ejemplo.com/pag1.jpg, https://ejemplo.com/pag2.jpg`,
+                        'https://ejemplo.com/pag1.jpg, https://ejemplo.com/pag2.jpg'
+                    );
+                    
+                    if (urls) {
+                        const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
+                        if (urlsArray.length > 0) {
+                            this.agregarMangaASubcontenedor(subId, urlsArray);
+                            botonManga.innerHTML = '📖 Leer Manga';
+                            botonManga.style.background = 'linear-gradient(135deg, #9C27B0, #673AB7)';
+                            alert(`✅ ${urlsArray.length} páginas añadidas a ${subId}`);
+                        }
+                    }
+                }
             };
             
-            // Añadir botón a la tarjeta
             tarjeta.appendChild(botonManga);
-            
-            console.log("✅ Botón de manga añadido a:", subcontenedorId);
-        }
-    });
-}
+        });
+        
+        console.log("✅ Botones de manga añadidos a", tarjetas.length, "tarjetas");
+    }
+};
 
-// Función global para mostrar manga desde cualquier lugar
-window.mostrarManga = function(urlsImagenes, indiceInicial = 0) {
-    if (mangaViewer && mangaViewer.mostrarImagenes) {
-        mangaViewer.mostrarImagenes(urlsImagenes, indiceInicial);
-        return true;
+// ============================================================================
+// INICIALIZACIÓN AUTOMÁTICA
+// ============================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    mangaViewer.inicializar();
+    window.mangaViewer = mangaViewer;
+    
+    console.log("📖 Manga Viewer cargado y listo");
+});
+
+// ============================================================================
+// FUNCIONES GLOBALES PARA USAR DESDE OTROS ARCHIVOS
+// ============================================================================
+
+// Función principal para mostrar manga
+window.mostrarManga = function(subcontenedorId, indiceInicial = 0) {
+    if (mangaViewer && mangaViewer.mostrarMangaDeSubcontenedor) {
+        return mangaViewer.mostrarMangaDeSubcontenedor(subcontenedorId, indiceInicial);
     }
     return false;
 };
 
-// Función global para mostrar una sola imagen
+// Función para mostrar imagen individual
 window.mostrarImagenAmpliada = function(urlImagen) {
-    if (mangaViewer && mangaViewer.mostrarImagen) {
-        mangaViewer.mostrarImagen(urlImagen);
+    if (mangaViewer && mangaViewer.mostrarImagenIndividual) {
+        mangaViewer.mostrarImagenIndividual(urlImagen);
         return true;
     }
     return false;
 };
 
 // Función para añadir imágenes dinámicamente
-window.agregarImagenesManga = function(urlsImagenes) {
-    if (mangaViewer && mangaViewer.agregarImagenes) {
-        mangaViewer.agregarImagenes(urlsImagenes);
+window.agregarImagenesManga = function(subcontenedorId, urlsImagenes) {
+    if (mangaViewer && mangaViewer.agregarMangaASubcontenedor) {
+        return mangaViewer.agregarMangaASubcontenedor(subcontenedorId, urlsImagenes);
+    }
+    return false;
+};
+
+// Función para añadir botones a tarjetas (llamar después de cargar subcontenedores)
+window.agregarBotonesManga = function() {
+    if (mangaViewer && mangaViewer.agregarBotonesMangaATarjetas) {
+        mangaViewer.agregarBotonesMangaATarjetas();
         return true;
     }
     return false;
 };
 
 // ============================================================================
-// EJEMPLOS DE USO (para testing)
+// FUNCIONES DE TESTING DESDE CONSOLA
 // ============================================================================
 
-// Ejemplo 1: Mostrar manga desde consola
+// Ejemplo: mostrar manga de un subcontenedor
 window.ejemploManga = function() {
-    const imagenesEjemplo = [
-        'https://pbs.twimg.com/media/G5_unInW4AA4bVq?format=png&name=large',
-        'https://pbs.twimg.com/media/G5_vVCEX0AAnsA7?format=jpg&name=large',
-        'https://pbs.twimg.com/media/G5_vDqIXgAAa8et?format=png&name=large'
-    ];
-    
-    mostrarManga(imagenesEjemplo);
-    console.log("📖 Ejemplo de manga mostrado. Usa las flechas ← → para navegar.");
+    mostrarManga('sub1_1');
+    console.log("📖 Ejemplo: Mostrando manga de sub1_1");
 };
 
-// Ejemplo 2: Añadir más imágenes dinámicamente
-window.agregarMasImagenes = function() {
-    const nuevasImagenes = [
-        'https://pbs.twimg.com/media/G6FAe2wWIAAIYTu?format=jpg&name=large',
-        'https://pbs.twimg.com/media/G6FAHBHW8AAX4f1?format=png&name=large'
-    ];
-    
-    agregarImagenesManga(nuevasImagenes);
-    console.log("➕ Imágenes añadidas dinámicamente");
+// Añadir más páginas a un subcontenedor
+window.agregarPaginasManga = function(subcontenedorId) {
+    const urls = prompt("Introduce URLs separadas por comas:");
+    if (urls) {
+        const urlsArray = urls.split(',').map(url => url.trim()).filter(url => url);
+        if (urlsArray.length > 0) {
+            const total = agregarImagenesManga(subcontenedorId, urlsArray);
+            console.log(`✅ ${urlsArray.length} páginas añadidas a ${subcontenedorId}. Total: ${total}`);
+        }
+    }
 };
 
-// Ejemplo 3: Ver estado actual
+// Ver todos los subcontenedores con manga
+window.verSubcontenedoresConManga = function() {
+    if (mangaViewer) {
+        const subcontenedores = mangaViewer.obtenerTodosLosSubcontenedoresConManga();
+        console.log("📚 Subcontenedores con manga:");
+        subcontenedores.forEach(sub => {
+            console.log(`- ${sub.id}: ${sub.paginas} páginas`);
+        });
+        return subcontenedores;
+    }
+    return [];
+};
+
+// Ver estado actual
 window.verEstadoMangaViewer = function() {
     if (mangaViewer) {
         const estado = mangaViewer.obtenerEstado();
@@ -744,3 +813,14 @@ window.verEstadoMangaViewer = function() {
     }
     return null;
 };
+
+// Cargar manga desde un array de URLs
+window.cargarMangaDesdeArray = function(subcontenedorId, arrayUrls) {
+    if (mangaViewer && arrayUrls && arrayUrls.length > 0) {
+        mangaViewer.agregarMangaASubcontenedor(subcontenedorId, arrayUrls);
+        console.log(`📚 ${arrayUrls.length} páginas cargadas en ${subcontenedorId}`);
+        return true;
+    }
+    return false;
+};
+[file content end]
