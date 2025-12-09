@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- VISOR DE VIDEOS H (se crea dinámicamente en 1videos-viewer.js) -->
+    <!-- Se mostrará como overlay cuando se active -->
+
     <!-- PANTALLA DE EVENTO DIARIO -->
     <div id="pantalla-evento-diario" class="pantalla">
         <div class="contenedor">
@@ -156,6 +159,13 @@
                             <div class="lastsummer-texto">🔥 PALABRAS FALLADAS</div>
                             <div class="lastsummer-info">Revisa y practica tus errores</div>
                         </div>
+                        
+                        <!-- NUEVA TARJETA: VISOR DE VIDEOS H -->
+                        <div class="lastsummer-card" onclick="iniciarVisorVideosH()">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2504/2504942.png" alt="Videos H" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">🎬 VISOR DE VIDEOS H</div>
+                            <div class="lastsummer-info">Videos + Sistema de quiz integrado</div>
+                        </div>
                     </div>
                 </div>
 
@@ -222,12 +232,13 @@
                             <div class="lastsummer-texto">📅 Calendario Fabrizio 2026</div>
                             <div class="lastsummer-info">12 meses × 4 semanas × 5 fotos = 240 fotos</div>
                         </div>
-                                <!-- NUEVA TARJETA: COMIENZO 2025 - DICIEMBRE -->
-        <div class="lastsummer-card" onclick="iniciarComienzoDiciembre2025()">
-            <img src="https://via.placeholder.com/300x200/ffd700/000000?text=Diciembre+2025" alt="Comienzo Diciembre 2025" class="lastsummer-imagen">
-            <div class="lastsummer-texto">🎄 Comienzo 2025 - Diciembre</div>
-            <div class="lastsummer-info">8-31 dic × 5 fotos/día = 120 fotos</div>
-        </div>
+                        
+                        <!-- NUEVA TARJETA: COMIENZO 2025 - DICIEMBRE -->
+                        <div class="lastsummer-card" onclick="iniciarComienzoDiciembre2025()">
+                            <img src="https://via.placeholder.com/300x200/ffd700/000000?text=Diciembre+2025" alt="Comienzo Diciembre 2025" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">🎄 Comienzo 2025 - Diciembre</div>
+                            <div class="lastsummer-info">8-31 dic × 5 fotos/día = 120 fotos</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -614,6 +625,77 @@
         <!-- Esta pantalla se crea dinámicamente en script.js -->
     </div>
 
+    <!-- PANTALLA DE VISOR DE VIDEOS H -->
+    <div id="pantalla-visor-videos-h" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🎬 VISOR DE VIDEOS H</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                </div>
+            </div>
+            
+            <h1>🎬 Colecciones de Videos H</h1>
+            <p class="subtitulo">Selecciona una colección para ver sus videos</p>
+            
+            <div class="menu-videos-h">
+                <!-- COLECCIÓN 1 -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">📁 COLECCIÓN 1</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="cargarVideosColeccion('coleccion1', 'subcoleccion1')">
+                            <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Sub1" alt="Subcolección 1" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Subcolección 1</div>
+                            <div class="lastsummer-info">5 videos disponibles</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarVideosColeccion('coleccion1', 'subcoleccion2')">
+                            <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Sub2" alt="Subcolección 2" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Subcolección 2</div>
+                            <div class="lastsummer-info">3 videos disponibles</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarVideosColeccion('coleccion1', 'subcoleccion3')">
+                            <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Sub3" alt="Subcolección 3" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Subcolección 3</div>
+                            <div class="lastsummer-info">4 videos disponibles</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- COLECCIÓN 2 -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">📁 COLECCIÓN 2</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="cargarVideosColeccion('coleccion2', 'subcoleccion1')">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Sub1" alt="Subcolección 1" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Subcolección 1</div>
+                            <div class="lastsummer-info">6 videos disponibles</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarVideosColeccion('coleccion2', 'subcoleccion2')">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Sub2" alt="Subcolección 2" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Subcolección 2</div>
+                            <div class="lastsummer-info">2 videos disponibles</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- INFORMACIÓN DEL SISTEMA -->
+                <div class="info-videos-h">
+                    <div class="info-box">
+                        <h3>💡 Información del Sistema</h3>
+                        <ul>
+                            <li>🎬 Videos cargados desde Google Drive</li>
+                            <li>📝 Sistema de quiz integrado después de cada video</li>
+                            <li>💰 Recompensas económicas por completar quizzes</li>
+                            <li>🎮 Controles: Flechas para navegar, Espacio para pausa/reproducir</li>
+                            <li>📊 Estadísticas de progreso guardadas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- ARCHIVOS JS (IMPORTANTE: ORDEN CORRECTO) -->
 <script src="1vocabulario.js"></script>
 <script src="1config.js"></script>
@@ -621,7 +703,7 @@
 <script src="1failed-words.js"></script>
 <script src="1events.js"></script>
 <script src="1rpg_nakano.js"></script>
-<script src="1calendario.js"></script> <!-- ¡NUEVO ARCHIVO! -->
+<script src="1calendario.js"></script>
 <script src="1manga-viewer.js"></script>
 <script src="1videos-viewer.js"></script>
 <script src="1main.js"></script>
