@@ -1,5 +1,5 @@
 // ============================================================================
-// SISTEMA MANGA PRINCIPAL
+// SISTEMA MANGA PRINCIPAL - CON ZOOM AUTOMÁTICO 240% nhentai
 // ============================================================================
 
 const sistemaManga = {
@@ -109,7 +109,7 @@ const sistemaManga = {
                     </div>
                     
                     <!-- Contenedor de lectura -->
-                    <div class="contenedor-lectura" onclick="sistemaManga.siguientePagina()">
+                    <div class="contenedor-lectura">
                         <div class="imagen-manga-container">
                             <div class="contenedor-imagen-zoom" id="contenedor-imagen-zoom">
                                 <img src="${manga.imagenes[0]}" 
@@ -117,8 +117,11 @@ const sistemaManga = {
                                      class="imagen-manga"
                                      id="imagen-manga-actual">
                                 <div class="indicador-click">
-                                    <div class="icono-click">🔍</div>
-                                    <p>Doble clic para zoom • Rueda para ajustar • Arrastra para mover</p>
+                                    <div class="icono-click">↔️</div>
+                                    <p><strong>Modo nhentai activado (240%)</strong></p>
+                                    <p>Usa la barra inferior para navegar • Flechas ←→ para desplazarte</p>
+                                    <p>Rueda del mouse para scroll horizontal • Doble clic para zoom normal</p>
+                                    <p><code>Z</code> +5% • <code>X</code> -5% • <code>F</code> pantalla completa • <code>R</code> reiniciar zoom</p>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +130,7 @@ const sistemaManga = {
                     <!-- Navegación rápida -->
                     <div class="navegacion-rapida">
                         <button class="boton-nav" onclick="sistemaManga.paginaAnterior(); event.stopPropagation();">
-                            ← Anterior
+                            ← Página Anterior
                         </button>
                         <button class="boton-nav-principal" onclick="sistemaManga.siguientePagina(); event.stopPropagation();">
                             Siguiente Página →
@@ -138,14 +141,37 @@ const sistemaManga = {
                         </button>
                     </div>
                     
-                    <!-- Controles de salto rápido -->
-                    <div class="controles-salto">
-                        <div class="grupo-saltos">
-                            <button class="boton-salto" onclick="sistemaManga.saltarAPagina(0)">Primera</button>
-                            <button class="boton-salto" onclick="sistemaManga.saltarAPagina(${Math.floor(manga.paginas/4)})">25%</button>
-                            <button class="boton-salto" onclick="sistemaManga.saltarAPagina(${Math.floor(manga.paginas/2)})">50%</button>
-                            <button class="boton-salto" onclick="sistemaManga.saltarAPagina(${Math.floor(manga.paginas*3/4)})">75%</button>
-                            <button class="boton-salto" onclick="sistemaManga.saltarAPagina(${manga.paginas-1})">Última</button>
+                    <!-- Controles de zoom nhentai -->
+                    <div class="controles-zoom-nhentai">
+                        <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.ajustarZoomNhentai(-0.05)" title="Disminuir zoom 5% (X)">
+                            🔍−
+                        </button>
+                        <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.reiniciarZoomNhentai()" title="Reiniciar a 240% (R)">
+                            240%
+                        </button>
+                        <span class="escala-zoom-nhentai" id="escala-zoom-nhentai" style="color: #ffd700; font-weight: bold; min-width: 100px; text-align: center;">
+                            240%
+                        </span>
+                        <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.ajustarZoomNhentai(0.05)" title="Aumentar zoom 5% (Z)">
+                            🔍+
+                        </button>
+                        <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.toggleModoNhentai()" title="Cambiar modo (Doble clic)">
+                            ${sistemaZoomManga.modoNhentai ? '📱' : '🔍'}
+                        </button>
+                    </div>
+                    
+                    <!-- Barra de progreso horizontal -->
+                    <div class="barra-progreso-horizontal">
+                        <div class="barra-progreso-horizontal-container">
+                            <div class="barra-progreso-horizontal-fill" id="barra-progreso-horizontal-fill"></div>
+                            <div class="indicador-posicion-horizontal" id="indicador-posicion-horizontal"></div>
+                        </div>
+                        <div class="controles-horizontal">
+                            <button onclick="sistemaZoomManga.scrollIzquierda()">◀◀</button>
+                            <button onclick="sistemaZoomManga.scrollIzquierdaPoco()">◀</button>
+                            <span>Scroll Horizontal</span>
+                            <button onclick="sistemaZoomManga.scrollDerechaPoco()">▶</button>
+                            <button onclick="sistemaZoomManga.scrollDerecha()">▶▶</button>
                         </div>
                     </div>
                     
@@ -176,6 +202,10 @@ const sistemaManga = {
                                 <span class="estadistica-label">Progreso</span>
                                 <span class="estadistica-valor" id="progreso-estadistica">${Math.round((1/manga.paginas)*100)}%</span>
                             </div>
+                            <div class="estadistica">
+                                <span class="estadistica-label">Zoom actual</span>
+                                <span class="estadistica-valor" id="zoom-estadistica">240%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,11 +218,9 @@ const sistemaManga = {
         // Generar miniaturas
         this.generarMiniaturas();
         
-        // Inicializar sistema de zoom
+        // Inicializar sistema de zoom nhentai con 240% por defecto
         setTimeout(() => {
-            if (typeof sistemaZoomManga !== 'undefined') {
-                sistemaZoomManga.inicializarZoom();
-            }
+            sistemaZoomManga.inicializarZoomNhentai();
         }, 100);
         
         console.log("📚 Manga cargado:", manga.titulo);
@@ -284,10 +312,10 @@ const sistemaManga = {
         // Actualizar miniaturas
         this.generarMiniaturas();
         
-        // Reiniciar zoom si está activo
-        if (typeof sistemaZoomManga !== 'undefined' && sistemaZoomManga.zoomActivado) {
-            sistemaZoomManga.resetearZoom();
-        }
+        // Resetear scroll horizontal
+        sistemaZoomManga.reiniciarScrollHorizontal();
+        
+        console.log(`📄 Cambiado a página ${pagina + 1}`);
     },
     
     // Mostrar mensaje final
@@ -351,12 +379,21 @@ const sistemaManga = {
                         <h3>${this.estado.mangaActual.titulo}</h3>
                         <p>${this.estado.mangaActual.descripcion}</p>
                         <p>Página actual: ${this.estado.paginaActual + 1} de ${this.estado.mangaActual.paginas}</p>
+                        <p>Zoom actual: <span id="zoom-menu-estadistica">${Math.round(sistemaZoomManga.zoomNhentai * 100)}%</span></p>
                     </div>
                 </div>
             </div>
         `;
         
         document.body.innerHTML = html;
+        
+        // Actualizar estadística de zoom en el menú
+        setTimeout(() => {
+            const zoomEstadistica = document.getElementById('zoom-menu-estadistica');
+            if (zoomEstadistica) {
+                zoomEstadistica.textContent = `${Math.round(sistemaZoomManga.zoomNhentai * 100)}%`;
+            }
+        }, 100);
     },
     
     // Continuar leyendo desde el menú
@@ -369,33 +406,438 @@ const sistemaManga = {
     repetirManga: function() {
         this.estado.paginaActual = 0;
         this.mostrarPantallaManga(this.estado.mangaActual);
+    },
+    
+    // Ver en pantalla completa (modo nhentai)
+    verEnPantallaCompleta: function() {
+        const manga = this.estado.mangaActual;
+        if (!manga) return;
+        
+        const paginaActual = this.estado.paginaActual;
+        const imagenUrl = manga.imagenes[paginaActual];
+        
+        // Crear modal estilo nhentai
+        const modal = document.createElement('div');
+        modal.id = 'modal-pantalla-completa-nhentai';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        `;
+        
+        modal.innerHTML = `
+            <!-- Barra superior -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid #333;">
+                <div style="color: white; font-weight: bold;">
+                    ${manga.titulo} - Página ${paginaActual + 1}/${manga.imagenes.length}
+                    <span style="color: #ffd700; margin-left: 15px;">Zoom: ${Math.round(sistemaZoomManga.zoomNhentai * 100)}%</span>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="sistemaZoomMangaPantallaCompleta.ajustarZoom(-0.05)" 
+                            style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                        🔍−
+                    </button>
+                    <button onclick="sistemaZoomMangaPantallaCompleta.resetearZoom()" 
+                            style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                        240%
+                    </button>
+                    <button onclick="sistemaZoomMangaPantallaCompleta.ajustarZoom(0.05)" 
+                            style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                        🔍+
+                    </button>
+                    <button onclick="document.getElementById('modal-pantalla-completa-nhentai').remove()" 
+                            style="background: #ff4444; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">
+                        ✕
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contenedor de imagen -->
+            <div style="flex: 1; display: flex; justify-content: flex-start; align-items: flex-start; overflow-x: auto; overflow-y: hidden; position: relative;">
+                <div id="contenedor-imagen-pantalla-completa" 
+                     style="min-width: ${sistemaZoomManga.zoomNhentai * 100}%; height: 100%; display: flex; justify-content: flex-start; align-items: flex-start;">
+                    <img src="${imagenUrl}" 
+                         alt="Página ${paginaActual + 1}" 
+                         id="imagen-pantalla-completa"
+                         style="width: auto; height: 100%; object-fit: contain; cursor: grab;">
+                </div>
+                
+                <!-- Navegación lateral -->
+                <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">
+                    <button onclick="sistemaMangaPantallaCompleta.paginaAnterior(); event.stopPropagation()" 
+                            style="background: rgba(0,0,0,0.7); color: white; border: none; padding: 20px 10px; border-radius: 5px; cursor: pointer; font-size: 24px;">
+                        ←
+                    </button>
+                </div>
+                <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+                    <button onclick="sistemaMangaPantallaCompleta.paginaSiguiente(); event.stopPropagation()" 
+                            style="background: rgba(0,0,0,0.7); color: white; border: none; padding: 20px 10px; border-radius: 5px; cursor: pointer; font-size: 24px;">
+                        →
+                    </button>
+                </div>
+                
+                <!-- Indicador de posición -->
+                <div id="indicador-posicion-pantalla-completa" 
+                     style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: #00ff88; padding: 5px 10px; border-radius: 5px; font-family: monospace;">
+                    0%
+                </div>
+            </div>
+            
+            <!-- Barra inferior -->
+            <div style="display: flex; justify-content: center; padding: 10px; background: rgba(0, 0, 0, 0.9); border-top: 1px solid #333;">
+                <button onclick="sistemaMangaPantallaCompleta.descargarImagen()" 
+                        style="background: #2575fc; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; margin: 0 5px;">
+                    ⬇ Descargar
+                </button>
+                <button onclick="sistemaMangaPantallaCompleta.copiarEnlace()" 
+                        style="background: #00c853; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; margin: 0 5px;">
+                    🔗 Copiar enlace
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Sistema de zoom para pantalla completa
+        const sistemaZoomPantallaCompleta = {
+            zoomActual: sistemaZoomManga.zoomNhentai,
+            
+            ajustarZoom: function(incremento) {
+                this.zoomActual = Math.max(1.0, Math.min(4.0, this.zoomActual + incremento));
+                this.aplicarZoom();
+                sistemaZoomManga.mostrarNotificacionZoom(`Zoom: ${Math.round(this.zoomActual * 100)}%`);
+            },
+            
+            resetearZoom: function() {
+                this.zoomActual = 2.4; // 240%
+                this.aplicarZoom();
+                sistemaZoomManga.mostrarNotificacionZoom('Zoom reiniciado: 240%');
+            },
+            
+            aplicarZoom: function() {
+                const contenedor = document.getElementById('contenedor-imagen-pantalla-completa');
+                if (contenedor) {
+                    contenedor.style.minWidth = `${this.zoomActual * 100}%`;
+                }
+            }
+        };
+        
+        // Sistema de navegación para pantalla completa
+        const sistemaMangaPantallaCompleta = {
+            paginaAnterior: function() {
+                sistemaManga.paginaAnterior();
+                // Actualizar imagen en modal
+                const nuevaImagen = sistemaManga.estado.mangaActual.imagenes[sistemaManga.estado.paginaActual];
+                document.getElementById('imagen-pantalla-completa').src = nuevaImagen;
+                document.querySelector('#modal-pantalla-completa-nhentai div:first-child div:first-child').innerHTML = 
+                    `${manga.titulo} - Página ${sistemaManga.estado.paginaActual + 1}/${manga.imagenes.length}
+                    <span style="color: #ffd700; margin-left: 15px;">Zoom: ${Math.round(sistemaZoomPantallaCompleta.zoomActual * 100)}%</span>`;
+            },
+            
+            paginaSiguiente: function() {
+                sistemaManga.siguientePagina();
+                // Actualizar imagen en modal
+                const nuevaImagen = sistemaManga.estado.mangaActual.imagenes[sistemaManga.estado.paginaActual];
+                document.getElementById('imagen-pantalla-completa').src = nuevaImagen;
+                document.querySelector('#modal-pantalla-completa-nhentai div:first-child div:first-child').innerHTML = 
+                    `${manga.titulo} - Página ${sistemaManga.estado.paginaActual + 1}/${manga.imagenes.length}
+                    <span style="color: #ffd700; margin-left: 15px;">Zoom: ${Math.round(sistemaZoomPantallaCompleta.zoomActual * 100)}%</span>`;
+            },
+            
+            descargarImagen: function() {
+                const link = document.createElement('a');
+                link.href = imagenUrl;
+                link.download = `${manga.titulo.replace(/[^a-z0-9]/gi, '_')}_pagina_${paginaActual + 1}.jpg`;
+                link.click();
+            },
+            
+            copiarEnlace: function() {
+                navigator.clipboard.writeText(imagenUrl).then(() => {
+                    sistemaZoomManga.mostrarNotificacionZoom('Enlace copiado al portapapeles');
+                });
+            }
+        };
+        
+        // Hacer globales para los botones
+        window.sistemaZoomMangaPantallaCompleta = sistemaZoomPantallaCompleta;
+        window.sistemaMangaPantallaCompleta = sistemaMangaPantallaCompleta;
+        
+        // Configurar eventos de scroll
+        const contenedorPC = document.getElementById('contenedor-imagen-pantalla-completa').parentElement;
+        contenedorPC.addEventListener('scroll', () => {
+            const scrollPorcentaje = Math.round(
+                (contenedorPC.scrollLeft / (contenedorPC.scrollWidth - contenedorPC.clientWidth)) * 100
+            ) || 0;
+            document.getElementById('indicador-posicion-pantalla-completa').textContent = `${scrollPorcentaje}%`;
+        });
+        
+        // Cerrar con ESC
+        const cerrarConESC = (e) => {
+            if (e.key === 'Escape') modal.remove();
+        };
+        document.addEventListener('keydown', cerrarConESC);
+        
+        // Remover event listener cuando se cierre
+        modal.addEventListener('remove', () => {
+            document.removeEventListener('keydown', cerrarConESC);
+        });
+        
+        console.log("📺 Pantalla completa activada estilo nhentai");
     }
 };
 
 // ============================================================================
-// SISTEMA DE ZOOM ESTILO nhentai
+// SISTEMA DE ZOOM nhentai CON 240% POR DEFECTO
 // ============================================================================
 
 const sistemaZoomManga = {
-    zoomActivado: false,
-    escalaActual: 1.0,
-    escalaMaxima: 3.0,
-    escalaMinima: 1.0,
-    escalaPaso: 0.2,
-    posicionX: 0,
-    posicionY: 0,
+    modoNhentai: true,           // Modo nhentai activado por defecto
+    zoomNhentai: 2.4,            // 240% por defecto
+    zoomMinimo: 1.0,             // 100%
+    zoomMaximo: 4.0,             // 400%
+    pasoZoom: 0.05,              // 5% por paso
     arrastrando: false,
-    ultimoX: 0,
-    ultimoY: 0,
+    inicioX: 0,
+    scrollInicial: 0,
     
-    // Inicializar zoom
-    inicializarZoom: function() {
+    // Inicializar zoom nhentai
+    inicializarZoomNhentai: function() {
         const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
         const imagenManga = document.getElementById('imagen-manga-actual');
         
         if (!contenedorImagen || !imagenManga) return;
         
-        // Estilo inicial
+        // Activar modo nhentai por defecto
+        this.activarModoNhentai();
+        
+        // Configurar eventos
+        this.configurarEventosNhentai();
+        
+        // Inicializar barra de progreso horizontal
+        this.inicializarBarraProgresoHorizontal();
+        
+        console.log("🔍 Sistema nhentai activado - Zoom inicial: 240%");
+    },
+    
+    // Activar modo nhentai (240% por defecto)
+    activarModoNhentai: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        const imagenManga = document.getElementById('imagen-manga-actual');
+        
+        if (!contenedorImagen || !imagenManga) return;
+        
+        // Aplicar estilos nhentai
+        contenedorImagen.style.cssText = `
+            position: relative;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            cursor: grab;
+            width: 100%;
+            height: 75vh !important;
+            display: flex;
+            justify-content: flex-start !important;
+            align-items: flex-start !important;
+            scroll-behavior: smooth;
+            background: #111;
+            border-radius: 10px;
+            border: 2px solid #333;
+        `;
+        
+        // Imagen ampliada 240% por defecto
+        imagenManga.style.cssText = `
+            width: ${this.zoomNhentai * 100}% !important;
+            height: auto !important;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            pointer-events: auto;
+            flex-shrink: 0;
+        `;
+        
+        this.modoNhentai = true;
+        
+        // Actualizar UI
+        this.actualizarUIZoom();
+        this.actualizarBarraProgresoHorizontal();
+        
+        console.log(`📐 Modo nhentai activado - Ancho: ${Math.round(this.zoomNhentai * 100)}%`);
+    },
+    
+    // Configurar eventos para modo nhentai
+    configurarEventosNhentai: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        const imagenManga = document.getElementById('imagen-manga-actual');
+        
+        if (!contenedorImagen || !imagenManga) return;
+        
+        // Doble clic para alternar entre modo nhentai y normal
+        imagenManga.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.toggleModoNhentai();
+        });
+        
+        // Rueda del mouse controla el scroll horizontal
+        contenedorImagen.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (this.modoNhentai) {
+                // Scroll horizontal con la rueda
+                contenedorImagen.scrollLeft += e.deltaY * 2;
+                this.actualizarBarraProgresoHorizontal();
+            }
+        });
+        
+        // Arrastre para navegar
+        contenedorImagen.addEventListener('mousedown', (e) => {
+            if (this.modoNhentai && e.button === 0) {
+                this.arrastrando = true;
+                contenedorImagen.style.cursor = 'grabbing';
+                this.inicioX = e.pageX;
+                this.scrollInicial = contenedorImagen.scrollLeft;
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!this.arrastrando || !this.modoNhentai) return;
+            
+            const deltaX = e.pageX - this.inicioX;
+            contenedorImagen.scrollLeft = this.scrollInicial - deltaX;
+            this.actualizarBarraProgresoHorizontal();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            this.arrastrando = false;
+            if (this.modoNhentai) {
+                contenedorImagen.style.cursor = 'grab';
+            }
+        });
+        
+        // Atajos de teclado
+        document.addEventListener('keydown', (e) => {
+            if (!this.modoNhentai) return;
+            
+            switch(e.key.toLowerCase()) {
+                case 'z':
+                    e.preventDefault();
+                    this.ajustarZoomNhentai(this.pasoZoom);
+                    break;
+                case 'x':
+                    e.preventDefault();
+                    this.ajustarZoomNhentai(-this.pasoZoom);
+                    break;
+                case 'r':
+                    e.preventDefault();
+                    this.reiniciarZoomNhentai();
+                    break;
+                case 'f':
+                    e.preventDefault();
+                    sistemaManga.verEnPantallaCompleta();
+                    break;
+                case 'arrowleft':
+                    e.preventDefault();
+                    this.scrollIzquierdaPoco();
+                    break;
+                case 'arrowright':
+                    e.preventDefault();
+                    this.scrollDerechaPoco();
+                    break;
+                case 'home':
+                    e.preventDefault();
+                    this.reiniciarScrollHorizontal();
+                    break;
+                case 'end':
+                    e.preventDefault();
+                    this.scrollAlFinal();
+                    break;
+            }
+        });
+        
+        // Actualizar barra de progreso al hacer scroll
+        contenedorImagen.addEventListener('scroll', () => {
+            this.actualizarBarraProgresoHorizontal();
+        });
+        
+        console.log("🎮 Controles nhentai configurados");
+    },
+    
+    // Ajustar zoom en modo nhentai
+    ajustarZoomNhentai: function(incremento) {
+        if (!this.modoNhentai) return;
+        
+        const imagenManga = document.getElementById('imagen-manga-actual');
+        if (!imagenManga) return;
+        
+        // Calcular nuevo zoom
+        const nuevoZoom = Math.max(this.zoomMinimo, Math.min(this.zoomMaximo, this.zoomNhentai + incremento));
+        
+        if (nuevoZoom !== this.zoomNhentai) {
+            // Guardar posición de scroll relativa antes del cambio
+            const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+            const scrollPorcentaje = contenedorImagen.scrollLeft / (contenedorImagen.scrollWidth - contenedorImagen.clientWidth);
+            
+            // Aplicar nuevo zoom
+            this.zoomNhentai = nuevoZoom;
+            imagenManga.style.width = `${this.zoomNhentai * 100}%`;
+            
+            // Restaurar posición de scroll relativa después del cambio
+            setTimeout(() => {
+                const nuevoScrollMax = contenedorImagen.scrollWidth - contenedorImagen.clientWidth;
+                contenedorImagen.scrollLeft = scrollPorcentaje * nuevoScrollMax;
+                this.actualizarBarraProgresoHorizontal();
+            }, 10);
+            
+            // Actualizar UI
+            this.actualizarUIZoom();
+            this.mostrarNotificacionZoom(`Zoom: ${Math.round(this.zoomNhentai * 100)}%`);
+            
+            console.log(`🔍 Zoom ajustado a: ${Math.round(this.zoomNhentai * 100)}%`);
+        }
+    },
+    
+    // Reiniciar zoom a 240%
+    reiniciarZoomNhentai: function() {
+        if (!this.modoNhentai) return;
+        
+        const imagenManga = document.getElementById('imagen-manga-actual');
+        if (!imagenManga) return;
+        
+        this.zoomNhentai = 2.4; // 240%
+        imagenManga.style.width = `${this.zoomNhentai * 100}%`;
+        
+        // Actualizar UI
+        this.actualizarUIZoom();
+        this.mostrarNotificacionZoom('Zoom reiniciado: 240%');
+        this.reiniciarScrollHorizontal();
+        
+        console.log("🔁 Zoom reiniciado a 240%");
+    },
+    
+    // Alternar entre modo nhentai y modo normal
+    toggleModoNhentai: function() {
+        if (this.modoNhentai) {
+            this.desactivarModoNhentai();
+        } else {
+            this.activarModoNhentai();
+        }
+    },
+    
+    // Desactivar modo nhentai (volver a modo normal)
+    desactivarModoNhentai: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        const imagenManga = document.getElementById('imagen-manga-actual');
+        
+        if (!contenedorImagen || !imagenManga) return;
+        
+        // Estilo normal
         contenedorImagen.style.cssText = `
             position: relative;
             overflow: hidden;
@@ -405,602 +847,165 @@ const sistemaZoomManga = {
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #111;
+            border-radius: 10px;
+            border: 2px solid #333;
         `;
         
         imagenManga.style.cssText = `
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: transform 0.2s ease-out;
-            transform-origin: center center;
-            user-select: none;
-            -webkit-user-drag: none;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
         `;
         
-        // Eventos para imagen
-        imagenManga.addEventListener('dblclick', (e) => this.alternarZoomCompleto(e));
-        imagenManga.addEventListener('wheel', (e) => this.zoomConRueda(e));
-        imagenManga.addEventListener('mousedown', (e) => this.iniciarArrastre(e));
+        this.modoNhentai = false;
         
-        // Eventos globales
-        document.addEventListener('mousemove', (e) => this.arrastrarImagen(e));
-        document.addEventListener('mouseup', () => this.detenerArrastre());
-        document.addEventListener('keydown', (e) => this.controlesTeclado(e));
+        // Actualizar UI
+        this.actualizarUIZoom();
+        this.mostrarNotificacionZoom('Modo normal activado');
         
-        // Agregar controles visuales
-        this.agregarControlesZoom();
-        this.agregarIndicadorZoom();
-        
-        console.log("🔍 Sistema de zoom estilo nhentai inicializado");
+        console.log("📱 Modo normal activado");
     },
     
-    // Alternar zoom completo (doble clic)
-    alternarZoomCompleto: function(event) {
-        event.stopPropagation();
-        event.preventDefault();
+    // Actualizar UI del zoom
+    actualizarUIZoom: function() {
+        const escalaElement = document.getElementById('escala-zoom-nhentai');
+        const zoomEstadistica = document.getElementById('zoom-estadistica');
+        const botonToggle = document.querySelector('.boton-zoom-nhentai:last-child');
         
-        const imagen = event.target;
-        
-        if (!this.zoomActivado) {
-            // Activar zoom al máximo
-            this.zoomActivado = true;
-            this.escalaActual = this.escalaMaxima;
-            
-            // Centrar en el punto del clic
-            const rect = imagen.getBoundingClientRect();
-            const x = ((event.clientX - rect.left) / rect.width) * 100;
-            const y = ((event.clientY - rect.top) / rect.height) * 100;
-            
-            imagen.style.transformOrigin = `${x}% ${y}%`;
-            imagen.style.transform = `scale(${this.escalaActual})`;
-            imagen.parentElement.style.cursor = 'grabbing';
-            
-            this.mostrarOverlay();
-            
-        } else {
-            // Desactivar zoom
-            this.resetearZoom();
+        if (escalaElement) {
+            escalaElement.textContent = `${Math.round(this.zoomNhentai * 100)}%`;
         }
         
-        this.actualizarIndicadorZoom();
-    },
-    
-    // Zoom con rueda del mouse
-    zoomConRueda: function(event) {
-        event.stopPropagation();
-        event.preventDefault();
+        if (zoomEstadistica) {
+            zoomEstadistica.textContent = `${Math.round(this.zoomNhentai * 100)}%`;
+        }
         
-        const imagen = event.target;
-        const delta = event.deltaY > 0 ? -this.escalaPaso : this.escalaPaso;
-        const nuevaEscala = Math.max(this.escalaMinima, Math.min(this.escalaMaxima, this.escalaActual + delta));
-        
-        if (nuevaEscala !== this.escalaActual) {
-            this.escalaActual = nuevaEscala;
-            this.zoomActivado = this.escalaActual > this.escalaMinima;
-            
-            // Calcular origen del zoom (centro del viewport)
-            const rect = imagen.getBoundingClientRect();
-            const contRect = imagen.parentElement.getBoundingClientRect();
-            
-            const x = ((event.clientX - contRect.left) / contRect.width) * 100;
-            const y = ((event.clientY - contRect.top) / contRect.height) * 100;
-            
-            imagen.style.transformOrigin = `${x}% ${y}%`;
-            imagen.style.transform = `scale(${this.escalaActual}) translate(${this.posicionX}px, ${this.posicionY}px)`;
-            
-            if (this.zoomActivado) {
-                imagen.parentElement.style.cursor = 'grabbing';
-                this.mostrarOverlay();
-            } else {
-                imagen.parentElement.style.cursor = 'grab';
-                this.ocultarOverlay();
-                this.posicionX = 0;
-                this.posicionY = 0;
-            }
-            
-            this.actualizarIndicadorZoom();
+        if (botonToggle) {
+            botonToggle.innerHTML = this.modoNhentai ? '📱' : '🔍';
+            botonToggle.title = this.modoNhentai ? 'Cambiar a modo normal' : 'Cambiar a modo nhentai (240%)';
         }
     },
     
-    // Iniciar arrastre
-    iniciarArrastre: function(event) {
-        if (this.zoomActivado && event.button === 0) { // Botón izquierdo
-            this.arrastrando = true;
-            this.ultimoX = event.clientX;
-            this.ultimoY = event.clientY;
-            event.target.parentElement.style.cursor = 'grabbing';
-        }
+    // Inicializar barra de progreso horizontal
+    inicializarBarraProgresoHorizontal: function() {
+        // La barra ya está en el HTML, solo necesitamos actualizarla
+        this.actualizarBarraProgresoHorizontal();
     },
     
-    // Arrastrar imagen
-    arrastrarImagen: function(event) {
-        if (!this.arrastrando || !this.zoomActivado) return;
-        
-        event.preventDefault();
-        
-        const deltaX = event.clientX - this.ultimoX;
-        const deltaY = event.clientY - this.ultimoY;
-        
-        this.posicionX += deltaX;
-        this.posicionY += deltaY;
-        
-        // Límites para el arrastre (evita que se salga demasiado)
-        const maxDrag = 200;
-        this.posicionX = Math.max(-maxDrag, Math.min(maxDrag, this.posicionX));
-        this.posicionY = Math.max(-maxDrag, Math.min(maxDrag, this.posicionY));
-        
-        const imagen = document.getElementById('imagen-manga-actual');
-        if (imagen) {
-            imagen.style.transform = `scale(${this.escalaActual}) translate(${this.posicionX}px, ${this.posicionY}px)`;
-        }
-        
-        this.ultimoX = event.clientX;
-        this.ultimoY = event.clientY;
-    },
-    
-    // Detener arrastre
-    detenerArrastre: function() {
-        this.arrastrando = false;
-        const contenedor = document.querySelector('.contenedor-imagen-zoom');
-        if (contenedor && this.zoomActivado) {
-            contenedor.style.cursor = 'grabbing';
-        }
-    },
-    
-    // Controles de teclado
-    controlesTeclado: function(event) {
-        if (!this.zoomActivado) return;
-        
-        const paso = 20;
-        switch(event.key) {
-            case 'ArrowUp':
-                event.preventDefault();
-                this.posicionY += paso;
-                break;
-            case 'ArrowDown':
-                event.preventDefault();
-                this.posicionY -= paso;
-                break;
-            case 'ArrowLeft':
-                event.preventDefault();
-                this.posicionX += paso;
-                break;
-            case 'ArrowRight':
-                event.preventDefault();
-                this.posicionX -= paso;
-                break;
-            case 'Escape':
-                event.preventDefault();
-                this.resetearZoom();
-                break;
-            case '+':
-            case '=':
-                event.preventDefault();
-                this.zoomIn();
-                break;
-            case '-':
-                event.preventDefault();
-                this.zoomOut();
-                break;
-            case '0':
-                event.preventDefault();
-                this.resetearZoom();
-                break;
-            case 'f':
-            case 'F':
-                event.preventDefault();
-                sistemaManga.verEnPantallaCompleta();
-                break;
-        }
-        
-        // Aplicar transformación
-        const imagen = document.getElementById('imagen-manga-actual');
-        if (imagen) {
-            imagen.style.transform = `scale(${this.escalaActual}) translate(${this.posicionX}px, ${this.posicionY}px)`;
-        }
-    },
-    
-    // Zoom in
-    zoomIn: function() {
-        if (this.escalaActual < this.escalaMaxima) {
-            this.escalaActual = Math.min(this.escalaMaxima, this.escalaActual + this.escalaPaso);
-            this.aplicarZoom();
-        }
-    },
-    
-    // Zoom out
-    zoomOut: function() {
-        if (this.escalaActual > this.escalaMinima) {
-            this.escalaActual = Math.max(this.escalaMinima, this.escalaActual - this.escalaPaso);
-            this.aplicarZoom();
-        }
-    },
-    
-    // Aplicar zoom
-    aplicarZoom: function() {
-        const imagen = document.getElementById('imagen-manga-actual');
-        if (!imagen) return;
-        
-        this.zoomActivado = this.escalaActual > this.escalaMinima;
-        
-        imagen.style.transform = `scale(${this.escalaActual}) translate(${this.posicionX}px, ${this.posicionY}px)`;
-        
-        if (this.zoomActivado) {
-            imagen.parentElement.style.cursor = 'grabbing';
-            this.mostrarOverlay();
-        } else {
-            imagen.parentElement.style.cursor = 'grab';
-            this.ocultarOverlay();
-            this.posicionX = 0;
-            this.posicionY = 0;
-        }
-        
-        this.actualizarIndicadorZoom();
-    },
-    
-    // Resetear zoom
-    resetearZoom: function() {
-        this.escalaActual = this.escalaMinima;
-        this.posicionX = 0;
-        this.posicionY = 0;
-        this.zoomActivado = false;
-        
-        const imagen = document.getElementById('imagen-manga-actual');
-        const contenedor = document.querySelector('.contenedor-imagen-zoom');
-        
-        if (imagen) {
-            imagen.style.transform = `scale(${this.escalaActual})`;
-            imagen.style.transformOrigin = 'center center';
-            imagen.parentElement.style.cursor = 'grab';
-        }
-        
-        if (contenedor) {
-            contenedor.style.cursor = 'grab';
-        }
-        
-        this.ocultarOverlay();
-        this.actualizarIndicadorZoom();
-    },
-    
-    // Mostrar overlay
-    mostrarOverlay: function() {
-        let overlay = document.getElementById('overlay-zoom-nhentai');
-        
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.id = 'overlay-zoom-nhentai';
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.7);
-                z-index: 9998;
-                pointer-events: none;
-            `;
-            document.body.appendChild(overlay);
-        }
-        
-        overlay.style.display = 'block';
-    },
-    
-    // Ocultar overlay
-    ocultarOverlay: function() {
-        const overlay = document.getElementById('overlay-zoom-nhentai');
-        if (overlay) {
-            overlay.style.display = 'none';
-        }
-    },
-    
-    // Agregar controles de zoom
-    agregarControlesZoom: function() {
-        const navegacion = document.querySelector('.navegacion-rapida');
-        if (!navegacion) return;
-        
-        // Verificar si ya existen controles
-        if (document.querySelector('.controles-zoom-nhentai')) return;
-        
-        const controlesZoom = document.createElement('div');
-        controlesZoom.className = 'controles-zoom-nhentai';
-        controlesZoom.style.cssText = `
-            display: flex;
-            gap: 10px;
-            margin: 15px auto;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 25px;
-            justify-content: center;
-            align-items: center;
-            max-width: 400px;
-            border: 1px solid #444;
-        `;
-        
-        controlesZoom.innerHTML = `
-            <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.zoomOut()" title="Alejar (Rueda -)">
-                🔍−
-            </button>
-            <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.resetearZoom()" title="Restablecer zoom (0)">
-                ↺
-            </button>
-            <span class="escala-zoom-nhentai" style="color: #ffd700; font-weight: bold; min-width: 70px; text-align: center;">
-                100%
-            </span>
-            <button class="boton-zoom-nhentai" onclick="sistemaZoomManga.zoomIn()" title="Acercar (Rueda +)">
-                🔍+
-            </button>
-            <button class="boton-zoom-nhentai" onclick="sistemaManga.verEnPantallaCompleta()" title="Pantalla completa (F)">
-                ⛶
-            </button>
-        `;
-        
-        // Insertar después de la navegación
-        navegacion.parentNode.insertBefore(controlesZoom, navegacion.nextSibling);
-    },
-    
-    // Agregar indicador de zoom
-    agregarIndicadorZoom: function() {
+    // Actualizar barra de progreso horizontal
+    actualizarBarraProgresoHorizontal: function() {
         const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
-        if (!contenedorImagen) return;
+        const barraFill = document.getElementById('barra-progreso-horizontal-fill');
+        const indicadorPos = document.getElementById('indicador-posicion-horizontal');
         
-        const indicador = document.createElement('div');
-        indicador.className = 'indicador-zoom-nhentai';
-        indicador.style.cssText = `
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #00ff88;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-family: monospace;
-            z-index: 10;
-            border: 1px solid #00ff88;
-            display: none;
-        `;
-        indicador.textContent = 'Zoom: 100%';
+        if (!contenedorImagen || !barraFill || !indicadorPos) return;
         
-        contenedorImagen.appendChild(indicador);
+        const scrollMax = contenedorImagen.scrollWidth - contenedorImagen.clientWidth;
         
-        // Mostrar/ocultar al hacer hover
-        contenedorImagen.addEventListener('mouseenter', () => {
-            if (this.zoomActivado) {
-                indicador.style.display = 'block';
-            }
-        });
-        
-        contenedorImagen.addEventListener('mouseleave', () => {
-            indicador.style.display = 'none';
-        });
+        if (scrollMax > 0) {
+            const scrollPorcentaje = (contenedorImagen.scrollLeft / scrollMax) * 100;
+            const posicionPorcentaje = (contenedorImagen.scrollLeft / contenedorImagen.scrollWidth) * 100;
+            
+            barraFill.style.width = `${scrollPorcentaje}%`;
+            indicadorPos.style.left = `${posicionPorcentaje}%`;
+        } else {
+            barraFill.style.width = '0%';
+            indicadorPos.style.left = '0%';
+        }
     },
     
-    // Actualizar indicador de zoom
-    actualizarIndicadorZoom: function() {
-        const indicador = document.querySelector('.escala-zoom-nhentai');
-        const indicadorFlotante = document.querySelector('.indicador-zoom-nhentai');
-        const porcentaje = Math.round(this.escalaActual * 100);
+    // Controles de scroll horizontal
+    scrollIzquierda: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
         
-        if (indicador) {
-            indicador.textContent = `${porcentaje}%`;
+        contenedorImagen.scrollLeft -= contenedorImagen.clientWidth * 0.5;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    scrollIzquierdaPoco: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
+        
+        contenedorImagen.scrollLeft -= 100;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    scrollDerechaPoco: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
+        
+        contenedorImagen.scrollLeft += 100;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    scrollDerecha: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
+        
+        contenedorImagen.scrollLeft += contenedorImagen.clientWidth * 0.5;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    reiniciarScrollHorizontal: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
+        
+        contenedorImagen.scrollLeft = 0;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    scrollAlFinal: function() {
+        const contenedorImagen = document.querySelector('.contenedor-imagen-zoom');
+        if (!contenedorImagen || !this.modoNhentai) return;
+        
+        contenedorImagen.scrollLeft = contenedorImagen.scrollWidth;
+        this.actualizarBarraProgresoHorizontal();
+    },
+    
+    // Mostrar notificación temporal
+    mostrarNotificacionZoom: function(mensaje) {
+        // Remover notificación anterior si existe
+        const notificacionAnterior = document.querySelector('.notificacion-zoom-nhentai');
+        if (notificacionAnterior) {
+            notificacionAnterior.remove();
         }
         
-        if (indicadorFlotante) {
-            indicadorFlotante.textContent = `Zoom: ${porcentaje}%`;
-            indicadorFlotante.style.display = this.zoomActivado ? 'block' : 'none';
-        }
-    }
-};
-
-// ============================================================================
-// FUNCIÓN DE PANTALLA COMPLETA ESTILO nhentai
-// ============================================================================
-
-// Agregar función de pantalla completa al sistema manga
-sistemaManga.verEnPantallaCompleta = function() {
-    const manga = this.estado.mangaActual;
-    if (!manga) return;
-    
-    const paginaActual = this.estado.paginaActual;
-    const imagenUrl = manga.imagenes[paginaActual];
-    
-    // Crear modal estilo nhentai
-    const modal = document.createElement('div');
-    modal.id = 'modal-pantalla-completa-nhentai';
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #000;
-        z-index: 10000;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-    `;
-    
-    modal.innerHTML = `
-        <!-- Barra superior -->
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid #333;">
-            <div style="color: white; font-weight: bold;">
-                ${manga.titulo} - Página ${paginaActual + 1}/${manga.imagenes.length}
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="sistemaZoomMangaPantallaCompleta.zoomOut()" 
-                        style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
-                    🔍−
-                </button>
-                <button onclick="sistemaZoomMangaPantallaCompleta.resetearZoom()" 
-                        style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
-                    100%
-                </button>
-                <button onclick="sistemaZoomMangaPantallaCompleta.zoomIn()" 
-                        style="background: #333; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
-                    🔍+
-                </button>
-                <button onclick="document.getElementById('modal-pantalla-completa-nhentai').remove()" 
-                        style="background: #ff4444; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">
-                    ✕
-                </button>
-            </div>
-        </div>
+        const notificacion = document.createElement('div');
+        notificacion.className = 'notificacion-zoom-nhentai';
+        notificacion.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: #ffd700;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 2px solid #ffd700;
+            z-index: 10000;
+            font-weight: bold;
+            font-size: 14px;
+            animation: fadeInOutZoom 2s ease-in-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            max-width: 300px;
+            text-align: center;
+        `;
         
-        <!-- Contenedor de imagen -->
-        <div style="flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative;">
-            <div id="contenedor-imagen-pantalla-completa" 
-                 style="position: relative; overflow: hidden; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-                <img src="${imagenUrl}" 
-                     alt="Página ${paginaActual + 1}" 
-                     id="imagen-pantalla-completa"
-                     style="max-width: none; max-height: none; object-fit: contain; cursor: grab; transition: transform 0.2s ease-out;">
-            </div>
-            
-            <!-- Navegación lateral -->
-            <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">
-                <button onclick="sistemaMangaPantallaCompleta.paginaAnterior(); event.stopPropagation()" 
-                        style="background: rgba(0,0,0,0.7); color: white; border: none; padding: 20px 10px; border-radius: 5px; cursor: pointer; font-size: 24px;">
-                    ←
-                </button>
-            </div>
-            <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
-                <button onclick="sistemaMangaPantallaCompleta.paginaSiguiente(); event.stopPropagation()" 
-                        style="background: rgba(0,0,0,0.7); color: white; border: none; padding: 20px 10px; border-radius: 5px; cursor: pointer; font-size: 24px;">
-                    →
-                </button>
-            </div>
-            
-            <!-- Indicador de zoom -->
-            <div id="indicador-zoom-pantalla-completa" 
-                 style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: #00ff88; padding: 5px 10px; border-radius: 5px; font-family: monospace;">
-                100%
-            </div>
-        </div>
+        notificacion.textContent = mensaje;
+        notificacion.innerHTML += '<br><small style="color: #aaa; font-size: 11px;">(Notificación desaparecerá en 2s)</small>';
         
-        <!-- Barra inferior -->
-        <div style="display: flex; justify-content: center; padding: 10px; background: rgba(0, 0, 0, 0.9); border-top: 1px solid #333;">
-            <button onclick="sistemaMangaPantallaCompleta.descargarImagen()" 
-                    style="background: #2575fc; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; margin: 0 5px;">
-                ⬇ Descargar
-            </button>
-            <button onclick="sistemaMangaPantallaCompleta.copiarEnlace()" 
-                    style="background: #00c853; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; margin: 0 5px;">
-                🔗 Copiar enlace
-            </button>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Sistema de zoom para pantalla completa
-    const sistemaZoomPantallaCompleta = {
-        escalaActual: 1.0,
-        escalaMaxima: 5.0,
-        escalaMinima: 0.5,
+        document.body.appendChild(notificacion);
         
-        zoomIn: function() {
-            this.escalaActual = Math.min(this.escalaMaxima, this.escalaActual + 0.2);
-            this.aplicarZoom();
-        },
-        
-        zoomOut: function() {
-            this.escalaActual = Math.max(this.escalaMinima, this.escalaActual - 0.2);
-            this.aplicarZoom();
-        },
-        
-        resetearZoom: function() {
-            this.escalaActual = 1.0;
-            this.aplicarZoom();
-        },
-        
-        aplicarZoom: function() {
-            const imagen = document.getElementById('imagen-pantalla-completa');
-            if (imagen) {
-                imagen.style.transform = `scale(${this.escalaActual})`;
-                document.getElementById('indicador-zoom-pantalla-completa').textContent = 
-                    `${Math.round(this.escalaActual * 100)}%`;
+        // Remover después de 2 segundos
+        setTimeout(() => {
+            if (notificacion.parentNode) {
+                notificacion.remove();
             }
-        }
-    };
-    
-    // Sistema de navegación para pantalla completa
-    const sistemaMangaPantallaCompleta = {
-        paginaAnterior: function() {
-            sistemaManga.paginaAnterior();
-            // Actualizar imagen en modal
-            const nuevaImagen = sistemaManga.estado.mangaActual.imagenes[sistemaManga.estado.paginaActual];
-            document.getElementById('imagen-pantalla-completa').src = nuevaImagen;
-            document.querySelector('#modal-pantalla-completa-nhentai div:first-child div:first-child').textContent = 
-                `${manga.titulo} - Página ${sistemaManga.estado.paginaActual + 1}/${manga.imagenes.length}`;
-            sistemaZoomPantallaCompleta.resetearZoom();
-        },
-        
-        paginaSiguiente: function() {
-            sistemaManga.siguientePagina();
-            // Actualizar imagen en modal
-            const nuevaImagen = sistemaManga.estado.mangaActual.imagenes[sistemaManga.estado.paginaActual];
-            document.getElementById('imagen-pantalla-completa').src = nuevaImagen;
-            document.querySelector('#modal-pantalla-completa-nhentai div:first-child div:first-child').textContent = 
-                `${manga.titulo} - Página ${sistemaManga.estado.paginaActual + 1}/${manga.imagenes.length}`;
-            sistemaZoomPantallaCompleta.resetearZoom();
-        },
-        
-        descargarImagen: function() {
-            const link = document.createElement('a');
-            link.href = imagenUrl;
-            link.download = `${manga.titulo.replace(/[^a-z0-9]/gi, '_')}_pagina_${paginaActual + 1}.jpg`;
-            link.click();
-        },
-        
-        copiarEnlace: function() {
-            navigator.clipboard.writeText(imagenUrl).then(() => {
-                alert('Enlace copiado al portapapeles');
-            });
-        }
-    };
-    
-    // Hacer globales para los botones
-    window.sistemaZoomMangaPantallaCompleta = sistemaZoomPantallaCompleta;
-    window.sistemaMangaPantallaCompleta = sistemaMangaPantallaCompleta;
-    
-    // Inicializar eventos de zoom
-    const imagenPC = document.getElementById('imagen-pantalla-completa');
-    imagenPC.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        e.deltaY > 0 ? sistemaZoomPantallaCompleta.zoomOut() : sistemaZoomPantallaCompleta.zoomIn();
-    });
-    
-    imagenPC.addEventListener('dblclick', (e) => {
-        e.preventDefault();
-        sistemaZoomPantallaCompleta.resetearZoom();
-    });
-    
-    // Evento de clic en la imagen para cambiar página
-    imagenPC.addEventListener('click', (e) => {
-        const rect = imagenPC.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        
-        if (clickX < rect.width / 3) {
-            // Clic en el tercio izquierdo - página anterior
-            sistemaMangaPantallaCompleta.paginaAnterior();
-        } else if (clickX > rect.width * 2/3) {
-            // Clic en el tercio derecho - página siguiente
-            sistemaMangaPantallaCompleta.paginaSiguiente();
-        }
-    });
-    
-    // Cerrar con ESC
-    const cerrarConESC = (e) => {
-        if (e.key === 'Escape') modal.remove();
-    };
-    document.addEventListener('keydown', cerrarConESC);
-    
-    // Remover event listener cuando se cierre
-    modal.addEventListener('remove', () => {
-        document.removeEventListener('keydown', cerrarConESC);
-    });
+        }, 2000);
+    }
 };
 
 // ============================================================================
@@ -1016,5 +1021,6 @@ window.iniciarLecturaManga = function(subcontenedorId) {
     sistemaManga.iniciarLecturaManga(subcontenedorId);
 };
 
-console.log("📚 Sistema Manga cargado correctamente");
-console.log("🔍 Sistema de Zoom cargado correctamente");
+console.log("📚 Sistema Manga nhentai cargado correctamente");
+console.log("🔍 Zoom automático 240% configurado");
+console.log("🎮 Controles: Z(+5%), X(-5%), R(240%), F(pantalla completa), Flechas(←→ navegación)");
