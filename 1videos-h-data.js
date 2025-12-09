@@ -176,4 +176,91 @@ const vocabularioH = {
             { japones: '旺盛', lectura: 'ousei', opciones: ['Abundante/vigoroso', 'Escaso', 'Débil', 'Limitado'], respuesta: 0 },
             { japones: '旺盛な食欲', lectura: 'ousei na shokuyoku', opciones: ['Apetito voraz', 'Poco apetito', 'Apetito normal', 'Sin apetito'], respuesta: 0 },
             { japones: '貪る', lectura: 'musaboru', opciones: ['Devorar', 'Comer lentamente', 'Probar', 'Dejar'], respuesta: 0 },
-            { japones: 'むしゃむしゃ', lectura: 'mushamusha', opciones: ['Comer ruidosamente', 'Comer en silencio
+            { japones: 'むしゃむしゃ', lectura: 'mushamusha', opciones: ['Comer ruidosamente', 'Comer en silencio', 'Comer elegantemente', 'No comer'], respuesta: 0 }
+        ],
+        // ... más mazos para colección 5
+    }
+};
+
+// ============================================================================
+// FUNCIONES PARA OBTENER VOCABULARIO
+// ============================================================================
+
+// Obtener mazo específico de una colección
+function obtenerMazoColeccion(coleccionId, mazoId) {
+    if (vocabularioH[coleccionId] && vocabularioH[coleccionId][mazoId]) {
+        return [...vocabularioH[coleccionId][mazoId]];
+    }
+    
+    // Fallback: generar palabras genéricas si no hay específicas
+    console.log(`⚠️ No se encontró mazo ${mazoId} en colección ${coleccionId}, usando fallback`);
+    return generarPalabrasGenericas(10);
+}
+
+// Obtener todos los mazos de una colección
+function obtenerTodosMazosColeccion(coleccionId) {
+    if (vocabularioH[coleccionId]) {
+        return Object.keys(vocabularioH[coleccionId]).map(mazoId => ({
+            id: mazoId,
+            nombre: `Mazo ${mazoId.replace('mazo', '')}`,
+            palabras: vocabularioH[coleccionId][mazoId]
+        }));
+    }
+    return [];
+}
+
+// Generar palabras genéricas como fallback
+function generarPalabrasGenericas(cantidad) {
+    const palabrasGenericas = [
+        { japones: '愛', lectura: 'ai', opciones: ['Amor', 'Odio', 'Indiferencia', 'Amistad'], respuesta: 0 },
+        { japones: '恋', lectura: 'koi', opciones: ['Amor romántico', 'Odio', 'Indiferencia', 'Respeto'], respuesta: 0 },
+        { japones: '情熱', lectura: 'jounetsu', opciones: ['Pasión', 'Frío', 'Calma', 'Paz'], respuesta: 0 },
+        { japones: '欲望', lectura: 'yokubou', opciones: ['Deseo', 'Rechazo', 'Indiferencia', 'Miedo'], respuesta: 0 },
+        { japones: '本能', lectura: 'honnou', opciones: ['Instinto', 'Razón', 'Pensamiento', 'Lógica'], respuesta: 0 },
+        { japones: '感覚', lectura: 'kankaku', opciones: ['Sensación', 'Pensamiento', 'Emoción', 'Memoria'], respuesta: 0 },
+        { japones: '感情', lectura: 'kanjou', opciones: ['Emoción', 'Razón', 'Lógica', 'Pensamiento'], respuesta: 0 },
+        { japones: '興奮', lectura: 'koufun', opciones: ['Excitación', 'Calma', 'Aburrimiento', 'Sueño'], respuesta: 0 },
+        { japones: '快楽', lectura: 'kairaku', opciones: ['Placer', 'Dolor', 'Sufrimiento', 'Angustia'], respuesta: 0 },
+        { japones: '歓喜', lectura: 'kanki', opciones: ['Éxtasis/alegría', 'Tristeza', 'Enojo', 'Miedo'], respuesta: 0 }
+    ];
+    
+    const resultado = [];
+    for (let i = 0; i < cantidad; i++) {
+        resultado.push({...palabrasGenericas[i % palabrasGenericas.length]});
+    }
+    return resultado;
+}
+
+// ============================================================================
+// FUNCIONES GLOBALES PARA TESTING
+// ============================================================================
+
+// Ver vocabulario de una colección
+window.verVocabularioH = function(coleccionId) {
+    if (vocabularioH[coleccionId]) {
+        console.log(`📚 Vocabulario de ${coleccionId}:`);
+        Object.keys(vocabularioH[coleccionId]).forEach(mazoId => {
+            console.log(`  ${mazoId}: ${vocabularioH[coleccionId][mazoId].length} palabras`);
+        });
+    } else {
+        console.log(`❌ Colección ${coleccionId} no encontrada`);
+    }
+};
+
+// Añadir palabra a mazo
+window.agregarPalabraH = function(coleccionId, mazoId, palabra) {
+    if (!vocabularioH[coleccionId]) {
+        vocabularioH[coleccionId] = {};
+    }
+    if (!vocabularioH[coleccionId][mazoId]) {
+        vocabularioH[coleccionId][mazoId] = [];
+    }
+    
+    vocabularioH[coleccionId][mazoId].push(palabra);
+    console.log(`✅ Palabra añadida a ${coleccionId}/${mazoId}`);
+    return true;
+};
+
+// Hacer funciones globales
+window.obtenerMazoColeccion = obtenerMazoColeccion;
+window.obtenerTodosMazosColeccion = obtenerTodosMazosColeccion;
