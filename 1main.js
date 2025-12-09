@@ -52,13 +52,17 @@ function generarMazosEspecificos(subcontenedorId) {
 // ============================================================================
 // ESTRUCTURA PRINCIPAL
 // ============================================================================
+// ============================================================================
+// ESTRUCTURA PRINCIPAL - MODIFICADA
+// ============================================================================
 
-function crearSubcontenedores(cantidad) {
+// Función para crear siempre 5 subcontenedores por contenedor
+function crearSubcontenedores(numContenedor) {
     const subs = {};
-    for (let i = 1; i <= cantidad; i++) {
-        const id = `sub${cantidad}_${i}`;
+    for (let i = 1; i <= 5; i++) { // SIEMPRE 5 subcontenedores
+        const id = `sub${numContenedor}_${i}`;
         subs[id] = {
-            nombre: `Sub-Contenedor ${cantidad}.${i}`,
+            nombre: `Sub-Contenedor ${numContenedor}.${i}`,
             mazos: generarMazosEspecificos(id)
         };
     }
@@ -66,18 +70,71 @@ function crearSubcontenedores(cantidad) {
 }
 
 const estructura = {
-    contenedor1: { nombre: 'The Last Summer 1', subcontenedores: crearSubcontenedores(1) },
-    contenedor2: { nombre: 'The Last Summer 2', subcontenedores: { 
-        ...crearSubcontenedores(2), 
-        sub2_4: { nombre: 'Sub-Contenedor 2.4', mazos: generarMazosEspecificos('sub2_4') } 
-    }},
-    contenedor3: { nombre: 'The Last Summer 3', subcontenedores: crearSubcontenedores(3) },
-    ...Object.fromEntries(
-        Array.from({ length: 7 }, (_, i) => [
-            `contenedor${i + 4}`,
-            { nombre: `Contenedor ${i + 4}`, subcontenedores: crearSubcontenedores(i + 4) }
-        ])
-    )
+    // Contenedor 1: The Last Summer 1 - 5 subcontenedores
+    contenedor1: { 
+        nombre: 'The Last Summer 1', 
+        subcontenedores: crearSubcontenedores(1)
+    },
+    
+    // Contenedor 2: The Last Summer 2 - 5 subcontenedores + el especial
+    contenedor2: { 
+        nombre: 'The Last Summer 2', 
+        subcontenedores: {
+            ...crearSubcontenedores(2),
+            sub2_6: {  // Puedes mantener sub2_4 como sub2_6 ahora
+                nombre: 'Sub-Contenedor 2.6 (Especial)', 
+                mazos: generarMazosEspecificos('sub2_4') 
+            } 
+        }
+    },
+    
+    // Contenedor 3: The Last Summer 3 - 5 subcontenedores
+    contenedor3: { 
+        nombre: 'The Last Summer 3', 
+        subcontenedores: crearSubcontenedores(3)
+    },
+    
+    // Contenedor 4: 5 subcontenedores
+    contenedor4: { 
+        nombre: 'Contenedor 4', 
+        subcontenedores: crearSubcontenedores(4)
+    },
+    
+    // Contenedor 5: 5 subcontenedores
+    contenedor5: { 
+        nombre: 'Contenedor 5', 
+        subcontenedores: crearSubcontenedores(5)
+    },
+    
+    // Contenedor 6: 5 subcontenedores
+    contenedor6: { 
+        nombre: 'Contenedor 6', 
+        subcontenedores: crearSubcontenedores(6)
+    },
+    
+    // Contenedor 7: 5 subcontenedores
+    contenedor7: { 
+        nombre: 'Contenedor 7', 
+        subcontenedores: crearSubcontenedores(7)
+    },
+    
+    // Contenedor 8: 5 subcontenedores
+    contenedor8: { 
+        nombre: 'Contenedor 8', 
+        subcontenedores: crearSubcontenedores(8)
+    },
+    
+    // Contenedor 9: 5 subcontenedores
+    contenedor9: { 
+        nombre: 'Contenedor 9', 
+        subcontenedores: crearSubcontenedores(9)
+    },
+    
+    // Contenedor 10: 5 subcontenedores
+    contenedor10: { 
+        nombre: 'Contenedor 10', 
+        subcontenedores: crearSubcontenedores(10)
+    }
 };
 
 // ============================================================================
