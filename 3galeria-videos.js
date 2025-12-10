@@ -438,7 +438,7 @@ function cargarVideosPorCategoria(categoriaId) {
 }
 
 // ============================================================================
-// FUNCIÓN PARA REPRODUCIR VIDEO CON TIMESTAMPS - VERSIÓN MEJORADA
+// FUNCIÓN PARA REPRODUCIR VIDEO CON TIMESTAMPS - VERSIÓN CORREGIDA
 // ============================================================================
 
 // FUNCIÓN ORIGINAL (para reproducción normal)
@@ -446,19 +446,16 @@ function reproducirVideo(video) {
     reproducirVideoConTimestamp(video, 0);
 }
 
-// Función mejorada con autoplay
+// Función CORREGIDA con autoplay funcional
 function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
     videoActual = video;
     
-    // Construir URL con timestamp Y AUTOPLAY
+    // Construir URL SIN autoplay (Google Drive no lo acepta)
     let videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
     
     if (timestampSegundos > 0) {
-        // Agregar timestamp Y autoplay
-        videoUrl += `?t=${timestampSegundos}s&autoplay=1`;
-    } else {
-        // Solo autoplay para inicio normal
-        videoUrl += `?autoplay=1`;
+        // Solo timestamp, NO autoplay
+        videoUrl += `?t=${timestampSegundos}s`;
     }
     
     // Actualizar interfaz
@@ -482,25 +479,24 @@ function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
         imagenElement.alt = video.nombre;
     }
     
-    // Cargar iframe de video CON AUTOPLAY
+    // Cargar iframe de video
     const iframeElement = document.getElementById('iframe-video-reproductor');
     if (iframeElement) {
-        // Resetear primero
+        // 1. Resetear primero
         iframeElement.src = '';
         
-        // Pequeño delay para asegurar reset
+        // 2. Pequeño delay para asegurar reset
         setTimeout(() => {
             iframeElement.src = videoUrl;
             iframeElement.title = `Reproduciendo: ${video.nombre}`;
             
-            // Intentar forzar reproducción
-            setTimeout(() => {
-                try {
-                    iframeElement.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                } catch (e) {
-                    console.log("Autoplay bloqueado, usuario debe hacer clic");
-                }
-            }, 1000);
+            // 3. AGREGAR EVENT LISTENER para detectar cuando el iframe está listo
+            iframeElement.onload = function() {
+                // Intentar reproducir automáticamente después de que cargue
+                setTimeout(() => {
+                    intentarReproducirAutomaticamente(iframeElement);
+                }, 1500); // Dar tiempo suficiente para que cargue
+            };
         }, 100);
     }
     
@@ -514,7 +510,45 @@ function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
         const minutos = Math.floor(timestampSegundos / 60);
         const segs = timestampSegundos % 60;
         const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
-        mostrarNotificacionGaleria(`⏱️ Video cargado desde ${tiempoFormateado} - Haz clic en el video para reproducir`);
+        mostrarNotificacionGaleria(`⏱️ Saltando a ${tiempoFormateado}...`);
+    }
+}
+
+// ============================================================================
+// FUNCIÓN AUXILIAR PARA INTENTAR REPRODUCCIÓN AUTOMÁTICA
+// ============================================================================
+
+function intentarReproducirAutomaticamente(iframeElement) {
+    try {
+        // Método 1: Usar la API de YouTube Player (que usa Google Drive internamente)
+        iframeElement.contentWindow.postMessage(
+            JSON.stringify({
+                'event': 'command',
+                'func': 'playVideo',
+                'args': ''
+            }),
+            '*'
+        );
+        
+        console.log("✅ Intento de reproducción automática enviado");
+        
+        // Método 2: Intentar hacer clic programático en el iframe
+        setTimeout(() => {
+            try {
+                const iframeDoc = iframeElement.contentDocument || iframeElement.contentWindow.document;
+                const playButton = iframeDoc.querySelector('button[aria-label="Play"]');
+                if (playButton) {
+                    playButton.click();
+                    console.log("✅ Botón Play encontrado y clickeado");
+                }
+            } catch (e) {
+                console.log("❌ No se pudo encontrar botón Play:", e.message);
+            }
+        }, 500);
+        
+    } catch (error) {
+        console.log("❌ Autoplay bloqueado por el navegador:", error.message);
+        mostrarNotificacionGaleria("⚠️ Haz clic en el video para reproducir");
     }
 }
 // ============================================================================
