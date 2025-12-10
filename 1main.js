@@ -976,31 +976,95 @@ function iniciarComienzoDiciembre2025() {
     }
 }
 // ============================================================================
-// FUNCIÓN PARA INICIAR SISTEMA ANIME
+// FUNCIÓN PARA INICIAR SISTEMA ANIME - VERSIÓN CON CARGA DINÁMICA
 // ============================================================================
 
+let animeCargado = false;
+
 function iniciarSistemaAnime() {
-    // Verificar si el sistema anime está cargado
-    if (typeof crearPantallasAnime !== 'undefined') {
-        // Crear pantallas si no existen
-        crearPantallasAnime();
-        
-        // Cambiar a pantalla de selección
+    console.log("🎬 Iniciando sistema anime...");
+    
+    // Si ya está cargado, usar normalmente
+    if (animeCargado && typeof crearPantallasAnime !== 'undefined') {
+        console.log("✅ Sistema anime ya cargado");
         cambiarPantalla('pantalla-anime-seleccion');
-        
-        // Cargar lista de animes con un pequeño delay
         setTimeout(() => {
             if (typeof cargarListaAnimes === 'function') {
                 cargarListaAnimes();
             }
         }, 100);
-        
-        console.log("🎬 Sistema anime iniciado");
-    } else {
-        console.error("❌ Sistema anime no cargado");
-        mostrarNotificacion("Error: Sistema anime no disponible");
+        return;
     }
+    
+    // Si no está cargado, cargarlo dinámicamente
+    cargarScriptAnime();
 }
+
+function cargarScriptAnime() {
+    console.log("📂 Cargando anime-todo.js dinámicamente...");
+    
+    // Crear elemento script
+    const script = document.createElement('script');
+    script.src = '2anime-todo.js';
+    script.id = 'script-anime';
+    
+    script.onload = function() {
+        console.log("✅ anime-todo.js cargado exitosamente");
+        animeCargado = true;
+        
+        // Esperar un momento para que las funciones estén disponibles
+        setTimeout(() => {
+            // Verificar que las funciones existan
+            if (typeof crearPantallasAnime !== 'undefined') {
+                crearPantallasAnime();
+                cambiarPantalla('pantalla-anime-seleccion');
+                
+                setTimeout(() => {
+                    if (typeof cargarListaAnimes === 'function') {
+                        cargarListaAnimes();
+                        console.log("✅ Sistema anime listo");
+                    }
+                }, 200);
+            } else {
+                console.error("❌ crearPantallasAnime sigue undefined después de carga");
+            }
+        }, 300);
+    };
+    
+    script.onerror = function() {
+        console.error("❌ ERROR: No se pudo cargar 2anime-todo.js");
+        console.log("🔍 Verifica que el archivo existe en la misma carpeta");
+        console.log("🔍 Ruta actual: " + window.location.href);
+        
+        // Mostrar mensaje al usuario
+        alert("❌ Error: No se pudo cargar el sistema anime.\n\nVerifica que el archivo '2anime-todo.js' esté en la misma carpeta que '1main.js'");
+    };
+    
+    // Agregar el script al documento
+    document.head.appendChild(script);
+}
+
+// También agregar función para verificar estado
+window.verificarAnime = function() {
+    console.log("🔍 Verificando estado anime:");
+    console.log("- animeCargado:", animeCargado);
+    console.log("- crearPantallasAnime:", typeof crearPantallasAnime);
+    console.log("- cargarListaAnimes:", typeof cargarListaAnimes);
+    console.log("- animeConfig:", typeof animeConfig);
+    
+    // Intentar acceder al archivo directamente
+    fetch('2anime-todo.js')
+        .then(response => {
+            if (response.ok) {
+                console.log("✅ Archivo 2anime-todo.js existe");
+            } else {
+                console.log("❌ Archivo 2anime-todo.js NO existe o hay error");
+            }
+        })
+        .catch(error => {
+            console.log("❌ Error al intentar acceder a 2anime-todo.js:", error.message);
+        });
+};
 // ============================================================================
 // FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS
 // ============================================================================
