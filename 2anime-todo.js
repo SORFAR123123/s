@@ -624,44 +624,9 @@ function saltarATimestampAnime(segundos) {
 }
 
 // ============================================================================
-// 6. FUNCIONES DEL QUIZ - CON BOTÓN "AGREGAR A PALABRAS DIFÍCILES"
+// 6. FUNCIÓN CORREGIDA PARA MOSTRAR PREGUNTA ANIME - LIMPIA EL BOTÓN ANTERIOR
 // ============================================================================
 
-// Función para iniciar el quiz de un mazo de anime
-function iniciarQuizAnime(animeId, mazoId) {
-    if (animeVocabulario[animeId] && animeVocabulario[animeId][mazoId]) {
-        // Reiniciar estado del mazo difícil (empezamos un mazo normal)
-        mazoDificilActivo = false;
-        
-        mazoActualAnime = [...animeVocabulario[animeId][mazoId]];
-        preguntaActualAnime = 0;
-        respuestasCorrectasAnime = 0;
-        respuestasIncorrectasAnime = 0;
-        
-        // Mezclar preguntas
-        for (let i = mazoActualAnime.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [mazoActualAnime[i], mazoActualAnime[j]] = [mazoActualAnime[j], mazoActualAnime[i]];
-        }
-        
-        // Cambiar a pantalla de quiz
-        cambiarPantalla('pantalla-quiz-anime');
-        
-        // Actualizar contador
-        document.getElementById('numero-pregunta-anime').textContent = 1;
-        document.getElementById('total-preguntas-anime').textContent = mazoActualAnime.length;
-        
-        // Mostrar primera pregunta
-        mostrarPreguntaAnime();
-        
-        console.log(`📝 Iniciando quiz NORMAL: ${animeId} - ${mazoId}`);
-    } else {
-        console.error(`❌ No se encontró el mazo ${mazoId} para ${animeId}`);
-        alert('Este mazo aún no está disponible. ¡Próximamente!');
-    }
-}
-
-// Función para mostrar una pregunta del quiz anime - CON BOTÓN DIFÍCIL
 function mostrarPreguntaAnime() {
     if (preguntaActualAnime < mazoActualAnime.length) {
         const pregunta = mazoActualAnime[preguntaActualAnime];
@@ -676,9 +641,15 @@ function mostrarPreguntaAnime() {
         document.getElementById('resultado-anime').className = 'resultado';
         document.getElementById('boton-siguiente-anime').style.display = 'none';
         
-        // Limpiar opciones anteriores
+        // Limpiar opciones anteriores y el botón de difícil SI EXISTE
         const contenedorOpciones = document.getElementById('contenedor-opciones-anime');
         contenedorOpciones.innerHTML = '';
+        
+        // También limpiar cualquier botón de difícil existente fuera del contenedor
+        const botonDificilExistente = document.querySelector('.boton-dificil');
+        if (botonDificilExistente) {
+            botonDificilExistente.remove();
+        }
         
         // Mezclar opciones
         const opcionesMezcladas = [...pregunta.opciones];
@@ -700,13 +671,20 @@ function mostrarPreguntaAnime() {
         // NUEVO: AGREGAR BOTÓN "✰ AGREGAR A PALABRAS DIFÍCILES" SI ESTAMOS EN MAZO NORMAL
         // ============================================================================
         if (!mazoDificilActivo) {
+            // Crear contenedor para el botón de difícil (fuera del contenedor de opciones)
+            const contenedorPadre = contenedorOpciones.parentNode;
+            
+            // Crear un div contenedor para el botón de difícil
+            const contenedorBotonDificil = document.createElement('div');
+            contenedorBotonDificil.className = 'contenedor-boton-dificil';
+            contenedorBotonDificil.style.cssText = 'margin: 15px 0; text-align: center;';
+            
             const botonDificil = document.createElement('button');
             botonDificil.className = 'boton-dificil';
             botonDificil.innerHTML = '✰ Marcar como difícil';
             botonDificil.onclick = () => agregarAPalabrasDificilesAnime(pregunta);
             botonDificil.style.cssText = `
-                margin: 15px auto;
-                display: block;
+                margin: 0 auto;
                 background: linear-gradient(135deg, #ff9800, #ff5722);
                 color: white;
                 border: none;
@@ -728,7 +706,10 @@ function mostrarPreguntaAnime() {
                 this.style.boxShadow = '0 4px 10px rgba(255, 152, 0, 0.3)';
             };
             
-            contenedorOpciones.parentNode.insertBefore(botonDificil, contenedorOpciones.nextSibling);
+            contenedorBotonDificil.appendChild(botonDificil);
+            
+            // Insertar el botón después del contenedor de opciones
+            contenedorPadre.insertBefore(contenedorBotonDificil, contenedorOpciones.nextSibling);
         }
     } else {
         mostrarResultadosAnime();
