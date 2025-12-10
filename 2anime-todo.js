@@ -57,7 +57,7 @@ const animeConfig = {
     
     // IDs reales de Google Drive (reemplazar con los tuyos)
     driveVideoIds: {
-        'anime1': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+        'anime1': '1aPPqNHRq-Twvdp-TnQ0FkyYLuksmr2qe',
         'anime2': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
         'anime3': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
         'anime4': '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
