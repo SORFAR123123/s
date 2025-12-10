@@ -624,7 +624,7 @@ function saltarATimestampAnime(segundos) {
 }
 
 // ============================================================================
-// 6. FUNCIONES DEL QUIZ - CON BOTÓN "AGREGAR A PALABRAS DIFÍCILES"
+// 6. FUNCIONES DEL QUIZ - CON BOTÓN "AGREGAR A PALABRAS DIFÍCILES" (CORREGIDAS)
 // ============================================================================
 
 // Función para iniciar el quiz de un mazo de anime
@@ -789,6 +789,110 @@ function agregarAPalabrasDificilesAnime(palabra) {
     
     console.log(`📝 Palabra agregada a mazo difícil: ${palabra.japones}`);
     console.log(`📊 Total palabras difíciles: ${mazoPalabrasDificilesAnime.length}`);
+}
+
+// Función para iniciar el mazo de palabras difíciles
+function iniciarMazoDificilAnime() {
+    // Verificar si hay palabras en el mazo difícil
+    if (mazoPalabrasDificilesAnime.length === 0) {
+        mostrarNotificacionAnime('📭 No hay palabras en tu mazo de palabras difíciles');
+        return false;
+    }
+    
+    // Cambiar a modo mazo difícil
+    mazoDificilActivo = true;
+    
+    // Copiar las palabras difíciles al mazo actual
+    mazoActualAnime = [...mazoPalabrasDificilesAnime];
+    preguntaActualAnime = 0;
+    respuestasCorrectasAnime = 0;
+    respuestasIncorrectasAnime = 0;
+    
+    // Mezclar preguntas
+    for (let i = mazoActualAnime.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [mazoActualAnime[i], mazoActualAnime[j]] = [mazoActualAnime[j], mazoActualAnime[i]];
+    }
+    
+    // Cambiar a pantalla de quiz
+    cambiarPantalla('pantalla-quiz-anime');
+    
+    // Actualizar contador con indicador especial
+    document.getElementById('numero-pregunta-anime').textContent = 1;
+    document.getElementById('total-preguntas-anime').textContent = mazoActualAnime.length;
+    
+    // Cambiar título para indicar que es el mazo difícil
+    const contadorElement = document.querySelector('#pantalla-quiz-anime .contador');
+    if (contadorElement) {
+        contadorElement.innerHTML = `📚 MAZO DE PALABRAS DIFÍCILES: <span id="numero-pregunta-anime">1</span>/<span id="total-preguntas-anime">${mazoActualAnime.length}</span>`;
+    }
+    
+    // Mostrar primera pregunta
+    mostrarPreguntaAnime();
+    
+    console.log(`📝 Iniciando mazo DIFÍCIL con ${mazoPalabrasDificilesAnime.length} palabras`);
+    return true;
+}
+
+// Función para reiniciar el mazo de palabras difíciles
+function reiniciarMazoDificilAnime() {
+    mazoPalabrasDificilesAnime = [];
+    mazoDificilActivo = false;
+    console.log("🔄 Mazo de palabras difíciles reiniciado");
+}
+
+// Función para verificar respuesta en quiz anime - MODIFICADA PARA MANEJAR MAZO DIFÍCIL
+function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectura, pregunta) {
+    const opcionesDOM = document.querySelectorAll('#contenedor-opciones-anime .opcion');
+    const resultado = document.getElementById('resultado-anime');
+    
+    // Deshabilitar botones
+    opcionesDOM.forEach(opcion => {
+        opcion.disabled = true;
+    });
+    
+    // También deshabilitar el botón de difícil si existe
+    const botonDificil = document.querySelector('.boton-dificil');
+    if (botonDificil) {
+        botonDificil.disabled = true;
+    }
+    
+    // Marcar respuestas correctas e incorrectas
+    opcionesDOM.forEach(opcion => {
+        if (opcion.textContent === respuestaCorrecta) {
+            opcion.classList.add('correcta');
+        } else if (opcion.textContent === respuestaSeleccionada && respuestaSeleccionada !== respuestaCorrecta) {
+            opcion.classList.add('incorrecta');
+        }
+    });
+    
+    // Mostrar lectura
+    document.getElementById('lectura-anime').textContent = `(${lectura})`;
+    
+    if (respuestaSeleccionada === respuestaCorrecta) {
+        resultado.textContent = '¡Correcto! ✅';
+        resultado.className = 'resultado correcto';
+        respuestasCorrectasAnime++;
+        
+        // Navegación automática para respuestas correctas
+        setTimeout(() => {
+            siguientePreguntaAnime();
+        }, 1000);
+        
+    } else {
+        resultado.textContent = `Incorrecto ❌. La respuesta es: ${respuestaCorrecta}`;
+        resultado.className = 'resultado incorrecto';
+        respuestasIncorrectasAnime++;
+        
+        // Mostrar botón "Continuar" para respuestas incorrectas
+        document.getElementById('boton-siguiente-anime').style.display = 'block';
+    }
+}
+
+// Función para pasar a la siguiente pregunta anime
+function siguientePreguntaAnime() {
+    preguntaActualAnime++;
+    mostrarPreguntaAnime();
 }
 
 // ============================================================================
