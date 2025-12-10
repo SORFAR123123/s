@@ -129,69 +129,99 @@ const animeConfig = {
 // ============================================================================
 
 const animeVocabulario = {
-    // ANIME 1 - Quintillizas Nakano
-    'anime1': {
-        'mazo1': [
-            { japones: 'こちらこそ', lectura: 'kochirakozo', opciones: ['es mi culpa', 'Hermanos', 'Amigas', 'Compañeras'], respuesta: 0 },
-            { japones: '恋愛', lectura: 'renai', opciones: ['Amor romántico', 'Amistad', 'Familia', 'Respeto'], respuesta: 0 },
-            { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Trabajo', 'Juego', 'Descanso'], respuesta: 0 },
-            { japones: '試験', lectura: 'shiken', opciones: ['Examen', 'Tarea', 'Proyecto', 'Práctica'], respuesta: 0 },
-            { japones: '家庭教師', lectura: 'kateikyoushi', opciones: ['Tutor', 'Profesor', 'Estudiante', 'Director'], respuesta: 0 },
-            { japones: '笑顔', lectura: 'egao', opciones: ['Sonrisa', 'Llanto', 'Enojo', 'Sorpresa'], respuesta: 0 },
-            { japones: '約束', lectura: 'yakusoku', opciones: ['Promesa', 'Mentira', 'Secreto', 'Verdad'], respuesta: 0 },
-            { japones: '心配', lectura: 'shinpai', opciones: ['Preocupación', 'Alegría', 'Calma', 'Confianza'], respuesta: 0 },
-            { japones: '勇気', lectura: 'yuuki', opciones: ['Valentía', 'Miedo', 'Duda', 'Timidez'], respuesta: 0 },
-            { japones: '幸せ', lectura: 'shiawase', opciones: ['Felicidad', 'Tristeza', 'Enojo', 'Aburrimiento'], respuesta: 0 }
-        ],
-        'mazo2': [
-            { japones: '想い', lectura: 'omoi', opciones: ['Sentimientos', 'Pensamientos', 'Palabras', 'Acciones'], respuesta: 0 },
-            { japones: '支える', lectura: 'sasaeru', opciones: ['Apoyar', 'Criticar', 'Ignorar', 'Abandonar'], respuesta: 0 },
-            { japones: '成長', lectura: 'seichou', opciones: ['Crecimiento', 'Estancamiento', 'Retroceso', 'Cambio'], respuesta: 0 },
-            { japones: '未来', lectura: 'mirai', opciones: ['Futuro', 'Pasado', 'Presente', 'Historia'], respuesta: 0 },
-            { japones: '信じる', lectura: 'shinjiru', opciones: ['Creer', 'Dudar', 'Negar', 'Olvidar'], respuesta: 0 },
-            { japones: '特別', lectura: 'tokubetsu', opciones: ['Especial', 'Común', 'Normal', 'Ordinario'], respuesta: 0 },
-            { japones: '大切', lectura: 'taisetsu', opciones: ['Importante', 'Insignificante', 'Común', 'Despreciable'], respuesta: 0 },
-            { japones: '頑張る', lectura: 'ganbaru', opciones: ['Esforzarse', 'Rendirse', 'Descansar', 'Evitar'], respuesta: 0 },
-            { japones: '絆', lectura: 'kizuna', opciones: ['Vínculo', 'Separación', 'Distancia', 'Aislamiento'], respuesta: 0 },
-            { japones: '恋', lectura: 'koi', opciones: ['Amor', 'Odio', 'Indiferencia', 'Amistad'], respuesta: 0 }
-        ],
-        'mazo3': [
-            { japones: '涙', lectura: 'namida', opciones: ['Lágrimas', 'Risa', 'Sonrisa', 'Grito'], respuesta: 0 },
-            { japones: '優しさ', lectura: 'yasashisa', opciones: ['Amabilidad', 'Crueldad', 'Indiferencia', 'Dureza'], respuesta: 0 },
-            { japones: '守る', lectura: 'mamoru', opciones: ['Proteger', 'Atacar', 'Abandonar', 'Ignorar'], respuesta: 0 },
-            { japones: '夢', lectura: 'yume', opciones: ['Sueño', 'Pesadilla', 'Realidad', 'Fantasía'], respuesta: 0 },
-            { japones: '希望', lectura: 'kibou', opciones: ['Esperanza', 'Desesperación', 'Duda', 'Miedo'], respuesta: 0 },
-            { japones: '努力', lectura: 'doryoku', opciones: ['Esfuerzo', 'Flojera', 'Suerte', 'Talento'], respuesta: 0 },
-            { japones: '成功', lectura: 'seikou', opciones: ['Éxito', 'Fracaso', 'Intento', 'Esfuerzo'], respuesta: 0 },
-            { japones: '失敗', lectura: 'shippai', opciones: ['Fallo', 'Logro', 'Victoria', 'Triunfo'], respuesta: 0 },
-            { japones: '挑戦', lectura: 'chousen', opciones: ['Desafío', 'Rendición', 'Evitación', 'Rechazo'], respuesta: 0 },
-            { japones: '勝利', lectura: 'shouri', opciones: ['Victoria', 'Derrota', 'Empate', 'Abandono'], respuesta: 0 }
-        ],
-        'mazo4': [
-            { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Amigos', 'Compañeros', 'Vecinos'], respuesta: 0 },
-            { japones: '愛情', lectura: 'aijou', opciones: ['Afecto', 'Odio', 'Indiferencia', 'Respeto'], respuesta: 0 },
-            { japones: '理解', lectura: 'rikai', opciones: ['Comprensión', 'Confusión', 'Duda', 'Ignorancia'], respuesta: 0 },
-            { japones: '誤解', lectura: 'gokai', opciones: ['Malentendido', 'Comprensión', 'Acuerdo', 'Claridad'], respuesta: 0 },
-            { japones: '喧嘩', lectura: 'kenka', opciones: ['Pelea', 'Paz', 'Acuerdo', 'Armonía'], respuesta: 0 },
-            { japones: '仲直り', lectura: 'nakanaori', opciones: ['Reconciliación', 'Separación', 'Pelea', 'Distancia'], respuesta: 0 },
-            { japones: '安心', lectura: 'anshin', opciones: ['Tranquilidad', 'Ansiedad', 'Preocupación', 'Estrés'], respuesta: 0 },
-            { japones: '不安', lectura: 'fuan', opciones: ['Inseguridad', 'Confianza', 'Seguridad', 'Certeza'], respuesta: 0 },
-            { japones: '信頼', lectura: 'shinrai', opciones: ['Confianza', 'Desconfianza', 'Duda', 'Sospecha'], respuesta: 0 },
-            { japones: '尊敬', lectura: 'sonkei', opciones: ['Respeto', 'Desprecio', 'Indiferencia', 'Menosprecio'], respuesta: 0 }
-        ],
-        'mazo5': [
-            { japones: '変化', lectura: 'henka', opciones: ['Cambio', 'Permanencia', 'Estabilidad', 'Constancia'], respuesta: 0 },
-            { japones: '進歩', lectura: 'shinpo', opciones: ['Progreso', 'Regresión', 'Estancamiento', 'Inmovilidad'], respuesta: 0 },
-            { japones: '発見', lectura: 'hakken', opciones: ['Descubrimiento', 'Pérdida', 'Ocultamiento', 'Ignorancia'], respuesta: 0 },
-            { japones: '秘密', lectura: 'himitsu', opciones: ['Secreto', 'Publicidad', 'Revelación', 'Transparencia'], respuesta: 0 },
-            { japones: '真実', lectura: 'shinjitsu', opciones: ['Verdad', 'Mentira', 'Ficción', 'Invento'], respuesta: 0 },
-            { japones: '嘘', lectura: 'uso', opciones: ['Mentira', 'Verdad', 'Hecho', 'Realidad'], respuesta: 0 },
-            { japones: '選択', lectura: 'sentaku', opciones: ['Elección', 'Obligación', 'Azar', 'Destino'], respuesta: 0 },
-            { japones: '決断', lectura: 'ketsudan', opciones: ['Decisión', 'Duda', 'Indecisión', 'Vacilación'], respuesta: 0 },
-            { japones: '責任', lectura: 'sekinin', opciones: ['Responsabilidad', 'Irresponsabilidad', 'Libertad', 'Despreocupación'], respuesta: 0 },
-            { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 }
-        ]
-    },
+   // ANIME 1 - Quintillizas Nakano (COMPLETAMENTE REEMPLAZADO)
+'anime1': {
+    'mazo1': [
+        { japones: 'ご視聴', lectura: 'go shichou', opciones: ['Ver/Audiencia (formal)', 'Escuchar', 'Hablar', 'Leer'], respuesta: 0 },
+        { japones: '覚えました', lectura: 'oboemashita', opciones: ['Lo recordé', 'Lo olvidé', 'Lo escribí', 'Lo borré'], respuesta: 0 },
+        { japones: '綺麗', lectura: 'kirei', opciones: ['Hermoso/Bonito', 'Feo', 'Común', 'Extraño'], respuesta: 0 },
+        { japones: '嫌', lectura: 'iya', opciones: ['Odio/Disgusto', 'Amor', 'Indiferencia', 'Alegría'], respuesta: 0 },
+        { japones: '感情', lectura: 'kanjou', opciones: ['Emoción', 'Razón', 'Pensamiento', 'Acción'], respuesta: 0 },
+        { japones: '礼儀正しくて', lectura: 'reigitadashikute', opciones: ['Ser educado', 'Ser grosero', 'Ser tímido', 'Ser valiente'], respuesta: 0 },
+        { japones: '格ゲー', lectura: 'kaku gee', opciones: ['Juego de pelea', 'Juego de rol', 'Juego de estrategia', 'Juego de deportes'], respuesta: 0 },
+        { japones: '歩み寄ろう', lectura: 'ayumiyorou', opciones: ['Vamos a acercarnos', 'Vamos a alejarnos', 'Vamos a pelear', 'Vamos a esperar'], respuesta: 0 },
+        { japones: '寿司', lectura: 'sushi', opciones: ['Sushi', 'Ramen', 'Tempura', 'Takoyaki'], respuesta: 0 },
+        { japones: '誘惑', lectura: 'yuuwaku', opciones: ['Tentación', 'Rechazo', 'Ayuda', 'Castigo'], respuesta: 0 }
+    ],
+    'mazo2': [
+        { japones: '騎士', lectura: 'kishi', opciones: ['Caballero', 'Princesa', 'Mago', 'Campesino'], respuesta: 0 },
+        { japones: '裏切る', lectura: 'uragiru', opciones: ['Traicionar', 'Proteger', 'Ayudar', 'Enseñar'], respuesta: 0 },
+        { japones: 'こちらこそ', lectura: 'kochirakoso', opciones: ['Igualmente/Yo también', 'Gracias', 'Lo siento', 'De nada'], respuesta: 0 },
+        { japones: '色素', lectura: 'shikiso', opciones: ['Pigmento/Color', 'Sabor', 'Olor', 'Textura'], respuesta: 0 },
+        { japones: '薄い', lectura: 'usui', opciones: ['Delgado/Diluido', 'Grueso', 'Largo', 'Corto'], respuesta: 0 },
+        { japones: '乳輪', lectura: 'nyuurin', opciones: ['Areola', 'Pezón', 'Pecho', 'Espalda'], respuesta: 0 },
+        { japones: '血もませろ', lectura: 'chimomasero', opciones: ['¡Mezcla tu sangre!', '¡Bebe agua!', '¡Corre rápido!', '¡Come bien!'], respuesta: 0 },
+        { japones: 'ぶちこませろ', lectura: 'buchikomasero', opciones: ['¡Mételo a la fuerza!', '¡Sácalo!', '¡Espera!', '¡Cálmate!'], respuesta: 0 },
+        { japones: 'いい加減', lectura: 'iikagen', opciones: ['Ya es suficiente', 'Más por favor', 'Es temprano', 'Es tarde'], respuesta: 0 },
+        { japones: '体拭いてあげる', lectura: 'karada fui te ageru', opciones: ['Te secaré el cuerpo', 'Te bañaré', 'Te vestiré', 'Te peinaré'], respuesta: 0 }
+    ],
+    'mazo3': [
+        { japones: '結構ですけど', lectura: 'kekkou desu kedo', opciones: ['Está bien, pero...', 'No gracias', 'Sí por favor', 'Tal vez'], respuesta: 0 },
+        { japones: '凶悪', lectura: 'kyouaku', opciones: ['Malvado/Feroz', 'Amable', 'Débil', 'Inteligente'], respuesta: 0 },
+        { japones: '肉厚', lectura: 'nikuatsu', opciones: ['Carnoso/Grueso', 'Delgado', 'Duro', 'Suave'], respuesta: 0 },
+        { japones: '抵抗', lectura: 'teikou', opciones: ['Resistencia', 'Sumisión', 'Ayuda', 'Ataque'], respuesta: 0 },
+        { japones: '怒ってます', lectura: 'okottemasu', opciones: ['Estoy enojado', 'Estoy feliz', 'Estoy triste', 'Estoy cansado'], respuesta: 0 },
+        { japones: '気づかない', lectura: 'kidzukanai', opciones: ['No darse cuenta', 'Darse cuenta', 'Ignorar', 'Observar'], respuesta: 0 },
+        { japones: '母国', lectura: 'bokoku', opciones: ['País natal', 'País extranjero', 'Ciudad', 'Pueblo'], respuesta: 0 },
+        { japones: '平等', lectura: 'byoudou', opciones: ['Igualdad', 'Desigualdad', 'Libertad', 'Justicia'], respuesta: 0 },
+        { japones: '尊重して', lectura: 'sonchou shite', opciones: ['Respeta', 'Ignora', 'Critica', 'Ayuda'], respuesta: 0 },
+        { japones: '相手', lectura: 'aite', opciones: ['Compañero/Contrincante', 'Amigo', 'Enemigo', 'Extraño'], respuesta: 0 }
+    ],
+    'mazo4': [
+        { japones: '切度を', lectura: 'setsudo wo', opciones: ['Con sinceridad', 'Con mentiras', 'Con miedo', 'Con alegría'], respuesta: 0 },
+        { japones: 'もって', lectura: 'motte', opciones: '['Con/Tener', 'Sin', 'Para', 'Desde'], respuesta: 0 },
+        { japones: '接することが', lectura: 'sesshi suru koto ga', opciones: ['Interactuar con', 'Evitar a', 'Observar a', 'Hablar de'], respuesta: 0 },
+        { japones: 'ブラブラ', lectura: 'burabura', opciones: ['Vagar/Sin rumbo', 'Correr rápido', 'Trabajar duro', 'Descansar'], respuesta: 0 },
+        { japones: '揺らして', lectura: 'yurashite', opciones: ['Sacudiendo', 'Sosteniendo', 'Empujando', 'Jalando'], respuesta: 0 },
+        { japones: '欲煽り', lectura: 'yoku aori', opciones: ['Incitando deseos', 'Calmando', 'Enseñando', 'Criticando'], respuesta: 0 },
+        { japones: '女性', lectura: 'josei', opciones: ['Mujer', 'Hombre', 'Niño', 'Animal'], respuesta: 0 },
+        { japones: '差別', lectura: 'sabetsu', opciones: ['Discriminación', 'Igualdad', 'Respeto', 'Amor'], respuesta: 0 },
+        { japones: '正しい', lectura: 'tadashii', opciones: ['Correcto', 'Incorrecto', 'Difícil', 'Fácil'], respuesta: 0 },
+        { japones: '勝負', lectura: 'shoubu', opciones: ['Competencia', 'Amistad', 'Estudio', 'Trabajo'], respuesta: 0 }
+    ],
+    'mazo5': [
+        { japones: '負けですね', lectura: 'make desu ne', opciones: ['Es una derrota, ¿verdad?', 'Es una victoria', 'Es un empate', 'Es difícil'], respuesta: 0 },
+        { japones: '腹め', lectura: 'harame', opciones: ['Vientre/Panza', 'Cabeza', 'Pies', 'Manos'], respuesta: 0 },
+        { japones: 'ジュポジュポ', lectura: 'jupojupo', opciones: ['Sonido de líquido', 'Sonido de pasos', 'Sonido de risa', 'Sonido de llanto'], respuesta: 0 },
+        { japones: '北欧', lectura: 'hokuou', opciones: ['Países nórdicos', 'Sudamérica', 'Asia', 'África'], respuesta: 0 },
+        { japones: '先進国', lectura: 'senshinkoku', opciones: ['País desarrollado', 'País en desarrollo', 'País pobre', 'País grande'], respuesta: 0 },
+        { japones: '突っ込まれて', lectura: 'tsukkomarete', opciones: ['Ser penetrado', 'Ser tocado', 'Ser mirado', 'Ser hablado'], respuesta: 0 },
+        { japones: '深度', lectura: 'shindo', opciones: ['Profundidad', 'Altura', 'Longitud', 'Ancho'], respuesta: 0 },
+        { japones: '頃顔してる', lectura: 'korogao shiteru', opciones: ['Haciendo una cara', 'Haciendo ejercicio', 'Haciendo tarea', 'Haciendo comida'], respuesta: 0 },
+        { japones: '喜ぶ', lectura: 'yorokobu', opciones: ['Alegrarse', 'Enojarse', 'Tristarse', 'Sorprenderse'], respuesta: 0 },
+        { japones: '一杯', lectura: 'ippai', opciones: ['Lleno/Una copa', 'Vacío', 'Medio', 'Mucho'], respuesta: 0 }
+    ],
+    'mazo6': [
+        { japones: '性欲', lectura: 'seiyoku', opciones: ['Deseo sexual', 'Hambre', 'Sed', 'Sueño'], respuesta: 0 },
+        { japones: '身も心も', lectura: 'mimo kokoromo', opciones: ['Cuerpo y alma', 'Solo cuerpo', 'Solo mente', 'Ninguno'], respuesta: 0 },
+        { japones: '健康', lectura: 'kenkou', opciones: ['Salud', 'Enfermedad', 'Fuerza', 'Debilidad'], respuesta: 0 },
+        { japones: '証拠ですよ', lectura: 'shouko desu yo', opciones: ['Es evidencia', 'Es mentira', 'Es verdad', 'Es secreto'], respuesta: 0 },
+        { japones: '掃除', lectura: 'souji', opciones: ['Limpieza', 'Desorden', 'Construcción', 'Destrucción'], respuesta: 0 },
+        { japones: 'やましい', lectura: 'yamashii', opciones: ['Culpable/Avergonzado', 'Inocente', 'Orgulloso', 'Feliz'], respuesta: 0 },
+        { japones: '言い訳', lectura: 'iiwake', opciones: ['Excusa', 'Verdad', 'Mentira', 'Pregunta'], respuesta: 0 },
+        { japones: '普通に', lectura: 'futsuu ni', opciones: ['Normalmente', 'Extrañamente', 'Rápidamente', 'Lentamente'], respuesta: 0 },
+        { japones: '誘えば', lectura: 'sasoeba', opciones: ['Si invitas', 'Si rechazas', 'Si aceptas', 'Si esperas'], respuesta: 0 },
+        { japones: 'ごまかさず', lectura: 'gomakasazu', opciones: ['Sin engañar', 'Con engaño', 'Con honestidad', 'Con mentiras'], respuesta: 0 }
+    ],
+    'mazo7': [
+        { japones: '隠さずに', lectura: 'kakasazu ni', opciones: ['Sin esconder', 'Escondiendo', 'Mintiendo', 'Revelando'], respuesta: 0 },
+        { japones: '求め合える', lectura: 'motome aeru', opciones: ['Poder buscarse mutuamente', 'Poder evitarse', 'Poder ignorarse', 'Poder odiarse'], respuesta: 0 },
+        { japones: '刺さるぞ', lectura: 'sasaru zo', opciones: '['¡Va a penetrar!', '¡Va a salir!', '¡Va a entrar!', '¡Va a romper!'], respuesta: 0 },
+        { japones: '冷め、', lectura: 'same,', opciones: ['Enfriarse,', 'Calentarse,', 'Secarse,', 'Mojarse,'], respuesta: 0 },
+        { japones: '呼吸', lectura: 'kokyuu', opciones: ['Respiración', 'Circulación', 'Digestión', 'Sudoración'], respuesta: 0 },
+        { japones: '至急', lectura: 'shikyuu', opciones: ['Urgente', 'Lento', 'Normal', 'Ocasional'], respuesta: 0 },
+        { japones: '受け取って', lectura: 'uketotte', opciones: ['Recibe', 'Da', 'Toma', 'Deja'], respuesta: 0 },
+        { japones: '特選してやる', lectura: 'tokusen shite yaru', opciones: ['Te lo seleccionaré especialmente', 'Te lo daré común', 'Te lo quitaré', 'Te lo esconderé'], respuesta: 0 },
+        { japones: 'ゴキサビピストン', lectura: 'gokisabipisuton', opciones: ['Gokisabi pistón', 'Motor turbo', 'Frenos ABS', 'Suspensión'], respuesta: 0 },
+        { japones: '金玉', lectura: 'kintama', opciones: ['Testículos', 'Ovarios', 'Corazón', 'Cerebro'], respuesta: 0 }
+    ],
+    'mazo8': [
+        { japones: '楽しみにしていた', lectura: 'tanoshimi ni shiteita', opciones: ['Estaba esperando con ansias', 'Estaba temiendo', 'Estaba olvidando', 'Estaba ignorando'], respuesta: 0 },
+        { japones: '書いていない', lectura: 'kaite inai', opciones: ['No está escrito', 'Está escrito', 'Está borrado', 'Está tachado'], respuesta: 0 },
+        { japones: '所有権', lectura: 'shoyuuken', opciones: ['Derecho de propiedad', 'Derecho de uso', 'Derecho de venta', 'Derecho de préstamo'], respuesta: 0 },
+        { japones: '白黒つけるぞ', lectura: 'shirokuro tsukeru zo', opciones: ['¡Voy a aclarar las cosas!', '¡Voy a confundir!', '¡Voy a esconder!', '¡Voy a olvidar!'], respuesta: 0 }
+    ]
+},
     
     // ANIME 2 - Yamada Lv999
     'anime2': {
