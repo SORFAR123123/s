@@ -446,14 +446,19 @@ function reproducirVideo(video) {
     reproducirVideoConTimestamp(video, 0);
 }
 
-// NUEVA FUNCIÓN: Reproductor con soporte de timestamps
+// Función mejorada con autoplay
 function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
     videoActual = video;
     
-    // Construir URL con timestamp si se especifica
+    // Construir URL con timestamp Y AUTOPLAY
     let videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
+    
     if (timestampSegundos > 0) {
-        videoUrl += `?t=${timestampSegundos}s`;
+        // Agregar timestamp Y autoplay
+        videoUrl += `?t=${timestampSegundos}s&autoplay=1`;
+    } else {
+        // Solo autoplay para inicio normal
+        videoUrl += `?autoplay=1`;
     }
     
     // Actualizar interfaz
@@ -477,11 +482,26 @@ function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
         imagenElement.alt = video.nombre;
     }
     
-    // Cargar iframe de video
+    // Cargar iframe de video CON AUTOPLAY
     const iframeElement = document.getElementById('iframe-video-reproductor');
     if (iframeElement) {
-        iframeElement.src = videoUrl;
-        iframeElement.title = `Reproduciendo: ${video.nombre}`;
+        // Resetear primero
+        iframeElement.src = '';
+        
+        // Pequeño delay para asegurar reset
+        setTimeout(() => {
+            iframeElement.src = videoUrl;
+            iframeElement.title = `Reproduciendo: ${video.nombre}`;
+            
+            // Intentar forzar reproducción
+            setTimeout(() => {
+                try {
+                    iframeElement.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } catch (e) {
+                    console.log("Autoplay bloqueado, usuario debe hacer clic");
+                }
+            }, 1000);
+        }, 100);
     }
     
     // MOSTRAR TIMESTAMPS
@@ -494,10 +514,9 @@ function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
         const minutos = Math.floor(timestampSegundos / 60);
         const segs = timestampSegundos % 60;
         const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
-        mostrarNotificacionGaleria(`⏱️ Video cargado desde ${tiempoFormateado}`);
+        mostrarNotificacionGaleria(`⏱️ Video cargado desde ${tiempoFormateado} - Haz clic en el video para reproducir`);
     }
 }
-
 // ============================================================================
 // FUNCIONES DE TIMESTAMPS
 // ============================================================================
