@@ -1,6 +1,26 @@
 /* ============================================================================
-   ESTILOS COMPLETOS PARA LA APLICACIÓN CON SISTEMA NAKANO
+   ESTILOS OPTIMIZADOS - VERSIÓN OPTIMIZADA 1.0
    ============================================================================ */
+
+/* ============================================================================
+   1. VARIABLES Y RESET
+   ============================================================================ */
+
+:root {
+    /* OPT: Variables centralizadas para reducir repetición de colores */
+    --color-fondo: #1e1e1e;
+    --color-primario: #ff6b9d;
+    --color-secundario: #4a90e2;
+    --color-exito: #00ff88;
+    --color-advertencia: #ffd700;
+    --color-peligro: #ff6b6b;
+    --color-texto: #ffffff;
+    --color-texto-secundario: #cccccc;
+    --color-sombra: rgba(0, 0, 0, 0.5);
+    --radio-borde: 15px;
+    --transicion-base: all 0.3s ease;
+    --sombra-base: 0 8px 25px;
+}
 
 * {
     margin: 0;
@@ -10,8 +30,8 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #1e1e1e;
-    color: #ffffff;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
     min-height: 100vh;
 }
 
@@ -31,68 +51,162 @@ body {
 }
 
 /* ============================================================================
-   ESTILOS PARA EVENTOS DIARIOS
+   2. COMPONENTES REUTILIZABLES
    ============================================================================ */
 
-.evento-diario-container {
-    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
-    border-radius: 25px;
-    padding: 30px;
-    border: 4px solid #ff6b9d;
-    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+/* COMPONENTE: TARJETA BASE */
+.tarjeta {
+    border-radius: 20px;
+    padding: 20px;
     text-align: center;
+    cursor: pointer;
+    transition: var(--transicion-base);
+    border: 3px solid transparent;
+    box-shadow: var(--sombra-base) rgba(74, 144, 226, 0.3);
 }
 
-.evento-header {
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
+}
+
+/* Variantes de tarjetas */
+.tarjeta--azul {
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border-color: #4169e1;
+}
+
+.tarjeta--morada {
+    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
+    border-color: var(--color-primario);
+}
+
+.tarjeta--gris {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-color: #444444;
+}
+
+.tarjeta--dorada {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border-color: #ffd700;
+    color: #000000;
+}
+
+/* COMPONENTE: BOTÓN BASE */
+.boton {
+    border: none;
+    border-radius: var(--radio-borde);
+    padding: 15px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transicion-base);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.boton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.boton:hover::before {
+    left: 100%;
+}
+
+.boton:hover {
+    transform: translateY(-3px);
+}
+
+/* Variantes de botones */
+.boton--principal {
+    background: linear-gradient(135deg, var(--color-exito), #00cc6a);
+    color: var(--color-fondo);
+    box-shadow: var(--sombra-base) rgba(0, 255, 136, 0.4);
+}
+
+.boton--secundario {
+    background: linear-gradient(135deg, var(--color-peligro), #ff8e8e);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-base) rgba(255, 107, 107, 0.4);
+}
+
+.boton--terciario {
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-base) rgba(255, 152, 0, 0.4);
+}
+
+.boton--azul {
+    background: linear-gradient(135deg, var(--color-secundario), #7b68ee);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-base) rgba(74, 144, 226, 0.4);
+}
+
+.boton--morado {
+    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-base) rgba(255, 107, 157, 0.4);
+}
+
+/* COMPONENTE: CONTENEDOR DE CONTENIDO */
+.contenido-enfocado {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 25px;
+    border: 2px solid var(--color-secundario);
     margin-bottom: 25px;
 }
 
-.evento-header h1 {
-    font-size: 2.8rem;
-    color: #ff6b9d;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-}
-
-.evento-fecha {
-    font-size: 1.2rem;
-    color: #cccccc;
-    font-style: italic;
-}
-
-.evento-content {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    margin-bottom: 30px;
+/* COMPONENTE: BARRA DE PROGRESO */
+.barra-progreso {
+    width: 100%;
+    height: 20px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 25px;
-    border: 2px solid #4a90e2;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--color-primario);
 }
 
-/* CONTENEDOR DE VIDEO PARA EVENTOS DIARIOS */
-.video-container-evento {
+.barra-progreso__relleno {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primario), #ff8eb4);
+    border-radius: 8px;
+    transition: width 0.5s ease;
+}
+
+.barra-progreso--dorada {
+    border-color: var(--color-advertencia);
+}
+
+.barra-progreso--dorada .barra-progreso__relleno {
+    background: linear-gradient(90deg, var(--color-advertencia), #ffed4e);
+}
+
+/* COMPONENTE: VIDEO CONTAINER */
+.video-container {
     position: relative;
-    width: 300px;
-    height: 300px;
     border-radius: 20px;
     overflow: hidden;
-    border: 4px solid #ff6b9d;
+    border: 4px solid var(--color-primario);
     box-shadow: 0 8px 25px rgba(255, 107, 157, 0.5);
-    flex-shrink: 0;
     background: #000;
 }
 
-.video-evento {
+.video-container__elemento {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: #000;
     display: block;
 }
 
-.video-overlay {
+.video-container__overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -102,1800 +216,16 @@ body {
     pointer-events: none;
 }
 
-/* INDICADOR DE REPRODUCCIÓN PARA VIDEOS */
-.video-play-indicator {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    color: white;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 107, 157, 0.5);
-    pointer-events: none;
-}
-
-.play-icon {
-    font-size: 2rem;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.video-play-indicator p {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.video-fallback-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 107, 157, 0.9);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 15px;
-    text-align: center;
-    z-index: 10;
-    font-weight: bold;
-    display: none;
-}
-
-.video-container-evento.video-error .video-fallback-message {
-    display: block;
-}
-
-.evento-info {
-    flex: 1;
-    text-align: left;
-}
-
-.evento-nombre {
-    font-size: 2rem;
-    color: #ff6b9d;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.evento-descripcion {
-    font-size: 1.3rem;
-    color: #e0e0e0;
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
-
-.evento-progreso {
-    margin-bottom: 20px;
-}
-
-.progreso-texto {
-    font-size: 1.2rem;
-    color: #ffd700;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.barra-progreso-evento {
-    width: 100%;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid #ffd700;
-}
-
-.barra-progreso-fill-evento {
-    height: 100%;
-    background: linear-gradient(90deg, #ffd700, #ffed4e);
-    border-radius: 10px;
-    transition: width 0.5s ease;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-.evento-recompensa {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 15px;
-    border: 2px solid #00ff88;
-}
-
-.evento-recompensa h3 {
-    color: #00ff88;
-    margin-bottom: 8px;
-    font-size: 1.3rem;
-}
-
-.evento-recompensa p {
-    color: #ffffff;
-    font-size: 1.1rem;
-    line-height: 1.4;
-}
-
-.evento-actions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-/* Botones específicos para eventos */
-.evento-actions .boton-principal {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: #1e1e1e;
-    border: none;
-    border-radius: 15px;
-    padding: 18px 35px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
-}
-
-.evento-actions .boton-principal:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 255, 136, 0.6);
-}
-
-.evento-actions .boton-secundario {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 18px 35px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-}
-
-.evento-actions .boton-secundario:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
-}
-
 /* ============================================================================
-   ESTILOS PARA PALABRAS FALLADAS
+   3. SISTEMAS ESPECÍFICOS
    ============================================================================ */
 
-.palabras-falladas-container {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    border-radius: 20px;
-    padding: 30px;
-    border: 3px solid #ff6b9d;
-    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-}
-
-.estadisticas-palabras {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(255, 107, 157, 0.3);
-}
-
-.estadistica-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #4a90e2;
-    text-align: center;
-}
-
-.estadistica-label {
-    color: #cccccc;
-    font-size: 0.9rem;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.estadistica-valor {
-    color: #ff6b9d;
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-
-.opciones-palabras-falladas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.boton-palabras-falladas {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 20px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
-    border: 2px solid #4169e1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.boton-palabras-falladas:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.5);
-    background: linear-gradient(135deg, #7b68ee, #4a90e2);
-}
-
-.boton-palabras-falladas small {
-    font-size: 0.8rem;
-    color: #e0e0e0;
-    font-weight: normal;
-}
-
-.lista-palabras-container {
-    min-height: 200px;
-    margin-bottom: 30px;
-}
-
-.lista-palabras-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.lista-palabras-header h3 {
-    color: #ff6b9d;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-}
-
-.subtitulo-lista {
-    color: #cccccc;
-    font-size: 0.9rem;
-}
-
-.lista-palabras {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.palabra-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid rgba(255, 107, 157, 0.3);
-    transition: all 0.3s ease;
-}
-
-.palabra-item:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(5px);
-}
-
-.palabra-destacada {
-    border: 2px solid #ffd700;
-    background: rgba(255, 215, 0, 0.1);
-}
-
-.palabra-posicion {
-    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-}
-
-.palabra-info {
-    flex: 1;
-}
-
-.palabra-japones {
-    color: #ffffff;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.palabra-lectura {
-    color: #ffa500;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-.palabra-traduccion {
-    color: #00ff88;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.palabra-veces {
-    background: rgba(255, 107, 157, 0.2);
-    padding: 8px 15px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid #ff6b9d;
-}
-
-.veces-numero {
-    color: #ff6b9d;
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: block;
-}
-
-.veces-texto {
-    color: #cccccc;
-    font-size: 0.8rem;
-}
-
-/* Lista detallada de todas las palabras */
-.lista-palabras-todas {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.grupo-hora {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid rgba(74, 144, 226, 0.3);
-}
-
-.grupo-hora h4 {
-    color: #4a90e2;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.palabras-hora {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.palabra-item-detalle {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 12px;
-    border-left: 3px solid #ff6b9d;
-}
-
-.palabra-japones-detalle {
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.palabra-info-detalle {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-.palabra-error {
-    color: #ff6b6b;
-    font-size: 0.9rem;
-}
-
-.palabra-correcta {
-    color: #00ff88;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.palabra-lectura-detalle {
-    color: #ffa500;
-    font-size: 0.8rem;
-}
-
-/* Mensajes vacíos y de éxito */
-.mensaje-vacio, .mensaje-exito {
-    text-align: center;
-    padding: 40px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    border: 2px dashed #4a90e2;
-}
-
-.mensaje-vacio h3, .mensaje-exito h3 {
-    color: #4a90e2;
-    margin-bottom: 15px;
-    font-size: 1.4rem;
-}
-
-.mensaje-vacio p, .mensaje-exito p {
-    color: #cccccc;
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
-
-.mensaje-exito {
-    border-color: #00ff88;
-}
-
-.mensaje-exito h3 {
-    color: #00ff88;
-}
-
-.acciones-palabras {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-/* ============================================================================
-   PANTALLA DE INICIO
-   ============================================================================ */
-
-h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-.subtitulo {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #cccccc;
-    margin-bottom: 40px;
-}
-
-.menu-principal {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.seccion-menu {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    border-radius: 20px;
-    padding: 25px;
-    border: 2px solid #444444;
-}
-
-.titulo-seccion {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #ff6b6b;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.contenedor-tarjetas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* THE LAST SUMMER CARDS */
-.lastsummer-card {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-    border: 3px solid #4169e1;
-    max-width: 300px;
-    margin-bottom: 30px;
-}
-
-.lastsummer-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
-}
-
-.lastsummer-imagen {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    margin-bottom: 15px;
-}
-
-.lastsummer-texto {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.lastsummer-info {
-    font-size: 0.9rem;
-    color: #e0e0e0;
-    margin-top: 8px;
-}
-
-/* ============================================================================
-   PANEL DE MISIONES DIARIAS
-   ============================================================================ */
-
-.misiones-diarias-panel {
-    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 30px;
-    border: 3px solid #ff6b9d;
-    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-}
-
-.misiones-diarias-panel h3 {
-    color: #ff6b9d;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.misiones-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.mision-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 12px;
-    border: 2px solid #4a90e2;
-    transition: all 0.3s ease;
-}
-
-.mision-item:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.mision-texto {
-    color: #ffffff;
-    font-size: 1rem;
-    flex: 1;
-}
-
-.mision-recompensa {
-    color: #ffd700;
-    font-weight: bold;
-    margin: 0 15px;
-    font-size: 1.1rem;
-}
-
-.mision-progreso {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #ff6b9d;
-}
-
-.mision-progreso span {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-/* ============================================================================
-   PANEL DE ECONOMÍA
-   ============================================================================ */
-
-.economia-panel {
-    text-align: center;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    border: 2px solid #ffd700;
-}
-
-.saldo-total {
-    color: #ffd700;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* ============================================================================
-   PANTALLA DE SUBCONTENEDORES
-   ============================================================================ */
-
-.contenedor-subcontenedores {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.subcontenedor-card {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-    border: 3px solid #4169e1;
-}
-
-.subcontenedor-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
-}
-
-.subcontenedor-imagen {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    margin-bottom: 15px;
-}
-
-.subcontenedor-texto {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-}
-
-.subcontenedor-info {
-    font-size: 0.9rem;
-    color: #e0e0e0;
-}
-
-/* ============================================================================
-   PANTALLA DE MAZOS
-   ============================================================================ */
-
-.contenedor-mazos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.mazo-card {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-    border: 3px solid #4169e1;
-}
-
-.mazo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
-}
-
-.mazo-imagen {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid white;
-    margin-bottom: 15px;
-}
-
-.mazo-texto {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-}
-
-.mazo-info {
-    font-size: 0.9rem;
-    color: #e0e0e0;
-}
-
-/* ============================================================================
-   BARRA SUPERIOR Y BOTONES
-   ============================================================================ */
-
-.barra-superior {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #2d2d2d;
-    border-radius: 10px;
-    margin-bottom: 30px;
-}
-
-.contador {
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.botones-superiores {
-    display: flex;
-    gap: 10px;
-}
-
-.boton-home, .boton-menu {
-    background-color: #444444;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.boton-home:hover, .boton-menu:hover {
-    background-color: #555555;
-    transform: translateY(-2px);
-}
-
-.boton-menu {
-    background-color: #4a90e2;
-}
-
-.boton-menu:hover {
-    background-color: #5a9ce2;
-}
-
-/* ============================================================================
-   PANTALLA DEL QUIZ
-   ============================================================================ */
-
-.contenido-quiz {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.palabra-japones {
-    font-size: 4rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #ffffff;
-}
-
-.lectura {
-    font-size: 1.8rem;
-    font-style: italic;
-    color: #ffa500;
-    margin-bottom: 40px;
-    min-height: 50px;
-    text-align: center;
-}
-
-.contenedor-opciones {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.opcion {
-    background-color: #333333;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    padding: 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.opcion:hover {
-    background-color: #444444;
-    transform: translateY(-2px);
-}
-
-.opcion.correcta {
-    background: linear-gradient(135deg, #00ff88, #00cc6a) !important;
-    color: #1e1e1e;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-}
-
-.opcion.incorrecta {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e) !important;
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
-}
-
-.opcion:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-    transform: none !important;
-}
-
-.resultado {
-    font-size: 1.5rem;
-    font-weight: bold;
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.resultado.correcto {
-    color: #00ff88;
-}
-
-.resultado.incorrecto {
-    color: #ff4444;
-}
-
-/* Botón siguiente */
-#boton-siguiente {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-    margin-top: 10px;
-}
-
-#boton-siguiente:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.6);
-}
-
-/* ============================================================================
-   PANTALLA DE VIDEO RECOMPENSA
-   ============================================================================ */
-
-.contenido-video {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.subtitulo-video {
-    font-size: 1.5rem;
-    color: #ffa500;
-    margin-bottom: 30px;
-}
-
-.video-container {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 30px;
-    border: 3px solid #4a90e2;
-    position: relative;
-}
-
-.video-recompensa {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    background: #000;
-}
-
-.info-video {
-    margin-bottom: 30px;
-}
-
-.duracion-video {
-    font-size: 1.1rem;
-    color: #cccccc;
-    margin-bottom: 10px;
-}
-
-.mensaje-video {
-    font-size: 1.2rem;
-    color: #4a90e2;
-    font-weight: bold;
-}
-
-.recompensa-dinero {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #ffd700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* ============================================================================
-   PANTALLA DE RESULTADOS
-   ============================================================================ */
-
-.resultado-final {
-    background-color: #2d2d2d;
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 30px;
-    text-align: left;
-    line-height: 1.6;
-    font-size: 1.1rem;
-    white-space: pre-line;
-    border: 2px solid #4a90e2;
-}
-
-/* ============================================================================
-   BOTONES PRINCIPALES
-   ============================================================================ */
-
-.boton-principal {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: #1e1e1e;
-    border: none;
-    border-radius: 15px;
-    padding: 18px 35px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
-    margin: 10px;
-}
-
-.boton-principal:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 255, 136, 0.6);
-}
-
-.boton-secundario {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-    margin: 10px;
-}
-
-.boton-secundario:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
-}
-
-.boton-terciario {
-    background: linear-gradient(135deg, #ff9800, #ff5722);
-    color: white;
-    border: none;
-    border-radius: 15px;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
-    margin: 10px;
-}
-
-.boton-terciario:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 152, 0, 0.6);
-}
-
-.boton-saltar {
-    background-color: #444444;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.boton-saltar:hover {
-    background-color: #555555;
-    transform: translateY(-2px);
-}
-
-/* ============================================================================
-   ESTILOS PARA SISTEMA NAKANO
-   ============================================================================ */
-
-/* SELECTOR DE QUINTILLIZAS */
-.selector-nakano-container {
-    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 25px;
-    border: 3px solid #ff6b9d;
-}
-
-.selector-nakano-container h3 {
-    color: #ff6b9d;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.nakano-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-}
-
-.nakano-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.nakano-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-    border-color: #4a90e2;
-}
-
-.nakano-card.seleccionada {
-    border-color: #ff6b9d;
-    background: rgba(255, 107, 157, 0.2);
-    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
-}
-
-.nakano-imagen {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid white;
-    margin-bottom: 10px;
-}
-
-.nakano-card.seleccionada .nakano-imagen {
-    border-color: #ff6b9d;
-    box-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
-}
-
-.nakano-info {
-    font-size: 0.9rem;
-}
-
-.nakano-nombre {
-    color: white;
-    font-weight: bold;
-    margin-bottom: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.nakano-nivel {
-    color: #4a90e2;
-    font-size: 0.8rem;
-}
-
-.nakano-xp {
-    color: #00ff88;
-    font-size: 0.8rem;
-}
-
-.seleccion-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff6b9d;
-    color: white;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-}
-
-/* PERFIL NAKANO */
-.perfil-nakano {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    border: 2px solid #ff6b9d;
-}
-
-.imagen-nakano {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #ff6b9d;
-    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.5);
-}
-
-.info-nakano {
-    flex: 1;
-}
-
-.info-nakano h2 {
-    color: #ff6b9d;
-    font-size: 1.8rem;
-    margin-bottom: 8px;
-}
-
-.descripcion-nakano {
-    color: #cccccc;
-    font-style: italic;
-    margin-bottom: 15px;
-    font-size: 1rem;
-}
-
-.estadisticas-nakano {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.stat {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px;
-    border-radius: 10px;
-    border: 1px solid #ff6b9d;
-    min-width: 120px;
-}
-
-.stat-label {
-    color: #cccccc;
-    font-size: 0.9rem;
-    display: block;
-    margin-bottom: 3px;
-}
-
-.stat-value {
-    color: #ff6b9d;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-/* BARRA DE EXPERIENCIA MEJORADA */
-.barra-progreso-container {
-    margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #4a90e2;
-}
-
-.barra-progreso-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-    color: #ff6b9d;
-    font-weight: bold;
-}
-
-.descripcion-humor {
-    font-size: 0.9rem;
-    color: #cccccc;
-    margin-top: 5px;
-    padding: 5px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    text-align: center;
-}
-
-.barra-progreso {
-    width: 100%;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid #ff6b9d;
-}
-
-.barra-progreso-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ff6b9d, #ff8eb4);
-    border-radius: 8px;
-    transition: width 0.5s ease;
-}
-
-/* ECONOMÍA NAKANO */
-.economia-nakano {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #ffd700;
-}
-
-.saldo, .inventario {
-    padding: 10px;
-}
-
-.saldo {
-    border-right: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-.saldo-label, .inventario-label {
-    color: #ffd700;
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-.saldo-valor {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-/* INVENTARIO MEJORADO */
-.inventario {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.inventario-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-}
-
-.inventario-item:last-child {
-    border-bottom: none;
-}
-
-.inventario-label {
-    color: #ffd700;
-    font-size: 0.8rem;
-}
-
-.inventario-valor {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-/* DIÁLOGO */
-.dialogo-container {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #4a90e2;
-    min-height: 120px;
-}
-
-.dialogo-nakano {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    border-radius: 15px;
-    padding: 15px;
-    position: relative;
-}
-
-.pregunta-dialogo {
-    color: #ffd700;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-}
-
-.texto-dialogo {
-    color: white;
-    font-size: 1.1rem;
-    line-height: 1.4;
-}
-
-.tiempo-dialogo {
-    color: #cccccc;
-    font-size: 0.8rem;
-    text-align: right;
-    margin-top: 8px;
-}
-
-/* ACCIONES BÁSICAS MODIFICADAS */
-.acciones-basicas {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.boton-accion {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1;
-    min-width: 150px;
-}
-
-.boton-accion:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
-}
-
-/* TIENDA DE REGALOS */
-.tienda-regalos {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #ff6b9d;
-}
-
-.tienda-regalos h3 {
-    color: #ff6b9d;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.regalos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.boton-regalo {
-    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.boton-regalo:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
-}
-
-/* REGALOS ESPECIALES */
-.regalos-especiales-container {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #7b68ee;
-}
-
-.regalos-especiales-container h3 {
-    color: #7b68ee;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.regalos-especiales-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.boton-regalo-especial {
-    background: linear-gradient(135deg, #7b68ee, #4a90e2);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.boton-regalo-especial:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
-}
-
-/* DECORACIÓN DE HABITACIÓN */
-.decoracion-container {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #00ff88;
-}
-
-.decoracion-container h3 {
-    color: #00ff88;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.estado-habitacion {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.dinero-gastado {
-    color: #ffd700;
-    font-weight: bold;
-}
-
-.items-totales {
-    color: #4a90e2;
-    font-weight: bold;
-}
-
-.muebles-actuales {
-    margin-bottom: 15px;
-}
-
-.muebles-actuales h5 {
-    color: #ff6b9d;
-    margin-bottom: 8px;
-}
-
-.mueble-item {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 5px 10px;
-    margin: 3px;
-    border-radius: 5px;
-    border: 1px solid #4a90e2;
-    font-size: 0.9rem;
-}
-
-.decoraciones-disponibles {
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.decoraciones-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.decoracion-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.decoracion-item.comprado {
-    border-color: #00ff88;
-    background: rgba(0, 255, 136, 0.1);
-}
-
-.decoracion-item.no-dinero {
-    border-color: #ff6b6b;
-    background: rgba(255, 107, 107, 0.1);
-    opacity: 0.7;
-}
-
-.decoracion-nombre {
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-.decoracion-precio {
-    color: #ffd700;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.decoracion-tipo {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-}
-
-.boton-comprar {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.boton-comprar:hover:not(:disabled) {
-    transform: translateY(-2px);
-}
-
-.boton-comprar:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.comprado-label {
-    color: #00ff88;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-/* MOMENTOS ÍNTIMOS NAKANO */
-.seccion-intima {
-    background: rgba(139, 0, 0, 0.3);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #8b0000;
-}
-
-.seccion-intima h3 {
-    color: #ff6b9d;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.acciones-intimas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.boton-intimo {
-    background: linear-gradient(135deg, #8b0000, #b22222);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    position: relative;
-}
-
-.boton-intimo:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
-}
-
-.boton-intimo:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Tooltip para botones de momentos íntimos */
-.boton-intimo:hover::after {
-    content: attr(title);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    z-index: 10;
-}
-
-/* ESCENAS ADULTAS */
-.escena-adulta {
-    background: linear-gradient(135deg, #8b0000, #b22222);
-    border-radius: 15px;
-    padding: 15px;
-}
-
-.linea-escena {
-    color: white;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    line-height: 1.4;
-    text-align: center;
-}
-
-/* VIDEOS ÍNTIMOS */
-.video-escena-adulta {
-    background: linear-gradient(135deg, #8b0000, #b22222);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-}
-
-.video-escena-adulta h4 {
-    color: #ff6b9d;
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-}
-
-.video-intimo {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    margin-bottom: 15px;
-    background: #000;
-}
-
-.leyenda-escena {
-    color: #ffd700;
-    font-style: italic;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-}
-
-.controles-video {
-    margin-top: 15px;
-}
-
-.boton-saltar-video {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.boton-saltar-video:hover {
-    background: linear-gradient(135deg, #7b68ee, #4a90e2);
-    transform: translateY(-2px);
-}
-
-.fallback-text {
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-/* MENSAJES DEL SISTEMA */
-.mensaje-sistema {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    margin-top: 15px;
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ============================================================================
-   ANIMACIONES MEJORADAS
-   ============================================================================ */
-
-@keyframes pulse-gold {
-    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-}
-
+/* SISTEMA: EVENTOS DIARIOS */
 .evento-diario-container {
+    composes: tarjeta--morada;
+    padding: 30px;
+    text-align: center;
     animation: pulse-gold 2s infinite;
-}
-
-@keyframes slideInFromTop {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#pantalla-evento-diario.activa {
-    animation: slideInFromTop 0.8s ease-out;
-}
-
-@keyframes dineroFlash {
-    0% { 
-        transform: scale(1); 
-        color: #ffd700;
-    }
-    50% { 
-        transform: scale(1.3); 
-        color: #ffffff;
-        text-shadow: 0 0 20px #ffd700;
-    }
-    100% { 
-        transform: scale(1); 
-        color: #ffd700;
-    }
-}
-
-/* Animación para notificaciones */
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Efecto de brillo */
-.evento-diario-container {
     position: relative;
     overflow: hidden;
 }
@@ -1912,1333 +242,193 @@ h1 {
     pointer-events: none;
 }
 
-@keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
-/* Efecto de partículas para recompensas */
-@keyframes confetti {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    background: #ffd700;
-    animation: confetti 2s ease-in-out forwards;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-/* ============================================================================
-   EFECTOS VISUALES PARA BOTONES
-   ============================================================================ */
-
-.boton-principal, .boton-secundario, .boton-palabras-falladas, .boton-terciario {
-    position: relative;
-    overflow: hidden;
-}
-
-.boton-principal::before, .boton-secundario::before, .boton-palabras-falladas::before, .boton-terciario::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.boton-principal:hover::before, .boton-secundario:hover::before, .boton-palabras-falladas:hover::before, .boton-terciario:hover::before {
-    left: 100%;
-}
-
-/* ============================================================================
-   RESPONSIVE DESIGN
-   ============================================================================ */
-
-@media (max-width: 768px) {
-    .evento-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .video-container-evento {
-        width: 250px;
-        height: 250px;
-    }
-    
-    .evento-info {
-        text-align: center;
-    }
-    
-    .evento-actions {
-        flex-direction: column;
-    }
-    
-    .evento-header h1 {
-        font-size: 2.2rem;
-    }
-    
-    .evento-nombre {
-        font-size: 1.6rem;
-    }
-    
-    .evento-descripcion {
-        font-size: 1.1rem;
-    }
-
-    .contenedor-tarjetas {
-        grid-template-columns: 1fr;
-    }
-    
-    .contenedor-subcontenedores {
-        grid-template-columns: 1fr;
-    }
-    
-    .contenedor-mazos {
-        grid-template-columns: 1fr;
-    }
-    
-    .palabra-japones {
-        font-size: 3rem;
-    }
-    
-    .contenedor-opciones {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    .lastsummer-imagen {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .lastsummer-texto {
-        font-size: 1.3rem;
-    }
-    
-    .subcontenedor-imagen {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .mazo-imagen {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .misiones-lista {
-        gap: 10px;
-    }
-    
-    .mision-item {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .mision-texto, .mision-recompensa, .mision-progreso {
-        margin: 5px 0;
-    }
-    
-    .contenedor-opciones {
-        grid-template-columns: 1fr;
-    }
-    
-    .opcion {
-        min-height: 70px;
-        font-size: 1.1rem;
-    }
-    
-    .economia-panel {
-        padding: 10px;
-    }
-    
-    .saldo-total {
-        font-size: 1.1rem;
-    }
-    
-    /* Responsive para NAKANO */
-    .nakano-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .perfil-nakano {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .imagen-nakano {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .estadisticas-nakano {
-        justify-content: center;
-    }
-    
-    .economia-nakano {
-        grid-template-columns: 1fr;
-    }
-    
-    .saldo {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-    
-    .acciones-basicas {
-        flex-direction: column;
-    }
-    
-    .boton-accion {
-        min-width: 100%;
-    }
-    
-    .regalos-grid, .regalos-especiales-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .acciones-intimas {
-        grid-template-columns: 1fr;
-    }
-    
-    .barra-progreso-label {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    
-    .opciones-palabras-falladas {
-        grid-template-columns: 1fr;
-    }
-    
-    .decoraciones-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .misiones-diarias-panel {
-        padding: 15px;
-    }
-    
-    .mision-item {
-        padding: 10px;
-    }
-    
-    .mision-texto {
-        font-size: 0.9rem;
-    }
-    
-    .mision-recompensa {
-        font-size: 1rem;
-    }
-    
-    .palabras-falladas-container {
-        padding: 15px;
-    }
-    
-    .estadisticas-palabras {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Ajustes adicionales para móviles pequeños */
-    .rpg-container {
-        padding: 15px;
-    }
-    
-    .tienda-regalos, .regalos-especiales-container, .decoracion-container, .seccion-intima {
-        padding: 15px;
-    }
-    
-    .boton-intimo, .boton-regalo, .boton-regalo-especial {
-        font-size: 0.8rem;
-        padding: 10px;
-    }
-    
-    .nakano-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .nakano-imagen {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .nakano-nombre {
-        font-size: 0.8rem;
-    }
-}
-
-/* ============================================================================
-   MEJORAS DE ACCESIBILIDAD
-   ============================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* ============================================================================
-   BOTONES DE CIERRE MEJORADOS
-   ============================================================================ */
-
-.boton-cierre-video {
-    background: linear-gradient(135deg, #ff6b9d, #ff8eb4);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
-    margin: 15px;
-}
-
-.boton-cierre-video:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.6);
-}
-
-/* ============================================================================
-   INDICADOR DE VIDEO EN BUCLE
-   ============================================================================ */
-
-.video-loop-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #00ff88;
-    padding: 5px 10px;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    z-index: 5;
-}
-
-/* ============================================================================
-   EFECTOS PARA CUANDO SE REPRODUCE VIDEO
-   ============================================================================ */
-
-.video-escena-adulta.reproduciendo {
-    border: 3px solid #ff6b9d;
-    box-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
-}
-
-/* ============================================================================
-   BOTONES DE ACCIÓN PRINCIPALES
-   ============================================================================ */
-
-.acciones-botones {
+.evento-content {
     display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-/* ============================================================================
-   ESTILOS ADICIONALES PARA DIALOGO BURBUJA
-   ============================================================================ */
-
-.dialogo-burbuja {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 15px;
-    position: relative;
-}
-
-.dialogo-burbuja::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 20px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ============================================================================
-   ESTILOS PARA MULTIPLICADOR DE EXPERIENCIA
-   ============================================================================ */
-
-#multiplicador-exp {
-    background: rgba(255, 215, 0, 0.2);
-    padding: 2px 8px;
-    border-radius: 10px;
-    border: 1px solid #ffd700;
-}
-
-/* ============================================================================
-   ESTILOS PARA BOTONES CON ESTADOS ESPECIALES
-   ============================================================================ */
-
-.boton-regalo:hover, .boton-regalo-especial:hover {
-    background: linear-gradient(135deg, #ff8eb4, #ff6b9d);
-}
-
-.boton-intimo:not(:disabled):hover {
-    background: linear-gradient(135deg, #b22222, #8b0000);
-}
-
-/* ============================================================================
-   ESTILOS PARA EL CONTENEDOR DE INVENTARIO
-   ============================================================================ */
-
-.inventario {
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
-/* Scrollbar personalizado */
-.inventario::-webkit-scrollbar, .decoraciones-disponibles::-webkit-scrollbar {
-    width: 5px;
-}
-
-.inventario::-webkit-scrollbar-track, .decoraciones-disponibles::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
-
-.inventario::-webkit-scrollbar-thumb, .decoraciones-disponibles::-webkit-scrollbar-thumb {
-    background: #ff6b9d;
-    border-radius: 10px;
-}
-
-.inventario::-webkit-scrollbar-thumb:hover, .decoraciones-disponibles::-webkit-scrollbar-thumb:hover {
-    background: #ff8eb4;
-}
-
-/* ============================================================================
-   ESTILOS PARA LA BARRA DE EXPERIENCIA ANIMADA
-   ============================================================================ */
-
-.barra-progreso-fill {
-    position: relative;
-    overflow: hidden;
-}
-
-.barra-progreso-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    animation: shine-bar 2s infinite;
-}
-
-@keyframes shine-bar {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
-
-/* ============================================================================
-   ESTILOS PARA RESULTADOS DETALLADOS
-   ============================================================================ */
-
-.resultado-detalle {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 20px;
-    border: 1px solid #4a90e2;
-}
-
-.resultado-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.resultado-item:last-child {
-    border-bottom: none;
-}
-
-.resultado-label {
-    color: #cccccc;
-    font-weight: bold;
-}
-
-.resultado-valor {
-    color: white;
-    font-weight: bold;
-}
-
-.resultado-porcentaje {
-    color: #ffd700;
-    font-size: 1.2rem;
-}
-
-.resultado-mensaje {
-    text-align: center;
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #ff6b9d;
-}
-
-/* ============================================================================
-   ESTILOS PARA BOTONES DE RESULTADOS
-   ============================================================================ */
-
-.botones-resultados {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-/* ============================================================================
-   EFECTO DE SELECCIÓN PARA TARJETAS NAKANO
-   ============================================================================ */
-
-.nakano-card.seleccionada::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #ff6b9d, #7b68ee, #4a90e2, #ff6b9d);
-    border-radius: 17px;
-    z-index: -1;
-    animation: borderRotate 3s linear infinite;
-}
-
-@keyframes borderRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* ============================================================================
-   ESTILOS PARA ICONOS DE DECORACIÓN
-   ============================================================================ */
-
-.decoracion-tipo.poster { color: #ff6b9d; }
-.decoracion-tipo.mueble { color: #4a90e2; }
-.decoracion-tipo.decoracion { color: #ffd700; }
-
-/* ============================================================================
-   ESTILOS PARA VIDEOS DE REGALOS RECÍPROCOS
-   ============================================================================ */
-
-#pantalla-video-regalo {
-    z-index: 10000;
-}
-
-#pantalla-video-regalo h2 {
-    color: #ff6b9d;
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-#video-regalo-reciproco {
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    background: #000;
-}
-
-/* ============================================================================
-   ESTILOS PARA ESTADOS DE HUMOR
-   ============================================================================ */
-
-.humor-coqueta { color: #ff6b9d; }
-.humor-tsundere { color: #ff4444; }
-.humor-timida { color: #7b68ee; }
-.humor-energetica { color: #00ff88; }
-.humor-estudiosa { color: #4a90e2; }
-.humor-actriz { color: #ffd700; }
-.humor-chef { color: #ff9800; }
-.humor-historica { color: #9c27b0; }
-.humor-deportista { color: #00bcd4; }
-.humor-glotona { color: #ff5722; }
-
-/* ============================================================================
-   ESTILOS PARA TEXTO DE DESCRIPCIÓN NAKANO
-   ============================================================================ */
-
-.descripcion-nakano {
-    font-size: 1rem;
-    color: #cccccc;
-    line-height: 1.4;
-    padding: 5px 0;
-}
-
-/* ============================================================================
-   ESTILOS PARA BOTONES DESHABILITADOS
-   ============================================================================ */
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* ============================================================================
-   ESTILOS PARA MENSAJE DE ERROR/CARGA
-   ============================================================================ */
-
-.mensaje-carga {
-    text-align: center;
-    padding: 30px;
-    color: #4a90e2;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.mensaje-error {
-    text-align: center;
-    padding: 30px;
-    color: #ff6b6b;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background: rgba(255, 107, 107, 0.1);
-    border-radius: 15px;
-    border: 2px solid #ff6b6b;
-}
-
-/* ============================================================================
-   ESTILOS FINALES PARA BOTONES DE ACCIÓN
-   ============================================================================ */
-
-.boton-accion.secundario {
-    background: linear-gradient(135deg, #ff9800, #ff5722);
-}
-
-.boton-accion.terciario {
-    background: linear-gradient(135deg, #9c27b0, #673ab7);
-}
-
-.boton-accion.cuaternario {
-    background: linear-gradient(135deg, #00bcd4, #0097a7);
-}
-
-/* ============================================================================
-   ESTILOS PARA VERSION MÓVIL MEJORADA
-   ============================================================================ */
-
-@media (max-width: 360px) {
-    .contenedor {
-        padding: 10px;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    .subtitulo {
-        font-size: 1rem;
-    }
-    
-    .lastsummer-imagen {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .lastsummer-texto {
-        font-size: 1.1rem;
-    }
-    
-    .palabra-japones {
-        font-size: 2.5rem;
-    }
-    
-    .opcion {
-        padding: 15px;
-        font-size: 1rem;
-        min-height: 60px;
-    }
-    
-    .boton-principal, .boton-secundario, .boton-terciario {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-}
-
-/* ============================================================================
-   ESTILOS PARA EL CALENDARIO FABRIZIO 2026
-   ============================================================================ */
-
-/* CONTENEDOR DE MESES */
-.meses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-    padding: 10px;
-}
-
-.mes-card {
-    background: linear-gradient(135deg, #ff6b9d, #ff4081);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
-    border: 2px solid transparent;
-}
-
-.mes-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.5);
-    border-color: #ffffff;
-}
-
-.mes-numero {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 5px;
-}
-
-.mes-nombre {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.mes-info, .mes-fotos {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 3px 0;
-}
-
-/* CONTENEDOR DE SEMANAS */
-.semanas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-    padding: 10px;
-}
-
-.semana-card {
-    background: linear-gradient(135deg, #2196F3, #21CBF3);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
-    border: 2px solid transparent;
-}
-
-.semana-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(33, 150, 243, 0.5);
-    border-color: #ffffff;
-}
-
-.semana-numero {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.semana-info {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 15px;
-}
-
-.dias-lista {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.dia {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-/* CONTENEDOR DE FOTOS */
-.fotos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    margin: 20px 0;
-    padding: 10px;
-}
-
-.foto-card {
-    background: linear-gradient(135deg, #9C27B0, #E91E63);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
-    transition: all 0.3s ease;
-}
-
-.foto-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(156, 39, 176, 0.5);
-}
-
-.foto-dia {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-}
-
-.foto-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 3px solid white;
-    margin-bottom: 10px;
-}
-
-.foto-info {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
-    padding: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-}
-
-/* INFORMACIÓN DEL CALENDARIO */
-.info-calendario, .info-semana, .info-fotos {
-    text-align: center;
-    margin: 20px 0;
-    padding: 15px;
-    background: rgba(255, 107, 157, 0.1);
-    border-radius: 10px;
-    border-left: 4px solid #ff6b9d;
-}
-
-.info-calendario p, .info-semana p, .info-fotos p {
-    margin: 0;
-    font-size: 1rem;
-    color: #ff6b9d;
-    font-weight: bold;
-}
-
-/* TÍTULOS DEL CALENDARIO */
-#pantalla-calendario-meses h1,
-#pantalla-calendario-semanas h2,
-#pantalla-calendario-fotos h2 {
-    text-align: center;
-    color: #ff6b9d;
-    margin-bottom: 10px;
-}
-
-.subtitulo {
-    text-align: center;
-    color: #888;
+    align-items: center;
+    gap: 30px;
     margin-bottom: 30px;
-    font-size: 1.1rem;
 }
 
-/* BARRA SUPERIOR ESPECIAL PARA CALENDARIO */
-#pantalla-calendario-meses .barra-superior .contador,
-#pantalla-calendario-semanas .barra-superior .contador,
-#pantalla-calendario-fotos .barra-superior .contador {
-    background: linear-gradient(135deg, #ff6b9d, #ff4081);
-    color: white;
+.evento-info {
+    flex: 1;
+    text-align: left;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .meses-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .semanas-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .fotos-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .mes-card, .semana-card {
-        padding: 15px;
-    }
-    
-    .mes-numero {
-        font-size: 2rem;
-    }
-    
-    .mes-nombre {
-        font-size: 1.2rem;
-    }
+.evento-nombre {
+    font-size: 2rem;
+    color: var(--color-primario);
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px var(--color-sombra);
 }
 
-@media (max-width: 480px) {
-    .meses-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .semanas-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .dias-lista {
-        flex-wrap: wrap;
-    }
-}
-/* ============================================================================
-   ESTILOS PARA FOTOS DEL CALENDARIO - MEJORADOS
-   ============================================================================ */
-
-.foto-card {
-    cursor: pointer; /* Manita para indicar que es clickeable */
-    transition: transform 0.3s ease; /* Animación suave */
-    position: relative;
-}
-
-.foto-card:hover {
-    transform: scale(1.02); /* Se agranda un poquito al pasar el mouse */
-}
-
-.foto-click {
-    font-size: 0.8rem;
-    color: #ff6b9d;
-    margin-top: 5px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Botón de cerrar en la foto grande */
-.boton-cerrar-foto {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff6b9d;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 10001;
-}
-
-.boton-cerrar-foto:hover {
-    background: #ff4081;
-    transform: scale(1.1);
-}
-
-/* Para pantallas móviles */
-@media (max-width: 768px) {
-    .foto-click {
-        font-size: 0.7rem;
-    }
-    
-    .boton-cerrar-foto {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
-}
-/* ============================================================================
-   ESTILOS PARA COMIENZO DICIEMBRE 2025 (5 FOTOS POR DÍA)
-   ============================================================================ */
-
-/* Grid para mostrar todos los días */
-.dias-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-}
-
-/* Tarjeta de cada día */
-.dia-card {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-    border: 2px solid transparent;
-    position: relative;
-}
-
-.dia-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
-    border-color: #ffffff;
-}
-
-.dia-card.dia-especial {
-    background: linear-gradient(135deg, #ff6b9d, #ff4081);
-    border: 2px solid #ffd700;
-}
-
-.dia-numero {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 5px;
-}
-
-.dia-nombre {
-    font-size: 0.9rem;
-    color: #000000;
-    font-weight: bold;
-    margin-bottom: 10px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dia-imagen {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid #000;
-    margin-bottom: 10px;
-}
-
-.dia-info {
-    font-size: 0.8rem;
-    color: #333333;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 3px 8px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-.dia-especial-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff0000;
-    color: white;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    animation: pulse 1.5s infinite;
-}
-
-/* Grid para mostrar las 5 fotos de un día */
-.fotos-dia-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-}
-
-/* Tarjeta de cada foto individual */
-.foto-dia-card {
-    background: linear-gradient(135deg, #333333, #444444);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border: 2px solid #ffd700;
-}
-
-.foto-dia-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
-}
-
-.foto-numero {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #ffd700;
-    margin-bottom: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 5px 10px;
-    border-radius: 10px;
-}
-
-.foto-dia-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid #ffd700;
-    margin-bottom: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .dias-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .fotos-dia-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .dia-numero {
-        font-size: 1.8rem;
-    }
-    
-    .dia-nombre {
-        font-size: 0.8rem;
-        height: 35px;
-    }
-    
-    .dia-imagen {
-        height: 100px;
-    }
-}
-
-@media (max-width: 480px) {
-    .dias-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .dia-card {
-        padding: 12px;
-    }
-}
-/* ============================================================================
-   ESTILOS PARA SISTEMA ANIME
-   ============================================================================ */
-
-/* Tarjetas de anime */
-.anime-card {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border-radius: 15px;
-    padding: 15px;
-    margin: 10px;
-    width: 280px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px solid #00b4d8;
-    box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
-}
-
-.anime-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 180, 216, 0.5);
-    border-color: #ff006e;
-}
-
-.anime-imagen {
-    width: 100%;
-    height: 180px;
-    border-radius: 10px;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-.anime-texto {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
-    margin: 10px 0;
-}
-
-.anime-info {
-    font-size: 0.9rem;
-    color: #00b4d8;
-    margin-bottom: 5px;
-}
-
-.anime-desc {
-    font-size: 0.8rem;
-    color: #cccccc;
-    font-style: italic;
-}
-
-/* Contenedor de animes */
-.contenedor-animes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Video container para anime */
-.video-container-anime {
-    margin: 20px 0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.video-container-anime iframe {
-    border: none;
-    border-radius: 10px;
-}
-
-.video-desc {
-    text-align: center;
-    color: #cccccc;
-    font-style: italic;
-    margin-top: 10px;
-}
-
-/* Mazos de anime */
-.mazo-anime-card {
-    background: linear-gradient(135deg, #2d3047, #3a3d5d);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
-    width: 200px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid #4cc9f0;
-}
-
-.mazo-anime-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
-    border-color: #f72585;
-}
-
-.mazo-anime-card.mazo-inactivo {
-    opacity: 0.6;
-    cursor: not-allowed;
-    border-color: #666666;
-}
-
-.mazo-anime-card.mazo-inactivo:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: #666666;
-}
-
-.mazo-anime-numero {
+.evento-descripcion {
     font-size: 1.3rem;
-    font-weight: bold;
-    color: #4cc9f0;
-    margin-bottom: 5px;
+    color: var(--color-texto-secundario);
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
 
-.mazo-anime-texto {
-    font-size: 1rem;
-    color: #ffffff;
-    margin: 5px 0;
-}
-
-.mazo-anime-info {
-    font-size: 0.8rem;
-    color: #90e0ef;
-}
-
-.contenedor-mazos-anime {
+.evento-actions {
     display: flex;
-    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
-    gap: 15px;
-    padding: 20px;
 }
 
-/* Anime detail container */
-.anime-detalle-container {
-    max-width: 900px;
+/* SISTEMA: PALABRAS FALLADAS */
+.palabras-falladas-container {
+    composes: contenido-enfocado;
+    border-color: var(--color-primario);
+}
+
+.estadisticas-palabras {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 107, 157, 0.3);
+}
+
+.estadistica-item {
+    composes: contenido-enfocado;
+    padding: 15px;
+    text-align: center;
+}
+
+.lista-palabras {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.palabra-item {
+    composes: contenido-enfocado;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.palabra-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+/* SISTEMA: QUIZ */
+.contenido-quiz {
+    text-align: center;
+    max-width: 600px;
     margin: 0 auto;
 }
 
-.video-anime-container,
-.mazos-anime-container {
-    background: rgba(30, 30, 46, 0.8);
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
-    border: 2px solid #4361ee;
+.palabra-japones {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--color-texto);
 }
 
-/* Resultados anime */
-.resultado-anime-container {
-    background: rgba(30, 30, 46, 0.9);
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px auto;
-    max-width: 600px;
-    border: 3px solid #7209b7;
+.contenedor-opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
-.botones-resultados-anime {
+.opcion {
+    composes: contenido-enfocado;
+    min-height: 80px;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
+    text-align: center;
+    cursor: pointer;
 }
 
-/* Info anime */
-.info-anime {
-    text-align: center;
-    color: #90e0ef;
-    font-size: 0.9rem;
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0, 180, 216, 0.1);
-    border-radius: 10px;
+.opcion:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
-/* ============================================================================
-   ESTILOS PARA SISTEMA OPENINGS DE ANIME - VERSIÓN SIMPLIFICADA
-   ============================================================================ */
 
-/* PANTALLA DE SELECCIÓN DE OPENINGS - ESTILO SIMPLE */
-#pantalla-openings-seleccion h1 {
-    color: #4a90e2;
+.opcion.correcta {
+    background: linear-gradient(135deg, var(--color-exito), #00cc6a) !important;
+    color: var(--color-fondo);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.opcion.incorrecta {
+    background: linear-gradient(135deg, var(--color-peligro), #ff8e8e) !important;
+    color: var(--color-texto);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+}
+
+/* SISTEMA: NAKANO */
+.selector-nakano-container {
+    composes: contenido-enfocado;
+    border-color: var(--color-primario);
+}
+
+.nakano-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.nakano-card {
+    composes: contenido-enfocado;
     text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.nakano-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-secundario);
+    transform: translateY(-5px);
+}
+
+.nakano-card.seleccionada {
+    border-color: var(--color-primario);
+    background: rgba(255, 107, 157, 0.2);
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}
+
+.nakano-imagen {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-texto);
     margin-bottom: 10px;
 }
 
-#pantalla-openings-seleccion .subtitulo {
-    color: #cccccc;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.1rem;
+.perfil-nakano {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    composes: contenido-enfocado;
+    border-color: var(--color-primario);
+}
+
+/* SISTEMA: ANIME OPENINGS */
+.opening-card {
+    composes: tarjeta;
+    width: 280px;
+    border-color: var(--color-secundario);
+}
+
+.opening-imagen {
+    width: 100%;
+    height: 160px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid var(--color-secundario);
 }
 
 .contenedor-openings {
@@ -3250,186 +440,10 @@ button:disabled {
     padding: 20px;
 }
 
-.opening-card {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    border-radius: 20px;
-    padding: 20px;
-    width: 280px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px solid #4a90e2;
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-}
-
-.opening-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
-}
-
-.opening-imagen {
-    width: 100%;
-    height: 160px;
-    border-radius: 15px;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 2px solid #4a90e2;
-}
-
-.opening-texto {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
-    margin: 10px 0;
-}
-
-.opening-info {
-    font-size: 1rem;
-    color: #4a90e2;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.opening-desc {
-    font-size: 0.9rem;
-    color: #cccccc;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
-
-.opening-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.opening-año {
-    background: rgba(74, 144, 226, 0.2);
-    color: #4a90e2;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.opening-tipo {
-    background: rgba(255, 107, 157, 0.2);
-    color: #ff6b9d;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.info-openings {
-    background: rgba(74, 144, 226, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 30px;
-    border-left: 4px solid #4a90e2;
-}
-
-.info-openings p {
-    color: #cccccc;
-    margin: 10px 0;
-    font-size: 1rem;
-}
-
-/* PANTALLA DE DETALLE DE OPENING */
-.opening-detalle-container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.video-opening-container {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 25px;
-    border: 2px solid #4a90e2;
-}
-
-.video-opening-container h3 {
-    color: #4a90e2;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.video-container-opening {
-    background: #000;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    border: 3px solid #4a90e2;
-    position: relative;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-}
-
-#video-opening {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.video-desc {
-    text-align: center;
-    color: #cccccc;
-    font-style: italic;
-    font-size: 1rem;
-    padding: 15px;
-}
-
-.mazos-opening-container {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px;
-    border: 2px solid #4a90e2;
-}
-
-.mazos-opening-container h3 {
-    color: #4a90e2;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 1.4rem;
-}
-
-.mazos-opening-container > p {
-    text-align: center;
-    color: #cccccc;
-    margin-bottom: 25px;
-    font-size: 1rem;
-}
-
-.contenedor-mazos-opening {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-}
-
 .mazo-opening-card {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    border-radius: 20px;
-    padding: 20px;
+    composes: tarjeta--azul;
     width: 220px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px solid #4a90e2;
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-}
-
-.mazo-opening-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
+    padding: 20px;
 }
 
 .mazo-opening-card.mazo-inactivo {
@@ -3444,326 +458,269 @@ button:disabled {
     box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
 }
 
-.mazo-opening-numero {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #4a90e2;
-    margin-bottom: 10px;
-}
-
-.mazo-opening-texto {
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin: 10px 0;
-    font-weight: bold;
-}
-
-.mazo-opening-info {
-    font-size: 0.9rem;
-    color: #cccccc;
-    padding: 5px 10px;
-}
-
-.opening-tips {
-    margin-top: 25px;
-    padding: 20px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 10px;
-    border-left: 4px solid #ffd700;
-}
-
-.opening-tips p {
-    color: #ffd700;
-    margin: 8px 0;
-    font-size: 0.9rem;
-}
-
-/* PANTALLA DE QUIZ OPENING - ESTILO SIMPLE */
-#palabra-japones-opening {
-    font-size: 4rem;
-    color: #ffffff;
-    margin-bottom: 15px;
-}
-
-#lectura-opening {
-    color: #ffa500;
-    font-size: 1.8rem;
-    font-style: italic;
-    margin-bottom: 40px;
-    min-height: 50px;
-    text-align: center;
-}
-
-#contenedor-opciones-opening {
+/* SISTEMA: CALENDARIO */
+.meses-grid,
+.semanas-grid,
+.fotos-grid,
+.dias-grid,
+.fotos-dia-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-bottom: 30px;
+    margin: 20px 0;
+    padding: 10px;
 }
 
-#contenedor-opciones-opening .opcion {
-    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-    color: white;
-    border: 2px solid #4a90e2;
-    border-radius: 12px;
-    padding: 25px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.meses-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.semanas-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.fotos-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.dias-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.fotos-dia-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+.mes-card,
+.semana-card,
+.foto-card,
+.dia-card,
+.foto-dia-card {
+    composes: tarjeta;
     text-align: center;
-}
-
-#contenedor-opciones-opening .opcion:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
-}
-
-#contenedor-opciones-opening .opcion.correcta {
-    background: linear-gradient(135deg, #00ff88, #00cc6a) !important;
-    border-color: #00ff88 !important;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-}
-
-#contenedor-opciones-opening .opcion.incorrecta {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e) !important;
-    border-color: #ff6b6b !important;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
-}
-
-#contenedor-opciones-opening .opcion:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-    transform: none !important;
-}
-
-#resultado-opening {
-    font-size: 1.5rem;
-    font-weight: bold;
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-#resultado-opening.correcto {
-    color: #00ff88;
-}
-
-#resultado-opening.incorrecto {
-    color: #ff4444;
-}
-
-#boton-siguiente-opening {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-    margin: 0 auto;
-    display: block;
 }
 
-#boton-siguiente-opening:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.6);
+.mes-card {
+    background: linear-gradient(135deg, var(--color-primario), #ff4081);
 }
 
-/* PANTALLA DE RESULTADOS OPENING */
-.resultado-opening-container {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px auto;
-    max-width: 600px;
-    border: 2px solid #4a90e2;
+.semana-card {
+    background: linear-gradient(135deg, #2196F3, #21CBF3);
 }
 
-.resultado-opening-container h2 {
-    color: #4a90e2;
-    text-align: center;
-    margin-bottom: 25px;
+.foto-card {
+    background: linear-gradient(135deg, #9C27B0, #E91E63);
 }
 
-.resultado-opening-detalle {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 25px;
-    margin-bottom: 30px;
+.dia-card {
+    composes: tarjeta--dorada;
 }
 
-.resultado-item {
+.dia-card.dia-especial {
+    background: linear-gradient(135deg, var(--color-primario), #ff4081);
+    border: 2px solid var(--color-advertencia);
+}
+
+/* ============================================================================
+   4. LAYOUT Y ESTRUCTURA
+   ============================================================================ */
+
+/* BARRA SUPERIOR */
+.barra-superior {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.resultado-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.resultado-label {
-    color: #cccccc;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.resultado-valor {
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.resultado-porcentaje {
-    color: #ffd700;
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-
-.resultado-mensaje {
-    text-align: center;
-    padding: 20px;
-    background: rgba(255, 107, 157, 0.1);
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2d2d2d;
     border-radius: 10px;
-    border: 2px solid #ff6b9d;
-    margin-top: 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
+    margin-bottom: 30px;
 }
 
-.botones-resultados-opening {
+/* MENÚ PRINCIPAL */
+.menu-principal {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.seccion-menu {
+    composes: tarjeta--gris;
+    padding: 25px;
+}
+
+.contenedor-tarjetas,
+.contenedor-subcontenedores,
+.contenedor-mazos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-top: 30px;
-    flex-wrap: wrap;
 }
 
-.botones-resultados-opening .boton-principal {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: #1e1e1e;
+/* PANELES DE INFORMACIÓN */
+.misiones-diarias-panel,
+.economia-panel {
+    composes: contenido-enfocado;
+    margin-bottom: 30px;
 }
 
-.botones-resultados-opening .boton-secundario {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-    color: white;
+.misiones-diarias-panel {
+    border-color: var(--color-primario);
 }
 
-.botones-resultados-opening .boton-terciario {
-    background: linear-gradient(135deg, #4a90e2, #7b68ee);
-    color: white;
+.economia-panel {
+    text-align: center;
+    border-color: var(--color-advertencia);
 }
 
-/* RESPONSIVE PARA OPENINGS */
+/* ============================================================================
+   5. ANIMACIONES
+   ============================================================================ */
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.play-icon {
+    font-size: 2rem;
+    animation: pulse 2s infinite;
+}
+
+#pantalla-evento-diario.activa {
+    animation: slideInFromTop 0.8s ease-out;
+}
+
+/* ============================================================================
+   6. RESPONSIVE DESIGN
+   ============================================================================ */
+
 @media (max-width: 768px) {
-    .contenedor-openings {
-        gap: 20px;
-        padding: 15px;
+    .evento-content,
+    .perfil-nakano {
+        flex-direction: column;
+        text-align: center;
     }
     
-    .opening-card {
-        width: 250px;
-    }
-    
-    .mazo-opening-card {
-        width: 200px;
-        padding: 15px;
-    }
-    
+    .contenedor-tarjetas,
+    .contenedor-subcontenedores,
+    .contenedor-mazos,
     #contenedor-opciones-opening {
         grid-template-columns: 1fr;
-        gap: 15px;
     }
     
-    #palabra-japones-opening {
-        font-size: 3rem;
+    .nakano-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    #lectura-opening {
-        font-size: 1.5rem;
-    }
-    
-    #contenedor-opciones-opening .opcion {
-        min-height: 80px;
-        padding: 20px;
-    }
-    
-    .botones-resultados-opening {
+    .evento-actions,
+    .acciones-basicas {
         flex-direction: column;
-        align-items: center;
     }
     
-    .botones-resultados-opening button {
-        width: 100%;
-        max-width: 300px;
+    .evento-header h1 { font-size: 2.2rem; }
+    .evento-nombre { font-size: 1.6rem; }
+    .palabra-japones { font-size: 3rem; }
+    h1 { font-size: 2rem; }
+    
+    .meses-grid,
+    .semanas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .fotos-grid,
+    .fotos-dia-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dias-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 480px) {
-    .opening-card {
-        width: 100%;
-        max-width: 300px;
+    .nakano-grid,
+    .meses-grid,
+    .semanas-grid,
+    .dias-grid,
+    .estadisticas-palabras {
+        grid-template-columns: 1fr;
     }
     
-    .contenedor-mazos-opening {
-        gap: 15px;
-    }
-    
-    .mazo-opening-card {
-        width: 100%;
-        max-width: 250px;
-    }
-    
-    .video-opening-container,
-    .mazos-opening-container {
-        padding: 15px;
-    }
-    
-    #palabra-japones-opening {
-        font-size: 2.5rem;
-    }
-    
-    #lectura-opening {
-        font-size: 1.3rem;
-    }
-    
-    .resultado-opening-container {
-        padding: 20px;
-    }
-    
-    .resultado-item {
+    .mision-item {
         flex-direction: column;
+        gap: 10px;
         text-align: center;
-        gap: 5px;
+    }
+    
+    .economia-nakano {
+        grid-template-columns: 1fr;
+    }
+    
+    .opciones-palabras-falladas,
+    .regalos-grid,
+    .regalos-especiales-grid,
+    .decoraciones-grid,
+    .acciones-intimas {
+        grid-template-columns: 1fr;
     }
 }
 
-/* ESTILOS PARA MENSAJES DE ESTADO */
-.mensaje-carga-opening {
-    text-align: center;
-    padding: 40px;
-    color: #4a90e2;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background: rgba(74, 144, 226, 0.1);
-    border-radius: 15px;
-    border: 2px solid #4a90e2;
-    margin: 20px auto;
-    max-width: 500px;
+@media (max-width: 360px) {
+    .contenedor { padding: 10px; }
+    h1 { font-size: 1.8rem; }
+    .palabra-japones { font-size: 2.5rem; }
+}
+
+/* ============================================================================
+   7. ACCESIBILIDAD Y MEJORAS
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primario);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff8eb4;
 }
