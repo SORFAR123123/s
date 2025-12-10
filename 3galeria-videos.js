@@ -438,13 +438,23 @@ function cargarVideosPorCategoria(categoriaId) {
 }
 
 // ============================================================================
-// FUNCIÓN PARA REPRODUCIR VIDEO CON TIMESTAMPS
+// FUNCIÓN PARA REPRODUCIR VIDEO CON TIMESTAMPS - VERSIÓN MEJORADA
 // ============================================================================
 
+// FUNCIÓN ORIGINAL (para reproducción normal)
 function reproducirVideo(video) {
+    reproducirVideoConTimestamp(video, 0);
+}
+
+// NUEVA FUNCIÓN: Reproductor con soporte de timestamps
+function reproducirVideoConTimestamp(video, timestampSegundos = 0) {
     videoActual = video;
     
-    const videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
+    // Construir URL con timestamp si se especifica
+    let videoUrl = `https://drive.google.com/file/d/${video.driveId}/preview`;
+    if (timestampSegundos > 0) {
+        videoUrl += `?t=${timestampSegundos}s`;
+    }
     
     // Actualizar interfaz
     const tituloElement = document.getElementById('titulo-video-reproductor');
@@ -478,6 +488,14 @@ function reproducirVideo(video) {
     mostrarTimestampsEnReproductor(video);
     
     cambiarPantalla('pantalla-reproductor-video');
+    
+    // Mostrar notificación si hay timestamp
+    if (timestampSegundos > 0) {
+        const minutos = Math.floor(timestampSegundos / 60);
+        const segs = timestampSegundos % 60;
+        const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
+        mostrarNotificacionGaleria(`⏱️ Video cargado desde ${tiempoFormateado}`);
+    }
 }
 
 // ============================================================================
@@ -504,7 +522,7 @@ function mostrarTimestampsEnReproductor(video) {
     
     video.timestamps.forEach((ts, index) => {
         html += `
-            <div class="timestamp-item" onclick="saltarATimestamp(${ts.segundos})">
+            <div class="timestamp-item" onclick="reproducirVideoConTimestamp(videoActual, ${ts.segundos})">
                 <span class="timestamp-tiempo">${ts.tiempo}</span>
                 <span class="timestamp-desc">${ts.descripcion}</span>
                 <span class="timestamp-saltar">▶️ Ir</span>
@@ -527,23 +545,15 @@ function mostrarTimestampsEnReproductor(video) {
     contenedorTimestamps.innerHTML = html;
 }
 
-// Función para saltar a un timestamp específico
+// Función para saltar a un timestamp específico (alternativa)
 function saltarATimestamp(segundos) {
-    const iframe = document.getElementById('iframe-video-reproductor');
-    if (!iframe) return;
+    if (!videoActual) {
+        mostrarNotificacionGaleria("❌ No hay video seleccionado");
+        return;
+    }
     
-    // Actualizar la URL del iframe con el timestamp
-    const urlBase = iframe.src.split('#')[0];
-    iframe.src = `${urlBase}#t=${segundos}`;
-    
-    // Mostrar notificación
-    const minutos = Math.floor(segundos / 60);
-    const segs = segundos % 60;
-    const tiempoFormateado = `${minutos}:${segs.toString().padStart(2, '0')}`;
-    mostrarNotificacionGaleria(`⏱️ Saltando a ${tiempoFormateado}`);
-    
-    // Enfocar el iframe
-    iframe.focus();
+    // Usar la nueva función para reiniciar el video desde el timestamp
+    reproducirVideoConTimestamp(videoActual, segundos);
 }
 
 // Función para agregar timestamp desde la posición actual (simulada)
@@ -1641,6 +1651,7 @@ window.iniciarGaleriaVideos = iniciarGaleriaVideos;
 window.cargarCategoriasVideos = cargarCategoriasVideos;
 window.cargarVideosPorCategoria = cargarVideosPorCategoria;
 window.reproducirVideo = reproducirVideo;
+window.reproducirVideoConTimestamp = reproducirVideoConTimestamp;
 window.volverACategorias = volverACategorias;
 window.volverAListaVideos = volverAListaVideos;
 window.marcarComoFavorito = marcarComoFavorito;
