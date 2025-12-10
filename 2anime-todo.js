@@ -132,7 +132,7 @@ const animeVocabulario = {
     // ANIME 1 - Quintillizas Nakano
     'anime1': {
         'mazo1': [
-            { japones: '姉妹', lectura: 'shimai', opciones: ['Hermanas', 'Hermanos', 'Amigas', 'Compañeras'], respuesta: 0 },
+            { japones: 'こちらこそ', lectura: 'kochirakozo', opciones: ['Hermanas', 'Hermanos', 'Amigas', 'Compañeras'], respuesta: 0 },
             { japones: '恋愛', lectura: 'renai', opciones: ['Amor romántico', 'Amistad', 'Familia', 'Respeto'], respuesta: 0 },
             { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Trabajo', 'Juego', 'Descanso'], respuesta: 0 },
             { japones: '試験', lectura: 'shiken', opciones: ['Examen', 'Tarea', 'Proyecto', 'Práctica'], respuesta: 0 },
