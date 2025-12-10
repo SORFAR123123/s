@@ -1035,3 +1035,34 @@ function iniciarGaleriaVideos() {
         }
     }, 50); // Delay muy pequeño pero suficiente
 }
+// ============================================================================
+// FUNCIÓN PARA INICIAR GALERÍA DE AUDIOS
+// ============================================================================
+
+function iniciarGaleriaAudios() {
+    console.log("🎧 Iniciando galería de audios...");
+    
+    // 1. PRIMERO verificar que el sistema existe
+    if (typeof crearPantallasGaleriaAudios === 'undefined') {
+        console.error("❌ ERROR: Sistema de galería de audios no cargado");
+        mostrarNotificacion("Error: Galería de audios no disponible");
+        return; // Salir si no está cargado
+    }
+    
+    // 2. CREAR las pantallas si no existen
+    crearPantallasGaleriaAudios();
+    console.log("✅ Pantallas de audio creadas/verificadas");
+    
+    // 3. ESPERAR un momento para que el DOM se actualice
+    setTimeout(() => {
+        // 4. LUEGO cambiar a la pantalla
+        cambiarPantalla('pantalla-galerias-audios');
+        console.log("✅ Pantalla de audios cambiada");
+        
+        // 5. FINALMENTE cargar las categorías
+        if (typeof cargarCategoriasAudios === 'function') {
+            cargarCategoriasAudios();
+            console.log("✅ Categorías de audio cargadas");
+        }
+    }, 50); // Delay muy pequeño pero suficiente
+}
