@@ -3224,19 +3224,18 @@ button:disabled {
     border-radius: 10px;
 }
 /* ============================================================================
-   ESTILOS PARA SISTEMA OPENINGS DE ANIME
+   ESTILOS PARA SISTEMA OPENINGS DE ANIME - VERSIÓN SIMPLIFICADA
    ============================================================================ */
 
-/* PANTALLA DE SELECCIÓN DE OPENINGS */
+/* PANTALLA DE SELECCIÓN DE OPENINGS - ESTILO SIMPLE */
 #pantalla-openings-seleccion h1 {
-    color: #7209b7;
+    color: #4a90e2;
     text-align: center;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(114, 9, 183, 0.5);
 }
 
 #pantalla-openings-seleccion .subtitulo {
-    color: #90e0ef;
+    color: #cccccc;
     text-align: center;
     margin-bottom: 30px;
     font-size: 1.1rem;
@@ -3246,55 +3245,48 @@ button:disabled {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px;
+    gap: 20px;
     margin: 20px 0;
     padding: 20px;
 }
 
 .opening-card {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border-radius: 15px;
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
     padding: 20px;
     width: 280px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 3px solid #00b4d8;
-    box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
-    position: relative;
-    overflow: hidden;
+    border: 3px solid #4a90e2;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
 }
 
 .opening-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 180, 216, 0.5);
-    border-color: #ff006e;
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
 }
 
 .opening-imagen {
     width: 100%;
     height: 160px;
-    border-radius: 10px;
+    border-radius: 15px;
     object-fit: cover;
     margin-bottom: 15px;
-    border: 2px solid #4cc9f0;
+    border: 2px solid #4a90e2;
 }
 
 .opening-texto {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #ffffff;
     margin: 10px 0;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .opening-info {
     font-size: 1rem;
-    color: #00b4d8;
-    margin-bottom: 10px;
+    color: #4a90e2;
+    margin-bottom: 5px;
     font-weight: bold;
 }
 
@@ -3303,7 +3295,6 @@ button:disabled {
     color: #cccccc;
     margin-bottom: 15px;
     line-height: 1.4;
-    min-height: 60px;
 }
 
 .opening-meta {
@@ -3315,8 +3306,8 @@ button:disabled {
 }
 
 .opening-año {
-    background: rgba(0, 180, 216, 0.2);
-    color: #4cc9f0;
+    background: rgba(74, 144, 226, 0.2);
+    color: #4a90e2;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -3324,8 +3315,8 @@ button:disabled {
 }
 
 .opening-tipo {
-    background: rgba(255, 0, 110, 0.2);
-    color: #ff006e;
+    background: rgba(255, 107, 157, 0.2);
+    color: #ff6b9d;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -3333,64 +3324,46 @@ button:disabled {
 }
 
 .info-openings {
-    background: rgba(0, 180, 216, 0.1);
+    background: rgba(74, 144, 226, 0.1);
     border-radius: 15px;
     padding: 20px;
     margin-top: 30px;
-    border-left: 4px solid #7209b7;
+    border-left: 4px solid #4a90e2;
 }
 
 .info-openings p {
-    color: #90e0ef;
+    color: #cccccc;
     margin: 10px 0;
     font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.info-openings p::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: #00b4d8;
-    border-radius: 50%;
 }
 
 /* PANTALLA DE DETALLE DE OPENING */
-#pantalla-opening-detalle .barra-superior {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border: 2px solid #00b4d8;
-}
-
 .opening-detalle-container {
     max-width: 900px;
     margin: 0 auto;
 }
 
 .video-opening-container {
-    background: rgba(30, 30, 46, 0.8);
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     padding: 25px;
     margin-bottom: 25px;
-    border: 2px solid #7209b7;
+    border: 2px solid #4a90e2;
 }
 
 .video-opening-container h3 {
-    color: #ff006e;
+    color: #4a90e2;
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(255, 0, 110, 0.5);
 }
 
 .video-container-opening {
     background: #000;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     margin-bottom: 15px;
-    border: 3px solid #4361ee;
+    border: 3px solid #4a90e2;
     position: relative;
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
@@ -3407,23 +3380,21 @@ button:disabled {
 
 .video-desc {
     text-align: center;
-    color: #90e0ef;
+    color: #cccccc;
     font-style: italic;
     font-size: 1rem;
     padding: 15px;
-    background: rgba(0, 180, 216, 0.1);
-    border-radius: 10px;
 }
 
 .mazos-opening-container {
-    background: rgba(30, 30, 46, 0.8);
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     padding: 25px;
-    border: 2px solid #4361ee;
+    border: 2px solid #4a90e2;
 }
 
 .mazos-opening-container h3 {
-    color: #4cc9f0;
+    color: #4a90e2;
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.4rem;
@@ -3445,40 +3416,38 @@ button:disabled {
 }
 
 .mazo-opening-card {
-    background: linear-gradient(135deg, #2d3047, #3a3d5d);
-    border-radius: 12px;
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
     padding: 20px;
     width: 220px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 2px solid #4cc9f0;
-    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.3);
+    border: 3px solid #4a90e2;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
 }
 
 .mazo-opening-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.5);
-    border-color: #f72585;
+    box-shadow: 0 12px 35px rgba(74, 144, 226, 0.5);
 }
 
 .mazo-opening-card.mazo-inactivo {
     opacity: 0.6;
     cursor: not-allowed;
-    border-color: #666666;
     background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
+    border-color: #666666;
 }
 
 .mazo-opening-card.mazo-inactivo:hover {
     transform: none;
-    box-shadow: none;
-    border-color: #666666;
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
 }
 
 .mazo-opening-numero {
     font-size: 1.3rem;
     font-weight: bold;
-    color: #4cc9f0;
+    color: #4a90e2;
     margin-bottom: 10px;
 }
 
@@ -3491,10 +3460,8 @@ button:disabled {
 
 .mazo-opening-info {
     font-size: 0.9rem;
-    color: #90e0ef;
+    color: #cccccc;
     padding: 5px 10px;
-    background: rgba(0, 180, 216, 0.1);
-    border-radius: 8px;
 }
 
 .opening-tips {
@@ -3509,36 +3476,17 @@ button:disabled {
     color: #ffd700;
     margin: 8px 0;
     font-size: 0.9rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
 }
 
-/* PANTALLA DE QUIZ OPENING */
-#pantalla-quiz-opening .barra-superior {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border: 2px solid #7209b7;
-}
-
-#pantalla-quiz-opening .contador {
-    color: #4cc9f0;
-    font-weight: bold;
-}
-
-#numero-pregunta-opening, #total-preguntas-opening {
-    color: #ff006e;
-    font-weight: bold;
-}
-
+/* PANTALLA DE QUIZ OPENING - ESTILO SIMPLE */
 #palabra-japones-opening {
     font-size: 4rem;
     color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(255, 0, 110, 0.5);
     margin-bottom: 15px;
 }
 
 #lectura-opening {
-    color: #4cc9f0;
+    color: #ffa500;
     font-size: 1.8rem;
     font-style: italic;
     margin-bottom: 40px;
@@ -3554,9 +3502,9 @@ button:disabled {
 }
 
 #contenedor-opciones-opening .opcion {
-    background: linear-gradient(135deg, #2d3047, #3a3d5d);
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
     color: white;
-    border: 2px solid #4361ee;
+    border: 2px solid #4a90e2;
     border-radius: 12px;
     padding: 25px;
     font-size: 1.2rem;
@@ -3572,22 +3520,21 @@ button:disabled {
 
 #contenedor-opciones-opening .opcion:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
-    border-color: #4cc9f0;
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
 }
 
 #contenedor-opciones-opening .opcion.correcta {
-    background: linear-gradient(135deg, #00b4d8, #0096c7) !important;
-    border-color: #00b4d8 !important;
+    background: linear-gradient(135deg, #00ff88, #00cc6a) !important;
+    border-color: #00ff88 !important;
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
 #contenedor-opciones-opening .opcion.incorrecta {
-    background: linear-gradient(135deg, #ff006e, #d90429) !important;
-    border-color: #ff006e !important;
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e) !important;
+    border-color: #ff6b6b !important;
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
 }
 
 #contenedor-opciones-opening .opcion:disabled {
@@ -3608,16 +3555,14 @@ button:disabled {
 
 #resultado-opening.correcto {
     color: #00ff88;
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 #resultado-opening.incorrecto {
     color: #ff4444;
-    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
 }
 
 #boton-siguiente-opening {
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
     color: white;
     border: none;
     border-radius: 12px;
@@ -3626,36 +3571,30 @@ button:disabled {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
     margin: 0 auto;
     display: block;
 }
 
 #boton-siguiente-opening:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(67, 97, 238, 0.6);
+    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.6);
 }
 
 /* PANTALLA DE RESULTADOS OPENING */
-#pantalla-resultados-opening .barra-superior {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    border: 2px solid #7209b7;
-}
-
 .resultado-opening-container {
-    background: rgba(30, 30, 46, 0.9);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     padding: 30px;
     margin: 20px auto;
     max-width: 600px;
-    border: 3px solid #7209b7;
+    border: 2px solid #4a90e2;
 }
 
 .resultado-opening-container h2 {
-    color: #ffd700;
+    color: #4a90e2;
     text-align: center;
     margin-bottom: 25px;
-    text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.5);
 }
 
 .resultado-opening-detalle {
@@ -3679,7 +3618,7 @@ button:disabled {
 }
 
 .resultado-label {
-    color: #90e0ef;
+    color: #cccccc;
     font-weight: bold;
     font-size: 1.1rem;
 }
@@ -3699,9 +3638,9 @@ button:disabled {
 .resultado-mensaje {
     text-align: center;
     padding: 20px;
-    background: rgba(255, 0, 110, 0.1);
+    background: rgba(255, 107, 157, 0.1);
     border-radius: 10px;
-    border: 2px solid #ff006e;
+    border: 2px solid #ff6b9d;
     margin-top: 20px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -3717,49 +3656,18 @@ button:disabled {
 }
 
 .botones-resultados-opening .boton-principal {
-    background: linear-gradient(135deg, #00b4d8, #0096c7);
-    color: white;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #1e1e1e;
 }
 
 .botones-resultados-opening .boton-secundario {
-    background: linear-gradient(135deg, #ff006e, #d90429);
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
     color: white;
 }
 
 .botones-resultados-opening .boton-terciario {
-    background: linear-gradient(135deg, #7209b7, #560bad);
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
     color: white;
-}
-
-/* ANIMACIONES ESPECIALES PARA OPENINGS */
-@keyframes openingGlow {
-    0% { 
-        box-shadow: 0 0 5px rgba(0, 180, 216, 0.5),
-                   0 0 10px rgba(114, 9, 183, 0.3); 
-    }
-    50% { 
-        box-shadow: 0 0 20px rgba(0, 180, 216, 0.8),
-                   0 0 30px rgba(255, 0, 110, 0.6),
-                   0 0 40px rgba(114, 9, 183, 0.4); 
-    }
-    100% { 
-        box-shadow: 0 0 5px rgba(0, 180, 216, 0.5),
-                   0 0 10px rgba(114, 9, 183, 0.3); 
-    }
-}
-
-.opening-card {
-    animation: openingGlow 3s infinite;
-}
-
-@keyframes mazoGlow {
-    0% { box-shadow: 0 4px 12px rgba(76, 201, 240, 0.3); }
-    50% { box-shadow: 0 4px 20px rgba(76, 201, 240, 0.6), 0 0 15px rgba(247, 37, 133, 0.4); }
-    100% { box-shadow: 0 4px 12px rgba(76, 201, 240, 0.3); }
-}
-
-.mazo-opening-card:not(.mazo-inactivo) {
-    animation: mazoGlow 2s infinite;
 }
 
 /* RESPONSIVE PARA OPENINGS */
@@ -3771,14 +3679,6 @@ button:disabled {
     
     .opening-card {
         width: 250px;
-    }
-    
-    .opening-texto {
-        font-size: 1.2rem;
-    }
-    
-    .opening-imagen {
-        height: 140px;
     }
     
     .mazo-opening-card {
@@ -3854,53 +3754,16 @@ button:disabled {
     }
 }
 
-/* ESTILOS PARA BARRAS SUPERIORES DE OPENINGS */
-#pantalla-openings-seleccion .barra-superior,
-#pantalla-opening-detalle .barra-superior,
-#pantalla-quiz-opening .barra-superior,
-#pantalla-resultados-opening .barra-superior {
-    margin-bottom: 25px;
-}
-
-#pantalla-openings-seleccion .barra-superior .contador,
-#pantalla-opening-detalle .barra-superior .contador,
-#pantalla-quiz-opening .barra-superior .contador,
-#pantalla-resultados-opening .barra-superior .contador {
-    background: linear-gradient(135deg, #7209b7, #3a0ca3);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 1rem;
-}
-
-/* EFECTO DE BRILLO PARA TARJETAS ACTIVAS */
-.opening-card::after,
-.mazo-opening-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.8s;
-}
-
-.opening-card:hover::after,
-.mazo-opening-card:hover::after {
-    left: 100%;
-}
-
 /* ESTILOS PARA MENSAJES DE ESTADO */
 .mensaje-carga-opening {
     text-align: center;
     padding: 40px;
-    color: #4cc9f0;
+    color: #4a90e2;
     font-size: 1.2rem;
     font-weight: bold;
-    background: rgba(76, 201, 240, 0.1);
+    background: rgba(74, 144, 226, 0.1);
     border-radius: 15px;
-    border: 2px solid #4cc9f0;
+    border: 2px solid #4a90e2;
     margin: 20px auto;
     max-width: 500px;
 }
