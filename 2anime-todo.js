@@ -29,7 +29,7 @@ const animeConfig = {
                 },
                 japones: {
                     driveId: 'TU_ID_JAPONES_RAW_1', // <-- REEMPLAZA CON TU ID DE JAPONÉS RAW
-                    nombre: 'Japonés Raw',
+                    nombre: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K',
                     timestamps: [
                         { tiempo: '0:30', descripcion: 'Introducción (japonés)', segundos: 30 },
                         { tiempo: '5:15', descripcion: 'Vocabulario útil', segundos: 315 },
