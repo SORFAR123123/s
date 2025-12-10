@@ -22,7 +22,7 @@ const animeConfig = {
                     nombre: 'Español',
                     timestamps: [
                         { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
-                        { tiempo: '3:55', descripcion: 'Escena clave', segundos: 235 },
+                        { tiempo: '3:55', descripcion: ' Potona', segundos: 235 },
                         { tiempo: '12:40', descripcion: 'Momento romántico', segundos: 760 },
                         { tiempo: '20:20', descripcion: 'Final del capítulo', segundos: 1220 }
                     ]
@@ -32,7 +32,7 @@ const animeConfig = {
                     nombre: 'Japones',
                     timestamps: [
                          { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
-                        { tiempo: '3:55', descripcion: 'Escena clave', segundos: 235 },
+                        { tiempo: '3:55', descripcion: ' Potona', segundos: 235 },
                         { tiempo: '12:40', descripcion: 'Diálogo rápido', segundos: 760 }
                     ]
                 }
@@ -132,7 +132,7 @@ const animeVocabulario = {
     // ANIME 1 - Quintillizas Nakano
     'anime1': {
         'mazo1': [
-            { japones: 'こちらこそ', lectura: 'kochirakozo', opciones: ['Nino mi puta culona escolar', 'Hermanos', 'Amigas', 'Compañeras'], respuesta: 0 },
+            { japones: 'こちらこそ', lectura: 'kochirakozo', opciones: ['es mi culpa', 'Hermanos', 'Amigas', 'Compañeras'], respuesta: 0 },
             { japones: '恋愛', lectura: 'renai', opciones: ['Amor romántico', 'Amistad', 'Familia', 'Respeto'], respuesta: 0 },
             { japones: '勉強', lectura: 'benkyou', opciones: ['Estudio', 'Trabajo', 'Juego', 'Descanso'], respuesta: 0 },
             { japones: '試験', lectura: 'shiken', opciones: ['Examen', 'Tarea', 'Proyecto', 'Práctica'], respuesta: 0 },
