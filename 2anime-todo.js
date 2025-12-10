@@ -382,11 +382,16 @@ function cargarListaAnimes() {
         div.style.borderColor = anime.color;
         div.onclick = () => cargarAnime(animeId);
         
-        // Contar mazos disponibles para este anime
-        let totalMazos = 0;
+        // Contar mazos disponibles (con al menos 1 palabra)
+        let mazosDisponibles = 0;
         if (animeVocabulario[animeId]) {
-            totalMazos = Object.keys(animeVocabulario[animeId]).length;
+            mazosDisponibles = Object.keys(animeVocabulario[animeId]).filter(mazoId => {
+                const mazo = animeVocabulario[animeId][mazoId];
+                return mazo && mazo.length >= 1;
+            }).length;
         }
+        
+        const totalMazos = animeVocabulario[animeId] ? Object.keys(animeVocabulario[animeId]).length : 0;
         
         // Contar timestamps totales
         let totalTimestamps = 0;
@@ -402,12 +407,12 @@ function cargarListaAnimes() {
             <img src="${anime.imagen}" alt="${anime.nombre}" class="anime-imagen" 
                  onerror="this.src='https://via.placeholder.com/300x200/333333/ffffff?text=${anime.nombre}'">
             <div class="anime-texto">${anime.nombre}</div>
-            <div class="anime-info">${totalMazos} mazos de vocabulario</div>
+            <div class="anime-info">${mazosDisponibles} mazos disponibles de ${totalMazos}</div>
             <div class="anime-desc">${anime.descripcion}</div>
             <div class="anime-extra-info">
                 <span class="anime-idiomas">🎬 2 idiomas</span>
                 <span class="anime-timestamps-count">⏱️ ${totalTimestamps} timestamps</span>
-                <span class="anime-mazos-count">📚 ${totalMazos} mazos</span>
+                <span class="anime-mazos-count">📚 ${mazosDisponibles}/${totalMazos} mazos</span>
             </div>
         `;
         
@@ -445,7 +450,7 @@ function cargarAnime(animeId) {
 }
 
 // ============================================================================
-// FUNCIÓN MODIFICADA: Cargar mazos dinámicamente
+// FUNCIÓN MODIFICADA: Cargar mazos dinámicamente (VERSIÓN CORREGIDA)
 // ============================================================================
 
 function cargarMazosAnime(animeId) {
@@ -481,36 +486,45 @@ function cargarMazosAnime(animeId) {
         const mazoNumero = mazoId.replace('mazo', '');
         const div = document.createElement('div');
         div.className = 'mazo-anime-card';
-        div.onclick = () => iniciarQuizAnime(animeId, mazoId);
         
         // Verificar si el mazo tiene palabras
         const tienePalabras = animeVocabulario[animeId][mazoId] && 
                              animeVocabulario[animeId][mazoId].length > 0;
         const cantidadPalabras = tienePalabras ? animeVocabulario[animeId][mazoId].length : 0;
         
-        // Determinar si está disponible o no
-        const disponible = tienePalabras && cantidadPalabras >= 5; // Mínimo 5 palabras para considerarlo disponible
+        // ⚠️ CORRECCIÓN: Permitir mazos con AL MENOS 1 palabra, no 5
+        const disponible = tienePalabras && cantidadPalabras >= 1; // Cambiado de 5 a 1
+        
+        if (disponible) {
+            div.onclick = () => iniciarQuizAnime(animeId, mazoId);
+            div.title = `Haz clic para practicar ${cantidadPalabras} palabras`;
+        } else {
+            div.classList.add('mazo-inactivo');
+            div.onclick = null;
+            div.title = 'Este mazo aún no tiene palabras';
+        }
         
         div.innerHTML = `
             <div class="mazo-anime-numero">Mazo ${mazoNumero}</div>
-            <div class="mazo-anime-texto">${disponible ? cantidadPalabras + ' palabras' : 'Incompleto'}</div>
+            <div class="mazo-anime-texto">${cantidadPalabras} palabra${cantidadPalabras !== 1 ? 's' : ''}</div>
             <div class="mazo-anime-info">${disponible ? '✅ Disponible' : '🚧 En preparación'}</div>
         `;
-        
-        // Marcar como inactivo si no está disponible
-        if (!disponible) {
-            div.classList.add('mazo-inactivo');
-            div.onclick = null;
-            div.title = 'Este mazo aún no está completo';
-        } else {
-            div.title = `Haz clic para practicar ${cantidadPalabras} palabras`;
-        }
         
         contenedor.appendChild(div);
     });
     
     // Mostrar estadísticas
     console.log(`✅ Cargados ${mazos.length} mazos para ${animeId}`);
+    
+    // Actualizar contador en la interfaz
+    const contadorElement = document.getElementById('contador-mazos');
+    if (contadorElement) {
+        const mazosDisponibles = mazos.filter(mazoId => {
+            const mazo = animeVocabulario[animeId][mazoId];
+            return mazo && mazo.length >= 1;
+        }).length;
+        contadorElement.textContent = `(${mazosDisponibles} disponibles de ${mazos.length})`;
+    }
     
     // Si no hay mazos, mostrar mensaje
     if (mazos.length === 0) {
@@ -519,7 +533,7 @@ function cargarMazosAnime(animeId) {
 }
 
 // ============================================================================
-// 6. NUEVA FUNCIÓN: Contar mazos disponibles
+// 6. NUEVA FUNCIÓN: Contar mazos disponibles (VERSIÓN CORREGIDA)
 // ============================================================================
 
 function contarMazosDisponibles(animeId) {
@@ -530,7 +544,7 @@ function contarMazosDisponibles(animeId) {
     
     mazos.forEach(mazoId => {
         const mazo = animeVocabulario[animeId][mazoId];
-        if (mazo && mazo.length >= 5) { // Considerar disponible si tiene al menos 5 palabras
+        if (mazo && mazo.length >= 1) { // ⚠️ CORRECCIÓN: Cambiado de 5 a 1
             contador++;
         }
     });
@@ -607,10 +621,6 @@ window.verMazosAnime = function(animeId) {
 };
 
 // ============================================================================
-// (El resto del código se mantiene igual desde aquí...)
-// Las funciones de video, quiz y navegación NO necesitan cambios
-// ============================================================================
-
 // NUEVA FUNCIÓN: Cargar video con opción de idioma
 function cargarVideoAnime(animeId, idioma = 'español') {
     const anime = animeConfig.animes[animeId];
@@ -1834,7 +1844,7 @@ window.verMazosAnime = verMazosAnime;
 
 console.log("✅ Sistema anime MEJORADO cargado correctamente");
 console.log("🎬 Novedades:");
-console.log("   - ✅ Detección dinámica de mazos");
+console.log("   - ✅ Detección dinámica de mazos (ahora con mínimo 1 palabra)");
 console.log("   - ✅ 2 idiomas por anime: Español y Japonés Raw");
 console.log("   - ✅ Timestamps clicables para navegación rápida");
 console.log("   - ✅ Selector de idioma en tiempo real");
@@ -1856,11 +1866,11 @@ console.log("💡 Usa iniciarSistemaAnime() para comenzar");
 console.log("💡 El sistema ahora detecta automáticamente todos los mazos que agregues a animeVocabulario");
 console.log("");
 console.log("📚 YA INCLUIDOS para anime1:");
-console.log("   - Mazo 1 al 5: Vocabulario de quintillizas");
-console.log("   - Mazo 6 al 10: Adjetivos básicos en japonés");
-console.log("   - Total: 10 mazos × 10 palabras = 100 palabras");
+console.log("   - Mazo 1 al 8: Vocabulario de quintillizas");
+console.log("   - Mazo 8 tiene 4 palabras (y ahora es clickeable!)");
+console.log("   - Total: 8 mazos con 74 palabras");
 console.log("");
 console.log("🚀 Para agregar más mazos, solo añádelos en animeVocabulario['anime1']:");
-console.log("   'mazo11': [...],");
-console.log("   'mazo12': [...],");
-console.log("   'mazo13': [...], etc.");
+console.log("   'mazo9': [...],");
+console.log("   'mazo10': [...],");
+console.log("   'mazo11': [...], etc.");
