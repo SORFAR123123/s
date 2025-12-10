@@ -29,7 +29,7 @@ const animeConfig = {
                 },
                 japones: {
                     driveId: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K', // <-- REEMPLAZA CON TU ID DE JAPONÉS RAW
-                    nombre: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K',
+                    nombre: 'Japones',
                     timestamps: [
                          { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
                         { tiempo: '3:55', descripcion: 'Escena clave', segundos: 235 },
