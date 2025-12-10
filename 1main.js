@@ -1066,3 +1066,34 @@ function iniciarGaleriaAudios() {
         }
     }, 50); // Delay muy pequeño pero suficiente
 }
+// ============================================================================
+// FUNCIÓN PARA INICIAR SISTEMA OPENINGS - AGREGAR EN main.js
+// ============================================================================
+
+function iniciarSistemaOpenings() {
+    console.log("🎵 Iniciando sistema de openings...");
+    
+    // 1. PRIMERO verificar que el sistema existe
+    if (typeof crearPantallasOpenings === 'undefined') {
+        console.error("❌ ERROR: Sistema de openings no cargado");
+        mostrarNotificacion("Error: Galería de openings no disponible");
+        return; // Salir si no está cargado
+    }
+    
+    // 2. CREAR las pantallas si no existen
+    crearPantallasOpenings();
+    console.log("✅ Pantallas de openings creadas/verificadas");
+    
+    // 3. ESPERAR un momento para que el DOM se actualice
+    setTimeout(() => {
+        // 4. LUEGO cambiar a la pantalla
+        cambiarPantalla('pantalla-openings-seleccion');
+        console.log("✅ Pantalla de openings cambiada");
+        
+        // 5. FINALMENTE cargar los openings
+        if (typeof cargarListaOpenings === 'function') {
+            cargarListaOpenings();
+            console.log("✅ Openings cargados");
+        }
+    }, 50); // Delay muy pequeño pero suficiente
+}
