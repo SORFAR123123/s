@@ -1,5 +1,6 @@
 // ============================================================================
 // SISTEMA ANIME PARA FABRI - CON TIMESTAMPS Y VIDEO EN JAPONÉS RAW
+// VERSIÓN MODIFICADA: DETECCIÓN DINÁMICA DE MAZOS
 // ============================================================================
 
 // ============================================================================
@@ -116,8 +117,8 @@ const animeConfig = {
         }
     },
     
-    // Configuración general
-    mazosPorAnime: 5,
+    // Configuración general - MODIFICADO PARA DETECCIÓN DINÁMICA
+    // mazosPorAnime: 5, // ¡Ya no necesitamos esto fijo!
     palabrasPorMazo: 10,
     
     // Idioma por defecto
@@ -125,7 +126,7 @@ const animeConfig = {
 };
 
 // ============================================================================
-// 2. VOCABULARIO COMPLETO DE TODOS LOS ANIMES (MISMO QUE ANTES)
+// 2. VOCABULARIO COMPLETO DE TODOS LOS ANIMES (AGREGA TODOS LOS MAZOS QUE QUIERAS)
 // ============================================================================
 
 const animeVocabulario = {
@@ -190,7 +191,70 @@ const animeVocabulario = {
             { japones: '決断', lectura: 'ketsudan', opciones: ['Decisión', 'Duda', 'Indecisión', 'Vacilación'], respuesta: 0 },
             { japones: '責任', lectura: 'sekinin', opciones: ['Responsabilidad', 'Irresponsabilidad', 'Libertad', 'Despreocupación'], respuesta: 0 },
             { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 }
+        ],
+        // 👇 AGREGAR MÁS MAZOS AQUÍ - SE DETECTARÁN AUTOMÁTICAMENTE
+        'mazo6': [
+            { japones: '新しい', lectura: 'atarashii', opciones: ['Nuevo', 'Viejo', 'Usado', 'Antiguo'], respuesta: 0 },
+            { japones: '古い', lectura: 'furui', opciones: ['Viejo', 'Nuevo', 'Moderno', 'Actual'], respuesta: 0 },
+            { japones: '良い', lectura: 'yoi/ii', opciones: ['Bueno', 'Malo', 'Regular', 'Medio'], respuesta: 0 },
+            { japones: '悪い', lectura: 'warui', opciones: ['Malo', 'Bueno', 'Excelente', 'Aceptable'], respuesta: 0 },
+            { japones: '高い', lectura: 'takai', opciones: ['Alto/Caro', 'Bajo', 'Medio', 'Barato'], respuesta: 0 },
+            { japones: '安い', lectura: 'yasui', opciones: ['Barato', 'Caro', 'Medio', 'Normal'], respuesta: 0 },
+            { japones: '暑い', lectura: 'atsui', opciones: ['Caliente (clima)', 'Frío', 'Tibio', 'Templado'], respuesta: 0 },
+            { japones: '寒い', lectura: 'samui', opciones: ['Frío (clima)', 'Caliente', 'Tibio', 'Agradable'], respuesta: 0 },
+            { japones: '難しい', lectura: 'muzukashii', opciones: ['Difícil', 'Fácil', 'Simple', 'Complicado'], respuesta: 0 },
+            { japones: '易しい', lectura: 'yasashii', opciones: ['Fácil', 'Difícil', 'Complejo', 'Retador'], respuesta: 0 }
+        ],
+        'mazo7': [
+            { japones: '速い', lectura: 'hayai', opciones: ['Rápido', 'Lento', 'Medio', 'Pausado'], respuesta: 0 },
+            { japones: '遅い', lectura: 'osoi', opciones: ['Lento', 'Rápido', 'Ágil', 'Veloz'], respuesta: 0 },
+            { japones: '重い', lectura: 'omoi', opciones: ['Pesado', 'Liviano', 'Medio', 'Ligero'], respuesta: 0 },
+            { japones: '軽い', lectura: 'karui', opciones: ['Liviano', 'Pesado', 'Medio', 'Denso'], respuesta: 0 },
+            { japones: '美しい', lectura: 'utsukushii', opciones: ['Hermoso', 'Feo', 'Normal', 'Simple'], respuesta: 0 },
+            { japones: '醜い', lectura: 'minikui', opciones: ['Feo', 'Hermoso', 'Atractivo', 'Guapo'], respuesta: 0 },
+            { japones: '強い', lectura: 'tsuyoi', opciones: ['Fuerte', 'Débil', 'Medio', 'Resistente'], respuesta: 0 },
+            { japones: '弱い', lectura: 'yowai', opciones: ['Débil', 'Fuerte', 'Robusto', 'Poderoso'], respuesta: 0 },
+            { japones: '長い', lectura: 'nagai', opciones: ['Largo', 'Corto', 'Mediano', 'Pequeño'], respuesta: 0 },
+            { japones: '短い', lectura: 'mijikai', opciones: ['Corto', 'Largo', 'Extenso', 'Grande'], respuesta: 0 }
+        ],
+        'mazo8': [
+            { japones: '広い', lectura: 'hiroi', opciones: ['Amplio', 'Estrecho', 'Medio', 'Limitado'], respuesta: 0 },
+            { japones: '狭い', lectura: 'semai', opciones: ['Estrecho', 'Amplio', 'Espacioso', 'Grande'], respuesta: 0 },
+            { japones: '明るい', lectura: 'akarui', opciones: ['Brillante/Luminoso', 'Oscuro', 'Tenue', 'Apagado'], respuesta: 0 },
+            { japones: '暗い', lectura: 'kurai', opciones: ['Oscuro', 'Luminoso', 'Brillante', 'Claro'], respuesta: 0 },
+            { japones: '深い', lectura: 'fukai', opciones: ['Profundo', 'Superficial', 'Poco profundo', 'Plano'], respuesta: 0 },
+            { japones: '浅い', lectura: 'asai', opciones: ['Poco profundo', 'Profundo', 'Hondo', 'Insondable'], respuesta: 0 },
+            { japones: '甘い', lectura: 'amai', opciones: ['Dulce', 'Salado', 'Amargo', 'Ácido'], respuesta: 0 },
+            { japones: '辛い', lectura: 'karai', opciones: ['Picante/Salado', 'Dulce', 'Suave', 'Insípido'], respuesta: 0 },
+            { japones: '忙しい', lectura: 'isogashii', opciones: ['Ocupado', 'Libre', 'Desocupado', 'Holgazán'], respuesta: 0 },
+            { japones: '暇', lectura: 'hima', opciones: ['Libre/Desocupado', 'Ocupado', 'Atareado', 'Obligado'], respuesta: 0 }
+        ],
+        'mazo9': [
+            { japones: '嬉しい', lectura: 'ureshii', opciones: ['Feliz/Alegre', 'Triste', 'Enojado', 'Indiferente'], respuesta: 0 },
+            { japones: '悲しい', lectura: 'kanashii', opciones: ['Triste', 'Feliz', 'Contento', 'Alegre'], respuesta: 0 },
+            { japones: '楽しい', lectura: 'tanoshii', opciones: ['Divertido', 'Aburrido', 'Tedioso', 'Monótono'], respuesta: 0 },
+            { japones: 'つまらない', lectura: 'tsumaranai', opciones: ['Aburrido', 'Divertido', 'Entretenido', 'Interesante'], respuesta: 0 },
+            { japones: '美味しい', lectura: 'oishii', opciones: ['Delicioso', 'Asqueroso', 'Regular', 'Insípido'], respuesta: 0 },
+            { japones: '不味い', lectura: 'mazui', opciones: ['Asqueroso', 'Delicioso', 'Rico', 'Exquisito'], respuesta: 0 },
+            { japones: '危険', lectura: 'kiken', opciones: ['Peligroso', 'Seguro', 'Inofensivo', 'Tranquilo'], respuesta: 0 },
+            { japones: '安全', lectura: 'anzen', opciones: ['Seguro', 'Peligroso', 'Arriesgado', 'Inseguro'], respuesta: 0 },
+            { japones: '便利', lectura: 'benri', opciones: ['Conveniente', 'Inconveniente', 'Complicado', 'Difícil'], respuesta: 0 },
+            { japones: '不便', lectura: 'fuben', opciones: ['Inconveniente', 'Conveniente', 'Práctico', 'Útil'], respuesta: 0 }
+        ],
+        'mazo10': [
+            { japones: '静か', lectura: 'shizuka', opciones: ['Tranquilo/Silencioso', 'Ruidoso', 'Bullicioso', 'Escandaloso'], respuesta: 0 },
+            { japones: '賑やか', lectura: 'nigiyaka', opciones: ['Animado/Ruidoso', 'Tranquilo', 'Silencioso', 'Calmado'], respuesta: 0 },
+            { japones: '奇麗', lectura: 'kirei', opciones: ['Bonito/Limpio', 'Sucio', 'Feo', 'Desordenado'], respuesta: 0 },
+            { japones: '汚い', lectura: 'kitanai', opciones: ['Sucio', 'Limpio', 'Pulcro', 'Aseado'], respuesta: 0 },
+            { japones: '丈夫', lectura: 'joubu', opciones: ['Robusto/Resistente', 'Frágil', 'Débil', 'Delicado'], respuesta: 0 },
+            { japones: '脆い', lectura: 'moroi', opciones: ['Frágil/Débil', 'Robusto', 'Fuerte', 'Resistente'], respuesta: 0 },
+            { japones: '豊か', lectura: 'yutaka', opciones: ['Rico/Abundante', 'Pobre', 'Escaso', 'Limitado'], respuesta: 0 },
+            { japones: '貧しい', lectura: 'mazushii', opciones: ['Pobre', 'Rico', 'Adinerado', 'Próspero'], respuesta: 0 },
+            { japones: '賢い', lectura: 'kashikoi', opciones: ['Inteligente', 'Tonto', 'Necio', 'Ignorante'], respuesta: 0 },
+            { japones: '馬鹿', lectura: 'baka', opciones: ['Tonto/Estúpido', 'Inteligente', 'Listo', 'Sabio'], respuesta: 0 }
         ]
+        // 🎯 ¡Puedes seguir agregando mazo11, mazo12, etc.!
+        // Solo agrégalos aquí y aparecerán automáticamente
     },
     
     // ANIME 2 - Yamada Lv999
@@ -255,6 +319,7 @@ const animeVocabulario = {
             { japones: '勉強会', lectura: 'benkyoukai', opciones: ['Sesión de estudio', 'Fiesta', 'Reunión', 'Juego'], respuesta: 0 },
             { japones: '図書館', lectura: 'toshokan', opciones: ['Biblioteca', 'Laboratorio', 'Gimnasio', 'Oficina'], respuesta: 0 }
         ]
+        // También puedes agregar más mazos a los otros animes si quieres
     },
     
     // ANIME 3 - Kimetsu no Yaiba (ejemplo reducido)
@@ -330,7 +395,7 @@ let respuestasIncorrectasAnime = 0;
 function iniciarSistemaAnime() {
     cambiarPantalla('pantalla-anime-seleccion');
     cargarListaAnimes();
-    console.log("🎬 Sistema anime iniciado (con timestamps y 2 idiomas)");
+    console.log("🎬 Sistema anime iniciado (con detección dinámica de mazos)");
 }
 
 // Función para cargar la lista de animes disponibles
@@ -350,6 +415,12 @@ function cargarListaAnimes() {
         div.style.borderColor = anime.color;
         div.onclick = () => cargarAnime(animeId);
         
+        // Contar mazos disponibles para este anime
+        let totalMazos = 0;
+        if (animeVocabulario[animeId]) {
+            totalMazos = Object.keys(animeVocabulario[animeId]).length;
+        }
+        
         // Contar timestamps totales
         let totalTimestamps = 0;
         if (anime.videos) {
@@ -364,11 +435,12 @@ function cargarListaAnimes() {
             <img src="${anime.imagen}" alt="${anime.nombre}" class="anime-imagen" 
                  onerror="this.src='https://via.placeholder.com/300x200/333333/ffffff?text=${anime.nombre}'">
             <div class="anime-texto">${anime.nombre}</div>
-            <div class="anime-info">5 mazos de vocabulario</div>
+            <div class="anime-info">${totalMazos} mazos de vocabulario</div>
             <div class="anime-desc">${anime.descripcion}</div>
             <div class="anime-extra-info">
                 <span class="anime-idiomas">🎬 2 idiomas</span>
                 <span class="anime-timestamps-count">⏱️ ${totalTimestamps} timestamps</span>
+                <span class="anime-mazos-count">📚 ${totalMazos} mazos</span>
             </div>
         `;
         
@@ -402,9 +474,13 @@ function cargarAnime(animeId) {
     
     cambiarPantalla('pantalla-anime-detalle');
     console.log(`🎬 Cargando anime: ${anime.nombre} (${idiomaVideoActual})`);
+    console.log(`📚 Mazos disponibles: ${animeVocabulario[animeId] ? Object.keys(animeVocabulario[animeId]).length : 0}`);
 }
 
-// FUNCIÓN AÑADIDA: Cargar los mazos de un anime
+// ============================================================================
+// FUNCIÓN MODIFICADA: Cargar mazos dinámicamente
+// ============================================================================
+
 function cargarMazosAnime(animeId) {
     const contenedor = document.getElementById('contenedor-mazos-anime');
     if (!contenedor) {
@@ -414,31 +490,159 @@ function cargarMazosAnime(animeId) {
     
     contenedor.innerHTML = '';
     
-    for (let i = 1; i <= animeConfig.mazosPorAnime; i++) {
-        const mazoId = `mazo${i}`;
+    // Verificar si el anime tiene vocabulario
+    if (!animeVocabulario[animeId]) {
+        console.log(`⚠️ No hay vocabulario para ${animeId}`);
+        contenedor.innerHTML = '<p style="color: #ff6b9d; text-align: center; padding: 30px;">No hay mazos disponibles para este anime</p>';
+        return;
+    }
+    
+    // Obtener todos los mazos del anime (detectar dinámicamente)
+    const mazos = Object.keys(animeVocabulario[animeId]);
+    
+    console.log(`🔍 Detectando mazos para ${animeId}:`, mazos);
+    
+    // Ordenar mazos numéricamente (mazo1, mazo2, mazo3...)
+    mazos.sort((a, b) => {
+        const numA = parseInt(a.replace('mazo', ''));
+        const numB = parseInt(b.replace('mazo', ''));
+        return numA - numB;
+    });
+    
+    // Crear un botón para cada mazo detectado
+    mazos.forEach(mazoId => {
+        const mazoNumero = mazoId.replace('mazo', '');
         const div = document.createElement('div');
         div.className = 'mazo-anime-card';
         div.onclick = () => iniciarQuizAnime(animeId, mazoId);
         
         // Verificar si el mazo tiene palabras
-        const tienePalabras = animeVocabulario[animeId] && 
-                             animeVocabulario[animeId][mazoId] && 
+        const tienePalabras = animeVocabulario[animeId][mazoId] && 
                              animeVocabulario[animeId][mazoId].length > 0;
+        const cantidadPalabras = tienePalabras ? animeVocabulario[animeId][mazoId].length : 0;
+        
+        // Determinar si está disponible o no
+        const disponible = tienePalabras && cantidadPalabras >= 5; // Mínimo 5 palabras para considerarlo disponible
         
         div.innerHTML = `
-            <div class="mazo-anime-numero">Mazo ${i}</div>
-            <div class="mazo-anime-texto">${tienePalabras ? '10 palabras' : 'Próximamente'}</div>
-            <div class="mazo-anime-info">${tienePalabras ? '✅ Disponible' : '🚧 En preparación'}</div>
+            <div class="mazo-anime-numero">Mazo ${mazoNumero}</div>
+            <div class="mazo-anime-texto">${disponible ? cantidadPalabras + ' palabras' : 'Incompleto'}</div>
+            <div class="mazo-anime-info">${disponible ? '✅ Disponible' : '🚧 En preparación'}</div>
         `;
         
-        if (!tienePalabras) {
+        // Marcar como inactivo si no está disponible
+        if (!disponible) {
             div.classList.add('mazo-inactivo');
             div.onclick = null;
+            div.title = 'Este mazo aún no está completo';
+        } else {
+            div.title = `Haz clic para practicar ${cantidadPalabras} palabras`;
         }
         
         contenedor.appendChild(div);
+    });
+    
+    // Mostrar estadísticas
+    console.log(`✅ Cargados ${mazos.length} mazos para ${animeId}`);
+    
+    // Si no hay mazos, mostrar mensaje
+    if (mazos.length === 0) {
+        contenedor.innerHTML = '<p style="color: #ff6b9d; text-align: center; padding: 30px;">No hay mazos configurados para este anime</p>';
     }
 }
+
+// ============================================================================
+// 6. NUEVA FUNCIÓN: Contar mazos disponibles
+// ============================================================================
+
+function contarMazosDisponibles(animeId) {
+    if (!animeVocabulario[animeId]) return 0;
+    
+    const mazos = Object.keys(animeVocabulario[animeId]);
+    let contador = 0;
+    
+    mazos.forEach(mazoId => {
+        const mazo = animeVocabulario[animeId][mazoId];
+        if (mazo && mazo.length >= 5) { // Considerar disponible si tiene al menos 5 palabras
+            contador++;
+        }
+    });
+    
+    return contador;
+}
+
+// ============================================================================
+// 7. NUEVA FUNCIÓN: Agregar mazo desde consola (para testing)
+// ============================================================================
+
+window.agregarMazoAnime = function(animeId, mazoNumero, palabras) {
+    // Validar parámetros
+    if (!animeId || !mazoNumero || !palabras || !Array.isArray(palabras)) {
+        console.log("❌ Parámetros inválidos. Uso: agregarMazoAnime('anime1', 6, [...palabras])");
+        return false;
+    }
+    
+    const mazoId = `mazo${mazoNumero}`;
+    
+    // Inicializar anime si no existe
+    if (!animeVocabulario[animeId]) {
+        animeVocabulario[animeId] = {};
+    }
+    
+    // Agregar o reemplazar mazo
+    animeVocabulario[animeId][mazoId] = palabras;
+    
+    console.log(`✅ Mazo ${mazoNumero} agregado a ${animeId} con ${palabras.length} palabras`);
+    
+    // Si este anime está actualmente cargado, actualizar la interfaz
+    if (animeActual === animeId) {
+        cargarMazosAnime(animeId);
+        mostrarNotificacionAnime(`✅ Mazo ${mazoNumero} agregado (${palabras.length} palabras)`);
+    }
+    
+    return true;
+};
+
+// ============================================================================
+// 8. NUEVA FUNCIÓN: Ver todos los mazos de un anime
+// ============================================================================
+
+window.verMazosAnime = function(animeId) {
+    if (!animeVocabulario[animeId]) {
+        console.log(`❌ No hay mazos para ${animeId}`);
+        return;
+    }
+    
+    const mazos = Object.keys(animeVocabulario[animeId]);
+    console.log(`📚 Mazos de ${animeId} (${mazos.length} total):`);
+    
+    mazos.sort((a, b) => {
+        const numA = parseInt(a.replace('mazo', ''));
+        const numB = parseInt(b.replace('mazo', ''));
+        return numA - numB;
+    });
+    
+    mazos.forEach(mazoId => {
+        const palabras = animeVocabulario[animeId][mazoId];
+        console.log(`   ${mazoId}: ${palabras ? palabras.length : 0} palabras`);
+    });
+    
+    // Mostrar estadísticas
+    const totalPalabras = mazos.reduce((total, mazoId) => {
+        const palabras = animeVocabulario[animeId][mazoId];
+        return total + (palabras ? palabras.length : 0);
+    }, 0);
+    
+    console.log(`📊 Estadísticas:`);
+    console.log(`   - Total mazos: ${mazos.length}`);
+    console.log(`   - Total palabras: ${totalPalabras}`);
+    console.log(`   - Mazos completos (10 palabras): ${mazos.filter(mId => animeVocabulario[animeId][mId] && animeVocabulario[animeId][mId].length === 10).length}`);
+};
+
+// ============================================================================
+// (El resto del código se mantiene igual desde aquí...)
+// Las funciones de video, quiz y navegación NO necesitan cambios
+// ============================================================================
 
 // NUEVA FUNCIÓN: Cargar video con opción de idioma
 function cargarVideoAnime(animeId, idioma = 'español') {
@@ -638,7 +842,7 @@ function saltarATimestampAnime(segundos) {
 }
 
 // ============================================================================
-// 6. FUNCIONES DEL QUIZ (SIN CAMBIOS - IGUAL QUE ANTES)
+// FUNCIONES DEL QUIZ (SIN CAMBIOS NECESARIOS)
 // ============================================================================
 
 // Función para iniciar el quiz de un mazo de anime
@@ -665,7 +869,7 @@ function iniciarQuizAnime(animeId, mazoId) {
         // Mostrar primera pregunta
         mostrarPreguntaAnime();
         
-        console.log(`📝 Iniciando quiz: ${animeId} - ${mazoId}`);
+        console.log(`📝 Iniciando quiz: ${animeId} - ${mazoId} (${mazoActualAnime.length} palabras)`);
     } else {
         console.error(`❌ No se encontró el mazo ${mazoId} para ${animeId}`);
         alert('Este mazo aún no está disponible. ¡Próximamente!');
@@ -854,7 +1058,7 @@ function repetirQuizAnime() {
 }
 
 // ============================================================================
-// 7. FUNCIONES DE NAVEGACIÓN
+// FUNCIONES DE NAVEGACIÓN
 // ============================================================================
 
 function volverAAnimeSeleccion() {
@@ -870,7 +1074,7 @@ function volverAAnimeDetalle() {
 }
 
 // ============================================================================
-// 8. FUNCIONES DE NOTIFICACIÓN
+// FUNCIONES DE NOTIFICACIÓN
 // ============================================================================
 
 function mostrarNotificacionAnime(mensaje) {
@@ -900,7 +1104,7 @@ function mostrarNotificacionAnime(mensaje) {
 }
 
 // ============================================================================
-// 9. FUNCIONES DE CONSOLA PARA TIMESTAMPS
+// FUNCIONES DE CONSOLA PARA TIMESTAMPS
 // ============================================================================
 
 // Agregar timestamp a un video de anime desde consola
@@ -1018,6 +1222,49 @@ window.verTimestampsAnime = function(animeId, idioma = 'español') {
 };
 
 // ============================================================================
+// NUEVAS FUNCIONES DE CONSOLA PARA MAZOS
+// ============================================================================
+
+// Función para agregar un mazo rápido desde consola
+window.agregarMazoRapido = function(animeId, mazoNumero) {
+    const palabrasEjemplo = [
+        { japones: '言葉', lectura: 'kotoba', opciones: ['Palabra', 'Lenguaje', 'Expresión', 'Término'], respuesta: 0 },
+        { japones: '時間', lectura: 'jikan', opciones: ['Tiempo', 'Hora', 'Momento', 'Duración'], respuesta: 0 },
+        { japones: '場所', lectura: 'basho', opciones: ['Lugar', 'Espacio', 'Sitio', 'Ubicación'], respuesta: 0 },
+        { japones: '人', lectura: 'hito', opciones: ['Persona', 'Gente', 'Humano', 'Individuo'], respuesta: 0 },
+        { japones: '物', lectura: 'mono', opciones: ['Cosa', 'Objeto', 'Artículo', 'Elemento'], respuesta: 0 },
+        { japones: '事', lectura: 'koto', opciones: ['Asunto', 'Cuestión', 'Tema', 'Problema'], respuesta: 0 },
+        { japones: '世界', lectura: 'sekai', opciones: ['Mundo', 'Planeta', 'Tierra', 'Universo'], respuesta: 0 },
+        { japones: '生活', lectura: 'seikatsu', opciones: ['Vida', 'Existencia', 'Rutina', 'Día a día'], respuesta: 0 },
+        { japones: '仕事', lectura: 'shigoto', opciones: ['Trabajo', 'Empleo', 'Oficio', 'Labor'], respuesta: 0 },
+        { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Parientes', 'Clan', 'Linaje'], respuesta: 0 }
+    ];
+    
+    return agregarMazoAnime(animeId, mazoNumero, palabrasEjemplo);
+};
+
+// Función para eliminar un mazo
+window.eliminarMazoAnime = function(animeId, mazoNumero) {
+    const mazoId = `mazo${mazoNumero}`;
+    
+    if (!animeVocabulario[animeId] || !animeVocabulario[animeId][mazoId]) {
+        console.log(`❌ El mazo ${mazoNumero} no existe en ${animeId}`);
+        return false;
+    }
+    
+    delete animeVocabulario[animeId][mazoId];
+    console.log(`🗑️ Mazo ${mazoNumero} eliminado de ${animeId}`);
+    
+    // Si este anime está cargado, actualizar
+    if (animeActual === animeId) {
+        cargarMazosAnime(animeId);
+        mostrarNotificacionAnime(`🗑️ Mazo ${mazoNumero} eliminado`);
+    }
+    
+    return true;
+};
+
+// ============================================================================
 // 10. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS - VERSIÓN MEJORADA
 // ============================================================================
 
@@ -1037,7 +1284,7 @@ function crearPantallasAnime() {
                     </div>
                     
                     <h1>🎬 VIDEOS PARA FABRI</h1>
-                    <p class="subtitulo">Selecciona un anime - Ahora con 2 idiomas y timestamps ⏱️</p>
+                    <p class="subtitulo">Selecciona un anime - Detección dinámica de mazos 🔄</p>
                     
                     <div class="info-idiomas">
                         <div class="idioma-info-item">
@@ -1052,6 +1299,10 @@ function crearPantallasAnime() {
                             <span class="idioma-badge timestamps">⏱️ Timestamps</span>
                             <span>Saltar a partes específicas del video</span>
                         </div>
+                        <div class="idioma-info-item">
+                            <span class="idioma-badge mazos-dinamicos">🔄 Mazos Dinámicos</span>
+                            <span>Agrega mazos y aparecen automáticamente</span>
+                        </div>
                     </div>
                     
                     <div class="contenedor-animes" id="contenedor-animes">
@@ -1059,9 +1310,10 @@ function crearPantallasAnime() {
                     </div>
                     
                     <div class="info-anime">
-                        <p>📚 5 animes × 5 mazos cada uno = 25 mazos de vocabulario</p>
+                        <p>📚 Sistema detecta automáticamente todos los mazos que agregues</p>
                         <p>🎬 Cada anime tiene 2 versiones: Español y Japonés Raw</p>
                         <p>⏱️ Timestamps para navegación rápida en videos</p>
+                        <p>🔄 Desde consola usa: <code>agregarMazoAnime('anime1', 11, [...palabras])</code></p>
                     </div>
                 </div>
             </div>
@@ -1116,20 +1368,27 @@ function crearPantallasAnime() {
                             <p class="video-desc" id="descripcion-anime">Mira el video y luego practica el vocabulario</p>
                         </div>
                         
-                        <!-- MAZOS DE VOCABULARIO -->
+                        <!-- MAZOS DE VOCABULARIO - DETECCIÓN DINÁMICA -->
                         <div class="mazos-anime-container">
-                            <h3>📚 Mazos de Vocabulario</h3>
-                            <p>Practica las palabras que aparecen en este anime:</p>
+                            <h3>📚 Mazos de Vocabulario <span id="contador-mazos" style="color: #00ff88; font-size: 0.8em;">(0 detectados)</span></h3>
+                            <p>Practica las palabras que aparecen en este anime (detectados automáticamente):</p>
                             
                             <div class="contenedor-mazos-anime" id="contenedor-mazos-anime">
                                 <!-- Los mazos se cargan aquí dinámicamente -->
+                            </div>
+                            
+                            <div class="mazos-info" style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 136, 0.1); border-radius: 10px; color: #00ff88; font-size: 0.9em;">
+                                <p><strong>💡 Sistema de mazos dinámico:</strong></p>
+                                <p>• Agrega mazos en la variable <code>animeVocabulario</code></p>
+                                <p>• Se detectan automáticamente al cargar</p>
+                                <p>• Desde consola: <code>verMazosAnime('${animeActual || 'anime1'}')</code></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- PANTALLA DE QUIZ ANIME (SIN CAMBIOS) -->
+            <!-- PANTALLA DE QUIZ ANIME -->
             <div id="pantalla-quiz-anime" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
@@ -1163,7 +1422,7 @@ function crearPantallasAnime() {
         // Agregar estilos específicos para el sistema anime mejorado
         agregarEstilosAnimeMejorado();
         
-        console.log("✅ Pantallas anime creadas dinámicamente (con timestamps y 2 idiomas)");
+        console.log("✅ Pantallas anime creadas dinámicamente (con detección dinámica de mazos)");
     }
 }
 
@@ -1219,6 +1478,11 @@ function agregarEstilosAnimeMejorado() {
             
             .idioma-badge.timestamps {
                 background: linear-gradient(135deg, #00ff88, #00cc6a);
+                color: white;
+            }
+            
+            .idioma-badge.mazos-dinamicos {
+                background: linear-gradient(135deg, #ff9800, #ff5722);
                 color: white;
             }
             
@@ -1409,9 +1673,11 @@ function agregarEstilosAnimeMejorado() {
                 margin-top: 10px;
                 padding-top: 10px;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
+                flex-wrap: wrap;
+                gap: 10px;
             }
             
-            .anime-idiomas, .anime-timestamps-count {
+            .anime-idiomas, .anime-timestamps-count, .anime-mazos-count {
                 font-size: 0.8rem;
                 padding: 3px 8px;
                 border-radius: 10px;
@@ -1424,6 +1690,63 @@ function agregarEstilosAnimeMejorado() {
             
             .anime-timestamps-count {
                 color: #00ff88;
+            }
+            
+            .anime-mazos-count {
+                color: #ff9800;
+            }
+            
+            /* MAZOS DINÁMICOS */
+            .contenedor-mazos-anime {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+                margin-top: 20px;
+            }
+            
+            .mazo-anime-card {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 15px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: 2px solid #4a90e2;
+            }
+            
+            .mazo-anime-card:hover:not(.mazo-inactivo) {
+                background: rgba(74, 144, 226, 0.2);
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+            }
+            
+            .mazo-anime-card.mazo-inactivo {
+                opacity: 0.5;
+                border-color: #666;
+                cursor: not-allowed;
+            }
+            
+            .mazo-anime-numero {
+                font-size: 1.2em;
+                font-weight: bold;
+                color: #4a90e2;
+                margin-bottom: 5px;
+            }
+            
+            .mazo-anime-texto {
+                font-size: 0.9em;
+                color: #cccccc;
+                margin-bottom: 5px;
+            }
+            
+            .mazo-anime-info {
+                font-size: 0.8em;
+                color: #00ff88;
+                font-weight: bold;
+            }
+            
+            .mazo-anime-card.mazo-inactivo .mazo-anime-info {
+                color: #ff6b9d;
             }
             
             /* RESPONSIVE */
@@ -1463,6 +1786,15 @@ function agregarEstilosAnimeMejorado() {
                     width: 100%;
                     max-width: 250px;
                 }
+                
+                .contenedor-mazos-anime {
+                    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                }
+                
+                .anime-extra-info {
+                    flex-direction: column;
+                    align-items: center;
+                }
             }
             
             @media (max-width: 480px) {
@@ -1480,6 +1812,18 @@ function agregarEstilosAnimeMejorado() {
                 .boton-idioma {
                     padding: 10px 15px;
                     font-size: 0.9rem;
+                }
+                
+                .contenedor-mazos-anime {
+                    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                }
+                
+                .mazo-anime-card {
+                    padding: 10px;
+                }
+                
+                .mazo-anime-numero {
+                    font-size: 1em;
                 }
             }
         </style>
@@ -1503,6 +1847,7 @@ window.volverAAnimeSeleccion = volverAAnimeSeleccion;
 window.volverAAnimeDetalle = volverAAnimeDetalle;
 window.repetirQuizAnime = repetirQuizAnime;
 window.crearPantallasAnime = crearPantallasAnime;
+window.contarMazosDisponibles = contarMazosDisponibles;
 
 // Funciones nuevas
 window.cargarVideoAnime = cargarVideoAnime;
@@ -1514,17 +1859,41 @@ window.agregarTimestampAnimeDesdeConsola = agregarTimestampAnimeDesdeConsola;
 window.cambiarDriveIdAnime = cambiarDriveIdAnime;
 window.verTimestampsAnime = verTimestampsAnime;
 
+// Funciones nuevas para mazos dinámicos
+window.agregarMazoAnime = agregarMazoAnime;
+window.agregarMazoRapido = agregarMazoRapido;
+window.eliminarMazoAnime = eliminarMazoAnime;
+window.verMazosAnime = verMazosAnime;
+
 console.log("✅ Sistema anime MEJORADO cargado correctamente");
 console.log("🎬 Novedades:");
-console.log("   - 2 idiomas por anime: Español y Japonés Raw");
-console.log("   - Timestamps clicables para navegación rápida");
-console.log("   - Selector de idioma en tiempo real");
-console.log("   - Funciones de administración desde consola");
+console.log("   - ✅ Detección dinámica de mazos");
+console.log("   - ✅ 2 idiomas por anime: Español y Japonés Raw");
+console.log("   - ✅ Timestamps clicables para navegación rápida");
+console.log("   - ✅ Selector de idioma en tiempo real");
+console.log("   - ✅ Funciones de administración desde consola");
 console.log("");
-console.log("🔧 Funciones nuevas desde consola:");
+console.log("🔧 Funciones nuevas desde consola (MAZOS):");
+console.log("   - agregarMazoAnime('anime1', 11, [...palabras])");
+console.log("   - verMazosAnime('anime1')");
+console.log("   - eliminarMazoAnime('anime1', 11)");
+console.log("   - verMazosAnime('anime1') para ver todos los mazos");
+console.log("");
+console.log("🔧 Funciones nuevas desde consola (VIDEOS):");
 console.log("   - cargarVideoAnime(animeId, idioma)");
 console.log("   - agregarTimestampAnime(animeId, idioma, segundos, descripcion)");
 console.log("   - cambiarDriveIdAnime(animeId, idioma, nuevoDriveId)");
 console.log("   - verTimestampsAnime(animeId, idioma)");
 console.log("");
 console.log("💡 Usa iniciarSistemaAnime() para comenzar");
+console.log("💡 El sistema ahora detecta automáticamente todos los mazos que agregues a animeVocabulario");
+console.log("");
+console.log("📚 YA INCLUIDOS para anime1:");
+console.log("   - Mazo 1 al 5: Vocabulario de quintillizas");
+console.log("   - Mazo 6 al 10: Adjetivos básicos en japonés");
+console.log("   - Total: 10 mazos × 10 palabras = 100 palabras");
+console.log("");
+console.log("🚀 Para agregar más mazos, solo añádelos en animeVocabulario['anime1']:");
+console.log("   'mazo11': [...],");
+console.log("   'mazo12': [...],");
+console.log("   'mazo13': [...], etc.");
