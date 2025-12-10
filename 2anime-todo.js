@@ -18,21 +18,21 @@ const animeConfig = {
             // 2 VIDEOS: ESPAÑOL Y JAPONÉS RAW
             videos: {
                 español: {
-                    driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                    driveId: '1aPPqNHRq-Twvdp-TnQ0FkyYLuksmr2qe',
                     nombre: 'Español',
                     timestamps: [
-                        { tiempo: '0:30', descripcion: 'Introducción personajes', segundos: 30 },
-                        { tiempo: '5:15', descripcion: 'Escena clave', segundos: 315 },
+                        { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
+                        { tiempo: '3:55', descripcion: 'Escena clave', segundos: 235 },
                         { tiempo: '12:40', descripcion: 'Momento romántico', segundos: 760 },
                         { tiempo: '20:20', descripcion: 'Final del capítulo', segundos: 1220 }
                     ]
                 },
                 japones: {
-                    driveId: 'TU_ID_JAPONES_RAW_1', // <-- REEMPLAZA CON TU ID DE JAPONÉS RAW
+                    driveId: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K', // <-- REEMPLAZA CON TU ID DE JAPONÉS RAW
                     nombre: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K',
                     timestamps: [
-                        { tiempo: '0:30', descripcion: 'Introducción (japonés)', segundos: 30 },
-                        { tiempo: '5:15', descripcion: 'Vocabulario útil', segundos: 315 },
+                         { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
+                        { tiempo: '3:55', descripcion: 'Escena clave', segundos: 235 },
                         { tiempo: '12:40', descripcion: 'Diálogo rápido', segundos: 760 }
                     ]
                 }
