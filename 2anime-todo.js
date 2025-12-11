@@ -1,6 +1,6 @@
 // ============================================================================
 // SISTEMA ANIME PARA FABRI - CON TIMESTAMPS Y VIDEO EN JAPONÉS RAW
-// VERSIÓN MODIFICADA: DETECCIÓN DINÁMICA DE MAZOS
+// VERSIÓN MODIFICADA: DETECCIÓN DINÁMICA DE MAZOS + SISTEMA DE PALABRAS DIFÍCILES
 // ============================================================================
 
 // ============================================================================
@@ -353,6 +353,13 @@ let mazoActualAnime = [];
 let preguntaActualAnime = 0;
 let respuestasCorrectasAnime = 0;
 let respuestasIncorrectasAnime = 0;
+
+// ============================================================================
+// NUEVAS VARIABLES PARA PALABRAS DIFÍCILES
+// ============================================================================
+
+let palabrasDificilesAnime = []; // Array para almacenar palabras marcadas como difíciles
+let mazoOriginalId = ''; // ID del mazo original para reiniciar correctamente
 
 // ============================================================================
 // 5. FUNCIONES PRINCIPALES - SISTEMA DE ANIME
@@ -819,12 +826,16 @@ function saltarATimestampAnime(segundos) {
 }
 
 // ============================================================================
-// FUNCIONES DEL QUIZ (SIN CAMBIOS NECESARIOS)
+// FUNCIONES DEL QUIZ (MEJORADAS CON SISTEMA DE PALABRAS DIFÍCILES)
 // ============================================================================
 
 // Función para iniciar el quiz de un mazo de anime
 function iniciarQuizAnime(animeId, mazoId) {
     if (animeVocabulario[animeId] && animeVocabulario[animeId][mazoId]) {
+        // Reiniciar el array de palabras difíciles cuando se inicia un nuevo mazo
+        palabrasDificilesAnime = [];
+        mazoOriginalId = mazoId; // Guardar el ID del mazo original
+        
         mazoActualAnime = [...animeVocabulario[animeId][mazoId]];
         preguntaActualAnime = 0;
         respuestasCorrectasAnime = 0;
@@ -847,13 +858,17 @@ function iniciarQuizAnime(animeId, mazoId) {
         mostrarPreguntaAnime();
         
         console.log(`📝 Iniciando quiz: ${animeId} - ${mazoId} (${mazoActualAnime.length} palabras)`);
+        console.log(`💡 Sistema de palabras difíciles activado. Mazo especial se creará al final con las palabras marcadas.`);
     } else {
         console.error(`❌ No se encontró el mazo ${mazoId} para ${animeId}`);
         alert('Este mazo aún no está disponible. ¡Próximamente!');
     }
 }
 
-// Función para mostrar una pregunta del quiz anime
+// ============================================================================
+// FUNCIÓN MEJORADA: Mostrar una pregunta del quiz anime (CON BOTÓN DE DIFÍCIL)
+// ============================================================================
+
 function mostrarPreguntaAnime() {
     if (preguntaActualAnime < mazoActualAnime.length) {
         const pregunta = mazoActualAnime[preguntaActualAnime];
@@ -887,12 +902,243 @@ function mostrarPreguntaAnime() {
             botonOpcion.onclick = () => verificarRespuestaAnime(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
             contenedorOpciones.appendChild(botonOpcion);
         });
+        
+        // Agregar botón "Marcar como difícil" - SOLO UNA VEZ POR PALABRA
+        agregarBotonDificil(pregunta);
     } else {
-        mostrarResultadosAnime();
+        // Verificar si hay palabras difíciles antes de mostrar resultados
+        if (palabrasDificilesAnime.length > 0) {
+            // Mostrar opción para practicar palabras difíciles
+            mostrarOpcionPalabrasDificiles();
+        } else {
+            // No hay palabras difíciles, mostrar resultados normales
+            mostrarResultadosAnime();
+        }
     }
 }
 
-// Función para verificar respuesta en quiz anime
+// ============================================================================
+// NUEVA FUNCIÓN: Agregar botón "Marcar como difícil"
+// ============================================================================
+
+function agregarBotonDificil(pregunta) {
+    // Verificar si ya existe el contenedor del botón difícil
+    let botonDificilContainer = document.getElementById('boton-dificil-container-anime');
+    
+    if (!botonDificilContainer) {
+        botonDificilContainer = document.createElement('div');
+        botonDificilContainer.id = 'boton-dificil-container-anime';
+        botonDificilContainer.style.marginTop = '20px';
+        botonDificilContainer.style.textAlign = 'center';
+        
+        // Insertar después del contenedor de opciones
+        const contenedorOpciones = document.getElementById('contenedor-opciones-anime');
+        contenedorOpciones.parentNode.insertBefore(botonDificilContainer, contenedorOpciones.nextSibling);
+    }
+    
+    // Verificar si esta palabra ya está marcada como difícil
+    const yaEsDificil = palabrasDificilesAnime.some(p => p.japones === pregunta.japones);
+    
+    // Crear o actualizar botón
+    botonDificilContainer.innerHTML = '';
+    const botonDificil = document.createElement('button');
+    botonDificil.className = yaEsDificil ? 'boton-dificil activo' : 'boton-dificil';
+    botonDificil.innerHTML = yaEsDificil ? 
+        '✅ Ya marcada como difícil' : 
+        '⚠️ Marcar esta palabra como difícil';
+    botonDificil.onclick = () => marcarComoDificilAnime(pregunta, botonDificil);
+    botonDificil.title = yaEsDificil ? 
+        'Esta palabra ya está en tu mazo de difíciles' : 
+        'Agregar esta palabra al mazo especial de palabras difíciles';
+    
+    botonDificilContainer.appendChild(botonDificil);
+}
+
+// ============================================================================
+// NUEVA FUNCIÓN: Marcar palabra como difícil
+// ============================================================================
+
+function marcarComoDificilAnime(pregunta, botonElement) {
+    // Verificar si ya está marcada
+    const yaEsDificil = palabrasDificilesAnime.some(p => p.japones === pregunta.japones);
+    
+    if (!yaEsDificil) {
+        // Agregar a la lista de palabras difíciles (crear copia)
+        palabrasDificilesAnime.push({
+            ...pregunta,
+            esDificil: true,
+            tiempoMarcado: new Date().toLocaleTimeString()
+        });
+        
+        // Actualizar botón
+        botonElement.innerHTML = '✅ Ya marcada como difícil';
+        botonElement.className = 'boton-dificil activo';
+        botonElement.title = 'Esta palabra ya está en tu mazo de difíciles';
+        
+        // Mostrar notificación
+        mostrarNotificacionAnime(`💾 Palabra guardada en "Difíciles": ${pregunta.japones}`);
+        
+        console.log(`📌 Palabra marcada como difícil: ${pregunta.japones}`);
+        console.log(`📊 Total palabras difíciles: ${palabrasDificilesAnime.length}`);
+    } else {
+        // Quitar de la lista de palabras difíciles
+        const indice = palabrasDificilesAnime.findIndex(p => p.japones === pregunta.japones);
+        if (indice !== -1) {
+            palabrasDificilesAnime.splice(indice, 1);
+        }
+        
+        // Actualizar botón
+        botonElement.innerHTML = '⚠️ Marcar esta palabra como difícil';
+        botonElement.className = 'boton-dificil';
+        botonElement.title = 'Agregar esta palabra al mazo especial de palabras difíciles';
+        
+        // Mostrar notificación
+        mostrarNotificacionAnime(`🗑️ Palabra eliminada de "Difíciles": ${pregunta.japones}`);
+        
+        console.log(`📌 Palabra quitada de difíciles: ${pregunta.japones}`);
+        console.log(`📊 Total palabras difíciles: ${palabrasDificilesAnime.length}`);
+    }
+}
+
+// ============================================================================
+// NUEVA FUNCIÓN: Mostrar opción para practicar palabras difíciles
+// ============================================================================
+
+function mostrarOpcionPalabrasDificiles() {
+    // Crear pantalla especial para palabras difíciles
+    const pantallaDificilHTML = `
+        <div class="resultado-anime-container">
+            <h2>🎉 ¡Has completado el mazo!</h2>
+            <div class="resultado-anime-detalle">
+                <div class="resultado-item">
+                    <span class="resultado-label">Preguntas totales:</span>
+                    <span class="resultado-valor">${mazoActualAnime.length}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Respuestas correctas:</span>
+                    <span class="resultado-valor">${respuestasCorrectasAnime}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Respuestas incorrectas:</span>
+                    <span class="resultado-valor">${respuestasIncorrectasAnime}</span>
+                </div>
+                <div class="resultado-item destacado">
+                    <span class="resultado-label">📌 Palabras marcadas como difíciles:</span>
+                    <span class="resultado-valor resultado-dificil">${palabrasDificilesAnime.length}</span>
+                </div>
+            </div>
+            
+            <div class="palabras-dificiles-lista">
+                <h3>📝 Tus palabras difíciles:</h3>
+                <div class="lista-palabras-dificiles">
+                    ${palabrasDificilesAnime.map((palabra, index) => `
+                        <div class="palabra-dificil-item">
+                            <span class="palabra-dificil-japones">${palabra.japones}</span>
+                            <span class="palabra-dificil-lectura">${palabra.lectura}</span>
+                            <span class="palabra-dificil-significado">${palabra.opciones[palabra.respuesta]}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="opciones-dificiles">
+                <h3>¿Qué quieres hacer ahora?</h3>
+                <div class="botones-dificiles">
+                    <button class="boton-principal boton-dificil-grande" onclick="iniciarQuizDificilAnime()">
+                        🎯 Practicar solo las palabras difíciles
+                        <span class="boton-subtexto">(${palabrasDificilesAnime.length} palabras)</span>
+                    </button>
+                    <button class="boton-secundario boton-dificil-grande" onclick="mostrarResultadosAnime()">
+                        📊 Ver resultados completos
+                    </button>
+                    <button class="boton-terciario boton-dificil-grande" onclick="volverAAnimeDetalle()">
+                        ← Volver al anime
+                    </button>
+                </div>
+            </div>
+            
+            <div class="info-dificil">
+                <p>💡 <strong>Consejo:</strong> Las palabras difíciles se reiniciarán cuando:</p>
+                <p>• Termines este mazo especial de difíciles</p>
+                <p>• Cargues un mazo diferente</p>
+                <p>• Salgas del sistema anime</p>
+            </div>
+        </div>
+    `;
+    
+    // Crear o actualizar pantalla
+    let resultadosPantalla = document.getElementById('pantalla-resultados-anime');
+    if (!resultadosPantalla) {
+        resultadosPantalla = document.createElement('div');
+        resultadosPantalla.id = 'pantalla-resultados-anime';
+        resultadosPantalla.className = 'pantalla';
+        document.body.appendChild(resultadosPantalla);
+    }
+    
+    resultadosPantalla.innerHTML = `
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">🎯 ¡Palabras Difíciles Detectadas!</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAAnimeDetalle()">Volver al Anime</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
+                </div>
+            </div>
+            ${pantallaDificilHTML}
+        </div>
+    `;
+    
+    cambiarPantalla('pantalla-resultados-anime');
+}
+
+// ============================================================================
+// NUEVA FUNCIÓN: Iniciar quiz solo con palabras difíciles
+// ============================================================================
+
+function iniciarQuizDificilAnime() {
+    if (palabrasDificilesAnime.length === 0) {
+        mostrarNotificacionAnime('📝 No hay palabras marcadas como difíciles');
+        return;
+    }
+    
+    console.log(`🎯 Iniciando quiz de palabras difíciles (${palabrasDificilesAnime.length} palabras)`);
+    
+    // Usar las palabras difíciles como mazo actual
+    mazoActualAnime = [...palabrasDificilesAnime];
+    preguntaActualAnime = 0;
+    respuestasCorrectasAnime = 0;
+    respuestasIncorrectasAnime = 0;
+    
+    // Mezclar preguntas
+    for (let i = mazoActualAnime.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [mazoActualAnime[i], mazoActualAnime[j]] = [mazoActualAnime[j], mazoActualAnime[i]];
+    }
+    
+    // Cambiar a pantalla de quiz
+    cambiarPantalla('pantalla-quiz-anime');
+    
+    // Actualizar contador con indicador especial
+    document.getElementById('numero-pregunta-anime').textContent = 1;
+    document.getElementById('total-preguntas-anime').textContent = mazoActualAnime.length;
+    
+    // Actualizar título de la barra superior para indicar que es el mazo de difíciles
+    const contadorElement = document.querySelector('#pantalla-quiz-anime .contador');
+    if (contadorElement) {
+        contadorElement.textContent = `🎯 MAZO DIFÍCIL: ${preguntaActualAnime + 1}/${mazoActualAnime.length}`;
+    }
+    
+    // Mostrar primera pregunta
+    mostrarPreguntaAnime();
+    
+    // Mostrar notificación
+    mostrarNotificacionAnime(`🎯 Practicando ${palabrasDificilesAnime.length} palabras difíciles`);
+}
+
+// ============================================================================
+// FUNCIÓN MEJORADA: Verificar respuesta en quiz anime
+// ============================================================================
+
 function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectura) {
     const opcionesDOM = document.querySelectorAll('#contenedor-opciones-anime .opcion');
     const resultado = document.getElementById('resultado-anime');
@@ -901,6 +1147,12 @@ function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectu
     opcionesDOM.forEach(opcion => {
         opcion.disabled = true;
     });
+    
+    // Deshabilitar también el botón de "difícil" si existe
+    const botonDificil = document.querySelector('.boton-dificil');
+    if (botonDificil) {
+        botonDificil.disabled = true;
+    }
     
     // Marcar respuestas correctas e incorrectas
     opcionesDOM.forEach(opcion => {
@@ -934,20 +1186,38 @@ function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectu
     }
 }
 
-// Función para pasar a la siguiente pregunta anime
+// ============================================================================
+// FUNCIÓN MEJORADA: Pasar a la siguiente pregunta anime
+// ============================================================================
+
 function siguientePreguntaAnime() {
     preguntaActualAnime++;
+    
+    // Si estamos en el mazo de palabras difíciles, actualizar título
+    if (mazoActualAnime === palabrasDificilesAnime) {
+        const contadorElement = document.querySelector('#pantalla-quiz-anime .contador');
+        if (contadorElement) {
+            contadorElement.textContent = `🎯 MAZO DIFÍCIL: ${preguntaActualAnime + 1}/${mazoActualAnime.length}`;
+        }
+    }
+    
     mostrarPreguntaAnime();
 }
 
-// Función para mostrar resultados del quiz anime
+// ============================================================================
+// FUNCIÓN MEJORADA: Mostrar resultados del quiz anime
+// ============================================================================
+
 function mostrarResultadosAnime() {
     const porcentaje = Math.round((respuestasCorrectasAnime / mazoActualAnime.length) * 100);
+    
+    // Determinar si es el mazo de palabras difíciles
+    const esMazoDificil = mazoActualAnime === palabrasDificilesAnime;
     
     // Crear pantalla de resultados dinámica
     const resultadosHTML = `
         <div class="resultado-anime-container">
-            <h2>🎬 Resultados del Quiz</h2>
+            <h2>${esMazoDificil ? '🎯 Resultados del Mazo Difícil' : '🎬 Resultados del Quiz'}</h2>
             <div class="resultado-anime-detalle">
                 <div class="resultado-item">
                     <span class="resultado-label">Preguntas totales:</span>
@@ -965,6 +1235,14 @@ function mostrarResultadosAnime() {
                     <span class="resultado-label">Porcentaje de aciertos:</span>
                     <span class="resultado-valor resultado-porcentaje">${porcentaje}%</span>
                 </div>
+                
+                ${!esMazoDificil && palabrasDificilesAnime.length > 0 ? `
+                <div class="resultado-item destacado">
+                    <span class="resultado-label">📌 Palabras guardadas como difíciles:</span>
+                    <span class="resultado-valor resultado-dificil">${palabrasDificilesAnime.length}</span>
+                </div>
+                ` : ''}
+                
                 <div class="resultado-mensaje">
                     ${porcentaje === 100 ? '¡Perfecto! 🎉 Dominas este vocabulario' : 
                       porcentaje >= 80 ? '¡Muy bien! 👏 Casi perfecto' : 
@@ -973,14 +1251,38 @@ function mostrarResultadosAnime() {
                 </div>
             </div>
             
+            ${esMazoDificil ? `
+            <div class="info-final-dificil">
+                <p>✅ <strong>¡Mazo difícil completado!</strong></p>
+                <p>Las palabras difíciles se han reiniciado. Se crearán nuevas cuando vuelvas a marcar palabras.</p>
+            </div>
+            ` : ''}
+            
             <div class="botones-resultados-anime">
                 <button class="boton-principal" onclick="volverAAnimeDetalle()">
                     Volver al Anime
                 </button>
-                <button class="boton-secundario" onclick="repetirQuizAnime()">
-                    Repetir Quiz
+                ${!esMazoDificil && palabrasDificilesAnime.length > 0 ? `
+                <button class="boton-secundario" onclick="iniciarQuizDificilAnime()">
+                    🎯 Practicar palabras difíciles (${palabrasDificilesAnime.length})
+                </button>
+                ` : ''}
+                <button class="boton-terciario" onclick="${esMazoDificil ? 'reiniciarPalabrasDificiles()' : 'repetirQuizAnime()'}">
+                    ${esMazoDificil ? '🔄 Reiniciar palabras difíciles' : '🔄 Repetir Quiz'}
                 </button>
             </div>
+            
+            ${!esMazoDificil && palabrasDificilesAnime.length > 0 ? `
+            <div class="palabras-dificiles-mini">
+                <h4>📝 Tus palabras difíciles en este mazo:</h4>
+                <div class="mini-lista-dificil">
+                    ${palabrasDificilesAnime.slice(0, 5).map(palabra => `
+                        <span class="mini-palabra-dificil">${palabra.japones}</span>
+                    `).join('')}
+                    ${palabrasDificilesAnime.length > 5 ? `<span class="mini-palabra-mas">+${palabrasDificilesAnime.length - 5} más</span>` : ''}
+                </div>
+            </div>
+            ` : ''}
         </div>
     `;
     
@@ -996,7 +1298,7 @@ function mostrarResultadosAnime() {
     resultadosPantalla.innerHTML = `
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador">Resultados</div>
+                <div class="contador">${esMazoDificil ? '🎯 Resultados Mazo Difícil' : 'Resultados'}</div>
                 <div class="botones-superiores">
                     <button class="boton-home" onclick="volverAAnimeDetalle()">Volver al Anime</button>
                     <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
@@ -1008,18 +1310,61 @@ function mostrarResultadosAnime() {
     
     cambiarPantalla('pantalla-resultados-anime');
     
+    // Si es el mazo difícil y se completó al 100%, reiniciar palabras difíciles
+    if (esMazoDificil && porcentaje === 100) {
+        setTimeout(() => {
+            palabrasDificilesAnime = [];
+            console.log('✅ Mazo difícil completado al 100%. Palabras difíciles reiniciadas.');
+        }, 1000);
+    }
+    
     // Dar recompensa si es 100%
     if (porcentaje === 100) {
         setTimeout(() => {
             if (typeof sistemaEconomia !== 'undefined') {
-                sistemaEconomia.agregarDinero(1, "Quiz anime completado al 100%");
+                sistemaEconomia.agregarDinero(esMazoDificil ? 2 : 1, 
+                    esMazoDificil ? "Mazo difícil completado al 100%" : "Quiz anime completado al 100%");
             }
         }, 500);
     }
 }
 
-// Función para repetir el quiz anime
+// ============================================================================
+// NUEVA FUNCIÓN: Reiniciar palabras difíciles
+// ============================================================================
+
+function reiniciarPalabrasDificiles() {
+    const confirmar = confirm(`¿Estás seguro de que quieres reiniciar las ${palabrasDificilesAnime.length} palabras difíciles?\n\nSe eliminarán todas y tendrás que marcarlas nuevamente.`);
+    
+    if (confirmar) {
+        const cantidadEliminadas = palabrasDificilesAnime.length;
+        palabrasDificilesAnime = [];
+        
+        mostrarNotificacionAnime(`🗑️ Se han eliminado ${cantidadEliminadas} palabras difíciles`);
+        console.log(`🗑️ Palabras difíciles reiniciadas. Se eliminaron ${cantidadEliminadas} palabras.`);
+        
+        // Volver al detalle del anime
+        volverAAnimeDetalle();
+    }
+}
+
+// ============================================================================
+// FUNCIÓN MEJORADA: Repetir el quiz anime
+// ============================================================================
+
 function repetirQuizAnime() {
+    // Si hay palabras difíciles, preguntar qué repetir
+    if (palabrasDificilesAnime.length > 0) {
+        const opcion = confirm(`¿Qué quieres repetir?\n\n• Aceptar: Repetir TODO el mazo (${mazoActualAnime.length} palabras)\n• Cancelar: Repetir solo las palabras DIFÍCILES (${palabrasDificilesAnime.length} palabras)`);
+        
+        if (!opcion) {
+            // Repetir solo palabras difíciles
+            iniciarQuizDificilAnime();
+            return;
+        }
+    }
+    
+    // Repetir todo el mazo
     preguntaActualAnime = 0;
     respuestasCorrectasAnime = 0;
     respuestasIncorrectasAnime = 0;
@@ -1035,14 +1380,25 @@ function repetirQuizAnime() {
 }
 
 // ============================================================================
-// FUNCIONES DE NAVEGACIÓN
+// FUNCIONES DE NAVEGACIÓN (MEJORADAS)
 // ============================================================================
 
 function volverAAnimeSeleccion() {
+    // Reiniciar palabras difíciles al cambiar de pantalla
+    if (palabrasDificilesAnime.length > 0) {
+        console.log(`🔄 Cambiando de pantalla. Se reinician ${palabrasDificilesAnime.length} palabras difíciles.`);
+        palabrasDificilesAnime = [];
+    }
+    
     cambiarPantalla('pantalla-anime-seleccion');
 }
 
 function volverAAnimeDetalle() {
+    // Reiniciar palabras difíciles al volver al detalle (solo si no estamos en medio de un quiz)
+    if (preguntaActualAnime >= mazoActualAnime.length && palabrasDificilesAnime.length > 0) {
+        console.log(`🔄 Volviendo al detalle. Se mantienen ${palabrasDificilesAnime.length} palabras difíciles.`);
+    }
+    
     if (animeActual) {
         cargarAnime(animeActual);
     } else {
@@ -1242,7 +1598,33 @@ window.eliminarMazoAnime = function(animeId, mazoNumero) {
 };
 
 // ============================================================================
-// 10. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS - VERSIÓN MEJORADA
+// NUEVAS FUNCIONES DE CONSOLA PARA PALABRAS DIFÍCILES
+// ============================================================================
+
+// Ver palabras difíciles actuales
+window.verPalabrasDificilesAnime = function() {
+    if (palabrasDificilesAnime.length === 0) {
+        console.log("📝 No hay palabras marcadas como difíciles en este momento");
+        return;
+    }
+    
+    console.log(`📌 PALABRAS DIFÍCILES ACTUALES (${palabrasDificilesAnime.length}):`);
+    palabrasDificilesAnime.forEach((palabra, index) => {
+        console.log(`   ${index + 1}. ${palabra.japones} (${palabra.lectura})`);
+        console.log(`      Significado: ${palabra.opciones[palabra.respuesta]}`);
+        if (palabra.tiempoMarcado) {
+            console.log(`      Marcada a las: ${palabra.tiempoMarcado}`);
+        }
+    });
+    
+    console.log("");
+    console.log("💡 Comandos disponibles:");
+    console.log("   reiniciarPalabrasDificiles() - Eliminar todas las palabras difíciles");
+    console.log("   iniciarQuizDificilAnime() - Practicar las palabras difíciles");
+};
+
+// ============================================================================
+// 10. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS - VERSIÓN MEJORADA CON PALABRAS DIFÍCILES
 // ============================================================================
 
 function crearPantallasAnime() {
@@ -1277,8 +1659,8 @@ function crearPantallasAnime() {
                             <span>Saltar a partes específicas del video</span>
                         </div>
                         <div class="idioma-info-item">
-                            <span class="idioma-badge mazos-dinamicos">🔄 Mazos Dinámicos</span>
-                            <span>Agrega mazos y aparecen automáticamente</span>
+                            <span class="idioma-badge mazos-dinamicos">🎯 Palabras Difíciles</span>
+                            <span>Marca palabras y crea un mazo especial</span>
                         </div>
                     </div>
                     
@@ -1290,7 +1672,7 @@ function crearPantallasAnime() {
                         <p>📚 Sistema detecta automáticamente todos los mazos que agregues</p>
                         <p>🎬 Cada anime tiene 2 versiones: Español y Japonés Raw</p>
                         <p>⏱️ Timestamps para navegación rápida en videos</p>
-                        <p>🔄 Desde consola usa: <code>agregarMazoAnime('anime1', 11, [...palabras])</code></p>
+                        <p>🎯 <strong>NUEVO:</strong> Marca palabras como difíciles para crear un mazo especial</p>
                     </div>
                 </div>
             </div>
@@ -1355,17 +1737,17 @@ function crearPantallasAnime() {
                             </div>
                             
                             <div class="mazos-info" style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 136, 0.1); border-radius: 10px; color: #00ff88; font-size: 0.9em;">
-                                <p><strong>💡 Sistema de mazos dinámico:</strong></p>
-                                <p>• Agrega mazos en la variable <code>animeVocabulario</code></p>
-                                <p>• Se detectan automáticamente al cargar</p>
-                                <p>• Desde consola: <code>verMazosAnime('${animeActual || 'anime1'}')</code></p>
+                                <p><strong>💡 Sistema mejorado con palabras difíciles:</strong></p>
+                                <p>• En cada pregunta, marca palabras como "difíciles"</p>
+                                <p>• Al terminar el mazo, practica solo las difíciles</p>
+                                <p>• Las difíciles se reinician al cambiar de mazo</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- PANTALLA DE QUIZ ANIME -->
+            <!-- PANTALLA DE QUIZ ANIME - MEJORADA CON BOTÓN DE DIFÍCIL -->
             <div id="pantalla-quiz-anime" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
@@ -1384,6 +1766,8 @@ function crearPantallasAnime() {
                             <!-- Las opciones se generarán dinámicamente -->
                         </div>
                         
+                        <!-- Aquí se insertará el botón de "difícil" dinámicamente -->
+                        
                         <div class="resultado" id="resultado-anime"></div>
                         
                         <button class="boton-principal" id="boton-siguiente-anime" onclick="siguientePreguntaAnime()" style="display: none;">
@@ -1396,21 +1780,24 @@ function crearPantallasAnime() {
         
         document.body.insertAdjacentHTML('beforeend', pantallasHTML);
         
-        // Agregar estilos específicos para el sistema anime mejorado
-        agregarEstilosAnimeMejorado();
+        // Agregar estilos específicos para el sistema anime mejorado CON PALABRAS DIFÍCILES
+        agregarEstilosAnimeMejoradoConDificil();
         
-        console.log("✅ Pantallas anime creadas dinámicamente (con detección dinámica de mazos)");
+        console.log("✅ Pantallas anime creadas dinámicamente (con sistema de palabras difíciles)");
     }
 }
 
-// Función para agregar estilos específicos del sistema anime mejorado
-function agregarEstilosAnimeMejorado() {
+// ============================================================================
+// FUNCIÓN PARA AGREGAR ESTILOS CON SISTEMA DE PALABRAS DIFÍCILES
+// ============================================================================
+
+function agregarEstilosAnimeMejoradoConDificil() {
     // Verificar si los estilos ya existen
     if (document.getElementById('estilos-anime-mejorado')) return;
     
     const estilos = `
         <style id="estilos-anime-mejorado">
-            /* ESTILOS PARA EL SISTEMA ANIME MEJORADO */
+            /* ESTILOS PARA EL SISTEMA ANIME MEJORADO CON PALABRAS DIFÍCILES */
             
             /* INFO IDIOMAS EN PANTALLA DE SELECCIÓN */
             .info-idiomas {
@@ -1557,6 +1944,41 @@ function agregarEstilosAnimeMejorado() {
                 margin: 15px 0;
                 justify-content: center;
                 flex-wrap: wrap;
+            }
+            
+            /* BOTÓN DE PALABRA DIFÍCIL */
+            .boton-dificil {
+                background: linear-gradient(135deg, #ff9800, #ff5722);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+                width: 100%;
+                max-width: 300px;
+                font-size: 0.9rem;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .boton-dificil:hover {
+                background: linear-gradient(135deg, #ff5722, #ff9800);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+            }
+            
+            .boton-dificil.activo {
+                background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                cursor: default;
+            }
+            
+            .boton-dificil.activo:hover {
+                transform: none;
+                box-shadow: none;
             }
             
             /* TIMESTAMPS EN MODAL */
@@ -1726,6 +2148,155 @@ function agregarEstilosAnimeMejorado() {
                 color: #ff6b9d;
             }
             
+            /* ESTILOS PARA PALABRAS DIFÍCILES */
+            .resultado-item.destacado {
+                background: rgba(255, 152, 0, 0.2);
+                border-radius: 10px;
+                padding: 10px;
+                border-left: 4px solid #ff9800;
+                margin: 10px 0;
+            }
+            
+            .resultado-dificil {
+                color: #ff9800 !important;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+            
+            .palabras-dificiles-lista {
+                background: rgba(255, 152, 0, 0.1);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #ff9800;
+            }
+            
+            .lista-palabras-dificiles {
+                max-height: 200px;
+                overflow-y: auto;
+                margin-top: 10px;
+            }
+            
+            .palabra-dificil-item {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                padding: 10px 15px;
+                margin: 8px 0;
+                display: flex;
+                align-items: center;
+                border-left: 3px solid #ff9800;
+            }
+            
+            .palabra-dificil-japones {
+                color: #ff9800;
+                font-weight: bold;
+                min-width: 100px;
+            }
+            
+            .palabra-dificil-lectura {
+                color: #cccccc;
+                font-style: italic;
+                min-width: 120px;
+                margin: 0 15px;
+            }
+            
+            .palabra-dificil-significado {
+                color: #ffffff;
+                flex: 1;
+            }
+            
+            .opciones-dificiles {
+                background: rgba(0, 255, 136, 0.1);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #00ff88;
+            }
+            
+            .botones-dificiles {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 15px;
+            }
+            
+            .boton-dificil-grande {
+                padding: 15px 25px;
+                font-size: 1rem;
+                text-align: center;
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .boton-subtexto {
+                font-size: 0.8em;
+                opacity: 0.8;
+                margin-top: 5px;
+            }
+            
+            .info-dificil {
+                background: rgba(74, 144, 226, 0.1);
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 20px;
+                border-left: 4px solid #4a90e2;
+                font-size: 0.9em;
+                color: #cccccc;
+            }
+            
+            .info-final-dificil {
+                background: rgba(76, 175, 80, 0.2);
+                border-radius: 10px;
+                padding: 15px;
+                margin: 20px 0;
+                border: 2px solid #4CAF50;
+                text-align: center;
+            }
+            
+            .palabras-dificiles-mini {
+                background: rgba(255, 152, 0, 0.05);
+                border-radius: 10px;
+                padding: 15px;
+                margin-top: 20px;
+                border: 1px solid rgba(255, 152, 0, 0.3);
+            }
+            
+            .mini-lista-dificil {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            .mini-palabra-dificil {
+                background: rgba(255, 152, 0, 0.2);
+                color: #ff9800;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.9em;
+                font-weight: bold;
+            }
+            
+            .mini-palabra-mas {
+                background: rgba(255, 255, 255, 0.1);
+                color: #cccccc;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.9em;
+            }
+            
+            .boton-terciario {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            
+            .boton-terciario:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+            
             /* RESPONSIVE */
             @media (max-width: 768px) {
                 .info-idiomas {
@@ -1772,6 +2343,19 @@ function agregarEstilosAnimeMejorado() {
                     flex-direction: column;
                     align-items: center;
                 }
+                
+                .boton-dificil {
+                    max-width: 100%;
+                }
+                
+                .botones-dificiles {
+                    gap: 10px;
+                }
+                
+                .boton-dificil-grande {
+                    padding: 12px 20px;
+                    font-size: 0.9rem;
+                }
             }
             
             @media (max-width: 480px) {
@@ -1801,6 +2385,17 @@ function agregarEstilosAnimeMejorado() {
                 
                 .mazo-anime-numero {
                     font-size: 1em;
+                }
+                
+                .palabra-dificil-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                
+                .palabra-dificil-japones,
+                .palabra-dificil-lectura {
+                    min-width: auto;
+                    margin: 0 0 5px 0;
                 }
             }
         </style>
@@ -1842,35 +2437,41 @@ window.agregarMazoRapido = agregarMazoRapido;
 window.eliminarMazoAnime = eliminarMazoAnime;
 window.verMazosAnime = verMazosAnime;
 
-console.log("✅ Sistema anime MEJORADO cargado correctamente");
+// Funciones nuevas para palabras difíciles
+window.iniciarQuizDificilAnime = iniciarQuizDificilAnime;
+window.reiniciarPalabrasDificiles = reiniciarPalabrasDificiles;
+window.verPalabrasDificilesAnime = verPalabrasDificilesAnime;
+
+console.log("✅ Sistema anime MEJORADO cargado correctamente CON PALABRAS DIFÍCILES");
 console.log("🎬 Novedades:");
-console.log("   - ✅ Detección dinámica de mazos (ahora con mínimo 1 palabra)");
+console.log("   - ✅ Sistema de palabras difíciles activado");
+console.log("   - ✅ Botón 'Marcar como difícil' en cada pregunta");
+console.log("   - ✅ Mazo especial al terminar con palabras difíciles");
+console.log("   - ✅ Reinicio automático al cambiar de mazo");
 console.log("   - ✅ 2 idiomas por anime: Español y Japonés Raw");
 console.log("   - ✅ Timestamps clicables para navegación rápida");
-console.log("   - ✅ Selector de idioma en tiempo real");
-console.log("   - ✅ Funciones de administración desde consola");
 console.log("");
-console.log("🔧 Funciones nuevas desde consola (MAZOS):");
+console.log("🎯 Funciones nuevas de PALABRAS DIFÍCILES:");
+console.log("   - Marca palabras durante el quiz con el botón ⚠️");
+console.log("   - Al terminar, practica solo las palabras difíciles");
+console.log("   - Las difíciles se reinician al cambiar de mazo");
+console.log("   - Desde consola: verPalabrasDificilesAnime()");
+console.log("");
+console.log("🔧 Funciones desde consola (MAZOS):");
 console.log("   - agregarMazoAnime('anime1', 11, [...palabras])");
 console.log("   - verMazosAnime('anime1')");
 console.log("   - eliminarMazoAnime('anime1', 11)");
-console.log("   - verMazosAnime('anime1') para ver todos los mazos");
 console.log("");
-console.log("🔧 Funciones nuevas desde consola (VIDEOS):");
+console.log("🔧 Funciones desde consola (VIDEOS):");
 console.log("   - cargarVideoAnime(animeId, idioma)");
 console.log("   - agregarTimestampAnime(animeId, idioma, segundos, descripcion)");
-console.log("   - cambiarDriveIdAnime(animeId, idioma, nuevoDriveId)");
 console.log("   - verTimestampsAnime(animeId, idioma)");
 console.log("");
 console.log("💡 Usa iniciarSistemaAnime() para comenzar");
-console.log("💡 El sistema ahora detecta automáticamente todos los mazos que agregues a animeVocabulario");
+console.log("💡 Ahora puedes marcar palabras difíciles y practicarlas después");
 console.log("");
 console.log("📚 YA INCLUIDOS para anime1:");
 console.log("   - Mazo 1 al 8: Vocabulario de quintillizas");
-console.log("   - Mazo 8 tiene 4 palabras (y ahora es clickeable!)");
 console.log("   - Total: 8 mazos con 74 palabras");
 console.log("");
-console.log("🚀 Para agregar más mazos, solo añádelos en animeVocabulario['anime1']:");
-console.log("   'mazo9': [...],");
-console.log("   'mazo10': [...],");
-console.log("   'mazo11': [...], etc.");
+console.log("🚀 ¡Disfruta del nuevo sistema de palabras difíciles! 🎯");
