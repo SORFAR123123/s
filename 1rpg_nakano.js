@@ -1,1076 +1,1564 @@
 // ============================================================================
-// SISTEMA RPG DE LAS 5 QUINTILLIZAS NAKANO - COMPLETAMENTE NUEVO
+// SISTEMA ANIME PARA FABRI - COMPLETAMENTE INTEGRADO CON TODOS LOS SISTEMAS
 // ============================================================================
 
-const sistemaNakano = {
-    // Novia seleccionada actualmente
-    noviaSeleccionada: 'ichika',
-    
-    // Estado de las 5 hermanas
-    quintillizas: {
-        'ichika': {
-            id: 'ichika',
-            nombre: 'Ichika Nakano',
-            descripcion: 'La hermana mayor, actriz y coqueta',
-            nivel: 0,
-            experiencia: 0,
-            experienciaTotal: 0,
-            humorActual: null,
-            ultimaFechaHumor: null,
-            momentosDesbloqueados: [],
-            // HUMORES ÚNICOS DE ICHIKA
-            humorPool: [
-                { id: "coqueta", nombre: "Coqueta 😘", multiplicadorExp: 1.8, permiteIntimos: true },
-                { id: "actriz", nombre: "En modo actriz 🎭", multiplicadorExp: 2.0, permiteIntimos: false },
-                { id: "hermana_mayor", nombre: "Responsable 👩‍🏫", multiplicadorExp: 1.2, permiteIntimos: false },
-                { id: "juguetona", nombre: "Juguetona 😏", multiplicadorExp: 1.5, permiteIntimos: true },
-                { id: "cansada", nombre: "Cansada 😴", multiplicadorExp: 0.8, permiteIntimos: false }
-            ],
-            // REGALOS ESPECIALES DE ICHIKA (con videos recíprocos)
-            regalosEspeciales: {
-                'microfono': { 
-                    costo: 25, 
-                    experiencia: 50, 
-                    videoReciproco: 'videos/ichika_microfono.mp4',
-                    mensaje: '¡Gracias por el micrófono! Te canto algo especial 🎤'
+// ============================================================================
+// 1. CONFIGURACIÓN MEJORADA - CON 2 VIDEOS POR ANIME (ESPAÑOL/JAPONÉS)
+// ============================================================================
+
+const animeConfig = {
+    // 5 animes para estudiar - CON TIMESTAMPS Y 2 IDIOMAS
+    animes: {
+        'anime1': {
+            id: 'anime1',
+            nombre: '✨ Quintillizas Nakano',
+            imagen: 'https://pbs.twimg.com/media/G7fvMrtWcAA1Y-W?format=png&name=900x900',
+            descripcion: 'Aprende japonés con las quintillizas',
+            color: '#ff6b9d',
+            // 2 VIDEOS: ESPAÑOL Y JAPONÉS RAW
+            videos: {
+                español: {
+                    driveId: '1aPPqNHRq-Twvdp-TnQ0FkyYLuksmr2qe',
+                    nombre: 'Español',
+                    timestamps: [
+                        { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
+                        { tiempo: '3:55', descripcion: ' Potona', segundos: 235 },
+                        { tiempo: '12:40', descripcion: 'Momento romántico', segundos: 760 },
+                        { tiempo: '20:20', descripcion: 'Final del capítulo', segundos: 1220 }
+                    ]
                 },
-                'maquillaje': { 
-                    costo: 20, 
-                    experiencia: 40, 
-                    videoReciproco: 'videos/ichika_maquillaje.mp4',
-                    mensaje: 'Con este maquillaje me veré hermosa para ti 💄'
-                },
-                'guion': { 
-                    costo: 30, 
-                    experiencia: 60, 
-                    videoReciproco: 'videos/ichika_guion.mp4',
-                    mensaje: '¡Un guion nuevo! Practicaremos juntos 📖'
+                japones: {
+                    driveId: '1-wYJYTaw0ZOKQy8BBPR7Fmhlzs0IVx9K',
+                    nombre: 'Japones',
+                    timestamps: [
+                         { tiempo: '1:53', descripcion: ' Quiero a una novia con ese poto', segundos: 113 },
+                        { tiempo: '3:55', descripcion: ' Potona', segundos: 235 },
+                        { tiempo: '12:40', descripcion: 'Diálogo rápido', segundos: 760 }
+                    ]
                 }
-            },
-            // MOMENTOS ÍNTIMOS ÚNICOS
-            momentosIntimos: [
-                { id: "beso_ichika", nombre: "Beso tras bambalinas 🎬", costoCondones: 1, nivelRequerido: 1, descripcion: "Un beso apasionado después de un ensayo" },
-                { id: "escena_privada", nombre: "Escena privada contigo 🎭", costoCondones: 1, nivelRequerido: 2, descripcion: "Una actuación especial sólo para ti" },
-                { id: "noche_estrellas", nombre: "Noche bajo las estrellas 🌟", costoCondones: 2, nivelRequerido: 4, descripcion: "Romance bajo el cielo nocturno" },
-                { id: "maquillaje_intimo", nombre: "Maquillaje íntimo 💋", costoCondones: 3, nivelRequerido: 6, descripcion: "Una sesión de maquillaje muy especial" }
-            ]
+            }
         },
-        
-        'nino': {
-            id: 'nino',
-            nombre: 'Nino Nakano',
-            descripcion: 'La chef tsundere, dulce pero temperamental',
-            nivel: 0,
-            experiencia: 0,
-            experienciaTotal: 0,
-            humorActual: null,
-            ultimaFechaHumor: null,
-            momentosDesbloqueados: [],
-            // HUMORES ÚNICOS DE NINO
-            humorPool: [
-                { id: "tsundere", nombre: "Tsundere 😠➡️😊", multiplicadorExp: 1.6, permiteIntimos: true },
-                { id: "chef", nombre: "Modo chef 👩‍🍳", multiplicadorExp: 1.8, permiteIntimos: false },
-                { id: "dulce", nombre: "Dulce y cariñosa 🍬", multiplicadorExp: 2.0, permiteIntimos: true },
-                { id: "celosa", nombre: "Celosa 😤", multiplicadorExp: 0.7, permiteIntimos: false },
-                { id: "protectora", nombre: "Protectora 🛡️", multiplicadorExp: 1.3, permiteIntimos: false }
-            ],
-            // REGALOS ESPECIALES DE NINO
-            regalosEspeciales: {
-                'utensilios_cocina': { 
-                    costo: 20, 
-                    experiencia: 45, 
-                    videoReciproco: 'videos/nino_cocinando.mp4',
-                    mensaje: '¡Utensilios nuevos! Te cocinaré algo especial 👩‍🍳'
+        'anime2': {
+            id: 'anime2',
+            nombre: '🏫 Yamada Lv999',
+            imagen: 'https://pbs.twimg.com/media/G7fsiFCXQAAhtKq?format=png&name=900x900',
+            descripcion: 'Vocabulario de romance escolar',
+            color: '#00b4d8',
+            videos: {
+                español: {
+                    driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                    nombre: 'Español',
+                    timestamps: []
                 },
-                'delantal': { 
-                    costo: 15, 
-                    experiencia: 35, 
-                    videoReciproco: 'videos/nino_delantal.mp4',
-                    mensaje: 'Con este delantal cocinaré sólo para ti 💖'
-                },
-                'libro_recetas': { 
-                    costo: 25, 
-                    experiencia: 55, 
-                    videoReciproco: 'videos/nino_recetas.mp4',
-                    mensaje: '¡Nuevas recetas! Prepararemos algo juntos 📚'
+                japones: {
+                    driveId: 'TU_ID_JAPONES_RAW_2',
+                    nombre: 'Japonés Raw',
+                    timestamps: []
                 }
-            },
-            // MOMENTOS ÍNTIMOS ÚNICOS
-            momentosIntimos: [
-                { id: "beso_nino", nombre: "Beso con sabor a postre 🍰", costoCondones: 1, nivelRequerido: 1, descripcion: "Un beso dulce después de cocinar" },
-                { id: "cena_romantica", nombre: "Cena romántica a la luz de velas 🕯️", costoCondones: 1, nivelRequerido: 3, descripcion: "Una cena especial sólo para dos" },
-                { id: "masaje_culinario", nombre: "Masaje con aceites especiales 💆‍♀️", costoCondones: 2, nivelRequerido: 5, descripcion: "Relajación con toques culinarios" },
-                { id: "noche_especias", nombre: "Noche de especias picantes 🌶️", costoCondones: 3, nivelRequerido: 7, descripcion: "Pasión intensa y ardiente" }
-            ]
+            }
         },
-        
-        'miku': {
-            id: 'miku',
-            nombre: 'Miku Nakano',
-            descripcion: 'La tímida amante de la historia y audífonos',
-            nivel: 0,
-            experiencia: 0,
-            experienciaTotal: 0,
-            humorActual: null,
-            ultimaFechaHumor: null,
-            momentosDesbloqueados: [],
-            // HUMORES ÚNICOS DE MIKU
-            humorPool: [
-                { id: "timida", nombre: "Tímida 😳", multiplicadorExp: 1.4, permiteIntimos: false },
-                { id: "historica", nombre: "Modo histórico 📜", multiplicadorExp: 1.7, permiteIntimos: false },
-                { id: "audifonos", nombre: "Con audífonos 🎧", multiplicadorExp: 1.9, permiteIntimos: true },
-                { id: "concentrada", nombre: "Concentrada 🤔", multiplicadorExp: 1.5, permiteIntimos: false },
-                { id: "valiente", nombre: "Valiente 💪", multiplicadorExp: 2.0, permiteIntimos: true }
-            ],
-            // REGALOS ESPECIALES DE MIKU
-            regalosEspeciales: {
-                'audifonos': { 
-                    costo: 30, 
-                    experiencia: 65, 
-                    videoReciproco: 'videos/miku_audifonos.mp4',
-                    mensaje: '¡Audífonos nuevos! Escucharemos juntos 🎧'
+        'anime3': {
+            id: 'anime3',
+            nombre: '🌙 Kimetsu no Yaiba',
+            imagen: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400',
+            descripcion: 'Vocabulario de acción y fantasía',
+            color: '#ff6d00',
+            videos: {
+                español: {
+                    driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                    nombre: 'Español',
+                    timestamps: []
                 },
-                'libro_historia': { 
-                    costo: 15, 
-                    experiencia: 35, 
-                    videoReciproco: 'videos/miku_historia.mp4',
-                    mensaje: '¡Un libro de historia! Te enseñaré algo 📖'
-                },
-                'daimyou': { 
-                    costo: 40, 
-                    experiencia: 80, 
-                    videoReciproco: 'videos/miku_daimyou.mp4',
-                    mensaje: '¡Figura de daimyō! Hablaremos de historia japonesa 🏯'
+                japones: {
+                    driveId: 'TU_ID_JAPONES_RAW_3',
+                    nombre: 'Japonés Raw',
+                    timestamps: []
                 }
-            },
-            // MOMENTOS ÍNTIMOS ÚNICOS
-            momentosIntimos: [
-                { id: "beso_miku", nombre: "Beso tímido tras los audífonos 🎧", costoCondones: 1, nivelRequerido: 1, descripcion: "Un beso suave y tímido" },
-                { id: "leccion_historica", nombre: "Lección histórica privada 📜", costoCondones: 1, nivelRequerido: 3, descripcion: "Una lección muy personal" },
-                { id: "musica_intima", nombre: "Música íntima compartida 🎵", costoCondones: 2, nivelRequerido: 5, descripcion: "Compartiendo audífonos y más" },
-                { id: "noche_samurais", nombre: "Noche de samuráis y pasión ⚔️", costoCondones: 3, nivelRequerido: 7, descripcion: "Pasión histórica y épica" }
-            ]
+            }
         },
-        
-        'yotsuba': {
-            id: 'yotsuba',
-            nombre: 'Yotsuba Nakano',
-            descripcion: 'La atleta energética y siempre positiva',
-            nivel: 0,
-            experiencia: 0,
-            experienciaTotal: 0,
-            humorActual: null,
-            ultimaFechaHumor: null,
-            momentosDesbloqueados: [],
-            // HUMORES ÚNICOS DE YOTSUBA
-            humorPool: [
-                { id: "energetica", nombre: "Energética ⚡", multiplicadorExp: 1.9, permiteIntimos: true },
-                { id: "deportista", nombre: "Modo deportista 🏃‍♀️", multiplicadorExp: 1.7, permiteIntimos: false },
-                { id: "positiva", nombre: "¡Siempre positiva! 🌟", multiplicadorExp: 2.0, permiteIntimos: true },
-                { id: "cansada_deporte", nombre: "Cansada del deporte 😅", multiplicadorExp: 1.0, permiteIntimos: false },
-                { id: "competitiva", nombre: "Competitiva 🏆", multiplicadorExp: 1.8, permiteIntimos: true }
-            ],
-            // REGALOS ESPECIALES DE YOTSUBA
-            regalosEspeciales: {
-                'balon': { 
-                    costo: 10, 
-                    experiencia: 30, 
-                    videoReciproco: 'videos/yotsuba_balon.mp4',
-                    mensaje: '¡Un balón nuevo! Jugaremos juntos ⚽'
+        'anime4': {
+            id: 'anime4',
+            nombre: '⚔️ Jujutsu Kaisen',
+            imagen: 'https://images.unsplash.com/photo-1639322537502-9e1f6bf2c3a5?w-400',
+            descripcion: 'Términos de hechicería y batallas',
+            color: '#7209b7',
+            videos: {
+                español: {
+                    driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                    nombre: 'Español',
+                    timestamps: []
                 },
-                'zapatos_deportivos': { 
-                    costo: 35, 
-                    experiencia: 70, 
-                    videoReciproco: 'videos/yotsuba_corriendo.mp4',
-                    mensaje: '¡Zapatos deportivos! Correremos juntos 👟'
-                },
-                'medalla': { 
-                    costo: 50, 
-                    experiencia: 100, 
-                    videoReciproco: 'videos/yotsuba_medalla.mp4',
-                    mensaje: '¡Una medalla! Ganaremos juntos 🥇'
+                japones: {
+                    driveId: 'TU_ID_JAPONES_RAW_4',
+                    nombre: 'Japonés Raw',
+                    timestamps: []
                 }
-            },
-            // MOMENTOS ÍNTIMOS ÚNICOS
-            momentosIntimos: [
-                { id: "beso_yotsuba", nombre: "Beso energético tras el deporte 🏃‍♀️", costoCondones: 1, nivelRequerido: 1, descripcion: "Un beso lleno de energía" },
-                { id: "ducha_juntos", nombre: "Ducha después del ejercicio 🚿", costoCondones: 1, nivelRequerido: 3, descripcion: "Relajación después del deporte" },
-                { id: "masaje_deportivo", nombre: "Masaje deportivo especial 💪", costoCondones: 2, nivelRequerido: 5, descripcion: "Cuidado para músculos cansados" },
-                { id: "noche_olimpica", nombre: "Noche olímpica de pasión 🏅", costoCondones: 3, nivelRequerido: 7, descripcion: "Pasión atlética y vigorosa" }
-            ]
+            }
         },
-        
-        'itsuki': {
-            id: 'itsuki',
-            nombre: 'Itsuki Nakano',
-            descripcion: 'La glotona estudiosa y la más joven',
-            nivel: 0,
-            experiencia: 0,
-            experienciaTotal: 0,
-            humorActual: null,
-            ultimaFechaHumor: null,
-            momentosDesbloqueados: [],
-            // HUMORES ÚNICOS DE ITSUKI
-            humorPool: [
-                { id: "estudiosa", nombre: "Estudiosa 📚", multiplicadorExp: 1.6, permiteIntimos: false },
-                { id: "glotona", nombre: "Glotona 🍔", multiplicadorExp: 1.8, permiteIntimos: true },
-                { id: "inocente", nombre: "Inocente y pura 🍓", multiplicadorExp: 1.4, permiteIntimos: false },
-                { id: "hambrienta", nombre: "¡Hambrienta! 🍜", multiplicadorExp: 0.9, permiteIntimos: false },
-                { id: "culinaria", nombre: "Modo culinario (come) 🍽️", multiplicadorExp: 1.7, permiteIntimos: true }
-            ],
-            // REGALOS ESPECIALES DE ITSUKI
-            regalosEspeciales: {
-                'libro_cocina': { 
-                    costo: 20, 
-                    experiencia: 45, 
-                    videoReciproco: 'videos/itsuki_cocinando.mp4',
-                    mensaje: '¡Libro de cocina! Cocinaré algo delicioso 📖'
+        'anime5': {
+            id: 'anime5',
+            nombre: '🏀 Slam Dunk',
+            imagen: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400',
+            descripcion: 'Vocabulario deportivo y escolar',
+            color: '#ff006e',
+            videos: {
+                español: {
+                    driveId: '1Hkzmk9M03_DMPp2znFhderLYNgUFCJ9R',
+                    nombre: 'Español',
+                    timestamps: []
                 },
-                'comida_gourmet': { 
-                    costo: 25, 
-                    experiencia: 55, 
-                    videoReciproco: 'videos/itsuki_comiendo.mp4',
-                    mensaje: '¡Comida gourmet! La compartiremos 🍱'
-                },
-                'postre_especial': { 
-                    costo: 15, 
-                    experiencia: 35, 
-                    videoReciproco: 'videos/itsuki_postre.mp4',
-                    mensaje: '¡Un postre especial! Para los dos 🍰'
-                }
-            },
-            // MOMENTOS ÍNTIMOS ÚNICOS
-            momentosIntimos: [
-                { id: "beso_itsuki", nombre: "Beso con sabor a postre 🍦", costoCondones: 1, nivelRequerido: 1, descripcion: "Un beso dulce y suave" },
-                { id: "cena_romantica_itsuki", nombre: "Cena romántica gourmet 🍽️", costoCondones: 1, nivelRequerido: 3, descripcion: "Una cena especial para dos" },
-                { id: "degustacion_intima", nombre: "Degustación íntima 👅", costoCondones: 2, nivelRequerido: 5, descripcion: "Probar sabores juntos" },
-                { id: "noche_chocolate", nombre: "Noche de chocolate y pasión 🍫", costoCondones: 3, nivelRequerido: 7, descripcion: "Dulzura y pasión combinadas" }
-            ]
-        }
-    },
-    
-    // SISTEMA DE DECORACIÓN DE HABITACIÓN
-    habitacion: {
-        fondoActual: 'default',
-        itemsComprados: [],
-        muebles: {
-            cama: { tipo: 'cama', nombre: 'Cama Simple', precio: 0, comprado: true, activo: true },
-            escritorio: { tipo: 'escritorio', nombre: 'Escritorio Básico', precio: 0, comprado: true, activo: true },
-            silla: { tipo: 'silla', nombre: 'Silla Simple', precio: 0, comprado: true, activo: true },
-            lampara: { tipo: 'lampara', nombre: 'Lámpara Básica', precio: 0, comprado: true, activo: true }
-        },
-        posters: [], // Posters de las quintillizas
-        decoracionesEspeciales: [], // Items especiales
-        dineroGastado: 0
-    },
-    
-    // ECONOMÍA COMPARTIDA
-    economia: {
-        moneda: "S/.",
-        nombre: "Soles",
-        saldo: 0,
-        inventario: {
-            condones: 0,
-            flores: 0,
-            chocolates: 0,
-            joyas: 0
-        }
-    },
-    
-    // REGALOS GENERALES (para todas)
-    sistemaRegalos: {
-        flores: { costo: 5, experiencia: 10 },
-        chocolates: { costo: 10, experiencia: 25 },
-        joyas: { costo: 20, experiencia: 50 }
-    },
-    
-    // EXPERIENCIA POR MAZOS (igual para todas)
-    sistemaExperienciaMazos: {
-        '100%': { experiencia: 30, descripcion: "Mazo perfecto" },
-        '90-99%': { experiencia: 20, descripcion: "Excelente trabajo" },
-        '80-89%': { experiencia: 15, descripcion: "Muy buen trabajo" },
-        '70-79%': { experiencia: 10, descripcion: "Buen trabajo" },
-        '60-69%': { experiencia: 5, descripcion: "Podría mejorar" },
-        '50-59%': { experiencia: 3, descripcion: "Sigue practicando" },
-        '0-49%': { experiencia: 1, descripcion: "Necesitas más práctica" }
-    },
-    
-    // INVENTARIO DE DECORACIONES DISPONIBLES
-    decoracionesDisponibles: [
-        { id: 'poster_ichika', nombre: 'Poster de Ichika', precio: 50, tipo: 'poster', quintilliza: 'ichika' },
-        { id: 'poster_nino', nombre: 'Poster de Nino', precio: 50, tipo: 'poster', quintilliza: 'nino' },
-        { id: 'poster_miku', nombre: 'Poster de Miku', precio: 50, tipo: 'poster', quintilliza: 'miku' },
-        { id: 'poster_yotsuba', nombre: 'Poster de Yotsuba', precio: 50, tipo: 'poster', quintilliza: 'yotsuba' },
-        { id: 'poster_itsuki', nombre: 'Poster de Itsuki', precio: 50, tipo: 'poster', quintilliza: 'itsuki' },
-        { id: 'cama_lujo', nombre: 'Cama de Lujo', precio: 200, tipo: 'mueble', mejora: 'cama' },
-        { id: 'escritorio_gaming', nombre: 'Escritorio Gaming', precio: 150, tipo: 'mueble', mejora: 'escritorio' },
-        { id: 'silla_gamer', nombre: 'Silla Gamer', precio: 180, tipo: 'mueble', mejora: 'silla' },
-        { id: 'lampara_neon', nombre: 'Lámpara Neon RGB', precio: 100, tipo: 'mueble', mejora: 'lampara' },
-        { id: 'alfombra_premium', nombre: 'Alfombra Premium', precio: 120, tipo: 'decoracion' },
-        { id: 'figura_coleccion', nombre: 'Figura de Colección', precio: 300, tipo: 'decoracion' },
-        { id: 'tv_4k', nombre: 'TV 4K 55"', precio: 400, tipo: 'decoracion' },
-        { id: 'sonido_ambiente', nombre: 'Sistema de Sonido', precio: 250, tipo: 'decoracion' }
-    ],
-    
-    // INICIALIZAR SISTEMA
-    inicializar: function() {
-        const datosGuardados = this.cargarDatos();
-        
-        if (datosGuardados) {
-            this.quintillizas = datosGuardados.quintillizas || this.quintillizas;
-            this.noviaSeleccionada = datosGuardados.noviaSeleccionada || 'ichika';
-            this.habitacion = datosGuardados.habitacion || this.habitacion;
-            this.economia = datosGuardados.economia || this.economia;
-        } else {
-            // Configuración inicial
-            this.economia.saldo = sistemaEconomia.saldoTotal;
-            this.actualizarHumorDiario();
-        }
-        
-        console.log("💕 Sistema Nakano inicializado. Novia seleccionada:", this.noviaSeleccionada);
-        this.guardarDatos();
-        this.actualizarInterfazNakano();
-    },
-    
-    // CARGAR DATOS
-    cargarDatos: function() {
-        try {
-            const datos = localStorage.getItem('sistemaNakano');
-            return datos ? JSON.parse(datos) : null;
-        } catch (e) {
-            console.error("Error cargando datos Nakano:", e);
-            return null;
-        }
-    },
-    
-    // GUARDAR DATOS
-    guardarDatos: function() {
-        try {
-            localStorage.setItem('sistemaNakano', JSON.stringify({
-                quintillizas: this.quintillizas,
-                noviaSeleccionada: this.noviaSeleccionada,
-                habitacion: this.habitacion,
-                economia: this.economia
-            }));
-            return true;
-        } catch (e) {
-            console.error("Error guardando datos Nakano:", e);
-            return false;
-        }
-    },
-    
-    // SELECCIONAR NOVIA
-    seleccionarNovia: function(idNovia) {
-        if (this.quintillizas[idNovia]) {
-            this.noviaSeleccionada = idNovia;
-            this.actualizarHumorDiario();
-            this.guardarDatos();
-            this.actualizarInterfazNakano();
-            
-            const novia = this.quintillizas[idNovia];
-            mostrarMensajeNakano(`Ahora estás con ${novia.nombre} 💕`);
-            
-            console.log("💖 Novia seleccionada:", novia.nombre);
-            return true;
-        }
-        return false;
-    },
-    
-    // OBTENER NOVIA ACTUAL
-    obtenerNoviaActual: function() {
-        return this.quintillizas[this.noviaSeleccionada];
-    },
-    
-    // ACTUALIZAR HUMOR DIARIO (para la novia actual)
-    actualizarHumorDiario: function() {
-        const novia = this.obtenerNoviaActual();
-        const hoy = new Date().toISOString().split('T')[0];
-        
-        if (!novia.ultimaFechaHumor || novia.ultimaFechaHumor !== hoy) {
-            const humorAleatorio = novia.humorPool[Math.floor(Math.random() * novia.humorPool.length)];
-            novia.humorActual = humorAleatorio;
-            novia.ultimaFechaHumor = hoy;
-            
-            console.log(`😊 ${novia.nombre} está: ${humorAleatorio.nombre}`);
-            
-            this.guardarDatos();
-        }
-    },
-    
-    // AGREGAR EXPERIENCIA (sólo a la novia actual)
-    agregarExperiencia: function(cantidad, motivo) {
-        const novia = this.obtenerNoviaActual();
-        
-        if (!novia.humorActual) {
-            this.actualizarHumorDiario();
-        }
-        
-        const cantidadConMultiplicador = Math.round(cantidad * novia.humorActual.multiplicadorExp);
-        
-        novia.experiencia += cantidadConMultiplicador;
-        novia.experienciaTotal += cantidadConMultiplicador;
-        
-        console.log(`💕 ${novia.nombre}: +${cantidadConMultiplicador} XP (${motivo}) | Multiplicador: ${novia.humorActual.multiplicadorExp}x`);
-        
-        this.verificarSubidaNivel(novia);
-        this.guardarDatos();
-        this.actualizarInterfazNakano();
-        
-        return cantidadConMultiplicador;
-    },
-    
-    // VERIFICAR SUBIDA DE NIVEL
-    verificarSubidaNivel: function(novia) {
-        const expNecesaria = this.calcularExpParaNivel(novia.nivel + 1);
-        
-        while (novia.experiencia >= expNecesaria && novia.experiencia > 0) {
-            novia.nivel++;
-            novia.experiencia -= expNecesaria;
-            
-            this.verificarMomentosDesbloqueados(novia);
-            
-            mostrarMensajeNakano(`🎉 ¡${novia.nombre} subió al nivel ${novia.nivel}! 💕`);
-            
-            console.log(`⬆️ ${novia.nombre} subió a nivel ${novia.nivel}. XP restante: ${novia.experiencia}`);
-        }
-    },
-    
-    // CALCULAR EXPERIENCIA NECESARIA
-    calcularExpParaNivel: function(nivel) {
-        return 100 * (nivel + 1);
-    },
-    
-    // VERIFICAR MOMENTOS DESBLOQUEADOS
-    verificarMomentosDesbloqueados: function(novia) {
-        novia.momentosIntimos.forEach(momento => {
-            if (novia.nivel >= momento.nivelRequerido && 
-                !novia.momentosDesbloqueados.includes(momento.id)) {
-                novia.momentosDesbloqueados.push(momento.id);
-                mostrarMensajeNakano(`✨ ¡Nuevo momento desbloqueado con ${novia.nombre}: ${momento.nombre}! 💖`);
-            }
-        });
-    },
-    
-    // REGISTRAR MAZO COMPLETADO (para la novia actual)
-    registrarMazoCompletado: function(porcentaje) {
-        let experiencia = 0;
-        
-        if (porcentaje === 100) {
-            experiencia = this.sistemaExperienciaMazos['100%'].experiencia;
-        } else if (porcentaje >= 90) {
-            experiencia = this.sistemaExperienciaMazos['90-99%'].experiencia;
-        } else if (porcentaje >= 80) {
-            experiencia = this.sistemaExperienciaMazos['80-89%'].experiencia;
-        } else if (porcentaje >= 70) {
-            experiencia = this.sistemaExperienciaMazos['70-79%'].experiencia;
-        } else if (porcentaje >= 60) {
-            experiencia = this.sistemaExperienciaMazos['60-69%'].experiencia;
-        } else if (porcentaje >= 50) {
-            experiencia = this.sistemaExperienciaMazos['50-59%'].experiencia;
-        } else {
-            experiencia = this.sistemaExperienciaMazos['0-49%'].experiencia;
-        }
-        
-        this.agregarExperiencia(experiencia, `Mazo completado al ${porcentaje}%`);
-    },
-    
-    // REGALAR ITEM GENERAL
-    regalarItem: function(tipo) {
-        const regalo = this.sistemaRegalos[tipo];
-        
-        if (!regalo) {
-            mostrarMensajeNakano("Tipo de regalo no válido");
-            return false;
-        }
-        
-          if (sistemaEconomia.saldoTotal >= regalo.costo) {
-        sistemaEconomia.agregarDinero(-regalo.costo, `Regalo de ${tipo}`);
-        this.economia.saldo = sistemaEconomia.saldoTotal;
-            
-            const expGanada = this.agregarExperiencia(regalo.experiencia, `Regalo de ${tipo}`);
-            
-            this.economia.inventario[tipo]++;
-            
-            mostrarMensajeNakano(`💝 Le regalaste ${tipo} a ${this.obtenerNoviaActual().nombre} (+${expGanada} XP)`);
-            return true;
-        } else {
-            mostrarMensajeNakano("No tienes suficiente dinero 💸");
-            return false;
-        }
-    },
-    
-    // REGALAR ITEM ESPECIAL (con video recíproco)
-    regalarItemEspecial: function(tipo) {
-        const novia = this.obtenerNoviaActual();
-        const regalo = novia.regalosEspeciales[tipo];
-        
-        if (!regalo) {
-            mostrarMensajeNakano("Este regalo no es para esta hermana");
-            return false;
-        }
-        
-          if (sistemaEconomia.saldoTotal >= regalo.costo) {
-        sistemaEconomia.agregarDinero(-regalo.costo, `Regalo especial de ${tipo}`);
-        this.economia.saldo = sistemaEconomia.saldoTotal;
-            
-            const expGanada = this.agregarExperiencia(regalo.experiencia, `Regalo especial: ${tipo}`);
-            
-            // MOSTRAR VIDEO RECÍPROCO
-            this.mostrarVideoRegaloReciproco(regalo.videoReciproco, regalo.mensaje);
-            
-            mostrarMensajeNakano(`💖 ${regalo.mensaje} (+${expGanada} XP)`);
-            return true;
-        } else {
-            mostrarMensajeNakano("No tienes suficiente dinero 💸");
-            return false;
-        }
-    },
-    
-    // MOSTRAR VIDEO DE REGALO RECÍPROCO
-    mostrarVideoRegaloReciproco: function(urlVideo, mensaje) {
-        // Crear pantalla temporal para video
-        const pantallaVideo = document.createElement('div');
-        pantallaVideo.id = 'pantalla-video-regalo';
-        pantallaVideo.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        `;
-        
-        pantallaVideo.innerHTML = `
-            <h2 style="color: #ff6b9d; margin-bottom: 20px;">${mensaje}</h2>
-            <video id="video-regalo-reciproco" controls autoplay style="width: 80%; max-width: 800px; border-radius: 15px;">
-                <source src="${urlVideo}" type="video/mp4">
-                Tu navegador no soporta el video.
-            </video>
-            <button onclick="this.parentElement.remove()" 
-                    style="margin-top: 20px; padding: 10px 20px; background: #ff6b9d; color: white; border: none; border-radius: 10px; cursor: pointer;">
-                Cerrar
-            </button>
-        `;
-        
-        document.body.appendChild(pantallaVideo);
-        
-        const videoElement = document.getElementById('video-regalo-reciproco');
-        videoElement.muted = true;
-        videoElement.play().catch(e => console.log("Autoplay bloqueado"));
-    },
-    
-    // COMPRAR CONDONES
-    comprarCondones: function() {
-        const costo = 15;
-  if (sistemaEconomia.saldoTotal >= costo) {
-        sistemaEconomia.agregarDinero(-costo, "Compra de condones");
-        this.economia.saldo = sistemaEconomia.saldoTotal;
-            this.economia.inventario.condones++;
-            
-            this.agregarExperiencia(5, "Compra de condones");
-            
-            this.actualizarInterfazNakano();
-            mostrarMensajeNakano("¡Condones comprados! 💕 +5 XP");
-            return true;
-        } else {
-            mostrarMensajeNakano("No tienes suficiente dinero para comprar condones 💸");
-            return false;
-        }
-    },
-    
-    // COMPRAR DECORACIÓN
-    comprarDecoracion: function(idDecoracion) {
-        const decoracion = this.decoracionesDisponibles.find(d => d.id === idDecoracion);
-        
-        if (!decoracion) {
-            mostrarMensajeNakano("Decoración no encontrada");
-            return false;
-        }
-        
-       if (sistemaEconomia.saldoTotal >= decoracion.precio) {
-        sistemaEconomia.agregarDinero(-decoracion.precio, `Compra Nakano: ${decoracion.nombre}`);
-        this.economia.saldo = sistemaEconomia.saldoTotal;
-            
-            this.habitacion.dineroGastado += decoracion.precio;
-            
-            // Añadir a items comprados
-            if (!this.habitacion.itemsComprados.includes(idDecoracion)) {
-                this.habitacion.itemsComprados.push(idDecoracion);
-            }
-            
-            // Si es un poster de la novia actual, dar experiencia
-            if (decoracion.tipo === 'poster' && decoracion.quintilliza === this.noviaSeleccionada) {
-                this.agregarExperiencia(20, `Poster de ${this.obtenerNoviaActual().nombre}`);
-            }
-            
-            // Si es mueble, actualizar
-            if (decoracion.tipo === 'mueble' && decoracion.mejora) {
-                this.habitacion.muebles[decoracion.mejora].nombre = decoracion.nombre;
-                this.habitacion.muebles[decoracion.mejora].precio = decoracion.precio;
-                this.habitacion.muebles[decoracion.mejora].comprado = true;
-            }
-            
-            this.guardarDatos();
-            this.actualizarInterfazNakano();
-            
-            mostrarMensajeNakano(`🛒 ¡Comprado: ${decoracion.nombre}!`);
-            return true;
-        } else {
-            mostrarMensajeNakano("No tienes suficiente dinero 💸");
-            return false;
-        }
-    },
-    
-    // USAR MOMENTO ÍNTIMO
-    usarMomentoIntimo: function(momentoId) {
-        const novia = this.obtenerNoviaActual();
-        const momento = novia.momentosIntimos.find(m => m.id === momentoId);
-        
-        if (!momento) {
-            mostrarMensajeNakano("Momento no encontrado");
-            return false;
-        }
-        
-        if (novia.nivel < momento.nivelRequerido) {
-            mostrarMensajeNakano(`Necesitas nivel ${momento.nivelRequerido} para este momento 💔`);
-            return false;
-        }
-        
-        if (!novia.humorActual.permiteIntimos) {
-            mostrarMensajeNakano(`${novia.nombre} no está de humor para momentos íntimos 💔`);
-            return false;
-        }
-        
-        if (this.economia.inventario.condones < momento.costoCondones) {
-            mostrarMensajeNakano(`Necesitas ${momento.costoCondones} condón(es) para este momento 💔`);
-            return false;
-        }
-        
-        this.economia.inventario.condones -= momento.costoCondones;
-        
-        const expPorMomento = 25 * momento.costoCondones;
-        const expGanada = this.agregarExperiencia(expPorMomento, `Momento íntimo: ${momento.nombre}`);
-        
-        this.ejecutarMomentoIntimo(novia, momento);
-        
-        mostrarMensajeNakano(`💖 ${momento.nombre} con ${novia.nombre} (+${expGanada} XP)`);
-        return true;
-    },
-    
-    // EJECUTAR MOMENTO ÍNTIMO
-    ejecutarMomentoIntimo: function(novia, momento) {
-        const dialogoElement = document.getElementById('dialogo-nakano');
-        
-        // Verificar si hay video para este momento
-        const videoKey = `${novia.id}_${momento.id}`;
-        if (videosIntimosNakano && videosIntimosNakano[videoKey]) {
-            // Mostrar video
-            dialogoElement.innerHTML = `
-                <div class="video-escena-adulta">
-                    <h4>${momento.nombre}</h4>
-                    <video controls autoplay class="video-intimo">
-                        <source src="${videosIntimosNakano[videoKey]}" type="video/mp4">
-                        <div class="fallback-text">
-                            💕 Disfruta este momento especial con ${novia.nombre}
-                        </div>
-                    </video>
-                    <div class="leyenda-escena">💖 ${momento.descripcion}</div>
-                    <div class="controles-video">
-                        <button class="boton-saltar-video" onclick="terminarMomentoIntimoNakano()">Finalizar</button>
-                    </div>
-                </div>
-            `;
-            
-            const videoElement = dialogoElement.querySelector('.video-intimo');
-            videoElement.muted = true;
-            videoElement.play().catch(e => console.log("Auto-play bloqueado"));
-            
-        } else {
-            // Fallback a texto descriptivo
-            const mensajes = {
-                ichika: [
-                    `Te acercas a Ichika entre bambalinas... 🎬`,
-                    `Ella te mira con una sonrisa coqueta... 😘`,
-                    `"¿Quieres ensayar una escena especial?" te susurra... 🎭`,
-                    `Sus labios se encuentran con los tuyos en un beso apasionado... 💋`,
-                    `La pasión de la actriz se desata en este momento íntimo... ✨`
-                ],
-                nino: [
-                    `Nino termina de cocinar y se acerca a ti... 👩‍🍳`,
-                    `"La cena está lista... pero primero el postre" dice con una sonrisa... 🍰`,
-                    `Su actitud tsundere se derrite por completo... ❄️➡️🔥`,
-                    `Un beso dulce con sabor a vainilla... 🍨`,
-                    `La chef muestra su lado más dulce y apasionado... 💖`
-                ],
-                miku: [
-                    `Miku se quita los audífonos tímidamente... 🎧`,
-                    `"Puedo escuchar tu corazón" susurra sonrojada... 💓`,
-                    `Te acerca su rostro lentamente... 😳`,
-                    `Un beso suave como una melodía... 🎵`,
-                    `La tímida Miku se entrega por completo en este momento... 🌸`
-                ],
-                yotsuba: [
-                    `Yotsuba llega llena de energía del deporte... ⚡`,
-                    `"¡Ganamos! Ahora mi recompensa eres tú" dice sonriendo... 🏆`,
-                    `Te abraza con fuerza, aún sudorosa... 💪`,
-                    `Un beso lleno de vitalidad y pasión... 🔥`,
-                    `La atleta demuestra su resistencia en el amor... ❤️‍🔥`
-                ],
-                itsuki: [
-                    `Itsuki termina de comer y te mira curiosamente... 🍔`,
-                    `"El postre fue delicioso... pero quiero probar algo más" dice inocente... 🍦`,
-                    `Se acerca lentamente, con un brillo juguetón en los ojos... 👀`,
-                    `Un beso dulce con sabor a chocolate... 🍫`,
-                    `La glotona descubre nuevos sabores en el amor... 💝`
-                ]
-            };
-            
-            let mensajeCompleto = `<div class="escena-adulta">`;
-            mensajes[novia.id].forEach((mensaje, index) => {
-                mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
-            });
-            mensajeCompleto += `</div>`;
-            dialogoElement.innerHTML = mensajeCompleto;
-        }
-    },
-    
-    // ACTUALIZAR INTERFAZ COMPLETA
-    actualizarInterfazNakano: function() {
-        const novia = this.obtenerNoviaActual();
-        
-        // 1. ACTUALIZAR SELECTOR DE NOVIAS
-        this.actualizarSelectorNovias();
-        
-        // 2. ACTUALIZAR PERFIL DE NOVIA ACTUAL
-        document.getElementById('nombre-nakano').textContent = novia.nombre;
-        document.getElementById('nivel-relacion').textContent = `Nivel ${novia.nivel}`;
-        document.getElementById('experiencia-actual').textContent = `${novia.experiencia}`;
-        document.getElementById('experiencia-total').textContent = `${novia.experienciaTotal}`;
-        document.getElementById('humor-nakano').textContent = novia.humorActual ? novia.humorActual.nombre : "Normal 😐";
-         document.getElementById('imagen-nakano').src = obtenerImagenNakano(novia.id);
-    document.getElementById('descripcion-nakano').textContent = novia.descripcion;
-        
-        // 3. ACTUALIZAR BARRA DE EXPERIENCIA
-        const expNecesaria = this.calcularExpParaNivel(novia.nivel + 1);
-        document.getElementById('experiencia-siguiente-nivel').textContent = `${expNecesaria}`;
-        const porcentajeExp = (novia.experiencia / expNecesaria) * 100;
-        document.getElementById('barra-experiencia-fill').style.width = `${porcentajeExp}%`;
-        
-        // 4. ACTUALIZAR MULTIPLICADOR
-        document.getElementById('multiplicador-exp').textContent = `${novia.humorActual ? novia.humorActual.multiplicadorExp : 1.0}x`;
-        
-        // 5. ACTUALIZAR DESCRIPCIÓN DEL HUMOR
-        this.actualizarDescripcionHumor(novia);
-        
-        // 6. ACTUALIZAR ECONOMÍA
-        this.economia.saldo = sistemaEconomia.saldoTotal;
-        document.getElementById('saldo-nakano').textContent = `${this.economia.saldo} ${this.economia.moneda}`;
-        
-        // 7. ACTUALIZAR INVENTARIO
-        document.getElementById('condones-inventario').textContent = this.economia.inventario.condones;
-        document.getElementById('flores-inventario').textContent = this.economia.inventario.flores;
-        document.getElementById('chocolates-inventario').textContent = this.economia.inventario.chocolates;
-        document.getElementById('joyas-inventario').textContent = this.economia.inventario.joyas;
-        
-        // 8. ACTUALIZAR DECORACIÓN
-        this.actualizarInterfazDecoracion();
-        
-        // 9. ACTUALIZAR BOTONES DE MOMENTOS ÍNTIMOS
-        this.actualizarBotonesMomentos(novia);
-        
-        // 10. ACTUALIZAR BOTONES DE REGALOS ESPECIALES
-        this.actualizarBotonesRegalosEspeciales(novia);
-    },
-    
-    // ACTUALIZAR SELECTOR DE NOVIAS
-    actualizarSelectorNovias: function() {
-        const contenedor = document.getElementById('selector-nakano');
-        if (!contenedor) return;
-        
-        let html = '<div class="nakano-grid">';
-        
-        Object.values(this.quintillizas).forEach(quintilliza => {
-            const seleccionada = quintilliza.id === this.noviaSeleccionada;
-            html += `
-                <div class="nakano-card ${seleccionada ? 'seleccionada' : ''}" onclick="sistemaNakano.seleccionarNovia('${quintilliza.id}')">
-                    <img src="${obtenerImagenNakano(quintilliza.id)}" alt="${quintilliza.nombre}" class="nakano-imagen">
-                    <div class="nakano-info">
-                        <div class="nakano-nombre">${quintilliza.nombre}</div>
-                        <div class="nakano-nivel">Nivel ${quintilliza.nivel}</div>
-                        <div class="nakano-xp">${quintilliza.experiencia} XP</div>
-                    </div>
-                    ${seleccionada ? '<div class="seleccion-indicator">❤️</div>' : ''}
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-        contenedor.innerHTML = html;
-    },
-    
-    // ACTUALIZAR DESCRIPCIÓN DEL HUMOR
-    actualizarDescripcionHumor: function(novia) {
-        const humor = novia.humorActual;
-        let descripcion = "";
-        
-        switch(humor.id) {
-            case "coqueta":
-                descripcion = "😘 Ichika está coqueta. 1.8x experiencia y permite momentos íntimos.";
-                break;
-            case "tsundere":
-                descripcion = "😠➡️😊 Nino en modo tsundere. 1.6x experiencia y permite momentos íntimos.";
-                break;
-            case "timida":
-                descripcion = "😳 Miku está tímida. 1.4x experiencia pero NO permite momentos íntimos.";
-                break;
-            case "energetica":
-                descripcion = "⚡ Yotsuba llena de energía. 1.9x experiencia y permite momentos íntimos.";
-                break;
-            case "estudiosa":
-                descripcion = "📚 Itsuki está estudiando. 1.6x experiencia pero NO permite momentos íntimos.";
-                break;
-            default:
-                descripcion = humor.nombre ? `${humor.nombre}. ${humor.multiplicadorExp}x experiencia.` : "Humor normal del día.";
-        }
-        
-        const elemento = document.getElementById('descripcion-humor');
-        if (elemento) {
-            elemento.textContent = descripcion;
-            elemento.title = `Multiplicador: ${humor.multiplicadorExp}x | Intimos: ${humor.permiteIntimos ? 'Sí' : 'No'}`;
-        }
-    },
-    
-    // ACTUALIZAR INTERFAZ DE DECORACIÓN
-    actualizarInterfazDecoracion: function() {
-        const contenedor = document.getElementById('decoracion-contenedor');
-        if (!contenedor) return;
-        
-        let html = `
-            <div class="estado-habitacion">
-                <h4>🛏️ Tu Habitación</h4>
-                <div class="dinero-gastado">Gastado: ${this.habitacion.dineroGastado} S/.</div>
-                <div class="items-totales">Items: ${this.habitacion.itemsComprados.length}</div>
-            </div>
-            
-            <div class="muebles-actuales">
-                <h5>Muebles:</h5>
-                ${Object.values(this.habitacion.muebles).map(mueble => 
-                    `<div class="mueble-item">${mueble.nombre}</div>`
-                ).join('')}
-            </div>
-            
-            <div class="decoraciones-disponibles">
-                <h5>🛒 Tienda de Decoración:</h5>
-                <div class="decoraciones-grid">
-        `;
-        
-        this.decoracionesDisponibles.forEach(decoracion => {
-            const comprado = this.habitacion.itemsComprados.includes(decoracion.id);
-            const puedeComprar = this.economia.saldo >= decoracion.precio;
-            
-            html += `
-                <div class="decoracion-item ${comprado ? 'comprado' : ''} ${!comprado && !puedeComprar ? 'no-dinero' : ''}">
-                    <div class="decoracion-nombre">${decoracion.nombre}</div>
-                    <div class="decoracion-precio">${decoracion.precio} S/.</div>
-                    <div class="decoracion-tipo">${decoracion.tipo === 'poster' ? '📌' : 
-                                                   decoracion.tipo === 'mueble' ? '🛋️' : '✨'}</div>
-                    ${!comprado ? 
-                        `<button class="boton-comprar" onclick="sistemaNakano.comprarDecoracion('${decoracion.id}')" 
-                                ${!puedeComprar ? 'disabled' : ''}>
-                            ${puedeComprar ? 'Comprar' : 'Sin dinero'}
-                        </button>` :
-                        '<div class="comprado-label">✅ Comprado</div>'
-                    }
-                </div>
-            `;
-        });
-        
-        html += `
-                </div>
-            </div>
-        `;
-        
-        contenedor.innerHTML = html;
-    },
-    
-    // ACTUALIZAR BOTONES DE MOMENTOS ÍNTIMOS
-    actualizarBotonesMomentos: function(novia) {
-        novia.momentosIntimos.forEach(momento => {
-            const boton = document.getElementById(`boton-${momento.id}`);
-            if (boton) {
-                const desbloqueado = novia.momentosDesbloqueados.includes(momento.id);
-                const nivelSuficiente = novia.nivel >= momento.nivelRequerido;
-                
-                if (desbloqueado) {
-                    boton.disabled = false;
-                    boton.title = momento.descripcion;
-                } else if (nivelSuficiente) {
-                    if (!novia.momentosDesbloqueados.includes(momento.id)) {
-                        novia.momentosDesbloqueados.push(momento.id);
-                    }
-                    boton.disabled = false;
-                    boton.title = momento.descripcion;
-                } else {
-                    boton.disabled = true;
-                    boton.title = `Nivel ${momento.nivelRequerido} requerido`;
-                }
-                
-                if (!novia.humorActual.permiteIntimos) {
-                    boton.disabled = true;
-                    boton.title = `${novia.nombre} no está de humor para momentos íntimos`;
-                }
-                
-                if (this.economia.inventario.condones < momento.costoCondones) {
-                    boton.disabled = true;
-                    boton.title = `Necesitas ${momento.costoCondones} condón(es)`;
+                japones: {
+                    driveId: 'TU_ID_JAPONES_RAW_5',
+                    nombre: 'Japonés Raw',
+                    timestamps: []
                 }
             }
-        });
+        }
     },
     
-    // ACTUALIZAR BOTONES DE REGALOS ESPECIALES
-    actualizarBotonesRegalosEspeciales: function(novia) {
-        // Actualizar botones generales de regalos
-        ['flores', 'chocolates', 'joyas'].forEach(tipo => {
-            const boton = document.getElementById(`boton-regalo-${tipo}`);
-            if (boton) {
-                const puedeComprar = this.economia.saldo >= this.sistemaRegalos[tipo].costo;
-                boton.disabled = !puedeComprar;
-                if (!puedeComprar) {
-                    boton.title = `Necesitas ${this.sistemaRegalos[tipo].costo} S/.`;
-                }
-            }
-        });
-        
-        // Actualizar botones especiales (si existen en el HTML)
-        Object.keys(novia.regalosEspeciales).forEach(tipo => {
-            const boton = document.getElementById(`boton-especial-${tipo}`);
-            if (boton) {
-                const regalo = novia.regalosEspeciales[tipo];
-                const puedeComprar = this.economia.saldo >= regalo.costo;
-                boton.disabled = !puedeComprar;
-                boton.innerHTML = `${this.obtenerIconoRegalo(tipo)} ${this.formatearNombreRegalo(tipo)} (S/.${regalo.costo})`;
-                if (!puedeComprar) {
-                    boton.title = `Necesitas ${regalo.costo} S/.`;
-                } else {
-                    boton.title = regalo.mensaje;
-                }
-            }
-        });
-    },
+    // Configuración general
+    palabrasPorMazo: 10,
     
-    // OBTENER ICONO PARA REGALO
-    obtenerIconoRegalo: function(tipo) {
-        const iconos = {
-            'microfono': '🎤',
-            'maquillaje': '💄',
-            'guion': '📖',
-            'utensilios_cocina': '🔪',
-            'delantal': '👩‍🍳',
-            'libro_recetas': '📚',
-            'audifonos': '🎧',
-            'libro_historia': '📜',
-            'daimyou': '🏯',
-            'balon': '⚽',
-            'zapatos_deportivos': '👟',
-            'medalla': '🥇',
-            'libro_cocina': '🍳',
-            'comida_gourmet': '🍱',
-            'postre_especial': '🍰'
-        };
-        return iconos[tipo] || '🎁';
-    },
+    // Idioma por defecto
+    idiomaPorDefecto: 'español',
     
-    // FORMATEAR NOMBRE DE REGALO
-    formatearNombreRegalo: function(tipo) {
-        const nombres = {
-            'microfono': 'Micrófono',
-            'maquillaje': 'Kit de Maquillaje',
-            'guion': 'Guion Especial',
-            'utensilios_cocina': 'Utensilios de Cocina',
-            'delantal': 'Delantal Personalizado',
-            'libro_recetas': 'Libro de Recetas',
-            'audifonos': 'Audífonos Premium',
-            'libro_historia': 'Libro de Historia',
-            'daimyou': 'Figura Daimyō',
-            'balon': 'Balón Deportivo',
-            'zapatos_deportivos': 'Zapatos Deportivos',
-            'medalla': 'Medalla de Oro',
-            'libro_cocina': 'Libro de Cocina',
-            'comida_gourmet': 'Cena Gourmet',
-            'postre_especial': 'Postre Especial'
-        };
-        return nombres[tipo] || tipo;
+    // NUEVO: Configuración de recompensas por porcentaje
+    recompensasPorcentaje: {
+        100: { dinero: 2, experiencia: 30, mensaje: '🎉 ¡Perfecto! Dominio absoluto' },
+        90: { dinero: 1, experiencia: 20, mensaje: '👏 ¡Excelente! Casi perfecto' },
+        80: { dinero: 0.5, experiencia: 15, mensaje: '👍 ¡Muy bien! Buen trabajo' },
+        70: { dinero: 0.3, experiencia: 10, mensaje: '✅ Bien, sigue mejorando' },
+        60: { dinero: 0.2, experiencia: 5, mensaje: '💪 Sigue practicando' },
+        50: { dinero: 0.1, experiencia: 3, mensaje: '📚 Necesitas más estudio' },
+        0: { dinero: 0, experiencia: 1, mensaje: '🔁 Repite para mejorar' }
     }
 };
 
 // ============================================================================
-// FUNCIONES GLOBALES PARA EL SISTEMA NAKANO
+// 2. VOCABULARIO COMPLETO DE TODOS LOS ANIMES
 // ============================================================================
 
-function iniciarSistemaNakano() {
-    cambiarPantalla('pantalla-rpg-nakano');
-    sistemaNakano.actualizarInterfazNakano();
-}
-
-function terminarMomentoIntimoNakano() {
-    const dialogoElement = document.getElementById('dialogo-nakano');
-    const novia = sistemaNakano.obtenerNoviaActual();
+const animeVocabulario = {
+    // ANIME 1 - Quintillizas Nakano (COMPLETAMENTE REEMPLAZADO)
+    'anime1': {
+        'mazo1': [
+            { japones: 'ご視聴', lectura: 'go shichou', opciones: ['Ver/Audiencia (formal)', 'Escuchar', 'Hablar', 'Leer'], respuesta: 0 },
+            { japones: '覚えました', lectura: 'oboemashita', opciones: ['Lo recordé', 'Lo olvidé', 'Lo escribí', 'Lo borré'], respuesta: 0 },
+            { japones: '綺麗', lectura: 'kirei', opciones: ['Hermoso/Bonito', 'Feo', 'Común', 'Extraño'], respuesta: 0 },
+            { japones: '嫌', lectura: 'iya', opciones: ['Odio/Disgusto', 'Amor', 'Indiferencia', 'Alegría'], respuesta: 0 },
+            { japones: '感情', lectura: 'kanjou', opciones: ['Emoción', 'Razón', 'Pensamiento', 'Acción'], respuesta: 0 },
+            { japones: '礼儀正しくて', lectura: 'reigitadashikute', opciones: ['Ser educado', 'Ser grosero', 'Ser tímido', 'Ser valiente'], respuesta: 0 },
+            { japones: '格ゲー', lectura: 'kaku gee', opciones: ['Juego de pelea', 'Juego de rol', 'Juego de estrategia', 'Juego de deportes'], respuesta: 0 },
+            { japones: '歩み寄ろう', lectura: 'ayumiyorou', opciones: ['Vamos a acercarnos', 'Vamos a alejarnos', 'Vamos a pelear', 'Vamos a esperar'], respuesta: 0 },
+            { japones: '寿司', lectura: 'sushi', opciones: ['Sushi', 'Ramen', 'Tempura', 'Takoyaki'], respuesta: 0 },
+            { japones: '誘惑', lectura: 'yuuwaku', opciones: ['Tentación', 'Rechazo', 'Ayuda', 'Castigo'], respuesta: 0 }
+        ],
+        'mazo2': [
+            { japones: '騎士', lectura: 'kishi', opciones: ['Caballero', 'Princesa', 'Mago', 'Campesino'], respuesta: 0 },
+            { japones: '裏切る', lectura: 'uragiru', opciones: ['Traicionar', 'Proteger', 'Ayudar', 'Enseñar'], respuesta: 0 },
+            { japones: 'こちらこそ', lectura: 'kochirakoso', opciones: ['Igualmente/Yo también', 'Gracias', 'Lo siento', 'De nada'], respuesta: 0 },
+            { japones: '色素', lectura: 'shikiso', opciones: ['Pigmento/Color', 'Sabor', 'Olor', 'Textura'], respuesta: 0 },
+            { japones: '薄い', lectura: 'usui', opciones: ['Delgado/Diluido', 'Grueso', 'Largo', 'Corto'], respuesta: 0 },
+            { japones: '乳輪', lectura: 'nyuurin', opciones: ['Areola', 'Pezón', 'Pecho', 'Espalda'], respuesta: 0 },
+            { japones: '血もませろ', lectura: 'chimomasero', opciones: ['¡Mezcla tu sangre!', '¡Bebe agua!', '¡Corre rápido!', '¡Come bien!'], respuesta: 0 },
+            { japones: 'ぶちこませろ', lectura: 'buchikomasero', opciones: ['¡Mételo a la fuerza!', '¡Sácalo!', '¡Espera!', '¡Cálmate!'], respuesta: 0 },
+            { japones: 'いい加減', lectura: 'iikagen', opciones: ['Ya es suficiente', 'Más por favor', 'Es temprano', 'Es tarde'], respuesta: 0 },
+            { japones: '体拭いてあげる', lectura: 'karada fui te ageru', opciones: ['Te secaré el cuerpo', 'Te bañaré', 'Te vestiré', 'Te peinaré'], respuesta: 0 }
+        ],
+        'mazo3': [
+            { japones: '結構ですけど', lectura: 'kekkou desu kedo', opciones: ['Está bien, pero...', 'No gracias', 'Sí por favor', 'Tal vez'], respuesta: 0 },
+            { japones: '凶悪', lectura: 'kyouaku', opciones: ['Malvado/Feroz', 'Amable', 'Débil', 'Inteligente'], respuesta: 0 },
+            { japones: '肉厚', lectura: 'nikuatsu', opciones: ['Carnoso/Grueso', 'Delgado', 'Duro', 'Suave'], respuesta: 0 },
+            { japones: '抵抗', lectura: 'teikou', opciones: ['Resistencia', 'Sumisión', 'Ayuda', 'Ataque'], respuesta: 0 },
+            { japones: '怒ってます', lectura: 'okottemasu', opciones: ['Estoy enojado', 'Estoy feliz', 'Estoy triste', 'Estoy cansado'], respuesta: 0 },
+            { japones: '気づかない', lectura: 'kidzukanai', opciones: ['No darse cuenta', 'Darse cuenta', 'Ignorar', 'Observar'], respuesta: 0 },
+            { japones: '母国', lectura: 'bokoku', opciones: ['País natal', 'País extranjero', 'Ciudad', 'Pueblo'], respuesta: 0 },
+            { japones: '平等', lectura: 'byoudou', opciones: ['Igualdad', 'Desigualdad', 'Libertad', 'Justicia'], respuesta: 0 },
+            { japones: '尊重して', lectura: 'sonchou shite', opciones: ['Respeta', 'Ignora', 'Critica', 'Ayuda'], respuesta: 0 },
+            { japones: '相手', lectura: 'aite', opciones: ['Compañero/Contrincante', 'Amigo', 'Enemigo', 'Extraño'], respuesta: 0 }
+        ],
+        'mazo4': [
+            { japones: '切度を', lectura: 'setsudo wo', opciones: ['Con sinceridad', 'Con mentiras', 'Con miedo', 'Con alegría'], respuesta: 0 },
+            { japones: 'もって', lectura: 'motte', opciones: ['Con/Tener', 'Sin', 'Para', 'Desde'], respuesta: 0 },
+            { japones: '接することが', lectura: 'sesshi suru koto ga', opciones: ['Interactuar con', 'Evitar a', 'Observar a', 'Hablar de'], respuesta: 0 },
+            { japones: 'ブラブラ', lectura: 'burabura', opciones: ['Vagar/Sin rumbo', 'Correr rápido', 'Trabajar duro', 'Descansar'], respuesta: 0 },
+            { japones: '揺らして', lectura: 'yurashite', opciones: ['Sacudiendo', 'Sosteniendo', 'Empujando', 'Jalando'], respuesta: 0 },
+            { japones: '欲煽り', lectura: 'yoku aori', opciones: ['Incitando deseos', 'Calmando', 'Enseñando', 'Criticando'], respuesta: 0 },
+            { japones: '女性', lectura: 'josei', opciones: ['Mujer', 'Hombre', 'Niño', 'Animal'], respuesta: 0 },
+            { japones: '差別', lectura: 'sabetsu', opciones: ['Discriminación', 'Igualdad', 'Respeto', 'Amor'], respuesta: 0 },
+            { japones: '正しい', lectura: 'tadashii', opciones: ['Correcto', 'Incorrecto', 'Difícil', 'Fácil'], respuesta: 0 },
+            { japones: '勝負', lectura: 'shoubu', opciones: ['Competencia', 'Amistad', 'Estudio', 'Trabajo'], respuesta: 0 }
+        ],
+        'mazo5': [
+            { japones: '負けですね', lectura: 'make desu ne', opciones: ['Es una derrota, ¿verdad?', 'Es una victoria', 'Es un empate', 'Es difícil'], respuesta: 0 },
+            { japones: '腹め', lectura: 'harame', opciones: ['Vientre/Panza', 'Cabeza', 'Pies', 'Manos'], respuesta: 0 },
+            { japones: 'ジュポジュポ', lectura: 'jupojupo', opciones: ['Sonido de líquido', 'Sonido de pasos', 'Sonido de risa', 'Sonido de llanto'], respuesta: 0 },
+            { japones: '北欧', lectura: 'hokuou', opciones: ['Países nórdicos', 'Sudamérica', 'Asia', 'África'], respuesta: 0 },
+            { japones: '先進国', lectura: 'senshinkoku', opciones: ['País desarrollado', 'País en desarrollo', 'País pobre', 'País grande'], respuesta: 0 },
+            { japones: '突っ込まれて', lectura: 'tsukkomarete', opciones: ['Ser penetrado', 'Ser tocado', 'Ser mirado', 'Ser hablado'], respuesta: 0 },
+            { japones: '深度', lectura: 'shindo', opciones: ['Profundidad', 'Altura', 'Longitud', 'Ancho'], respuesta: 0 },
+            { japones: '頃顔してる', lectura: 'korogao shiteru', opciones: ['Haciendo una cara', 'Haciendo ejercicio', 'Haciendo tarea', 'Haciendo comida'], respuesta: 0 },
+            { japones: '喜ぶ', lectura: 'yorokobu', opciones: ['Alegrarse', 'Enojarse', 'Tristarse', 'Sorprenderse'], respuesta: 0 },
+            { japones: '一杯', lectura: 'ippai', opciones: ['Lleno/Una copa', 'Vacío', 'Medio', 'Mucho'], respuesta: 0 }
+        ],
+        'mazo6': [
+            { japones: '性欲', lectura: 'seiyoku', opciones: ['Deseo sexual', 'Hambre', 'Sed', 'Sueño'], respuesta: 0 },
+            { japones: '身も心も', lectura: 'mimo kokoromo', opciones: ['Cuerpo y alma', 'Solo cuerpo', 'Solo mente', 'Ninguno'], respuesta: 0 },
+            { japones: '健康', lectura: 'kenkou', opciones: ['Salud', 'Enfermedad', 'Fuerza', 'Debilidad'], respuesta: 0 },
+            { japones: '証拠ですよ', lectura: 'shouko desu yo', opciones: ['Es evidencia', 'Es mentira', 'Es verdad', 'Es secreto'], respuesta: 0 },
+            { japones: '掃除', lectura: 'souji', opciones: ['Limpieza', 'Desorden', 'Construcción', 'Destrucción'], respuesta: 0 },
+            { japones: 'やましい', lectura: 'yamashii', opciones: ['Culpable/Avergonzado', 'Inocente', 'Orgulloso', 'Feliz'], respuesta: 0 },
+            { japones: '言い訳', lectura: 'iiwake', opciones: ['Excusa', 'Verdad', 'Mentira', 'Pregunta'], respuesta: 0 },
+            { japones: '普通に', lectura: 'futsuu ni', opciones: ['Normalmente', 'Extrañamente', 'Rápidamente', 'Lentamente'], respuesta: 0 },
+            { japones: '誘えば', lectura: 'sasoeba', opciones: ['Si invitas', 'Si rechazas', 'Si aceptas', 'Si esperas'], respuesta: 0 },
+            { japones: 'ごまかさず', lectura: 'gomakasazu', opciones: ['Sin engañar', 'Con engaño', 'Con honestidad', 'Con mentiras'], respuesta: 0 }
+        ],
+        'mazo7': [
+            { japones: '隠さずに', lectura: 'kakasazu ni', opciones: ['Sin esconder', 'Escondiendo', 'Mintiendo', 'Revelando'], respuesta: 0 },
+            { japones: '求め合える', lectura: 'motome aeru', opciones: ['Poder buscarse mutuamente', 'Poder evitarse', 'Poder ignorarse', 'Poder odiarse'], respuesta: 0 },
+            { japones: '刺さるぞ', lectura: 'sasaru zo', opciones: ['¡Va a penetrar!', '¡Va a salir!', '¡Va a entrar!', '¡Va a romper!'], respuesta: 0 },
+            { japones: '冷め、', lectura: 'same,', opciones: ['Enfriarse,', 'Calentarse,', 'Secarse,', 'Mojarse,'], respuesta: 0 },
+            { japones: '呼吸', lectura: 'kokyuu', opciones: ['Respiración', 'Circulación', 'Digestión', 'Sudoración'], respuesta: 0 },
+            { japones: '至急', lectura: 'shikyuu', opciones: ['Urgente', 'Lento', 'Normal', 'Ocasional'], respuesta: 0 },
+            { japones: '受け取って', lectura: 'uketotte', opciones: ['Recibe', 'Da', 'Toma', 'Deja'], respuesta: 0 },
+            { japones: '特選してやる', lectura: 'tokusen shite yaru', opciones: ['Te lo seleccionaré especialmente', 'Te lo daré común', 'Te lo quitaré', 'Te lo esconderé'], respuesta: 0 },
+            { japones: 'ゴキサビピストン', lectura: 'gokisabipisuton', opciones: ['Gokisabi pistón', 'Motor turbo', 'Frenos ABS', 'Suspensión'], respuesta: 0 },
+            { japones: '金玉', lectura: 'kintama', opciones: ['Testículos', 'Ovarios', 'Corazón', 'Cerebro'], respuesta: 0 }
+        ],
+        'mazo8': [
+            { japones: '楽しみにしていた', lectura: 'tanoshimi ni shiteita', opciones: ['Estaba esperando con ansias', 'Estaba temiendo', 'Estaba olvidando', 'Estaba ignorando'], respuesta: 0 },
+            { japones: '書いていない', lectura: 'kaite inai', opciones: ['No está escrito', 'Está escrito', 'Está borrado', 'Está tachado'], respuesta: 0 },
+            { japones: '所有権', lectura: 'shoyuuken', opciones: ['Derecho de propiedad', 'Derecho de uso', 'Derecho de venta', 'Derecho de préstamo'], respuesta: 0 },
+            { japones: '白黒つけるぞ', lectura: 'shirokuro tsukeru zo', opciones: ['¡Voy a aclarar las cosas!', '¡Voy a confundir!', '¡Voy a esconder!', '¡Voy a olvidar!'], respuesta: 0 }
+        ]
+    },
     
-    dialogoElement.innerHTML = `
-        <div class="dialogo-burbuja">
-            <div class="texto-dialogo">💖 Eso fue increíble... Te amo tanto, ${novia.nombre.split(' ')[0]}...</div>
-            <div class="tiempo-dialogo">Ahora</div>
-        </div>
-    `;
+    // ANIME 2 - Yamada Lv999
+    'anime2': {
+        'mazo1': [
+            { japones: 'ゲーマー', lectura: 'geemaa', opciones: ['Gamer', 'Deportista', 'Estudiante', 'Trabajador'], respuesta: 0 },
+            { japones: 'オンライン', lectura: 'onrain', opciones: ['Online', 'Offline', 'Presencial', 'Directo'], respuesta: 0 },
+            { japones: 'レベル', lectura: 'reberu', opciones: ['Nivel', 'Puntos', 'Experiencia', 'Habilidad'], respuesta: 0 },
+            { japones: '経験値', lectura: 'keikenchi', opciones: ['Puntos de experiencia', 'Vida', 'Fuerza', 'Magia'], respuesta: 0 },
+            { japones: 'ギルド', lectura: 'girudo', opciones: ['Gremio', 'Equipo', 'Grupo', 'Clan'], respuesta: 0 },
+            { japones: 'クエスト', lectura: 'kuesuto', opciones: ['Misión', 'Tarea', 'Objetivo', 'Meta'], respuesta: 0 },
+            { japones: 'アイテム', lectura: 'aitemu', opciones: ['Item', 'Arma', 'Armadura', 'Poción'], respuesta: 0 },
+            { japones: 'ボス', lectura: 'bosu', opciones: ['Jefe', 'Enemigo', 'Aliado', 'NPC'], respuesta: 0 },
+            { japones: 'ダンジョン', lectura: 'danjon', opciones: ['Mazmorra', 'Castillo', 'Bosque', 'Ciudad'], respuesta: 0 },
+            { japones: 'パーティー', lectura: 'paatii', opciones: ['Grupo/Party', 'Solo', 'Dúo', 'Equipo'], respuesta: 0 }
+        ]
+    }
+};
+
+// ============================================================================
+// 3. VARIABLES GLOBALES MEJORADAS
+// ============================================================================
+
+let animeActual = '';
+let idiomaVideoActual = animeConfig.idiomaPorDefecto;
+let videoAnimeActual = null;
+let mazoActualAnime = [];
+let preguntaActualAnime = 0;
+let respuestasCorrectasAnime = 0;
+let respuestasIncorrectasAnime = 0;
+
+// ============================================================================
+// 4. NUEVO: SISTEMA DE RECOMPENSAS ANIME INTEGRADO
+// ============================================================================
+
+const animeRecompensas = {
+    // Calcular recompensa basada en porcentaje
+    calcularRecompensa: function(porcentaje) {
+        let recompensa = null;
+        
+        if (porcentaje === 100) {
+            recompensa = animeConfig.recompensasPorcentaje[100];
+        } else if (porcentaje >= 90) {
+            recompensa = animeConfig.recompensasPorcentaje[90];
+        } else if (porcentaje >= 80) {
+            recompensa = animeConfig.recompensasPorcentaje[80];
+        } else if (porcentaje >= 70) {
+            recompensa = animeConfig.recompensasPorcentaje[70];
+        } else if (porcentaje >= 60) {
+            recompensa = animeConfig.recompensasPorcentaje[60];
+        } else if (porcentaje >= 50) {
+            recompensa = animeConfig.recompensasPorcentaje[50];
+        } else {
+            recompensa = animeConfig.recompensasPorcentaje[0];
+        }
+        
+        return recompensa;
+    },
+    
+    // Aplicar recompensa a todos los sistemas
+    aplicarRecompensa: function(porcentaje, animeId, mazoId) {
+        const recompensa = this.calcularRecompensa(porcentaje);
+        const animeNombre = animeConfig.animes[animeId] ? animeConfig.animes[animeId].nombre : animeId;
+        
+        console.log(`🎁 Aplicando recompensa anime: ${porcentaje}% → +${recompensa.dinero} S/. +${recompensa.experiencia} XP`);
+        
+        // 1. SISTEMA DE ECONOMÍA
+        if (typeof sistemaEconomia !== 'undefined' && sistemaEconomia.agregarDinero) {
+            sistemaEconomia.agregarDinero(recompensa.dinero, `Anime: ${animeNombre} - Mazo ${mazoId} (${porcentaje}%)`);
+        }
+        
+        // 2. SISTEMA NAKANO (EXPERIENCIA)
+        if (typeof sistemaNakano !== 'undefined' && sistemaNakano.agregarExperiencia) {
+            sistemaNakano.agregarExperiencia(recompensa.experiencia, `Quiz anime: ${animeNombre} - ${porcentaje}%`);
+        }
+        
+        // 3. EVENTOS DIARIOS (si hay evento activo)
+        if (typeof eventosDiarios !== 'undefined' && 
+            eventosDiarios.estado.eventoActual && 
+            eventosDiarios.estado.aceptado && 
+            !eventosDiarios.estado.completado) {
+            
+            const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
+            eventosDiarios.registrarMazoCompletado();
+            
+            if (eventoEstabaIncompleto && eventosDiarios.estado.completado) {
+                console.log("🎯 Evento diario completado desde anime!");
+                // El sistema de eventos manejará su propia recompensa
+            }
+        }
+        
+        // 4. MISIONES DIARIAS
+        if (typeof misionesDiarias !== 'undefined' && porcentaje >= 80) {
+            misionesDiarias.registrarMazoCompletado();
+        }
+        
+        // 5. PALABRAS FALLADAS (si hay incorrectas)
+        if (typeof sistemaPalabrasFalladas !== 'undefined' && respuestasIncorrectasAnime > 0) {
+            // Las palabras ya se registraron durante el quiz
+            console.log(`📝 ${respuestasIncorrectasAnime} palabras falladas registradas`);
+        }
+        
+        return recompensa;
+    },
+    
+    // Mostrar resumen de recompensas
+    mostrarResumenRecompensas: function(recompensa, porcentaje) {
+        return `
+            <div class="recompensa-resumen">
+                <h4>🎁 Recompensas Obtenidas</h4>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">💰</span>
+                    <span class="recompensa-texto">Dinero:</span>
+                    <span class="recompensa-valor">+${recompensa.dinero} S/.</span>
+                </div>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">💕</span>
+                    <span class="recompensa-texto">Experiencia RPG:</span>
+                    <span class="recompensa-valor">+${recompensa.experiencia} XP</span>
+                </div>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">📊</span>
+                    <span class="recompensa-texto">Puntuación:</span>
+                    <span class="recompensa-valor">${porcentaje}%</span>
+                </div>
+                <div class="recompensa-mensaje">
+                    ${recompensa.mensaje}
+                </div>
+            </div>
+        `;
+    }
+};
+
+// ============================================================================
+// 5. FUNCIONES PRINCIPALES - SISTEMA DE ANIME INTEGRADO
+// ============================================================================
+
+// Función para iniciar el sistema anime desde el menú principal
+function iniciarSistemaAnime() {
+    cambiarPantalla('pantalla-anime-seleccion');
+    cargarListaAnimes();
+    console.log("🎬 Sistema anime iniciado (COMPLETAMENTE INTEGRADO)");
 }
 
-function mostrarMensajeNakano(mensaje) {
-    const mensajeElement = document.getElementById('mensaje-nakano');
-    if (mensajeElement) {
-        mensajeElement.textContent = mensaje;
-        mensajeElement.style.display = 'block';
+// Función para cargar la lista de animes disponibles
+function cargarListaAnimes() {
+    const contenedor = document.getElementById('contenedor-animes');
+    if (!contenedor) {
+        console.error("❌ No se encontró el contenedor de animes");
+        return;
+    }
+    
+    contenedor.innerHTML = '';
+    
+    Object.keys(animeConfig.animes).forEach(animeId => {
+        const anime = animeConfig.animes[animeId];
+        const div = document.createElement('div');
+        div.className = 'anime-card';
+        div.style.borderColor = anime.color;
+        div.onclick = () => cargarAnime(animeId);
         
-        setTimeout(() => {
-            mensajeElement.style.display = 'none';
-        }, 3000);
+        // Contar mazos disponibles (con al menos 1 palabra)
+        let mazosDisponibles = 0;
+        if (animeVocabulario[animeId]) {
+            mazosDisponibles = Object.keys(animeVocabulario[animeId]).filter(mazoId => {
+                const mazo = animeVocabulario[animeId][mazoId];
+                return mazo && mazo.length >= 1;
+            }).length;
+        }
+        
+        // Mostrar sistema integrado
+        div.innerHTML = `
+            <img src="${anime.imagen}" alt="${anime.nombre}" class="anime-imagen" 
+                 onerror="this.src='https://via.placeholder.com/300x200/333333/ffffff?text=${anime.nombre}'">
+            <div class="anime-texto">${anime.nombre}</div>
+            <div class="anime-info">${mazosDisponibles} mazos</div>
+            <div class="anime-desc">${anime.descripcion}</div>
+            <div class="anime-sistemas">
+                <span class="sistema-badge economia">💰</span>
+                <span class="sistema-badge rpg">💕</span>
+                <span class="sistema-badge eventos">🎯</span>
+                <span class="sistema-badge misiones">📋</span>
+            </div>
+        `;
+        
+        contenedor.appendChild(div);
+    });
+}
+
+// Función para cargar un anime específico
+function cargarAnime(animeId) {
+    animeActual = animeId;
+    const anime = animeConfig.animes[animeId];
+    
+    // Restablecer idioma al por defecto
+    idiomaVideoActual = animeConfig.idiomaPorDefecto;
+    
+    // Obtener video según idioma actual
+    videoAnimeActual = anime.videos[idiomaVideoActual];
+    
+    // Actualizar interfaz
+    const tituloElement = document.getElementById('titulo-anime');
+    const descElement = document.getElementById('descripcion-anime');
+    
+    if (tituloElement) tituloElement.textContent = anime.nombre;
+    if (descElement) descElement.textContent = anime.descripcion;
+    
+    // Cargar mazos de este anime
+    cargarMazosAnime(animeId);
+    
+    // Cargar el video
+    cargarVideoAnime(animeId, idiomaVideoActual);
+    
+    cambiarPantalla('pantalla-anime-detalle');
+    console.log(`🎬 Cargando anime: ${anime.nombre}`);
+}
+
+// Función para cargar mazos dinámicamente
+function cargarMazosAnime(animeId) {
+    const contenedor = document.getElementById('contenedor-mazos-anime');
+    if (!contenedor) {
+        console.error("❌ No se encontró el contenedor de mazos anime");
+        return;
+    }
+    
+    contenedor.innerHTML = '';
+    
+    // Verificar si el anime tiene vocabulario
+    if (!animeVocabulario[animeId]) {
+        console.log(`⚠️ No hay vocabulario para ${animeId}`);
+        contenedor.innerHTML = '<p style="color: #ff6b9d; text-align: center; padding: 30px;">No hay mazos disponibles para este anime</p>';
+        return;
+    }
+    
+    // Obtener todos los mazos del anime
+    const mazos = Object.keys(animeVocabulario[animeId]);
+    
+    console.log(`🔍 Detectando mazos para ${animeId}:`, mazos);
+    
+    // Ordenar mazos numéricamente
+    mazos.sort((a, b) => {
+        const numA = parseInt(a.replace('mazo', ''));
+        const numB = parseInt(b.replace('mazo', ''));
+        return numA - numB;
+    });
+    
+    // Crear un botón para cada mazo detectado
+    mazos.forEach(mazoId => {
+        const mazoNumero = mazoId.replace('mazo', '');
+        const div = document.createElement('div');
+        div.className = 'mazo-anime-card';
+        
+        // Verificar si el mazo tiene palabras
+        const tienePalabras = animeVocabulario[animeId][mazoId] && 
+                             animeVocabulario[animeId][mazoId].length > 0;
+        const cantidadPalabras = tienePalabras ? animeVocabulario[animeId][mazoId].length : 0;
+        
+        const disponible = tienePalabras && cantidadPalabras >= 1;
+        
+        if (disponible) {
+            div.onclick = () => iniciarQuizAnime(animeId, mazoId);
+            div.title = `Haz clic para practicar ${cantidadPalabras} palabras`;
+        } else {
+            div.classList.add('mazo-inactivo');
+            div.onclick = null;
+            div.title = 'Este mazo aún no tiene palabras';
+        }
+        
+        div.innerHTML = `
+            <div class="mazo-anime-numero">Mazo ${mazoNumero}</div>
+            <div class="mazo-anime-texto">${cantidadPalabras} palabra${cantidadPalabras !== 1 ? 's' : ''}</div>
+            <div class="mazo-anime-recompensa">
+                <span class="recompensa-mini">💰+2</span>
+                <span class="recompensa-mini">💕+30</span>
+            </div>
+            <div class="mazo-anime-info">${disponible ? '✅ Disponible' : '🚧 En preparación'}</div>
+        `;
+        
+        contenedor.appendChild(div);
+    });
+    
+    // Mostrar estadísticas
+    const mazosDisponibles = mazos.filter(mazoId => {
+        const mazo = animeVocabulario[animeId][mazoId];
+        return mazo && mazo.length >= 1;
+    }).length;
+    
+    console.log(`✅ Cargados ${mazos.length} mazos para ${animeId} (${mazosDisponibles} disponibles)`);
+    
+    // Actualizar contador en la interfaz
+    const contadorElement = document.getElementById('contador-mazos');
+    if (contadorElement) {
+        contadorElement.textContent = `(${mazosDisponibles} disponibles de ${mazos.length})`;
     }
 }
 
-// Función global para regalar item (mantener compatibilidad)
-function regalarItem(tipo) {
-    sistemaNakano.regalarItem(tipo);
+// ============================================================================
+// 6. FUNCIÓN PARA INICIAR QUIZ ANIME - CON SISTEMAS INTEGRADOS
+// ============================================================================
+
+function iniciarQuizAnime(animeId, mazoId) {
+    if (animeVocabulario[animeId] && animeVocabulario[animeId][mazoId]) {
+        mazoActualAnime = [...animeVocabulario[animeId][mazoId]];
+        preguntaActualAnime = 0;
+        respuestasCorrectasAnime = 0;
+        respuestasIncorrectasAnime = 0;
+        
+        // Mezclar preguntas
+        for (let i = mazoActualAnime.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [mazoActualAnime[i], mazoActualAnime[j]] = [mazoActualAnime[j], mazoActualAnime[i]];
+        }
+        
+        // Cambiar a pantalla de quiz
+        cambiarPantalla('pantalla-quiz-anime');
+        
+        // Actualizar contador
+        document.getElementById('numero-pregunta-anime').textContent = 1;
+        document.getElementById('total-preguntas-anime').textContent = mazoActualAnime.length;
+        
+        // Mostrar primera pregunta
+        mostrarPreguntaAnime();
+        
+        console.log(`📝 Iniciando quiz anime: ${animeId} - ${mazoId} (${mazoActualAnime.length} palabras)`);
+        console.log(`🎮 Sistemas activos: Economía, RPG Nakano, Eventos, Misiones`);
+    } else {
+        console.error(`❌ No se encontró el mazo ${mazoId} para ${animeId}`);
+        alert('Este mazo aún no está disponible. ¡Próximamente!');
+    }
 }
 
-// Función global para comprar condones (mantener compatibilidad)
-function comprarCondones() {
-    sistemaNakano.comprarCondones();
+// Función para mostrar una pregunta del quiz anime
+function mostrarPreguntaAnime() {
+    if (preguntaActualAnime < mazoActualAnime.length) {
+        const pregunta = mazoActualAnime[preguntaActualAnime];
+        
+        // Actualizar contador
+        document.getElementById('numero-pregunta-anime').textContent = preguntaActualAnime + 1;
+        
+        // Mostrar palabra japonesa
+        document.getElementById('palabra-japones-anime').textContent = pregunta.japones;
+        document.getElementById('lectura-anime').textContent = '';
+        document.getElementById('resultado-anime').textContent = '';
+        document.getElementById('resultado-anime').className = 'resultado';
+        document.getElementById('boton-siguiente-anime').style.display = 'none';
+        
+        // Limpiar opciones anteriores
+        const contenedorOpciones = document.getElementById('contenedor-opciones-anime');
+        contenedorOpciones.innerHTML = '';
+        
+        // Mezclar opciones
+        const opcionesMezcladas = [...pregunta.opciones];
+        for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
+        }
+        
+        // Crear botones de opciones
+        opcionesMezcladas.forEach((opcion, index) => {
+            const botonOpcion = document.createElement('button');
+            botonOpcion.className = 'opcion';
+            botonOpcion.textContent = opcion;
+            botonOpcion.onclick = () => verificarRespuestaAnime(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
+            contenedorOpciones.appendChild(botonOpcion);
+        });
+    } else {
+        mostrarResultadosAnime();
+    }
 }
 
-// Función global para usar momento íntimo (actualizada)
-function usarMomentoIntimo(momentoId) {
-    sistemaNakano.usarMomentoIntimo(momentoId);
+// Función para verificar respuesta en quiz anime (CON SISTEMAS INTEGRADOS)
+function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
+    const opcionesDOM = document.querySelectorAll('#contenedor-opciones-anime .opcion');
+    const resultado = document.getElementById('resultado-anime');
+    const palabraActual = document.getElementById('palabra-japones-anime').textContent;
+    
+    // Deshabilitar botones
+    opcionesDOM.forEach(opcion => {
+        opcion.disabled = true;
+    });
+    
+    // Marcar respuestas correctas e incorrectas
+    opcionesDOM.forEach(opcion => {
+        if (opcion.textContent === respuestaCorrecta) {
+            opcion.classList.add('correcta');
+        } else if (opcion.textContent === respuestaSeleccionada && respuestaSeleccionada !== respuestaCorrecta) {
+            opcion.classList.add('incorrecta');
+        }
+    });
+    
+    // Mostrar lectura
+    document.getElementById('lectura-anime').textContent = `(${lectura})`;
+    
+    if (respuestaSeleccionada === respuestaCorrecta) {
+        resultado.textContent = '¡Correcto! ✅';
+        resultado.className = 'resultado correcto';
+        respuestasCorrectasAnime++;
+        
+        // Navegación automática para respuestas correctas
+        setTimeout(() => {
+            siguientePreguntaAnime();
+        }, 1000);
+        
+    } else {
+        resultado.textContent = `Incorrecto ❌. La respuesta es: ${respuestaCorrecta}`;
+        resultado.className = 'resultado incorrecto';
+        respuestasIncorrectasAnime++;
+        
+        // REGISTRAR PALABRA FALLADA EN SISTEMA
+        if (typeof sistemaPalabrasFalladas !== 'undefined') {
+            sistemaPalabrasFalladas.registrarPalabraFallada(
+                palabraActual,
+                respuestaSeleccionada,
+                respuestaCorrecta,
+                lectura,
+                opciones
+            );
+        }
+        
+        // Mostrar botón "Continuar" para respuestas incorrectas
+        document.getElementById('boton-siguiente-anime').style.display = 'block';
+    }
 }
 
-// Función para obtener imagen de quintilliza
-function obtenerImagenNakano(idQuintilliza) {
-    const imagenes = {
-        'ichika': 'https://pbs.twimg.com/media/G7qfcGRWkAAV74w?format=png&name=small',
-        'nino': 'https://pbs.twimg.com/media/G7qfpGZXAAAib4A?format=png&name=small',
-        'miku': 'https://pbs.twimg.com/media/G7qfrrKWsAAv6ZT?format=png&name=small',
-        'yotsuba': 'https://pbs.twimg.com/media/G7qfupkXUAAX0aS?format=png&name=small',
-        'itsuki': 'https://pbs.twimg.com/media/G7qfxnsX0AIbJK1?format=png&name=small'
-    };
-    return imagenes[idQuintilliza] || 'imagenes/nakano/default.jpg';
+// Función para pasar a la siguiente pregunta anime
+function siguientePreguntaAnime() {
+    preguntaActualAnime++;
+    mostrarPreguntaAnime();
 }
 
-// Función para mostrar video de regalo especial
-function regalarItemEspecial(tipo) {
-    sistemaNakano.regalarItemEspecial(tipo);
+// ============================================================================
+// 7. FUNCIÓN PARA MOSTRAR RESULTADOS DEL ANIME - CON TODOS LOS SISTEMAS
+// ============================================================================
+
+function mostrarResultadosAnime() {
+    const porcentaje = Math.round((respuestasCorrectasAnime / mazoActualAnime.length) * 100);
+    const mazoNumero = mazoActualAnime.length > 0 ? 
+        Object.keys(animeVocabulario[animeActual]).find(key => 
+            animeVocabulario[animeActual][key] === mazoActualAnime
+        ) : 'desconocido';
+    
+    console.log(`📊 Resultados anime: ${porcentaje}% (${respuestasCorrectasAnime}/${mazoActualAnime.length})`);
+    
+    // APLICAR RECOMPENSAS A TODOS LOS SISTEMAS
+    const recompensa = animeRecompensas.aplicarRecompensa(porcentaje, animeActual, mazoNumero);
+    
+    // Verificar si hay evento diario completado
+    let mostrarVideoEvento = false;
+    if (typeof eventosDiarios !== 'undefined' && 
+        eventosDiarios.estado.completado && 
+        eventosDiarios.estado.eventoActual) {
+        mostrarVideoEvento = true;
+        console.log("🎁 Evento diario completado desde anime - mostrando video de evento");
+    }
+    
+    // Crear pantalla de resultados dinámica
+    const resultadosHTML = `
+        <div class="resultado-anime-container">
+            <h2>🎬 Resultados del Quiz Anime</h2>
+            <div class="resultado-anime-detalle">
+                <div class="resultado-item">
+                    <span class="resultado-label">Anime:</span>
+                    <span class="resultado-valor">${animeConfig.animes[animeActual].nombre}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Mazo:</span>
+                    <span class="resultado-valor">${mazoNumero}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Preguntas totales:</span>
+                    <span class="resultado-valor">${mazoActualAnime.length}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Respuestas correctas:</span>
+                    <span class="resultado-valor">${respuestasCorrectasAnime}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Respuestas incorrectas:</span>
+                    <span class="resultado-valor">${respuestasIncorrectasAnime}</span>
+                </div>
+                <div class="resultado-item">
+                    <span class="resultado-label">Porcentaje de aciertos:</span>
+                    <span class="resultado-valor resultado-porcentaje">${porcentaje}%</span>
+                </div>
+                
+                <!-- NUEVO: MOSTRAR RECOMPENSAS INTEGRADAS -->
+                ${animeRecompensas.mostrarResumenRecompensas(recompensa, porcentaje)}
+                
+                <div class="resultado-mensaje">
+                    ${porcentaje === 100 ? '¡Perfecto! 🎉 Dominas este vocabulario' : 
+                      porcentaje >= 80 ? '¡Muy bien! 👏 Casi perfecto' : 
+                      porcentaje >= 60 ? 'Buen trabajo 👍 Sigue practicando' : 
+                      'Sigue estudiando 💪 Lo lograrás'}
+                </div>
+            </div>
+            
+            <div class="botones-resultados-anime">
+                <button class="boton-principal" onclick="volverAAnimeDetalle()">
+                    Volver al Anime
+                </button>
+                <button class="boton-secundario" onclick="repetirQuizAnime()">
+                    Repetir Quiz
+                </button>
+                ${respuestasIncorrectasAnime > 0 ? 
+                    `<button class="boton-terciario" onclick="practicarFalladasAnime()">
+                        📝 Práctica Especial (${respuestasIncorrectasAnime} falladas)
+                    </button>` : ''
+                }
+            </div>
+            
+            <div class="sistemas-activos-info">
+                <h4>🎮 Sistemas activos:</h4>
+                <div class="sistemas-lista">
+                    <span class="sistema-activo">💰 Economía: +${recompensa.dinero} S/.</span>
+                    <span class="sistema-activo">💕 RPG Nakano: +${recompensa.experiencia} XP</span>
+                    ${mostrarVideoEvento ? '<span class="sistema-activo">🎯 Evento diario: ¡Completado!</span>' : ''}
+                    ${porcentaje >= 80 ? '<span class="sistema-activo">📋 Misión diaria: Registrada</span>' : ''}
+                    ${respuestasIncorrectasAnime > 0 ? '<span class="sistema-activo">📝 Palabras falladas: Registradas</span>' : ''}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Crear o actualizar pantalla de resultados
+    let resultadosPantalla = document.getElementById('pantalla-resultados-anime');
+    if (!resultadosPantalla) {
+        resultadosPantalla = document.createElement('div');
+        resultadosPantalla.id = 'pantalla-resultados-anime';
+        resultadosPantalla.className = 'pantalla';
+        document.body.appendChild(resultadosPantalla);
+    }
+    
+    resultadosPantalla.innerHTML = `
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">Resultados Anime</div>
+                <div class="botones-superiores">
+                    <button class="boton-home" onclick="volverAAnimeDetalle()">Volver al Anime</button>
+                    <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
+                </div>
+            </div>
+            ${resultadosHTML}
+        </div>
+    `;
+    
+    cambiarPantalla('pantalla-resultados-anime');
+    
+    // IMPORTANTE: Si se completó evento diario, mostrar su video
+    if (mostrarVideoEvento && typeof eventosDiarios !== 'undefined') {
+        setTimeout(() => {
+            eventosDiarios.mostrarVideoRecompensa();
+        }, 1000);
+    }
 }
+
+// NUEVA FUNCIÓN: Práctica especial de palabras falladas en anime
+function practicarFalladasAnime() {
+    if (typeof sistemaPalabrasFalladas === 'undefined') {
+        alert("Sistema de palabras falladas no disponible");
+        return;
+    }
+    
+    // Obtener palabras falladas de este quiz específico
+    const palabrasFalladas = [];
+    
+    // Simular la obtención de las palabras falladas
+    // En un sistema real, deberíamos haberlas guardado durante el quiz
+    if (mazoActualAnime.length > 0) {
+        alert("Práctica especial de palabras falladas activada");
+        // Aquí iría la lógica para practicar solo las palabras falladas
+    }
+}
+
+// ============================================================================
+// 8. FUNCIONES AUXILIARES INTEGRADAS
+// ============================================================================
+
+// Función para repetir el quiz anime
+function repetirQuizAnime() {
+    preguntaActualAnime = 0;
+    respuestasCorrectasAnime = 0;
+    respuestasIncorrectasAnime = 0;
+    
+    // Mezclar preguntas de nuevo
+    for (let i = mazoActualAnime.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [mazoActualAnime[i], mazoActualAnime[j]] = [mazoActualAnime[j], mazoActualAnime[i]];
+    }
+    
+    cambiarPantalla('pantalla-quiz-anime');
+    mostrarPreguntaAnime();
+}
+
+// Función para volver al detalle del anime
+function volverAAnimeDetalle() {
+    if (animeActual) {
+        cargarAnime(animeActual);
+    } else {
+        cambiarPantalla('pantalla-anime-seleccion');
+    }
+}
+
+// Función para volver a selección de animes
+function volverAAnimeSeleccion() {
+    cambiarPantalla('pantalla-anime-seleccion');
+}
+
+// ============================================================================
+// 9. FUNCIONES DE VIDEO Y TIMESTAMPS (SIN CAMBIOS NECESARIOS)
+// ============================================================================
+
+// [Aquí van las funciones de video y timestamps existentes...]
+// Función para cargar video con opción de idioma
+function cargarVideoAnime(animeId, idioma = 'español') {
+    const anime = animeConfig.animes[animeId];
+    if (!anime || !anime.videos[idioma]) {
+        console.error(`❌ No hay video en ${idioma} para ${animeId}`);
+        return;
+    }
+    
+    idiomaVideoActual = idioma;
+    videoAnimeActual = anime.videos[idioma];
+    
+    const videoUrl = `https://drive.google.com/file/d/${videoAnimeActual.driveId}/preview`;
+    
+    const videoElement = document.getElementById('video-anime');
+    if (videoElement) {
+        videoElement.src = videoUrl;
+        videoElement.title = `${anime.nombre} - ${videoAnimeActual.nombre}`;
+    }
+    
+    const videoInfoElement = document.getElementById('info-video-anime');
+    if (videoInfoElement) {
+        videoInfoElement.innerHTML = `
+            <div class="video-info-header">
+                <span class="video-idioma-badge">🎬 ${videoAnimeActual.nombre}</span>
+                <span class="video-timestamps-badge">⏱️ ${videoAnimeActual.timestamps ? videoAnimeActual.timestamps.length : 0} timestamps</span>
+                <button class="boton-pequeno" onclick="mostrarTimestampsAnime()">Ver Timestamps</button>
+            </div>
+        `;
+    }
+    
+    actualizarBotonesIdioma(animeId);
+    mostrarNotificacionAnime(`🎬 Idioma cambiado a: ${videoAnimeActual.nombre}`);
+}
+
+// Función para cambiar idioma del video
+function cambiarIdiomaVideo(idioma) {
+    if (!animeActual) return;
+    cargarVideoAnime(animeActual, idioma);
+}
+
+// Función para actualizar botones de idioma
+function actualizarBotonesIdioma(animeId) {
+    const anime = animeConfig.animes[animeId];
+    const contenedor = document.getElementById('botones-idioma-anime');
+    
+    if (!contenedor) return;
+    
+    contenedor.innerHTML = '';
+    
+    Object.keys(anime.videos).forEach(idioma => {
+        const video = anime.videos[idioma];
+        const boton = document.createElement('button');
+        boton.className = `boton-idioma ${idioma === idiomaVideoActual ? 'activo' : ''}`;
+        boton.textContent = `${video.nombre} ${video.timestamps && video.timestamps.length > 0 ? '⏱️' : ''}`;
+        boton.onclick = () => cambiarIdiomaVideo(idioma);
+        boton.title = `Cambiar a ${video.nombre}`;
+        
+        contenedor.appendChild(boton);
+    });
+}
+
+// Función para mostrar timestamps del video actual
+function mostrarTimestampsAnime() {
+    if (!videoAnimeActual || !videoAnimeActual.timestamps || videoAnimeActual.timestamps.length === 0) {
+        mostrarNotificacionAnime('📝 Este video no tiene timestamps configurados');
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.id = 'modal-timestamps-anime';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 20px;
+    `;
+    
+    let timestampsHTML = '<div class="timestamps-header">⏱️ Puntos destacados:</div>';
+    
+    videoAnimeActual.timestamps.forEach((ts, index) => {
+        timestampsHTML += `
+            <div class="timestamp-item" onclick="saltarATimestampAnime(${ts.segundos})">
+                <span class="timestamp-tiempo">${ts.tiempo}</span>
+                <span class="timestamp-desc">${ts.descripcion}</span>
+                <span class="timestamp-saltar">▶️ Ir</span>
+            </div>
+        `;
+    });
+    
+    modal.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            border: 3px solid #ff6b9d;
+            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.3);
+            max-height: 80vh;
+            overflow-y: auto;
+        ">
+            <div style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #ff6b9d;
+            ">
+                <h2 style="color: #ff6b9d; margin: 0;">🎬 Timestamps del Video</h2>
+                <button onclick="document.getElementById('modal-timestamps-anime').remove()" 
+                        style="
+                            background: #ff4444;
+                            color: white;
+                            border: none;
+                            padding: 8px 15px;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">
+                    ✖ Cerrar
+                </button>
+            </div>
+            
+            <div style="color: white; margin-bottom: 15px;">
+                <p><strong>Anime:</strong> ${animeConfig.animes[animeActual].nombre}</p>
+                <p><strong>Idioma:</strong> ${videoAnimeActual.nombre}</p>
+                <p><strong>Total timestamps:</strong> ${videoAnimeActual.timestamps.length}</p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                ${timestampsHTML}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// Función para saltar a timestamp específico
+function saltarATimestampAnime(segundos) {
+    if (!animeActual || !videoAnimeActual) return;
+    
+    const videoUrl = `https://drive.google.com/file/d/${videoAnimeActual.driveId}/preview?t=${segundos}s`;
+    
+    const videoElement = document.getElementById('video-anime');
+    if (videoElement) {
+        videoElement.src = videoUrl;
+    }
+    
+    const modal = document.getElementById('modal-timestamps-anime');
+    if (modal) {
+        modal.remove();
+    }
+    
+    mostrarNotificacionAnime(`⏱️ Saltando a ${Math.floor(segundos/60)}:${(segundos%60).toString().padStart(2, '0')}`);
+}
+
+// ============================================================================
+// 10. FUNCIONES DE NOTIFICACIÓN Y CONSOLA
+// ============================================================================
+
+// Función para mostrar notificación
+function mostrarNotificacionAnime(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff6b9d, #ff4081);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 107, 157, 0.5);
+        border-left: 5px solid #00ff88;
+    `;
+    notificacion.textContent = mensaje;
+    notificacion.className = 'notificacion-anime';
+    
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.remove();
+    }, 3000);
+}
+
+// ============================================================================
+// 11. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS - VERSIÓN MEJORADA CON SISTEMAS
+// ============================================================================
+
+function crearPantallasAnime() {
+    if (!document.getElementById('pantalla-anime-seleccion')) {
+        const pantallasHTML = `
+            <!-- PANTALLA DE SELECCIÓN DE ANIME - MEJORADA -->
+            <div id="pantalla-anime-seleccion" class="pantalla">
+                <div class="contenedor">
+                    <div class="barra-superior">
+                        <div class="contador">🎬 ANIME CON SISTEMAS INTEGRADOS</div>
+                        <div class="botones-superiores">
+                            <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                        </div>
+                    </div>
+                    
+                    <h1>🎬 SISTEMA ANIME COMPLETO</h1>
+                    <p class="subtitulo">Estudia japonés con anime - Todos los sistemas activos</p>
+                    
+                    <div class="sistemas-info">
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">💰</span>
+                            <span class="sistema-texto">Economía: Gana dinero por cada quiz</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">💕</span>
+                            <span class="sistema-texto">RPG Nakano: Gana experiencia para tu novia</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">🎯</span>
+                            <span class="sistema-texto">Eventos Diarios: Completa retos especiales</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">📋</span>
+                            <span class="sistema-texto">Misiones Diarias: Progreso automático</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">📝</span>
+                            <span class="sistema-texto">Palabras Falladas: Registro automático</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contenedor-animes" id="contenedor-animes">
+                        <!-- Los animes se cargan aquí dinámicamente -->
+                    </div>
+                    
+                    <div class="recompensas-info">
+                        <h4>🎁 Recompensas por porcentaje:</h4>
+                        <div class="recompensas-grid">
+                            <div class="recompensa-item">
+                                <span class="porcentaje">100%</span>
+                                <span class="recompensa">💰+2 S/. + 💕+30 XP</span>
+                            </div>
+                            <div class="recompensa-item">
+                                <span class="porcentaje">90%</span>
+                                <span class="recompensa">💰+1 S/. + 💕+20 XP</span>
+                            </div>
+                            <div class="recompensa-item">
+                                <span class="porcentaje">80%</span>
+                                <span class="recompensa">💰+0.5 S/. + 💕+15 XP</span>
+                            </div>
+                            <div class="recompensa-item">
+                                <span class="porcentaje">70%</span>
+                                <span class="recompensa">💰+0.3 S/. + 💕+10 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PANTALLA DE DETALLE DE ANIME -->
+            <div id="pantalla-anime-detalle" class="pantalla">
+                <div class="contenedor">
+                    <div class="barra-superior">
+                        <div class="contador" id="titulo-anime">Anime</div>
+                        <div class="botones-superiores">
+                            <button class="boton-home" onclick="volverAAnimeSeleccion()">← Volver a Animes</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                        </div>
+                    </div>
+                    
+                    <div class="anime-detalle-container">
+                        <!-- SELECTOR DE IDIOMA -->
+                        <div class="selector-idioma-container">
+                            <h3>🎬 Selecciona el idioma del video:</h3>
+                            <div class="botones-idioma" id="botones-idioma-anime"></div>
+                            <div class="info-video-anime" id="info-video-anime"></div>
+                        </div>
+                        
+                        <!-- REPRODUCTOR DE VIDEO -->
+                        <div class="video-anime-container">
+                            <div class="video-container-anime">
+                                <iframe id="video-anime" 
+                                        width="100%" 
+                                        height="315"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen
+                                        title="Video del anime">
+                                </iframe>
+                            </div>
+                            
+                            <div class="controles-video-anime">
+                                <button class="boton-principal" onclick="mostrarTimestampsAnime()" 
+                                        style="background: linear-gradient(135deg, #00ff88, #00cc6a);">
+                                    ⏱️ Ver Timestamps
+                                </button>
+                                <button class="boton-secundario" onclick="saltarATimestampAnime(0)">
+                                    🔄 Reiniciar Video
+                                </button>
+                            </div>
+                            
+                            <p class="video-desc" id="descripcion-anime">Mira el video y luego practica el vocabulario</p>
+                        </div>
+                        
+                        <!-- MAZOS DE VOCABULARIO -->
+                        <div class="mazos-anime-container">
+                            <h3>📚 Mazos de Vocabulario <span id="contador-mazos" style="color: #00ff88; font-size: 0.8em;"></span></h3>
+                            <p>Practica las palabras que aparecen en este anime:</p>
+                            
+                            <div class="contenedor-mazos-anime" id="contenedor-mazos-anime"></div>
+                            
+                            <div class="mazos-info">
+                                <p><strong>💡 Todos los sistemas activos en cada quiz:</strong></p>
+                                <p>• Economía: Ganas dinero según tu porcentaje</p>
+                                <p>• RPG Nakano: Tu novia gana experiencia</p>
+                                <p>• Eventos Diarios: Progreso automático</p>
+                                <p>• Misiones Diarias: Completas objetivos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PANTALLA DE QUIZ ANIME -->
+            <div id="pantalla-quiz-anime" class="pantalla">
+                <div class="contenedor">
+                    <div class="barra-superior">
+                        <div class="contador">Quiz Anime: <span id="numero-pregunta-anime">1</span>/<span id="total-preguntas-anime">10</span></div>
+                        <div class="botones-superiores">
+                            <button class="boton-home" onclick="volverAAnimeDetalle()">Volver al Anime</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                        </div>
+                    </div>
+                    
+                    <div class="contenido-quiz">
+                        <div class="palabra-japones" id="palabra-japones-anime">言葉</div>
+                        <div class="lectura" id="lectura-anime"></div>
+                        
+                        <div class="contenedor-opciones" id="contenedor-opciones-anime"></div>
+                        
+                        <div class="resultado" id="resultado-anime"></div>
+                        
+                        <button class="boton-principal" id="boton-siguiente-anime" onclick="siguientePreguntaAnime()" style="display: none;">
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', pantallasHTML);
+        
+        // Agregar estilos específicos para el sistema anime mejorado
+        agregarEstilosAnimeMejorado();
+        
+        console.log("✅ Pantallas anime creadas dinámicamente (CON SISTEMAS INTEGRADOS)");
+    }
+}
+
+// ============================================================================
+// 12. AGREGAR ESTILOS PARA SISTEMAS INTEGRADOS
+// ============================================================================
+
+function agregarEstilosAnimeMejorado() {
+    if (document.getElementById('estilos-anime-mejorado')) return;
+    
+    const estilos = `
+        <style id="estilos-anime-mejorado">
+            /* SISTEMAS INFO */
+            .sistemas-info {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin: 20px 0;
+                padding: 15px;
+                background: rgba(255, 107, 157, 0.1);
+                border-radius: 15px;
+                border: 2px solid #ff6b9d;
+            }
+            
+            .sistema-info-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 8px 0;
+            }
+            
+            .sistema-icon {
+                background: rgba(0, 255, 136, 0.2);
+                color: #00ff88;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                border: 2px solid #00ff88;
+            }
+            
+            .sistema-texto {
+                color: #ffffff;
+                flex: 1;
+            }
+            
+            /* RECOMPENSAS INFO */
+            .recompensas-info {
+                background: rgba(0, 255, 136, 0.1);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #00ff88;
+            }
+            
+            .recompensas-info h4 {
+                color: #00ff88;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .recompensas-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            
+            .recompensa-item {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+                padding: 10px;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .porcentaje {
+                display: block;
+                font-weight: bold;
+                color: #ff6b9d;
+                font-size: 1.1em;
+            }
+            
+            .recompensa {
+                display: block;
+                font-size: 0.9em;
+                color: #00ff88;
+            }
+            
+            /* SISTEMAS EN TARJETAS */
+            .anime-sistemas {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .sistema-badge {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9em;
+            }
+            
+            .sistema-badge.economia {
+                background: rgba(255, 215, 0, 0.2);
+                color: #ffd700;
+                border: 1px solid #ffd700;
+            }
+            
+            .sistema-badge.rpg {
+                background: rgba(255, 107, 157, 0.2);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
+            }
+            
+            .sistema-badge.eventos {
+                background: rgba(0, 255, 136, 0.2);
+                color: #00ff88;
+                border: 1px solid #00ff88;
+            }
+            
+            .sistema-badge.misiones {
+                background: rgba(74, 144, 226, 0.2);
+                color: #4a90e2;
+                border: 1px solid #4a90e2;
+            }
+            
+            /* RECOMPENSAS EN MAZOS */
+            .mazo-anime-recompensa {
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+                margin: 5px 0;
+            }
+            
+            .recompensa-mini {
+                background: rgba(0, 255, 136, 0.1);
+                color: #00ff88;
+                padding: 2px 6px;
+                border-radius: 5px;
+                font-size: 0.8em;
+                border: 1px solid #00ff88;
+            }
+            
+            /* RECOMPENSA RESUMEN */
+            .recompensa-resumen {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 15px;
+                padding: 15px;
+                margin: 15px 0;
+                border: 2px solid #00ff88;
+            }
+            
+            .recompensa-resumen h4 {
+                color: #00ff88;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .recompensa-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .recompensa-item:last-child {
+                border-bottom: none;
+            }
+            
+            .recompensa-icon {
+                font-size: 1.2em;
+                min-width: 30px;
+                text-align: center;
+            }
+            
+            .recompensa-texto {
+                flex: 1;
+                color: #cccccc;
+            }
+            
+            .recompensa-valor {
+                color: #00ff88;
+                font-weight: bold;
+            }
+            
+            .recompensa-mensaje {
+                text-align: center;
+                font-style: italic;
+                color: #ff6b9d;
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* SISTEMAS ACTIVOS INFO */
+            .sistemas-activos-info {
+                background: rgba(74, 144, 226, 0.1);
+                border-radius: 15px;
+                padding: 15px;
+                margin-top: 20px;
+                border: 2px solid #4a90e2;
+            }
+            
+            .sistemas-activos-info h4 {
+                color: #4a90e2;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            .sistemas-lista {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .sistema-activo {
+                background: rgba(0, 255, 136, 0.1);
+                color: #00ff88;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.9em;
+                border: 1px solid #00ff88;
+            }
+            
+            /* BOTONES ESPECIALES */
+            .boton-terciario {
+                background: linear-gradient(135deg, #ff9800, #ff5722);
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin: 5px;
+            }
+            
+            .boton-terciario:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            }
+            
+            /* RESPONSIVE */
+            @media (max-width: 768px) {
+                .sistemas-info {
+                    padding: 10px;
+                }
+                
+                .sistema-info-item {
+                    font-size: 0.9em;
+                }
+                
+                .recompensas-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
+                .sistemas-lista {
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .recompensas-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .sistema-icon {
+                    width: 25px;
+                    height: 25px;
+                    font-size: 0.9em;
+                }
+            }
+        </style>
+    `;
+    
+    document.head.insertAdjacentHTML('beforeend', estilos);
+}
+
+// ============================================================================
+// 13. EXPORTAR FUNCIONES PARA USO GLOBAL
+// ============================================================================
+
+// Hacer funciones disponibles globalmente
+window.iniciarSistemaAnime = iniciarSistemaAnime;
+window.cargarAnime = cargarAnime;
+window.cargarMazosAnime = cargarMazosAnime;
+window.iniciarQuizAnime = iniciarQuizAnime;
+window.verificarRespuestaAnime = verificarRespuestaAnime;
+window.siguientePreguntaAnime = siguientePreguntaAnime;
+window.mostrarResultadosAnime = mostrarResultadosAnime;
+window.repetirQuizAnime = repetirQuizAnime;
+window.volverAAnimeSeleccion = volverAAnimeSeleccion;
+window.volverAAnimeDetalle = volverAAnimeDetalle;
+window.crearPantallasAnime = crearPantallasAnime;
+
+// Funciones de video
+window.cargarVideoAnime = cargarVideoAnime;
+window.cambiarIdiomaVideo = cambiarIdiomaVideo;
+window.mostrarTimestampsAnime = mostrarTimestampsAnime;
+window.saltarATimestampAnime = saltarATimestampAnime;
+
+// NUEVAS funciones para testing
+window.verRecompensasAnime = function(porcentaje) {
+    return animeRecompensas.calcularRecompensa(porcentaje);
+};
+
+window.simularQuizAnime = function(animeId, mazoId, porcentaje) {
+    console.log(`🎮 Simulando quiz anime: ${animeId} - ${mazoId} (${porcentaje}%)`);
+    const recompensa = animeRecompensas.aplicarRecompensa(porcentaje, animeId, mazoId);
+    console.log(`✅ Recompensa aplicada: +${recompensa.dinero} S/. +${recompensa.experiencia} XP`);
+    return recompensa;
+};
+
+// ============================================================================
+// 14. CONSOLA DE AYUDA
+// ============================================================================
+
+console.log("✅ Sistema anime COMPLETAMENTE INTEGRADO cargado correctamente");
+console.log("🎮 SISTEMAS ACTIVOS:");
+console.log("   - 💰 ECONOMÍA: Ganas dinero según tu porcentaje");
+console.log("   - 💕 RPG NAKANO: Tu novia gana experiencia");
+console.log("   - 🎯 EVENTOS DIARIOS: Progreso automático");
+console.log("   - 📋 MISIONES DIARIAS: Se completan con 80%+");
+console.log("   - 📝 PALABRAS FALLADAS: Registro automático");
+console.log("");
+console.log("🎁 RECOMPENSAS POR PORCENTAJE:");
+console.log("   - 100%: +2 S/. +30 XP");
+console.log("   - 90%: +1 S/. +20 XP");
+console.log("   - 80%: +0.5 S/. +15 XP");
+console.log("   - 70%: +0.3 S/. +10 XP");
+console.log("   - 60%: +0.2 S/. +5 XP");
+console.log("   - 50%: +0.1 S/. +3 XP");
+console.log("");
+console.log("🚀 PARA COMENZAR:");
+console.log("   - Usa iniciarSistemaAnime() desde el menú");
+console.log("   - O desde consola: iniciarSistemaAnime()");
+console.log("");
+console.log("🧪 FUNCIONES DE TESTING:");
+console.log("   - verRecompensasAnime(95) // Ver recompensa para 95%");
+console.log("   - simularQuizAnime('anime1', 'mazo1', 85) // Simular quiz");
+console.log("");
+console.log("💖 ¡Disfruta del sistema anime completamente integrado!");
