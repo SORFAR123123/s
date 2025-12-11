@@ -1,5 +1,5 @@
 // ============================================================================
-// SISTEMA OPENINGS DE ANIME - 5galeria-opening.js
+// SISTEMA OPENINGS DE ANIME COMPLETO CON TODOS LOS SISTEMAS INTEGRADOS
 // ============================================================================
 
 // ============================================================================
@@ -75,13 +75,15 @@ const openingsConfig = {
     mazosPorAnime: 5,
     palabrasPorMazo: 10,
     
-    // IDs reales de Google Drive (debes reemplazarlos con tus videos)
-    driveOpeningIds: {
-        'opening1': '1YOUR_DRIVE_ID_1',
-        'opening2': '1YOUR_DRIVE_ID_2',
-        'opening3': '1YOUR_DRIVE_ID_3',
-        'opening4': '1YOUR_DRIVE_ID_4',
-        'opening5': '1YOUR_DRIVE_ID_5'
+    // Sistema de recompensas IDÉNTICO al sistema anime
+    recompensasPorcentaje: {
+        100: { dinero: 2, experiencia: 30, mensaje: '🎵 ¡Perfecto! Dominio musical absoluto' },
+        90: { dinero: 1, experiencia: 20, mensaje: '👏 ¡Excelente! Ritmo perfecto' },
+        80: { dinero: 0.5, experiencia: 15, mensaje: '👍 ¡Muy bien! Buen oído' },
+        70: { dinero: 0.3, experiencia: 10, mensaje: '✅ Bien, sigue practicando' },
+        60: { dinero: 0.2, experiencia: 5, mensaje: '💪 Sigue escuchando' },
+        50: { dinero: 0.1, experiencia: 3, mensaje: '📚 Necesitas más estudio' },
+        0: { dinero: 0, experiencia: 1, mensaje: '🔁 Repite para mejorar' }
     }
 };
 
@@ -218,87 +220,481 @@ const openingsVocabulario = {
         ]
     },
     
-    // OPENING 3 - Kimetsu no Yaiba (ejemplo reducido)
+    // OPENING 3 - Kimetsu no Yaiba
     'opening3': {
-        'mazo1': generarPalabrasOpening(10),
-        'mazo2': generarPalabrasOpening(10),
-        'mazo3': generarPalabrasOpening(10),
-        'mazo4': generarPalabrasOpening(10),
-        'mazo5': generarPalabrasOpening(10)
+        'mazo1': [
+            { japones: '鬼', lectura: 'oni', opciones: ['Demonio', 'Ángel', 'Humano', 'Animal'], respuesta: 0 },
+            { japones: '刀', lectura: 'katana', opciones: ['Espada', 'Escudo', 'Lanza', 'Arco'], respuesta: 0 },
+            { japones: '呼吸', lectura: 'kokyuu', opciones: ['Respiración', 'Técnica', 'Movimiento', 'Postura'], respuesta: 0 },
+            { japones: '柱', lectura: 'hashira', opciones: ['Pilar', 'Guerrero', 'Maestro', 'Discípulo'], respuesta: 0 },
+            { japones: '殺鬼', lectura: 'satsuki', opciones: ['Matar demonios', 'Proteger humanos', 'Entrenar', 'Investigar'], respuesta: 0 },
+            { japones: '血鬼術', lectura: 'kekkijutsu', opciones: ['Técnica de sangre demoníaca', 'Magia', 'Hechizo', 'Técnica secreta'], respuesta: 0 },
+            { japones: '炎', lectura: 'honoo', opciones: ['Fuego', 'Agua', 'Viento', 'Tierra'], respuesta: 0 },
+            { japones: '水', lectura: 'mizu', opciones: ['Agua', 'Fuego', 'Viento', 'Tierra'], respuesta: 0 },
+            { japones: '雷', lectura: 'kaminari', opciones: ['Rayo', 'Fuego', 'Agua', 'Viento'], respuesta: 0 },
+            { japones: '風', lectura: 'kaze', opciones: ['Viento', 'Fuego', 'Agua', 'Tierra'], respuesta: 0 }
+        ],
+        'mazo2': [
+            { japones: '家族', lectura: 'kazoku', opciones: ['Familia', 'Amigos', 'Compañeros', 'Vecinos'], respuesta: 0 },
+            { japones: '兄妹', lectura: 'kyoudai', opciones: ['Hermanos', 'Padres', 'Primos', 'Tíos'], respuesta: 0 },
+            { japones: '守る', lectura: 'mamoru', opciones: ['Proteger', 'Atacar', 'Abandonar', 'Ignorar'], respuesta: 0 },
+            { japones: '強い', lectura: 'tsuyoi', opciones: ['Fuerte', 'Débil', 'Normal', 'Mediano'], respuesta: 0 },
+            { japones: '弱い', lectura: 'yowai', opciones: ['Débil', 'Fuerte', 'Robusto', 'Resistente'], respuesta: 0 },
+            { japones: '修行', lectura: 'shugyou', opciones: ['Entrenamiento', 'Descanso', 'Diversión', 'Trabajo'], respuesta: 0 },
+            { japones: '覚悟', lectura: 'kakugo', opciones: ['Determinación', 'Indecisión', 'Duda', 'Miedo'], respuesta: 0 },
+            { japones: '使命', lectura: 'shimei', opciones: ['Misión', 'Hobby', 'Pasatiempo', 'Elección'], respuesta: 0 },
+            { japones: '覚醒', lectura: 'kakusei', opciones: ['Despertar', 'Dormir', 'Descansar', 'Soñar'], respuesta: 0 },
+            { japones: '絆', lectura: 'kizuna', opciones: ['Vínculo', 'Separación', 'Distancia', 'Soledad'], respuesta: 0 }
+        ]
     },
     
-    // OPENING 4 - Jujutsu Kaisen (ejemplo reducido)
+    // OPENING 4 - Jujutsu Kaisen
     'opening4': {
-        'mazo1': generarPalabrasOpening(10),
-        'mazo2': generarPalabrasOpening(10),
-        'mazo3': generarPalabrasOpening(10),
-        'mazo4': generarPalabrasOpening(10),
-        'mazo5': generarPalabrasOpening(10)
+        'mazo1': [
+            { japones: '呪術', lectura: 'jujutsu', opciones: ['Hechicería', 'Magia', 'Técnica', 'Arte marcial'], respuesta: 0 },
+            { japones: '呪力', lectura: 'juryoku', opciones: ['Energía maldita', 'Poder espiritual', 'Fuerza física', 'Energía vital'], respuesta: 0 },
+            { japones: '領域展開', lectura: 'ryōiki tenkai', opciones: ['Expansión de dominio', 'Técnica secreta', 'Ataque final', 'Defensa máxima'], respuesta: 0 },
+            { japones: '術式', lectura: 'jutsushiki', opciones: ['Técnica', 'Hechizo', 'Ritual', 'Fórmula'], respuesta: 0 },
+            { japones: '特級呪物', lectura: 'tokkyū jumotsu', opciones: ['Objeto maldito especial', 'Arma sagrada', 'Reliquia', 'Artículo mágico'], respuesta: 0 },
+            { japones: '呪霊', lectura: 'juryō', opciones: ['Espíritu maldito', 'Fantasma', 'Demonio', 'Aparición'], respuesta: 0 },
+            { japones: '生得術式', lectura: 'seitoku jutsushiki', opciones: ['Técnica innata', 'Habilidad natural', 'Poder heredado', 'Don especial'], respuesta: 0 },
+            { japones: '反転術式', lectura: 'hanten jutsushiki', opciones: ['Técnica de reversión', 'Curación', 'Defensa', 'Contraataque'], respuesta: 0 },
+            { japones: '無限', lectura: 'mugen', opciones: ['Infinito', 'Limitado', 'Finito', 'Completo'], respuesta: 0 },
+            { japones: '虚式', lectura: 'kyoshiki', opciones: ['Técnica vacía', 'Ataque ilusorio', 'Defensa perfecta', 'Movimiento rápido'], respuesta: 0 }
+        ]
     },
     
-    // OPENING 5 - Slam Dunk (ejemplo reducido)
+    // OPENING 5 - Slam Dunk
     'opening5': {
-        'mazo1': generarPalabrasOpening(10),
-        'mazo2': generarPalabrasOpening(10),
-        'mazo3': generarPalabrasOpening(10),
-        'mazo4': generarPalabrasOpening(10),
-        'mazo5': generarPalabrasOpening(10)
+        'mazo1': [
+            { japones: 'バスケットボール', lectura: 'basukettobōru', opciones: ['Baloncesto', 'Fútbol', 'Voleibol', 'Béisbol'], respuesta: 0 },
+            { japones: '試合', lectura: 'shiai', opciones: ['Partido', 'Entrenamiento', 'Práctica', 'Competencia'], respuesta: 0 },
+            { japones: '得点', lectura: 'tokuten', opciones: ['Puntos', 'Goles', 'Sets', 'Rounds'], respuesta: 0 },
+            { japones: 'シュート', lectura: 'shūto', opciones: ['Tiro', 'Pase', 'Drible', 'Rebote'], respuesta: 0 },
+            { japones: 'リバウンド', lectura: 'ribaundo', opciones: ['Rebote', 'Bloqueo', 'Asistencia', 'Robo'], respuesta: 0 },
+            { japones: 'パス', lectura: 'pasu', opciones: ['Pase', 'Tiro', 'Drible', 'Bloqueo'], respuesta: 0 },
+            { japones: 'ドリブル', lectura: 'doriburu', opciones: ['Drible', 'Pase', 'Tiro', 'Rebote'], respuesta: 0 },
+            { japones: 'ブロック', lectura: 'burokku', opciones: ['Bloqueo', 'Robo', 'Asistencia', 'Rebote'], respuesta: 0 },
+            { japones: 'スティール', lectura: 'sutīru', opciones: ['Robo', 'Bloqueo', 'Asistencia', 'Rebote'], respuesta: 0 },
+            { japones: 'アシスト', lectura: 'ashisuto', opciones: ['Asistencia', 'Puntos', 'Rebotes', 'Robos'], respuesta: 0 }
+        ]
     }
 };
 
 // ============================================================================
-// 3. FUNCIÓN PARA GENERAR PALABRAS GENÉRICAS DE OPENINGS
+// 3. SISTEMAS DE PALABRAS FALLADAS Y DIFÍCILES PARA OPENINGS
 // ============================================================================
 
-function generarPalabrasOpening(cantidad) {
-    const palabras = [];
-    const palabrasBase = [
-        { japones: '歌', lectura: 'uta', opciones: ['Canción', 'Música', 'Letra', 'Melodía'], respuesta: 0 },
-        { japones: '音楽', lectura: 'ongaku', opciones: ['Música', 'Silencio', 'Ruido', 'Sonido'], respuesta: 0 },
-        { japones: '歌詞', lectura: 'kashi', opciones: ['Letra', 'Música', 'Ritmo', 'Melodía'], respuesta: 0 },
-        { japones: '旋律', lectura: 'senritsu', opciones: ['Melodía', 'Ritmo', 'Armonía', 'Acorde'], respuesta: 0 },
-        { japones: 'リズム', lectura: 'rizumu', opciones: ['Ritmo', 'Melodía', 'Armonía', 'Tempo'], respuesta: 0 },
-        { japones: '音', lectura: 'oto', opciones: ['Sonido', 'Silencio', 'Ruido', 'Eco'], respuesta: 0 },
-        { japones: '声', lectura: 'koe', opciones: ['Voz', 'Canto', 'Grito', 'Susurro'], respuesta: 0 },
-        { japones: '奏でる', lectura: 'kanaderu', opciones: ['Tocar (instrumento)', 'Cantar', 'Escuchar', 'Componer'], respuesta: 0 },
-        { japones: '聴く', lectura: 'kiku', opciones: ['Escuchar', 'Hablar', 'Cantar', 'Gritar'], respuesta: 0 },
-        { japones: '感動', lectura: 'kandou', opciones: ['Emoción', 'Indiferencia', 'Aburrimiento', 'Fastidio'], respuesta: 0 }
-    ];
-    
-    for (let i = 0; i < cantidad; i++) {
-        palabras.push({...palabrasBase[i % palabrasBase.length]});
-    }
-    return palabras;
-}
-
-// ============================================================================
-// 4. VARIABLES GLOBALES DEL SISTEMA OPENINGS
-// ============================================================================
-
+let palabrasFalladasOpenings = [];
+let palabrasDificilesOpenings = [];
 let openingActual = '';
 let mazoActualOpening = [];
 let preguntaActualOpening = 0;
 let respuestasCorrectasOpening = 0;
 let respuestasIncorrectasOpening = 0;
+let mazoActualIdOpening = '';
 
 // ============================================================================
-// 5. FUNCIONES PRINCIPALES DEL SISTEMA OPENINGS
+// 4. SISTEMA DE PALABRAS FALLADAS PARA OPENINGS
 // ============================================================================
 
-// Función para iniciar el sistema openings desde el menú principal
+const sistemaFalladasOpenings = {
+    registrarPalabraFallada: function(palabraJapones, respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
+        const yaRegistrada = palabrasFalladasOpenings.some(p => 
+            p.japones === palabraJapones && 
+            p.opening === openingActual &&
+            p.mazo === mazoActualIdOpening
+        );
+        
+        if (!yaRegistrada) {
+            const palabraFallada = {
+                japones: palabraJapones,
+                respuestaSeleccionada: respuestaSeleccionada,
+                respuestaCorrecta: respuestaCorrecta,
+                lectura: lectura,
+                opciones: opciones,
+                opening: openingActual,
+                mazo: mazoActualIdOpening,
+                fecha: new Date().toLocaleString(),
+                intentosFallados: 1
+            };
+            
+            palabrasFalladasOpenings.push(palabraFallada);
+            console.log(`📝 Palabra fallada opening registrada: ${palabraJapones} (${openingActual})`);
+            
+            actualizarContadoresFalladasOpenings();
+            
+            return palabraFallada;
+        } else {
+            const palabraExistente = palabrasFalladasOpenings.find(p => 
+                p.japones === palabraJapones && p.opening === openingActual
+            );
+            if (palabraExistente) {
+                palabraExistente.intentosFallados++;
+                palabraExistente.fecha = new Date().toLocaleString();
+                console.log(`📝 Palabra fallada opening actualizada: ${palabraJapones} (${palabraExistente.intentosFallados} veces)`);
+            }
+        }
+        
+        return null;
+    },
+    
+    obtenerPorOpening: function(openingId) {
+        return palabrasFalladasOpenings.filter(p => p.opening === openingId);
+    },
+    
+    obtenerTodas: function() {
+        return [...palabrasFalladasOpenings];
+    },
+    
+    obtenerEstadisticas: function() {
+        return {
+            total: palabrasFalladasOpenings.length,
+            porOpening: this.agruparPorOpening(),
+            masFalladas: this.obtenerMasFalladas()
+        };
+    },
+    
+    agruparPorOpening: function() {
+        const grupos = {};
+        palabrasFalladasOpenings.forEach(palabra => {
+            if (!grupos[palabra.opening]) {
+                grupos[palabra.opening] = {
+                    nombre: openingsConfig.animes[palabra.opening]?.nombre || palabra.opening,
+                    cantidad: 0,
+                    palabras: []
+                };
+            }
+            grupos[palabra.opening].cantidad++;
+            grupos[palabra.opening].palabras.push(palabra);
+        });
+        return grupos;
+    },
+    
+    obtenerMasFalladas: function() {
+        return [...palabrasFalladasOpenings]
+            .sort((a, b) => b.intentosFallados - a.intentosFallados)
+            .slice(0, 10);
+    },
+    
+    eliminarPalabra: function(palabraJapones, openingId) {
+        const index = palabrasFalladasOpenings.findIndex(p => 
+            p.japones === palabraJapones && p.opening === openingId
+        );
+        
+        if (index !== -1) {
+            const palabraEliminada = palabrasFalladasOpenings.splice(index, 1)[0];
+            console.log(`🗑️ Palabra fallada opening eliminada: ${palabraJapones}`);
+            actualizarContadoresFalladasOpenings();
+            return palabraEliminada;
+        }
+        return null;
+    },
+    
+    limpiarTodas: function() {
+        const cantidad = palabrasFalladasOpenings.length;
+        palabrasFalladasOpenings = [];
+        console.log(`🗑️ ${cantidad} palabras falladas openings limpiadas`);
+        actualizarContadoresFalladasOpenings();
+        return cantidad;
+    },
+    
+    limpiarPorOpening: function(openingId) {
+        const cantidadInicial = palabrasFalladasOpenings.length;
+        palabrasFalladasOpenings = palabrasFalladasOpenings.filter(p => p.opening !== openingId);
+        const cantidadEliminada = cantidadInicial - palabrasFalladasOpenings.length;
+        console.log(`🗑️ ${cantidadEliminada} palabras falladas limpiadas de ${openingId}`);
+        actualizarContadoresFalladasOpenings();
+        return cantidadEliminada;
+    },
+    
+    convertirAMazo: function() {
+        return palabrasFalladasOpenings.map(palabra => ({
+            japones: palabra.japones,
+            lectura: palabra.lectura,
+            opciones: palabra.opciones,
+            respuesta: palabra.opciones.indexOf(palabra.respuestaCorrecta)
+        }));
+    },
+    
+    iniciarPractica: function() {
+        if (palabrasFalladasOpenings.length === 0) {
+            mostrarNotificacionOpenings('📝 No hay palabras falladas para practicar');
+            return false;
+        }
+        
+        mazoActualOpening = this.convertirAMazo();
+        mazoActualIdOpening = 'falladas';
+        preguntaActualOpening = 0;
+        respuestasCorrectasOpening = 0;
+        respuestasIncorrectasOpening = 0;
+        
+        for (let i = mazoActualOpening.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [mazoActualOpening[i], mazoActualOpening[j]] = [mazoActualOpening[j], mazoActualOpening[i]];
+        }
+        
+        cambiarPantalla('pantalla-quiz-opening');
+        
+        document.getElementById('numero-pregunta-opening').textContent = 1;
+        document.getElementById('total-preguntas-opening').textContent = mazoActualOpening.length;
+        
+        mostrarPreguntaOpening();
+        
+        console.log(`📝 Iniciando práctica openings con ${mazoActualOpening.length} palabras falladas`);
+        mostrarNotificacionOpenings(`📝 Practicando ${mazoActualOpening.length} palabras falladas`);
+        
+        return true;
+    }
+};
+
+// ============================================================================
+// 5. SISTEMA DE PALABRAS DIFÍCILES PARA OPENINGS
+// ============================================================================
+
+const sistemaDificilesOpenings = {
+    marcarComoDificil: function(palabra) {
+        const yaMarcada = palabrasDificilesOpenings.some(p => 
+            p.japones === palabra.japones && 
+            p.lectura === palabra.lectura &&
+            p.opening === openingActual
+        );
+        
+        if (!yaMarcada) {
+            const palabraDificil = {
+                ...palabra,
+                opening: openingActual,
+                mazo: mazoActualIdOpening,
+                fecha: new Date().toLocaleString(),
+                motivo: 'Marcada manualmente'
+            };
+            
+            palabrasDificilesOpenings.push(palabraDificil);
+            console.log(`💀 Palabra opening marcada como difícil: ${palabra.japones}`);
+            return palabraDificil;
+        }
+        return null;
+    },
+    
+    removerDeDificiles: function(palabra) {
+        const index = palabrasDificilesOpenings.findIndex(p => 
+            p.japones === palabra.japones && 
+            p.lectura === palabra.lectura &&
+            p.opening === openingActual
+        );
+        
+        if (index !== -1) {
+            const palabraRemovida = palabrasDificilesOpenings.splice(index, 1)[0];
+            console.log(`✅ Palabra opening removida de difíciles: ${palabra.japones}`);
+            return palabraRemovida;
+        }
+        return null;
+    },
+    
+    esDificil: function(palabra) {
+        return palabrasDificilesOpenings.some(p => 
+            p.japones === palabra.japones && 
+            p.lectura === palabra.lectura
+        );
+    },
+    
+    obtenerPorOpening: function(openingId) {
+        return palabrasDificilesOpenings.filter(p => p.opening === openingId);
+    },
+    
+    obtenerTodas: function() {
+        return [...palabrasDificilesOpenings];
+    },
+    
+    convertirAMazo: function() {
+        return palabrasDificilesOpenings.map(palabra => ({
+            japones: palabra.japones,
+            lectura: palabra.lectura,
+            opciones: palabra.opciones,
+            respuesta: palabra.respuesta
+        }));
+    },
+    
+    iniciarPractica: function() {
+        if (palabrasDificilesOpenings.length === 0) {
+            mostrarNotificacionOpenings('💀 No hay palabras marcadas como difíciles');
+            return false;
+        }
+        
+        mazoActualOpening = this.convertirAMazo();
+        mazoActualIdOpening = 'dificiles';
+        preguntaActualOpening = 0;
+        respuestasCorrectasOpening = 0;
+        respuestasIncorrectasOpening = 0;
+        
+        for (let i = mazoActualOpening.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [mazoActualOpening[i], mazoActualOpening[j]] = [mazoActualOpening[j], mazoActualOpening[i]];
+        }
+        
+        cambiarPantalla('pantalla-quiz-opening');
+        
+        document.getElementById('numero-pregunta-opening').textContent = 1;
+        document.getElementById('total-preguntas-opening').textContent = mazoActualOpening.length;
+        
+        mostrarPreguntaOpening();
+        
+        console.log(`💀 Iniciando práctica openings con ${mazoActualOpening.length} palabras difíciles`);
+        mostrarNotificacionOpenings(`💀 Practicando ${mazoActualOpening.length} palabras difíciles`);
+        
+        return true;
+    },
+    
+    limpiarTodas: function() {
+        const cantidad = palabrasDificilesOpenings.length;
+        palabrasDificilesOpenings = [];
+        console.log(`🗑️ ${cantidad} palabras difíciles openings limpiadas`);
+        return cantidad;
+    }
+};
+
+// ============================================================================
+// 6. SISTEMA DE RECOMPENSAS PARA OPENINGS
+// ============================================================================
+
+const openingsRecompensas = {
+    calcularRecompensa: function(porcentaje) {
+        let recompensa = null;
+        
+        if (porcentaje === 100) {
+            recompensa = openingsConfig.recompensasPorcentaje[100];
+        } else if (porcentaje >= 90) {
+            recompensa = openingsConfig.recompensasPorcentaje[90];
+        } else if (porcentaje >= 80) {
+            recompensa = openingsConfig.recompensasPorcentaje[80];
+        } else if (porcentaje >= 70) {
+            recompensa = openingsConfig.recompensasPorcentaje[70];
+        } else if (porcentaje >= 60) {
+            recompensa = openingsConfig.recompensasPorcentaje[60];
+        } else if (porcentaje >= 50) {
+            recompensa = openingsConfig.recompensasPorcentaje[50];
+        } else {
+            recompensa = openingsConfig.recompensasPorcentaje[0];
+        }
+        
+        return recompensa;
+    },
+    
+    aplicarRecompensa: function(porcentaje, openingId, mazoId) {
+        const recompensa = this.calcularRecompensa(porcentaje);
+        const openingNombre = openingsConfig.animes[openingId] ? openingsConfig.animes[openingId].nombre : openingId;
+        
+        console.log(`🎵 Aplicando recompensa opening: ${porcentaje}% → +${recompensa.dinero} S/. +${recompensa.experiencia} XP`);
+        
+        // 1. SISTEMA DE ECONOMÍA
+        if (typeof sistemaEconomia !== 'undefined' && sistemaEconomia.agregarDinero) {
+            sistemaEconomia.agregarDinero(recompensa.dinero, `Opening: ${openingNombre} - Mazo ${mazoId} (${porcentaje}%)`);
+        }
+        
+        // 2. SISTEMA NAKANO (EXPERIENCIA)
+        if (typeof sistemaNakano !== 'undefined' && sistemaNakano.agregarExperiencia) {
+            sistemaNakano.agregarExperiencia(recompensa.experiencia, `Quiz opening: ${openingNombre} - ${porcentaje}%`);
+        }
+        
+        // 3. EVENTOS DIARIOS
+        if (typeof eventosDiarios !== 'undefined' && 
+            eventosDiarios.estado.eventoActual && 
+            eventosDiarios.estado.aceptado && 
+            !eventosDiarios.estado.completado) {
+            
+            const eventoEstabaIncompleto = !eventosDiarios.estado.completado;
+            eventosDiarios.registrarMazoCompletado();
+            
+            if (eventoEstabaIncompleto && eventosDiarios.estado.completado) {
+                console.log("🎯 Evento diario completado desde openings!");
+            }
+        }
+        
+        // 4. MISIONES DIARIAS
+        if (typeof misionesDiarias !== 'undefined' && porcentaje >= 80) {
+            misionesDiarias.registrarMazoCompletado();
+        }
+        
+        return recompensa;
+    },
+    
+    mostrarResumenRecompensas: function(recompensa, porcentaje) {
+        return `
+            <div class="recompensa-resumen">
+                <h4>🎵 Recompensas Obtenidas</h4>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">💰</span>
+                    <span class="recompensa-texto">Dinero:</span>
+                    <span class="recompensa-valor">+${recompensa.dinero} S/.</span>
+                </div>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">💕</span>
+                    <span class="recompensa-texto">Experiencia RPG:</span>
+                    <span class="recompensa-valor">+${recompensa.experiencia} XP</span>
+                </div>
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">📊</span>
+                    <span class="recompensa-texto">Puntuación:</span>
+                    <span class="recompensa-valor">${porcentaje}%</span>
+                </div>
+                <div class="recompensa-mensaje">
+                    ${recompensa.mensaje}
+                </div>
+            </div>
+        `;
+    }
+};
+
+// ============================================================================
+// 7. FUNCIONES PARA ACTUALIZAR CONTADORES EN INTERFAZ
+// ============================================================================
+
+function actualizarContadoresFalladasOpenings() {
+    const contadorFalladas = document.getElementById('contador-falladas-opening');
+    if (contadorFalladas) {
+        const totalFalladas = palabrasFalladasOpenings.length;
+        contadorFalladas.textContent = `📝 ${totalFalladas} fallada${totalFalladas !== 1 ? 's' : ''}`;
+        contadorFalladas.style.display = totalFalladas > 0 ? 'inline-block' : 'none';
+    }
+}
+
+function actualizarContadoresDificilesOpenings() {
+    const contadorDificiles = document.getElementById('contador-dificiles-opening');
+    if (contadorDificiles) {
+        const totalDificiles = palabrasDificilesOpenings.length;
+        contadorDificiles.textContent = `💀 ${totalDificiles} difícil${totalDificiles !== 1 ? 'es' : ''}`;
+        contadorDificiles.style.display = totalDificiles > 0 ? 'inline-block' : 'none';
+    }
+}
+
+function actualizarBotonDificilOpening(esDificil) {
+    const botonDificil = document.getElementById('boton-dificil-opening');
+    if (botonDificil) {
+        if (esDificil) {
+            botonDificil.innerHTML = '✅ Ya es difícil';
+            botonDificil.style.background = 'linear-gradient(135deg, #ff4444, #cc0000)';
+            botonDificil.title = 'Haz clic para quitar de palabras difíciles';
+        } else {
+            botonDificil.innerHTML = '💀 Marcar como difícil';
+            botonDificil.style.background = 'linear-gradient(135deg, #ff9800, #ff5722)';
+            botonDificil.title = 'Haz clic para marcar como difícil';
+        }
+    }
+}
+
+// ============================================================================
+// 8. FUNCIONES PRINCIPALES DEL SISTEMA OPENINGS
+// ============================================================================
+
 function iniciarSistemaOpenings() {
     cambiarPantalla('pantalla-openings-seleccion');
     cargarListaOpenings();
-    console.log("🎵 Sistema openings iniciado");
+    console.log("🎵 Sistema openings iniciado (CON TODOS LOS SISTEMAS)");
 }
 
-// Función para cargar la lista de openings disponibles
 function cargarListaOpenings() {
     const contenedor = document.getElementById('contenedor-openings');
-    if (!contenedor) {
-        console.error("❌ No se encontró el contenedor de openings");
-        return;
-    }
+    if (!contenedor) return;
     
     contenedor.innerHTML = '';
     
@@ -309,6 +705,18 @@ function cargarListaOpenings() {
         div.style.borderColor = opening.color;
         div.onclick = () => cargarOpening(openingId);
         
+        // Contar mazos disponibles
+        let mazosDisponibles = 0;
+        if (openingsVocabulario[openingId]) {
+            mazosDisponibles = Object.keys(openingsVocabulario[openingId]).filter(mazoId => {
+                return openingsVocabulario[openingId][mazoId] && openingsVocabulario[openingId][mazoId].length >= 1;
+            }).length;
+        }
+        
+        // Contar palabras falladas para este opening
+        const falladasOpening = sistemaFalladasOpenings.obtenerPorOpening(openingId).length;
+        const dificilesOpening = sistemaDificilesOpenings.obtenerPorOpening(openingId).length;
+        
         div.innerHTML = `
             <img src="${opening.imagen}" alt="${opening.nombre}" class="opening-imagen" 
                  onerror="this.src='https://via.placeholder.com/300x200/333333/ffffff?text=${opening.nombre}'">
@@ -318,6 +726,17 @@ function cargarListaOpenings() {
             <div class="opening-meta">
                 <span class="opening-año">${opening.año}</span>
                 <span class="opening-tipo">${opening.tipo}</span>
+                <span class="opening-mazos">${mazosDisponibles} mazos</span>
+            </div>
+            <div class="opening-contadores">
+                ${falladasOpening > 0 ? `<span class="contador-falladas-mini">📝 ${falladasOpening}</span>` : ''}
+                ${dificilesOpening > 0 ? `<span class="contador-dificiles-mini">💀 ${dificilesOpening}</span>` : ''}
+            </div>
+            <div class="opening-sistemas">
+                <span class="sistema-badge economia" title="Economía">💰</span>
+                <span class="sistema-badge rpg" title="RPG Nakano">💕</span>
+                ${falladasOpening > 0 ? '<span class="sistema-badge falladas" title="Tiene palabras falladas">📝</span>' : ''}
+                ${dificilesOpening > 0 ? '<span class="sistema-badge dificiles" title="Tiene palabras difíciles">💀</span>' : ''}
             </div>
         `;
         
@@ -325,13 +744,12 @@ function cargarListaOpenings() {
     });
 }
 
-// Función para cargar un opening específico
 function cargarOpening(openingId) {
     openingActual = openingId;
     const opening = openingsConfig.animes[openingId];
     
     // Obtener el ID real de Google Drive
-    const driveId = openingsConfig.driveOpeningIds[openingId] || 'TU_ID_POR_DEFECTO';
+    const driveId = extraerDriveId(opening.openingDrive);
     const openingUrl = `https://drive.google.com/file/d/${driveId}/preview`;
     
     // Actualizar interfaz
@@ -356,43 +774,113 @@ function cargarOpening(openingId) {
     console.log(`🎵 Cargando opening: ${opening.nombre}`);
 }
 
-// Función para cargar los mazos de un opening
+function extraerDriveId(url) {
+    const match = url.match(/\/d\/([^\/]+)/);
+    return match ? match[1] : url;
+}
+
 function cargarMazosOpening(openingId) {
     const contenedor = document.getElementById('contenedor-mazos-opening');
     if (!contenedor) return;
     
     contenedor.innerHTML = '';
     
-    for (let i = 1; i <= openingsConfig.mazosPorAnime; i++) {
-        const mazoId = `mazo${i}`;
-        const div = document.createElement('div');
-        div.className = 'mazo-opening-card';
-        div.onclick = () => iniciarQuizOpening(openingId, mazoId);
+    // Obtener estadísticas para este opening
+    const falladasOpening = sistemaFalladasOpenings.obtenerPorOpening(openingId).length;
+    const dificilesOpening = sistemaDificilesOpenings.obtenerPorOpening(openingId).length;
+    
+    // MAZO ESPECIAL: PALABRAS FALLADAS
+    if (falladasOpening > 0) {
+        const divFalladas = document.createElement('div');
+        divFalladas.className = 'mazo-opening-card mazo-fallado-especial';
+        divFalladas.onclick = () => sistemaFalladasOpenings.iniciarPractica();
+        divFalladas.title = `Practica ${falladasOpening} palabras que fallaste en este opening`;
         
-        // Verificar si el mazo tiene palabras
-        const tienePalabras = openingsVocabulario[openingId] && 
-                             openingsVocabulario[openingId][mazoId] && 
-                             openingsVocabulario[openingId][mazoId].length > 0;
-        
-        div.innerHTML = `
-            <div class="mazo-opening-numero">Mazo ${i}</div>
-            <div class="mazo-opening-texto">${tienePalabras ? '10 palabras' : 'Próximamente'}</div>
-            <div class="mazo-opening-info">${tienePalabras ? '🎵 Disponible' : '🚧 En preparación'}</div>
+        divFalladas.innerHTML = `
+            <div class="mazo-opening-numero" style="color: #ff4444;">📝 FALLADAS</div>
+            <div class="mazo-opening-texto">${falladasOpening} palabra${falladasOpening !== 1 ? 's' : ''}</div>
+            <div class="mazo-opening-recompensa">
+                <span class="recompensa-mini">💰+3</span>
+                <span class="recompensa-mini">💕+40</span>
+            </div>
+            <div class="mazo-opening-info" style="color: #ff4444;">🔥 ¡Supera errores musicales!</div>
         `;
+        contenedor.appendChild(divFalladas);
+    }
+    
+    // MAZO ESPECIAL: PALABRAS DIFÍCILES
+    if (dificilesOpening > 0) {
+        const divDificiles = document.createElement('div');
+        divDificiles.className = 'mazo-opening-card mazo-dificil-especial';
+        divDificiles.onclick = () => sistemaDificilesOpenings.iniciarPractica();
+        divDificiles.title = `Practica ${dificilesOpening} palabras marcadas como difíciles`;
         
-        if (!tienePalabras) {
-            div.classList.add('mazo-inactivo');
-            div.onclick = null;
-        }
+        divDificiles.innerHTML = `
+            <div class="mazo-opening-numero" style="color: #ff9800;">💀 DIFÍCILES</div>
+            <div class="mazo-opening-texto">${dificilesOpening} palabra${dificilesOpening !== 1 ? 's' : ''}</div>
+            <div class="mazo-opening-recompensa">
+                <span class="recompensa-mini">💰+2</span>
+                <span class="recompensa-mini">💕+30</span>
+            </div>
+            <div class="mazo-opening-info" style="color: #ff9800;">⚡ ¡Domina retos musicales!</div>
+        `;
+        contenedor.appendChild(divDificiles);
+    }
+    
+    // MAZOS NORMALES DEL OPENING
+    if (openingsVocabulario[openingId]) {
+        const mazos = Object.keys(openingsVocabulario[openingId]);
         
-        contenedor.appendChild(div);
+        // Ordenar mazos numéricamente
+        mazos.sort((a, b) => {
+            const numA = parseInt(a.replace('mazo', ''));
+            const numB = parseInt(b.replace('mazo', ''));
+            return numA - numB;
+        });
+        
+        mazos.forEach(mazoId => {
+            const mazoNumero = mazoId.replace('mazo', '');
+            const div = document.createElement('div');
+            div.className = 'mazo-opening-card';
+            
+            const tienePalabras = openingsVocabulario[openingId][mazoId] && 
+                                 openingsVocabulario[openingId][mazoId].length > 0;
+            const cantidadPalabras = tienePalabras ? openingsVocabulario[openingId][mazoId].length : 0;
+            
+            const disponible = tienePalabras && cantidadPalabras >= 1;
+            
+            if (disponible) {
+                div.onclick = () => iniciarQuizOpening(openingId, mazoId);
+                div.title = `Haz clic para practicar ${cantidadPalabras} palabras`;
+            } else {
+                div.classList.add('mazo-inactivo');
+                div.onclick = null;
+                div.title = 'Este mazo aún no tiene palabras';
+            }
+            
+            div.innerHTML = `
+                <div class="mazo-opening-numero">Mazo ${mazoNumero}</div>
+                <div class="mazo-opening-texto">${cantidadPalabras} palabra${cantidadPalabras !== 1 ? 's' : ''}</div>
+                <div class="mazo-opening-recompensa">
+                    <span class="recompensa-mini">💰+2</span>
+                    <span class="recompensa-mini">💕+30</span>
+                </div>
+                <div class="mazo-opening-info">${disponible ? '🎵 Disponible' : '🚧 En preparación'}</div>
+            `;
+            
+            contenedor.appendChild(div);
+        });
     }
 }
 
-// Función para iniciar el quiz de un mazo de opening
+// ============================================================================
+// 9. FUNCIONES DEL QUIZ OPENING (CON SISTEMAS INTEGRADOS)
+// ============================================================================
+
 function iniciarQuizOpening(openingId, mazoId) {
     if (openingsVocabulario[openingId] && openingsVocabulario[openingId][mazoId]) {
         mazoActualOpening = [...openingsVocabulario[openingId][mazoId]];
+        mazoActualIdOpening = mazoId;
         preguntaActualOpening = 0;
         respuestasCorrectasOpening = 0;
         respuestasIncorrectasOpening = 0;
@@ -403,29 +891,41 @@ function iniciarQuizOpening(openingId, mazoId) {
             [mazoActualOpening[i], mazoActualOpening[j]] = [mazoActualOpening[j], mazoActualOpening[i]];
         }
         
-        // Cambiar a pantalla de quiz
         cambiarPantalla('pantalla-quiz-opening');
         
-        // Actualizar contador
+        // Actualizar contadores en interfaz
+        actualizarContadoresInterfazQuizOpening();
+        
+        // Actualizar título del quiz
         document.getElementById('numero-pregunta-opening').textContent = 1;
         document.getElementById('total-preguntas-opening').textContent = mazoActualOpening.length;
         
         // Mostrar primera pregunta
         mostrarPreguntaOpening();
         
-        console.log(`📝 Iniciando quiz opening: ${openingId} - ${mazoId}`);
+        console.log(`🎵 Iniciando quiz opening: ${openingId} - ${mazoId} (${mazoActualOpening.length} palabras)`);
     } else {
         console.error(`❌ No se encontró el mazo ${mazoId} para ${openingId}`);
         alert('Este mazo aún no está disponible. ¡Próximamente!');
     }
 }
 
-// Función para mostrar una pregunta del quiz opening
+function actualizarContadoresInterfazQuizOpening() {
+    const contadorFalladasQuiz = document.getElementById('contador-falladas-quiz-opening');
+    if (contadorFalladasQuiz) {
+        contadorFalladasQuiz.textContent = `📝 Falladas: ${respuestasIncorrectasOpening}`;
+        contadorFalladasQuiz.style.display = respuestasIncorrectasOpening > 0 ? 'block' : 'none';
+    }
+    
+    actualizarContadoresFalladasOpenings();
+    actualizarContadoresDificilesOpenings();
+}
+
 function mostrarPreguntaOpening() {
     if (preguntaActualOpening < mazoActualOpening.length) {
         const pregunta = mazoActualOpening[preguntaActualOpening];
         
-        // Actualizar contador
+        // Actualizar contador de pregunta
         document.getElementById('numero-pregunta-opening').textContent = preguntaActualOpening + 1;
         
         // Mostrar palabra japonesa
@@ -434,6 +934,10 @@ function mostrarPreguntaOpening() {
         document.getElementById('resultado-opening').textContent = '';
         document.getElementById('resultado-opening').className = 'resultado';
         document.getElementById('boton-siguiente-opening').style.display = 'none';
+        
+        // Actualizar botón de "marcar como difícil"
+        const esDificil = sistemaDificilesOpenings.esDificil(pregunta);
+        actualizarBotonDificilOpening(esDificil);
         
         // Limpiar opciones anteriores
         const contenedorOpciones = document.getElementById('contenedor-opciones-opening');
@@ -451,7 +955,7 @@ function mostrarPreguntaOpening() {
             const botonOpcion = document.createElement('button');
             botonOpcion.className = 'opcion';
             botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuestaOpening(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura);
+            botonOpcion.onclick = () => verificarRespuestaOpening(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
             contenedorOpciones.appendChild(botonOpcion);
         });
     } else {
@@ -459,10 +963,11 @@ function mostrarPreguntaOpening() {
     }
 }
 
-// Función para verificar respuesta en quiz opening
-function verificarRespuestaOpening(respuestaSeleccionada, respuestaCorrecta, lectura) {
+function verificarRespuestaOpening(respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
     const opcionesDOM = document.querySelectorAll('#contenedor-opciones-opening .opcion');
     const resultado = document.getElementById('resultado-opening');
+    const palabraActual = document.getElementById('palabra-japones-opening').textContent;
+    const preguntaActual = mazoActualOpening[preguntaActualOpening];
     
     // Deshabilitar botones
     opcionesDOM.forEach(opcion => {
@@ -486,6 +991,18 @@ function verificarRespuestaOpening(respuestaSeleccionada, respuestaCorrecta, lec
         resultado.className = 'resultado correcto';
         respuestasCorrectasOpening++;
         
+        // Si esta palabra estaba marcada como difícil y se respondió correctamente
+        if (sistemaDificilesOpenings.esDificil(preguntaActual)) {
+            setTimeout(() => {
+                const confirmar = confirm(`¡Respondiste correctamente "${palabraActual}"!\n¿Quieres quitarla de las palabras difíciles?`);
+                if (confirmar) {
+                    sistemaDificilesOpenings.removerDeDificiles(preguntaActual);
+                    mostrarNotificacionOpenings(`✅ "${palabraActual}" removida de palabras difíciles`);
+                    actualizarContadoresDificilesOpenings();
+                }
+            }, 500);
+        }
+        
         // Navegación automática para respuestas correctas
         setTimeout(() => {
             siguientePreguntaOpening();
@@ -496,26 +1013,62 @@ function verificarRespuestaOpening(respuestaSeleccionada, respuestaCorrecta, lec
         resultado.className = 'resultado incorrecto';
         respuestasIncorrectasOpening++;
         
+        // REGISTRAR PALABRA FALLADA EN SISTEMA
+        sistemaFalladasOpenings.registrarPalabraFallada(
+            palabraActual,
+            respuestaSeleccionada,
+            respuestaCorrecta,
+            lectura,
+            opciones
+        );
+        
+        // Actualizar contadores
+        actualizarContadoresInterfazQuizOpening();
+        
         // Mostrar botón "Continuar" para respuestas incorrectas
         document.getElementById('boton-siguiente-opening').style.display = 'block';
     }
 }
 
-// Función para pasar a la siguiente pregunta opening
 function siguientePreguntaOpening() {
     preguntaActualOpening++;
     mostrarPreguntaOpening();
 }
 
-// Función para mostrar resultados del quiz opening
+// ============================================================================
+// 10. FUNCIÓN PARA MOSTRAR RESULTADOS DEL OPENING
+// ============================================================================
+
 function mostrarResultadosOpening() {
     const porcentaje = Math.round((respuestasCorrectasOpening / mazoActualOpening.length) * 100);
+    const mazoNumero = mazoActualIdOpening === 'falladas' ? 'Palabras Falladas' : 
+                      mazoActualIdOpening === 'dificiles' ? 'Palabras Difíciles' : 
+                      mazoActualIdOpening;
+    
+    console.log(`🎵 Resultados opening: ${porcentaje}% (${respuestasCorrectasOpening}/${mazoActualOpening.length})`);
+    
+    // APLICAR RECOMPENSAS A TODOS LOS SISTEMAS
+    const recompensa = openingsRecompensas.aplicarRecompensa(porcentaje, openingActual, mazoNumero);
     
     // Crear pantalla de resultados dinámica
     const resultadosHTML = `
         <div class="resultado-opening-container">
-            <h2>🎵 Resultados del Quiz</h2>
+            <h2>${mazoActualIdOpening === 'falladas' ? '📝 Resultados - Palabras Falladas' : 
+                  mazoActualIdOpening === 'dificiles' ? '💀 Resultados - Palabras Difíciles' : 
+                  '🎵 Resultados del Quiz Opening'}</h2>
+            
             <div class="resultado-opening-detalle">
+                ${mazoActualIdOpening !== 'falladas' && mazoActualIdOpening !== 'dificiles' ? `
+                    <div class="resultado-item">
+                        <span class="resultado-label">Opening:</span>
+                        <span class="resultado-valor">${openingsConfig.animes[openingActual].nombre}</span>
+                    </div>
+                    <div class="resultado-item">
+                        <span class="resultado-label">Canción:</span>
+                        <span class="resultado-valor">${openingsConfig.animes[openingActual].openingNombre}</span>
+                    </div>
+                ` : ''}
+                
                 <div class="resultado-item">
                     <span class="resultado-label">Preguntas totales:</span>
                     <span class="resultado-valor">${mazoActualOpening.length}</span>
@@ -529,12 +1082,34 @@ function mostrarResultadosOpening() {
                     <span class="resultado-valor">${respuestasIncorrectasOpening}</span>
                 </div>
                 <div class="resultado-item">
-                    <span class="resultado-label">Porcentaje de aciertos:</span>
+                    <span class="resultado-label">Porcentaje:</span>
                     <span class="resultado-valor resultado-porcentaje">${porcentaje}%</span>
                 </div>
+                
+                <!-- RECOMPENSAS OBTENIDAS -->
+                ${openingsRecompensas.mostrarResumenRecompensas(recompensa, porcentaje)}
+                
+                <!-- ESTADÍSTICAS ESPECIALES PARA MAZOS ESPECIALES -->
+                ${mazoActualIdOpening === 'falladas' || mazoActualIdOpening === 'dificiles' ? `
+                    <div class="estadisticas-especiales">
+                        <h4>📊 Progreso del Sistema</h4>
+                        <div class="estadistica-item">
+                            <span>📝 Palabras falladas restantes:</span>
+                            <span class="estadistica-valor">${sistemaFalladasOpenings.obtenerTodas().length}</span>
+                        </div>
+                        <div class="estadistica-item">
+                            <span>💀 Palabras difíciles restantes:</span>
+                            <span class="estadistica-valor">${sistemaDificilesOpenings.obtenerTodas().length}</span>
+                        </div>
+                        <p class="estadistica-nota">
+                            Las palabras que respondiste correctamente han sido removidas de este sistema especial
+                        </p>
+                    </div>
+                ` : ''}
+                
                 <div class="resultado-mensaje">
-                    ${porcentaje === 100 ? '¡Perfecto! 🎉 Dominas este vocabulario' : 
-                      porcentaje >= 80 ? '¡Muy bien! 👏 Casi perfecto' : 
+                    ${porcentaje === 100 ? '¡Perfecto! 🎉 Dominas este vocabulario musical' : 
+                      porcentaje >= 80 ? '¡Muy bien! 👏 Ritmo perfecto' : 
                       porcentaje >= 60 ? 'Buen trabajo 👍 Sigue practicando' : 
                       'Sigue estudiando 💪 Lo lograrás'}
                 </div>
@@ -542,14 +1117,38 @@ function mostrarResultadosOpening() {
             
             <div class="botones-resultados-opening">
                 <button class="boton-principal" onclick="volverAOpeningDetalle()">
-                    Volver al Opening
+                    ${mazoActualIdOpening === 'falladas' || mazoActualIdOpening === 'dificiles' ? 'Volver a Openings' : 'Volver al Opening'}
                 </button>
                 <button class="boton-secundario" onclick="repetirQuizOpening()">
                     Repetir Quiz
                 </button>
-                <button class="boton-terciario" onclick="verLetraCompleta()">
-                    📜 Ver letra completa
-                </button>
+                
+                <!-- BOTONES ESPECIALES PARA LIMPIAR SISTEMAS -->
+                ${sistemaFalladasOpenings.obtenerTodas().length > 0 ? `
+                    <button class="boton-terciario" onclick="limpiarPalabrasFalladasOpening()" 
+                            style="background: linear-gradient(135deg, #ff4444, #cc0000);">
+                        🗑️ Limpiar Falladas (${sistemaFalladasOpenings.obtenerTodas().length})
+                    </button>
+                ` : ''}
+                
+                ${sistemaDificilesOpenings.obtenerTodas().length > 0 ? `
+                    <button class="boton-terciario" onclick="limpiarPalabrasDificilesOpening()" 
+                            style="background: linear-gradient(135deg, #ff9800, #ff5722);">
+                        🗑️ Limpiar Difíciles (${sistemaDificilesOpenings.obtenerTodas().length})
+                    </button>
+                ` : ''}
+            </div>
+            
+            <!-- INFO SISTEMAS ACTIVOS -->
+            <div class="sistemas-activos-info">
+                <h4>🎮 Sistemas activos en este quiz:</h4>
+                <div class="sistemas-lista">
+                    <span class="sistema-activo">💰 Economía: +${recompensa.dinero} S/.</span>
+                    <span class="sistema-activo">💕 RPG Nakano: +${recompensa.experiencia} XP</span>
+                    ${respuestasIncorrectasOpening > 0 ? '<span class="sistema-activo">📝 Palabras falladas: Registradas</span>' : ''}
+                    ${mazoActualIdOpening === 'falladas' ? '<span class="sistema-activo">📝 Sistema falladas: Activo</span>' : ''}
+                    ${mazoActualIdOpening === 'dificiles' ? '<span class="sistema-activo">💀 Sistema difíciles: Activo</span>' : ''}
+                </div>
             </div>
         </div>
     `;
@@ -566,9 +1165,11 @@ function mostrarResultadosOpening() {
     resultadosPantalla.innerHTML = `
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador">Resultados del Quiz</div>
+                <div class="contador">Resultados Opening</div>
                 <div class="botones-superiores">
-                    <button class="boton-home" onclick="volverAOpeningDetalle()">Volver al Opening</button>
+                    <button class="boton-home" onclick="volverAOpeningDetalle()">
+                        ${mazoActualIdOpening === 'falladas' || mazoActualIdOpening === 'dificiles' ? 'Volver a Openings' : 'Volver al Opening'}
+                    </button>
                     <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
                 </div>
             </div>
@@ -577,19 +1178,102 @@ function mostrarResultadosOpening() {
     `;
     
     cambiarPantalla('pantalla-resultados-opening');
-    
-    // Dar recompensa si es 100%
-    if (porcentaje === 100) {
-        setTimeout(() => {
-            if (typeof sistemaEconomia !== 'undefined') {
-                sistemaEconomia.agregarDinero(2, "Quiz opening completado al 100%");
-                mostrarNotificacion('🎵 ¡Perfecto! +2 S/. por dominar el opening');
-            }
-        }, 500);
+}
+
+// ============================================================================
+// 11. FUNCIONES PARA MANEJAR PALABRAS DIFÍCILES EN OPENINGS
+// ============================================================================
+
+function marcarPalabraDificilOpening() {
+    if (preguntaActualOpening < mazoActualOpening.length) {
+        const palabraActual = mazoActualOpening[preguntaActualOpening];
+        
+        if (sistemaDificilesOpenings.esDificil(palabraActual)) {
+            // Remover de difíciles
+            sistemaDificilesOpenings.removerDeDificiles(palabraActual);
+            mostrarNotificacionOpenings(`✅ "${palabraActual.japones}" removida de palabras difíciles`);
+        } else {
+            // Marcar como difícil
+            sistemaDificilesOpenings.marcarComoDificil(palabraActual);
+            mostrarNotificacionOpenings(`💀 "${palabraActual.japones}" marcada como difícil`);
+        }
+        
+        // Actualizar botón
+        actualizarBotonDificilOpening(sistemaDificilesOpenings.esDificil(palabraActual));
+        
+        // Actualizar contadores
+        actualizarContadoresDificilesOpenings();
     }
 }
 
-// Función para repetir el quiz opening
+function limpiarPalabrasFalladasOpening() {
+    const totalFalladas = sistemaFalladasOpenings.obtenerTodas().length;
+    if (totalFalladas === 0) {
+        mostrarNotificacionOpenings('📝 No hay palabras falladas para limpiar');
+        return;
+    }
+    
+    const confirmar = confirm(`¿Estás seguro de limpiar TODAS las ${totalFalladas} palabras falladas de openings?\nEsta acción no se puede deshacer.`);
+    if (confirmar) {
+        const cantidad = sistemaFalladasOpenings.limpiarTodas();
+        mostrarNotificacionOpenings(`🗑️ ${cantidad} palabras falladas openings limpiadas`);
+        
+        actualizarContadoresFalladasOpenings();
+        if (openingActual) {
+            cargarMazosOpening(openingActual);
+        }
+    }
+}
+
+function limpiarPalabrasDificilesOpening() {
+    const totalDificiles = sistemaDificilesOpenings.obtenerTodas().length;
+    if (totalDificiles === 0) {
+        mostrarNotificacionOpenings('💀 No hay palabras difíciles para limpiar');
+        return;
+    }
+    
+    const confirmar = confirm(`¿Estás seguro de limpiar TODAS las ${totalDificiles} palabras difíciles de openings?\nEsta acción no se puede deshacer.`);
+    if (confirmar) {
+        const cantidad = sistemaDificilesOpenings.limpiarTodas();
+        mostrarNotificacionOpenings(`🗑️ ${cantidad} palabras difíciles openings limpiadas`);
+        
+        actualizarContadoresDificilesOpenings();
+        if (openingActual) {
+            cargarMazosOpening(openingActual);
+        }
+    }
+}
+
+// ============================================================================
+// 12. FUNCIONES AUXILIARES PARA OPENINGS
+// ============================================================================
+
+function mostrarNotificacionOpenings(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #7209b7, #3a0ca3);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: bold;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        box-shadow: 0 5px 15px rgba(114, 9, 183, 0.5);
+        border-left: 5px solid #00ff88;
+    `;
+    notificacion.textContent = mensaje;
+    notificacion.className = 'notificacion-opening';
+    
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.remove();
+    }, 3000);
+}
+
 function repetirQuizOpening() {
     preguntaActualOpening = 0;
     respuestasCorrectasOpening = 0;
@@ -605,21 +1289,12 @@ function repetirQuizOpening() {
     mostrarPreguntaOpening();
 }
 
-// Función para ver letra completa (placeholder)
-function verLetraCompleta() {
-    alert('📜 Función "Ver letra completa" en desarrollo.\nPróximamente podrás ver la letra completa del opening con todas las palabras aprendidas.');
-}
-
-// ============================================================================
-// 6. FUNCIONES DE NAVEGACIÓN PARA OPENINGS
-// ============================================================================
-
 function volverAOpeningsSeleccion() {
     cambiarPantalla('pantalla-openings-seleccion');
 }
 
 function volverAOpeningDetalle() {
-    if (openingActual) {
+    if (openingActual && mazoActualIdOpening !== 'falladas' && mazoActualIdOpening !== 'dificiles') {
         cargarOpening(openingActual);
     } else {
         cambiarPantalla('pantalla-openings-seleccion');
@@ -627,36 +1302,66 @@ function volverAOpeningDetalle() {
 }
 
 // ============================================================================
-// 7. FUNCIONES DE INTEGRACIÓN CON TU SISTEMA
+// 13. CREAR PANTALLAS DINÁMICAS PARA OPENINGS
 // ============================================================================
 
-// Función para crear las pantallas HTML dinámicamente
 function crearPantallasOpenings() {
-    // Solo crear si no existen
     if (!document.getElementById('pantalla-openings-seleccion')) {
         const pantallasHTML = `
             <!-- PANTALLA DE SELECCIÓN DE OPENINGS -->
             <div id="pantalla-openings-seleccion" class="pantalla">
                 <div class="contenedor">
                     <div class="barra-superior">
-                        <div class="contador">🎵 OPENINGS DE ANIME</div>
+                        <div class="contador">🎵 OPENINGS DE ANIME CON SISTEMAS COMPLETOS</div>
                         <div class="botones-superiores">
                             <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
                         </div>
                     </div>
                     
-                    <h1>🎵 OPENINGS DE ANIME</h1>
-                    <p class="subtitulo">Aprende japonés con los openings más famosos</p>
+                    <h1>🎵 GALERÍA DE OPENINGS COMPLETA</h1>
+                    <p class="subtitulo">Aprende japonés con los openings más famosos - ¡Sistemas completos!</p>
                     
-                    <div class="contenedor-openings" id="contenedor-openings">
-                        <!-- Los openings se cargan aquí dinámicamente -->
+                    <div class="sistemas-info">
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">📝</span>
+                            <span class="sistema-texto"><strong>Palabras Falladas:</strong> Se guardan automáticamente</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">💀</span>
+                            <span class="sistema-texto"><strong>Palabras Difíciles:</strong> Márcalas manualmente</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">💰</span>
+                            <span class="sistema-texto"><strong>Economía:</strong> Gana dinero por cada quiz</span>
+                        </div>
+                        <div class="sistema-info-item">
+                            <span class="sistema-icon">💕</span>
+                            <span class="sistema-texto"><strong>RPG Nakano:</strong> Gana experiencia para tu novia</span>
+                        </div>
                     </div>
                     
-                    <div class="info-openings">
-                        <p>📚 5 openings × 5 mazos cada uno = 25 mazos de vocabulario</p>
-                        <p>🎶 Aprende las palabras de tus openings favoritos</p>
-                        <p>💫 Recompensa doble: +2 S/. por mazo al 100%</p>
+                    <div class="contenedor-openings" id="contenedor-openings"></div>
+                    
+                    <div class="estadisticas-globales" id="estadisticas-globales-opening" style="display: none;">
+                        <h4>📊 Estadísticas Globales Openings:</h4>
+                        <div class="estadisticas-grid">
+                            <div class="estadistica-item-global">
+                                <span class="estadistica-icon">📝</span>
+                                <span class="estadistica-texto">Palabras falladas:</span>
+                                <span class="estadistica-valor" id="total-falladas-opening">0</span>
+                            </div>
+                            <div class="estadistica-item-global">
+                                <span class="estadistica-icon">💀</span>
+                                <span class="estadistica-texto">Palabras difíciles:</span>
+                                <span class="estadistica-valor" id="total-dificiles-opening">0</span>
+                            </div>
+                            <div class="estadistica-item-global">
+                                <span class="estadistica-icon">🎵</span>
+                                <span class="estadistica-texto">Openings con falladas:</span>
+                                <span class="estadistica-valor" id="openings-falladas-global">0</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -668,7 +1373,7 @@ function crearPantallasOpenings() {
                         <div class="contador" id="titulo-opening">Opening</div>
                         <div class="botones-superiores">
                             <button class="boton-home" onclick="volverAOpeningsSeleccion()">← Volver a Openings</button>
-                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
                         </div>
                     </div>
                     
@@ -689,16 +1394,27 @@ function crearPantallasOpenings() {
                         </div>
                         
                         <div class="mazos-opening-container">
-                            <h3>📚 Mazos de Vocabulario</h3>
+                            <h3>📚 Mazos de Vocabulario <span id="contador-mazos-opening" style="color: #00ff88; font-size: 0.8em;"></span></h3>
                             <p>Practica las palabras que aparecen en este opening:</p>
                             
-                            <div class="contenedor-mazos-opening" id="contenedor-mazos-opening">
-                                <!-- Los mazos se cargan aquí dinámicamente -->
-                            </div>
+                            <div class="contenedor-mazos-opening" id="contenedor-mazos-opening"></div>
                             
-                            <div class="opening-tips">
-                                <p>💡 <strong>Consejo:</strong> Escucha el opening primero, luego estudia las palabras.</p>
-                                <p>🎧 Usa auriculares para una mejor experiencia musical.</p>
+                            <div class="mazos-info-sistemas">
+                                <h4>💡 Sistemas Activos:</h4>
+                                <div class="sistemas-lista-mini">
+                                    <div class="sistema-mini-item">
+                                        <span class="sistema-mini-icon">📝</span>
+                                        <span class="sistema-mini-texto"><strong>Palabras Falladas:</strong> Se guardan automáticamente cuando fallas</span>
+                                    </div>
+                                    <div class="sistema-mini-item">
+                                        <span class="sistema-mini-icon">💀</span>
+                                        <span class="sistema-mini-texto"><strong>Palabras Difíciles:</strong> Márcalas durante el quiz con el botón 💀</span>
+                                    </div>
+                                    <div class="sistema-mini-item">
+                                        <span class="sistema-mini-icon">💰</span>
+                                        <span class="sistema-mini-texto"><strong>Recompensas:</strong> Ganas dinero y experiencia según tu porcentaje</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -711,8 +1427,10 @@ function crearPantallasOpenings() {
                     <div class="barra-superior">
                         <div class="contador">Quiz Opening: <span id="numero-pregunta-opening">1</span>/<span id="total-preguntas-opening">10</span></div>
                         <div class="botones-superiores">
+                            <span id="contador-falladas-opening" style="display: none; color: #ff4444; margin-right: 15px; font-weight: bold;"></span>
+                            <span id="contador-dificiles-opening" style="display: none; color: #ff9800; margin-right: 15px; font-weight: bold;"></span>
                             <button class="boton-home" onclick="volverAOpeningDetalle()">Volver al Opening</button>
-                            <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
+                            <button class="boton-menu" onclick="irAlMenu()">🏠 Menú</button>
                         </div>
                     </div>
                     
@@ -720,128 +1438,408 @@ function crearPantallasOpenings() {
                         <div class="palabra-japones" id="palabra-japones-opening">言葉</div>
                         <div class="lectura" id="lectura-opening"></div>
                         
-                        <div class="contenedor-opciones" id="contenedor-opciones-opening">
-                            <!-- Las opciones se generarán dinámicamente -->
-                        </div>
+                        <div class="contenedor-opciones" id="contenedor-opciones-opening"></div>
                         
                         <div class="resultado" id="resultado-opening"></div>
                         
-                        <button class="boton-principal" id="boton-siguiente-opening" onclick="siguientePreguntaOpening()" style="display: none;">
-                            Continuar
-                        </button>
+                        <div class="botones-quiz-opening">
+                            <button class="boton-principal" id="boton-siguiente-opening" onclick="siguientePreguntaOpening()" style="display: none;">
+                                Continuar
+                            </button>
+                            <button class="boton-dificil" id="boton-dificil-opening" onclick="marcarPalabraDificilOpening()">
+                                💀 Marcar como difícil
+                            </button>
+                        </div>
+                        
+                        <div id="contador-falladas-quiz-opening" style="display: none; text-align: center; margin-top: 15px; color: #ff4444; font-weight: bold;"></div>
                     </div>
                 </div>
             </div>
         `;
         
         document.body.insertAdjacentHTML('beforeend', pantallasHTML);
-        console.log("✅ Pantallas openings creadas dinámicamente");
-    }
-}
-
-// ============================================================================
-// 8. FUNCIONES DE TESTING PARA DESARROLLO
-// ============================================================================
-
-// Agregar palabras a un opening específico (desde consola)
-window.agregarPalabrasOpening = function(openingId, mazoNumero, palabras) {
-    if (!openingsVocabulario[openingId]) {
-        openingsVocabulario[openingId] = {};
-    }
-    
-    const mazoId = `mazo${mazoNumero}`;
-    openingsVocabulario[openingId][mazoId] = palabras;
-    console.log(`✅ ${palabras.length} palabras agregadas a ${openingId} - ${mazoId}`);
-    return true;
-};
-
-// Ver estado del sistema openings
-window.verEstadoOpenings = function() {
-    console.log("🎵 ESTADO DEL SISTEMA OPENINGS:");
-    console.log("- Opening actual:", openingActual);
-    console.log("- Mazo actual:", mazoActualOpening.length, "palabras");
-    console.log("- Pregunta actual:", preguntaActualOpening);
-    console.log("- Openings configurados:", Object.keys(openingsConfig.animes).length);
-    
-    // Contar palabras por opening
-    Object.keys(openingsVocabulario).forEach(openingId => {
-        let totalPalabras = 0;
-        Object.keys(openingsVocabulario[openingId]).forEach(mazoId => {
-            totalPalabras += openingsVocabulario[openingId][mazoId].length;
-        });
-        console.log(`  ${openingId}: ${totalPalabras} palabras en ${Object.keys(openingsVocabulario[openingId]).length} mazos`);
-    });
-};
-
-// Cambiar video de Google Drive (testing)
-window.cambiarVideoOpening = function(openingId, nuevoDriveId) {
-    if (openingsConfig.driveOpeningIds[openingId]) {
-        openingsConfig.driveOpeningIds[openingId] = nuevoDriveId;
-        console.log(`✅ Video de ${openingId} actualizado a ID: ${nuevoDriveId}`);
         
-        // Si este opening está actualmente cargado, actualizar
-        if (openingActual === openingId) {
-            const videoElement = document.getElementById('video-opening');
-            if (videoElement) {
-                videoElement.src = `https://drive.google.com/file/d/${nuevoDriveId}/preview`;
-            }
-        }
-        return true;
+        agregarEstilosOpeningsCompleto();
+        
+        console.log("✅ Pantallas openings creadas dinámicamente (CON SISTEMAS COMPLETOS)");
     }
-    return false;
-};
-
-// ============================================================================
-// 9. INICIALIZACIÓN AUTOMÁTICA
-// ============================================================================
-
-// Función para mostrar notificación
-function mostrarNotificacion(mensaje) {
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #7209b7, #3a0ca3);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 1000;
-        animation: slideInRight 0.3s ease;
-    `;
-    notificacion.textContent = mensaje;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
 }
+
+// ============================================================================
+// 14. AGREGAR ESTILOS COMPLETOS PARA OPENINGS
+// ============================================================================
+
+function agregarEstilosOpeningsCompleto() {
+    if (document.getElementById('estilos-openings-completo')) return;
+    
+    const estilos = `
+        <style id="estilos-openings-completo">
+            /* TARJETAS DE OPENINGS */
+            .opening-card {
+                background: linear-gradient(135deg, rgba(30, 30, 40, 0.9), rgba(20, 20, 30, 0.9));
+                border-radius: 15px;
+                padding: 15px;
+                margin: 15px;
+                text-align: center;
+                border: 3px solid;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: white;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .opening-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            }
+            
+            .opening-imagen {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                border: 2px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .opening-texto {
+                font-weight: bold;
+                font-size: 1.1em;
+                margin-bottom: 5px;
+                color: #ffffff;
+            }
+            
+            .opening-info {
+                color: #00ff88;
+                font-size: 0.9em;
+                margin-bottom: 8px;
+            }
+            
+            .opening-desc {
+                color: #cccccc;
+                font-size: 0.85em;
+                margin-bottom: 10px;
+                min-height: 40px;
+            }
+            
+            .opening-meta {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.8em;
+                color: #888888;
+                margin-bottom: 10px;
+            }
+            
+            .opening-contadores {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 8px;
+            }
+            
+            .contador-falladas-mini {
+                background: rgba(255, 68, 68, 0.2);
+                color: #ff4444;
+                padding: 2px 8px;
+                border-radius: 10px;
+                font-size: 0.8em;
+                border: 1px solid #ff4444;
+            }
+            
+            .contador-dificiles-mini {
+                background: rgba(255, 152, 0, 0.2);
+                color: #ff9800;
+                padding: 2px 8px;
+                border-radius: 10px;
+                font-size: 0.8em;
+                border: 1px solid #ff9800;
+            }
+            
+            .opening-sistemas {
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+                margin-top: 10px;
+            }
+            
+            .sistema-badge {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8em;
+            }
+            
+            .sistema-badge.economia {
+                background: rgba(0, 200, 83, 0.2);
+                color: #00c853;
+                border: 1px solid #00c853;
+            }
+            
+            .sistema-badge.rpg {
+                background: rgba(255, 107, 157, 0.2);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
+            }
+            
+            .sistema-badge.falladas {
+                background: rgba(255, 68, 68, 0.2);
+                color: #ff4444;
+                border: 1px solid #ff4444;
+            }
+            
+            .sistema-badge.dificiles {
+                background: rgba(255, 152, 0, 0.2);
+                color: #ff9800;
+                border: 1px solid #ff9800;
+            }
+            
+            /* MAZOS DE OPENINGS */
+            .mazo-opening-card {
+                background: linear-gradient(135deg, rgba(40, 40, 60, 0.8), rgba(30, 30, 50, 0.8));
+                border-radius: 12px;
+                padding: 15px;
+                margin: 10px;
+                text-align: center;
+                border: 2px solid #7209b7;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: white;
+                min-width: 150px;
+                flex: 1;
+            }
+            
+            .mazo-opening-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(114, 9, 183, 0.4);
+                border-color: #00ff88;
+            }
+            
+            .mazo-opening-numero {
+                font-weight: bold;
+                font-size: 1.1em;
+                margin-bottom: 5px;
+                color: #7209b7;
+            }
+            
+            .mazo-opening-texto {
+                font-size: 0.9em;
+                margin-bottom: 8px;
+                color: #cccccc;
+            }
+            
+            .mazo-opening-recompensa {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 8px;
+            }
+            
+            .recompensa-mini {
+                background: rgba(0, 255, 136, 0.1);
+                color: #00ff88;
+                padding: 2px 6px;
+                border-radius: 5px;
+                font-size: 0.8em;
+                border: 1px solid #00ff88;
+            }
+            
+            .mazo-opening-info {
+                font-size: 0.8em;
+                color: #888888;
+                font-style: italic;
+            }
+            
+            /* MAZOS ESPECIALES */
+            .mazo-opening-card.mazo-fallado-especial {
+                border: 3px solid #ff4444;
+                background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 68, 68, 0.2));
+                animation: pulseFalladas 2s infinite;
+            }
+            
+            .mazo-opening-card.mazo-dificil-especial {
+                border: 3px solid #ff9800;
+                background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 152, 0, 0.2));
+                animation: pulseDificiles 2s infinite;
+            }
+            
+            /* BOTÓN DE DIFÍCILES EN QUIZ */
+            .boton-dificil {
+                padding: 12px 25px;
+                border-radius: 12px;
+                border: 2px solid #ff9800;
+                background: linear-gradient(135deg, #ff9800, #ff5722);
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin: 10px;
+                font-size: 1rem;
+                min-width: 200px;
+            }
+            
+            .boton-dificil:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            }
+            
+            /* CONTAINERS ESPECÍFICOS */
+            .contenedor-openings {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+                margin: 20px 0;
+            }
+            
+            .contenedor-mazos-opening {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                margin: 20px 0;
+            }
+            
+            .video-container-opening {
+                position: relative;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                border-radius: 15px;
+                margin: 20px 0;
+                border: 3px solid #7209b7;
+            }
+            
+            .video-container-opening iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+            
+            /* ANIMACIONES */
+            @keyframes pulseFalladas {
+                0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
+            }
+            
+            @keyframes pulseDificiles {
+                0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(255, 152, 0, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+            }
+            
+            /* RESPONSIVE */
+            @media (max-width: 768px) {
+                .contenedor-openings {
+                    grid-template-columns: 1fr;
+                }
+                
+                .contenedor-mazos-opening {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .mazo-opening-card {
+                    width: 100%;
+                    max-width: 250px;
+                }
+                
+                .boton-dificil {
+                    width: 100%;
+                    max-width: 250px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .opening-card {
+                    margin: 10px 5px;
+                    padding: 10px;
+                }
+                
+                .opening-imagen {
+                    height: 150px;
+                }
+                
+                .opening-contadores {
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 5px;
+                }
+                
+                .mazo-opening-card {
+                    padding: 10px;
+                }
+            }
+        </style>
+    `;
+    
+    document.head.insertAdjacentHTML('beforeend', estilos);
+}
+
+// ============================================================================
+// 15. INICIALIZACIÓN Y EXPORTACIÓN
+// ============================================================================
 
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("🎵 Sistema openings cargado y listo");
+    console.log("🎵 Sistema openings completo cargado y listo");
     
     // Crear las pantallas HTML dinámicamente si no existen
     crearPantallasOpenings();
 });
 
-// ============================================================================
-// 10. EXPORTAR FUNCIONES PARA USO GLOBAL
-// ============================================================================
-
-// Hacer funciones disponibles globalmente
+// Exportar funciones para uso global
 window.iniciarSistemaOpenings = iniciarSistemaOpenings;
 window.cargarOpening = cargarOpening;
 window.iniciarQuizOpening = iniciarQuizOpening;
 window.verificarRespuestaOpening = verificarRespuestaOpening;
 window.siguientePreguntaOpening = siguientePreguntaOpening;
+window.marcarPalabraDificilOpening = marcarPalabraDificilOpening;
+window.limpiarPalabrasFalladasOpening = limpiarPalabrasFalladasOpening;
+window.limpiarPalabrasDificilesOpening = limpiarPalabrasDificilesOpening;
+window.sistemaFalladasOpenings = sistemaFalladasOpenings;
+window.sistemaDificilesOpenings = sistemaDificilesOpenings;
 window.volverAOpeningsSeleccion = volverAOpeningsSeleccion;
 window.volverAOpeningDetalle = volverAOpeningDetalle;
 window.repetirQuizOpening = repetirQuizOpening;
 window.crearPantallasOpenings = crearPantallasOpenings;
 
-console.log("✅ Sistema openings de anime cargado correctamente");
-console.log("🎵 Usa iniciarSistemaOpenings() para comenzar");
-console.log("📁 Archivo: 5galeria-opening.js");
+// ============================================================================
+// 16. CONSOLA DE AYUDA
+// ============================================================================
+
+console.log("✅ Sistema openings COMPLETAMENTE TERMINADO cargado correctamente");
+console.log("🎵 SISTEMAS ACTIVOS EN OPENINGS:");
+console.log("   - 📝 PALABRAS FALLADAS: Registro automático cuando fallas");
+console.log("   - 💀 PALABRAS DIFÍCILES: Marca manualmente con botón");
+console.log("   - 💰 ECONOMÍA: Ganas dinero según porcentaje");
+console.log("   - 💕 RPG NAKANO: Tu novia gana experiencia");
+console.log("   - 🎯 EVENTOS DIARIOS: Progreso automático");
+console.log("   - 📋 MISIONES DIARIAS: Se completan con 80%+");
+console.log("");
+console.log("🎁 RECOMPENSAS POR PORCENTAJE:");
+console.log("   - 100%: +2 S/. +30 XP");
+console.log("   - 90%: +1 S/. +20 XP");
+console.log("   - 80%: +0.5 S/. +15 XP");
+console.log("   - 70%: +0.3 S/. +10 XP");
+console.log("   - 60%: +0.2 S/. +5 XP");
+console.log("   - 50%: +0.1 S/. +3 XP");
+console.log("");
+console.log("🚀 FUNCIONES NUEVAS:");
+console.log("   - sistemaFalladasOpenings.verEstadisticas()");
+console.log("   - limpiarPalabrasFalladasOpening()");
+console.log("   - limpiarPalabrasDificilesOpening()");
+console.log("   - Durante el quiz: Usa el botón 💀 para marcar palabras difíciles");
+console.log("");
+console.log("💡 PARA COMENZAR:");
+console.log("   - Desde el menú: Haz clic en 'Sistema Openings'");
+console.log("   - Desde consola: iniciarSistemaOpenings()");
+console.log("");
+console.log("🎵 ¡Disfruta del sistema openings más completo!");
