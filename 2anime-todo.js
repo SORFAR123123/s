@@ -1,5 +1,6 @@
 // ============================================================================
 // SISTEMA ANIME PARA FABRI - COMPLETAMENTE INTEGRADO CON TODOS LOS SISTEMAS
+// INCLUYENDO SISTEMA DE PALABRAS FALLADAS
 // ============================================================================
 
 // ============================================================================
@@ -122,7 +123,7 @@ const animeConfig = {
     // Idioma por defecto
     idiomaPorDefecto: 'español',
     
-    // NUEVO: Configuración de recompensas por porcentaje
+    // Configuración de recompensas por porcentaje
     recompensasPorcentaje: {
         100: { dinero: 2, experiencia: 30, mensaje: '🎉 ¡Perfecto! Dominio absoluto' },
         90: { dinero: 1, experiencia: 20, mensaje: '👏 ¡Excelente! Casi perfecto' },
@@ -261,9 +262,10 @@ let mazoActualAnime = [];
 let preguntaActualAnime = 0;
 let respuestasCorrectasAnime = 0;
 let respuestasIncorrectasAnime = 0;
+let palabrasFalladasEnQuiz = []; // Array para almacenar palabras falladas DURANTE el quiz actual
 
 // ============================================================================
-// 4. NUEVO: SISTEMA DE RECOMPENSAS ANIME INTEGRADO
+// 4. SISTEMA DE RECOMPENSAS ANIME INTEGRADO CON PALABRAS FALLADAS
 // ============================================================================
 
 const animeRecompensas = {
@@ -327,17 +329,29 @@ const animeRecompensas = {
             misionesDiarias.registrarMazoCompletado();
         }
         
-        // 5. PALABRAS FALLADAS (si hay incorrectas)
-        if (typeof sistemaPalabrasFalladas !== 'undefined' && respuestasIncorrectasAnime > 0) {
-            // Las palabras ya se registraron durante el quiz
-            console.log(`📝 ${respuestasIncorrectasAnime} palabras falladas registradas`);
+        // 5. PALABRAS FALLADAS - REGISTRAR TODAS LAS FALLADAS DEL QUIZ
+        if (typeof sistemaPalabrasFalladas !== 'undefined' && palabrasFalladasEnQuiz.length > 0) {
+            console.log(`📝 Registrando ${palabrasFalladasEnQuiz.length} palabras falladas del quiz anime`);
+            
+            palabrasFalladasEnQuiz.forEach(palabra => {
+                sistemaPalabrasFalladas.registrarPalabraFallada(
+                    palabra.japones,
+                    palabra.respuestaSeleccionada,
+                    palabra.respuestaCorrecta,
+                    palabra.lectura,
+                    palabra.opciones
+                );
+            });
+            
+            // Limpiar el array de palabras falladas después de registrarlas
+            palabrasFalladasEnQuiz = [];
         }
         
         return recompensa;
     },
     
     // Mostrar resumen de recompensas
-    mostrarResumenRecompensas: function(recompensa, porcentaje) {
+    mostrarResumenRecompensas: function(recompensa, porcentaje, palabrasFalladasCount = 0) {
         return `
             <div class="recompensa-resumen">
                 <h4>🎁 Recompensas Obtenidas</h4>
@@ -356,6 +370,13 @@ const animeRecompensas = {
                     <span class="recompensa-texto">Puntuación:</span>
                     <span class="recompensa-valor">${porcentaje}%</span>
                 </div>
+                ${palabrasFalladasCount > 0 ? `
+                <div class="recompensa-item">
+                    <span class="recompensa-icon">📝</span>
+                    <span class="recompensa-texto">Palabras falladas:</span>
+                    <span class="recompensa-valor">${palabrasFalladasCount} registradas</span>
+                </div>
+                ` : ''}
                 <div class="recompensa-mensaje">
                     ${recompensa.mensaje}
                 </div>
@@ -365,14 +386,17 @@ const animeRecompensas = {
 };
 
 // ============================================================================
-// 5. FUNCIONES PRINCIPALES - SISTEMA DE ANIME INTEGRADO
+// 5. FUNCIONES PRINCIPALES - SISTEMA DE ANIME INTEGRADO CON PALABRAS FALLADAS
 // ============================================================================
 
 // Función para iniciar el sistema anime desde el menú principal
 function iniciarSistemaAnime() {
+    // Limpiar array de palabras falladas temporales
+    palabrasFalladasEnQuiz = [];
+    
     cambiarPantalla('pantalla-anime-seleccion');
     cargarListaAnimes();
-    console.log("🎬 Sistema anime iniciado (COMPLETAMENTE INTEGRADO)");
+    console.log("🎬 Sistema anime iniciado (COMPLETAMENTE INTEGRADO CON PALABRAS FALLADAS)");
 }
 
 // Función para cargar la lista de animes disponibles
@@ -413,6 +437,7 @@ function cargarListaAnimes() {
                 <span class="sistema-badge rpg">💕</span>
                 <span class="sistema-badge eventos">🎯</span>
                 <span class="sistema-badge misiones">📋</span>
+                <span class="sistema-badge palabras-falladas">📝</span>
             </div>
         `;
         
@@ -505,6 +530,7 @@ function cargarMazosAnime(animeId) {
             <div class="mazo-anime-recompensa">
                 <span class="recompensa-mini">💰+2</span>
                 <span class="recompensa-mini">💕+30</span>
+                <span class="recompensa-mini">📝+0</span>
             </div>
             <div class="mazo-anime-info">${disponible ? '✅ Disponible' : '🚧 En preparación'}</div>
         `;
@@ -532,6 +558,9 @@ function cargarMazosAnime(animeId) {
 // ============================================================================
 
 function iniciarQuizAnime(animeId, mazoId) {
+    // Limpiar array de palabras falladas temporales antes de empezar un nuevo quiz
+    palabrasFalladasEnQuiz = [];
+    
     if (animeVocabulario[animeId] && animeVocabulario[animeId][mazoId]) {
         mazoActualAnime = [...animeVocabulario[animeId][mazoId]];
         preguntaActualAnime = 0;
@@ -555,7 +584,7 @@ function iniciarQuizAnime(animeId, mazoId) {
         mostrarPreguntaAnime();
         
         console.log(`📝 Iniciando quiz anime: ${animeId} - ${mazoId} (${mazoActualAnime.length} palabras)`);
-        console.log(`🎮 Sistemas activos: Economía, RPG Nakano, Eventos, Misiones`);
+        console.log(`🎮 Sistemas activos: Economía, RPG Nakano, Eventos, Misiones, Palabras Falladas`);
     } else {
         console.error(`❌ No se encontró el mazo ${mazoId} para ${animeId}`);
         alert('Este mazo aún no está disponible. ¡Próximamente!');
@@ -593,7 +622,7 @@ function mostrarPreguntaAnime() {
             const botonOpcion = document.createElement('button');
             botonOpcion.className = 'opcion';
             botonOpcion.textContent = opcion;
-            botonOpcion.onclick = () => verificarRespuestaAnime(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones);
+            botonOpcion.onclick = () => verificarRespuestaAnime(opcion, pregunta.opciones[pregunta.respuesta], pregunta.lectura, pregunta.opciones, pregunta.japones);
             contenedorOpciones.appendChild(botonOpcion);
         });
     } else {
@@ -601,8 +630,8 @@ function mostrarPreguntaAnime() {
     }
 }
 
-// Función para verificar respuesta en quiz anime (CON SISTEMAS INTEGRADOS)
-function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectura, opciones) {
+// Función para verificar respuesta en quiz anime (CON SISTEMA DE PALABRAS FALLADAS INTEGRADO)
+function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectura, opciones, palabraJapones) {
     const opcionesDOM = document.querySelectorAll('#contenedor-opciones-anime .opcion');
     const resultado = document.getElementById('resultado-anime');
     const palabraActual = document.getElementById('palabra-japones-anime').textContent;
@@ -639,16 +668,18 @@ function verificarRespuestaAnime(respuestaSeleccionada, respuestaCorrecta, lectu
         resultado.className = 'resultado incorrecto';
         respuestasIncorrectasAnime++;
         
-        // REGISTRAR PALABRA FALLADA EN SISTEMA
-        if (typeof sistemaPalabrasFalladas !== 'undefined') {
-            sistemaPalabrasFalladas.registrarPalabraFallada(
-                palabraActual,
-                respuestaSeleccionada,
-                respuestaCorrecta,
-                lectura,
-                opciones
-            );
-        }
+        // GUARDAR PALABRA FALLADA EN EL ARRAY TEMPORAL
+        palabrasFalladasEnQuiz.push({
+            japones: palabraJapones,
+            respuestaSeleccionada: respuestaSeleccionada,
+            respuestaCorrecta: respuestaCorrecta,
+            lectura: lectura,
+            opciones: [...opciones],
+            timestamp: new Date().toISOString(),
+            origen: `Anime: ${animeActual}, Mazo: ${preguntaActualAnime + 1}`
+        });
+        
+        console.log(`📝 Palabra fallada guardada temporalmente: ${palabraJapones} (${respuestaSeleccionada} → ${respuestaCorrecta})`);
         
         // Mostrar botón "Continuar" para respuestas incorrectas
         document.getElementById('boton-siguiente-anime').style.display = 'block';
@@ -673,8 +704,9 @@ function mostrarResultadosAnime() {
         ) : 'desconocido';
     
     console.log(`📊 Resultados anime: ${porcentaje}% (${respuestasCorrectasAnime}/${mazoActualAnime.length})`);
+    console.log(`📝 Palabras falladas en este quiz: ${palabrasFalladasEnQuiz.length}`);
     
-    // APLICAR RECOMPENSAS A TODOS LOS SISTEMAS
+    // APLICAR RECOMPENSAS A TODOS LOS SISTEMAS (INCLUYENDO PALABRAS FALLADAS)
     const recompensa = animeRecompensas.aplicarRecompensa(porcentaje, animeActual, mazoNumero);
     
     // Verificar si hay evento diario completado
@@ -716,8 +748,8 @@ function mostrarResultadosAnime() {
                     <span class="resultado-valor resultado-porcentaje">${porcentaje}%</span>
                 </div>
                 
-                <!-- NUEVO: MOSTRAR RECOMPENSAS INTEGRADAS -->
-                ${animeRecompensas.mostrarResumenRecompensas(recompensa, porcentaje)}
+                <!-- NUEVO: MOSTRAR RECOMPENSAS INTEGRADAS CON PALABRAS FALLADAS -->
+                ${animeRecompensas.mostrarResumenRecompensas(recompensa, porcentaje, respuestasIncorrectasAnime)}
                 
                 <div class="resultado-mensaje">
                     ${porcentaje === 100 ? '¡Perfecto! 🎉 Dominas este vocabulario' : 
@@ -725,6 +757,18 @@ function mostrarResultadosAnime() {
                       porcentaje >= 60 ? 'Buen trabajo 👍 Sigue practicando' : 
                       'Sigue estudiando 💪 Lo lograrás'}
                 </div>
+                
+                <!-- MOSTRAR PALABRAS FALLADAS SI LAS HAY -->
+                ${respuestasIncorrectasAnime > 0 ? `
+                <div class="palabras-falladas-resumen">
+                    <h4>📝 Palabras Falladas (${respuestasIncorrectasAnime})</h4>
+                    <p>Estas palabras han sido registradas en tu historial de palabras falladas.</p>
+                    <p>Puedes practicarlas desde el menú principal en "📝 Palabras Falladas".</p>
+                    <button class="boton-terciario" onclick="practicarPalabrasFalladasAnime()">
+                        📝 Practicar palabras falladas ahora
+                    </button>
+                </div>
+                ` : ''}
             </div>
             
             <div class="botones-resultados-anime">
@@ -735,8 +779,9 @@ function mostrarResultadosAnime() {
                     Repetir Quiz
                 </button>
                 ${respuestasIncorrectasAnime > 0 ? 
-                    `<button class="boton-terciario" onclick="practicarFalladasAnime()">
-                        📝 Práctica Especial (${respuestasIncorrectasAnime} falladas)
+                    `<button class="boton-terciario" onclick="practicarPalabrasFalladasEspecial()" 
+                            style="background: linear-gradient(135deg, #ff4444, #cc0000);">
+                        🔄 Práctica Intensiva (${respuestasIncorrectasAnime} falladas)
                     </button>` : ''
                 }
             </div>
@@ -748,7 +793,7 @@ function mostrarResultadosAnime() {
                     <span class="sistema-activo">💕 RPG Nakano: +${recompensa.experiencia} XP</span>
                     ${mostrarVideoEvento ? '<span class="sistema-activo">🎯 Evento diario: ¡Completado!</span>' : ''}
                     ${porcentaje >= 80 ? '<span class="sistema-activo">📋 Misión diaria: Registrada</span>' : ''}
-                    ${respuestasIncorrectasAnime > 0 ? '<span class="sistema-activo">📝 Palabras falladas: Registradas</span>' : ''}
+                    ${respuestasIncorrectasAnime > 0 ? '<span class="sistema-activo">📝 Palabras falladas: ' + respuestasIncorrectasAnime + ' registradas</span>' : ''}
                 </div>
             </div>
         </div>
@@ -786,21 +831,46 @@ function mostrarResultadosAnime() {
     }
 }
 
-// NUEVA FUNCIÓN: Práctica especial de palabras falladas en anime
-function practicarFalladasAnime() {
-    if (typeof sistemaPalabrasFalladas === 'undefined') {
-        alert("Sistema de palabras falladas no disponible");
+// NUEVA FUNCIÓN: Práctica especial de palabras falladas del anime actual
+function practicarPalabrasFalladasEspecial() {
+    if (palabrasFalladasEnQuiz.length === 0) {
+        alert("No hay palabras falladas en este quiz para practicar.");
         return;
     }
     
-    // Obtener palabras falladas de este quiz específico
-    const palabrasFalladas = [];
+    // Crear un mazo especial solo con las palabras falladas
+    const mazoFalladas = palabrasFalladasEnQuiz.map(palabra => ({
+        japones: palabra.japones,
+        lectura: palabra.lectura,
+        opciones: [...palabra.opciones],
+        respuesta: palabra.opciones.indexOf(palabra.respuestaCorrecta)
+    }));
     
-    // Simular la obtención de las palabras falladas
-    // En un sistema real, deberíamos haberlas guardado durante el quiz
-    if (mazoActualAnime.length > 0) {
-        alert("Práctica especial de palabras falladas activada");
-        // Aquí iría la lógica para practicar solo las palabras falladas
+    // Iniciar quiz con las palabras falladas
+    mazoActualAnime = mazoFalladas;
+    preguntaActualAnime = 0;
+    respuestasCorrectasAnime = 0;
+    respuestasIncorrectasAnime = 0;
+    
+    // Cambiar a pantalla de quiz
+    cambiarPantalla('pantalla-quiz-anime');
+    
+    // Actualizar contador
+    document.getElementById('numero-pregunta-anime').textContent = 1;
+    document.getElementById('total-preguntas-anime').textContent = mazoActualAnime.length;
+    
+    // Mostrar primera pregunta
+    mostrarPreguntaAnime();
+    
+    console.log(`📝 Iniciando práctica intensiva con ${mazoFalladas.length} palabras falladas`);
+}
+
+// NUEVA FUNCIÓN: Ir al sistema de palabras falladas desde los resultados
+function practicarPalabrasFalladasAnime() {
+    if (typeof sistemaPalabrasFalladas !== 'undefined' && sistemaPalabrasFalladas.iniciarSistemaPalabrasFalladas) {
+        sistemaPalabrasFalladas.iniciarSistemaPalabrasFalladas();
+    } else {
+        alert("El sistema de palabras falladas no está disponible en este momento.");
     }
 }
 
@@ -813,6 +883,7 @@ function repetirQuizAnime() {
     preguntaActualAnime = 0;
     respuestasCorrectasAnime = 0;
     respuestasIncorrectasAnime = 0;
+    palabrasFalladasEnQuiz = []; // Limpiar palabras falladas al repetir
     
     // Mezclar preguntas de nuevo
     for (let i = mazoActualAnime.length - 1; i > 0; i--) {
@@ -826,6 +897,9 @@ function repetirQuizAnime() {
 
 // Función para volver al detalle del anime
 function volverAAnimeDetalle() {
+    // Limpiar palabras falladas temporales al salir del quiz
+    palabrasFalladasEnQuiz = [];
+    
     if (animeActual) {
         cargarAnime(animeActual);
     } else {
@@ -839,10 +913,9 @@ function volverAAnimeSeleccion() {
 }
 
 // ============================================================================
-// 9. FUNCIONES DE VIDEO Y TIMESTAMPS (SIN CAMBIOS NECESARIOS)
+// 9. FUNCIONES DE VIDEO Y TIMESTAMPS
 // ============================================================================
 
-// [Aquí van las funciones de video y timestamps existentes...]
 // Función para cargar video con opción de idioma
 function cargarVideoAnime(animeId, idioma = 'español') {
     const anime = animeConfig.animes[animeId];
@@ -1040,7 +1113,7 @@ function mostrarNotificacionAnime(mensaje) {
 }
 
 // ============================================================================
-// 11. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS - VERSIÓN MEJORADA CON SISTEMAS
+// 11. FUNCIÓN PARA CREAR PANTALLAS DINÁMICAS
 // ============================================================================
 
 function crearPantallasAnime() {
@@ -1108,6 +1181,12 @@ function crearPantallasAnime() {
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="palabras-falladas-info">
+                        <h4>📝 Sistema de Palabras Falladas:</h4>
+                        <p>Cada palabra que falles en los quizzes anime se registrará automáticamente en tu historial de palabras falladas.</p>
+                        <p>Puedes practicarlas desde el menú principal en "📝 Palabras Falladas".</p>
+                    </div>
                 </div>
             </div>
             
@@ -1169,6 +1248,7 @@ function crearPantallasAnime() {
                                 <p>• RPG Nakano: Tu novia gana experiencia</p>
                                 <p>• Eventos Diarios: Progreso automático</p>
                                 <p>• Misiones Diarias: Completas objetivos</p>
+                                <p>• <strong>📝 Palabras Falladas:</strong> Las palabras que falles se guardan automáticamente</p>
                             </div>
                         </div>
                     </div>
@@ -1181,6 +1261,9 @@ function crearPantallasAnime() {
                     <div class="barra-superior">
                         <div class="contador">Quiz Anime: <span id="numero-pregunta-anime">1</span>/<span id="total-preguntas-anime">10</span></div>
                         <div class="botones-superiores">
+                            <div class="contador-falladas" style="color: #ff6b9d; font-weight: bold; margin-right: 15px;">
+                                📝 Falladas: <span id="contador-falladas-actual">0</span>
+                            </div>
                             <button class="boton-home" onclick="volverAAnimeDetalle()">Volver al Anime</button>
                             <button class="boton-menu" onclick="irAlMenu()">🏠 Ir al Menú</button>
                         </div>
@@ -1207,12 +1290,12 @@ function crearPantallasAnime() {
         // Agregar estilos específicos para el sistema anime mejorado
         agregarEstilosAnimeMejorado();
         
-        console.log("✅ Pantallas anime creadas dinámicamente (CON SISTEMAS INTEGRADOS)");
+        console.log("✅ Pantallas anime creadas dinámicamente (CON SISTEMAS INTEGRADOS + PALABRAS FALLADAS)");
     }
 }
 
 // ============================================================================
-// 12. AGREGAR ESTILOS PARA SISTEMAS INTEGRADOS
+// 12. AGREGAR ESTILOS PARA SISTEMAS INTEGRADOS CON PALABRAS FALLADAS
 // ============================================================================
 
 function agregarEstilosAnimeMejorado() {
@@ -1343,6 +1426,12 @@ function agregarEstilosAnimeMejorado() {
                 border: 1px solid #4a90e2;
             }
             
+            .sistema-badge.palabras-falladas {
+                background: rgba(255, 107, 157, 0.2);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
+            }
+            
             /* RECOMPENSAS EN MAZOS */
             .mazo-anime-recompensa {
                 display: flex;
@@ -1358,6 +1447,12 @@ function agregarEstilosAnimeMejorado() {
                 border-radius: 5px;
                 font-size: 0.8em;
                 border: 1px solid #00ff88;
+            }
+            
+            .recompensa-mini:last-child {
+                background: rgba(255, 107, 157, 0.1);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
             }
             
             /* RECOMPENSA RESUMEN */
@@ -1412,6 +1507,26 @@ function agregarEstilosAnimeMejorado() {
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
             
+            /* PALABRAS FALLADAS RESUMEN */
+            .palabras-falladas-resumen {
+                background: rgba(255, 107, 157, 0.1);
+                border-radius: 15px;
+                padding: 15px;
+                margin: 15px 0;
+                border: 2px solid #ff6b9d;
+            }
+            
+            .palabras-falladas-resumen h4 {
+                color: #ff6b9d;
+                margin-bottom: 10px;
+            }
+            
+            .palabras-falladas-resumen p {
+                color: #cccccc;
+                font-size: 0.9em;
+                margin: 5px 0;
+            }
+            
             /* SISTEMAS ACTIVOS INFO */
             .sistemas-activos-info {
                 background: rgba(74, 144, 226, 0.1);
@@ -1443,6 +1558,12 @@ function agregarEstilosAnimeMejorado() {
                 border: 1px solid #00ff88;
             }
             
+            .sistema-activo:last-child {
+                background: rgba(255, 107, 157, 0.1);
+                color: #ff6b9d;
+                border: 1px solid #ff6b9d;
+            }
+            
             /* BOTONES ESPECIALES */
             .boton-terciario {
                 background: linear-gradient(135deg, #ff9800, #ff5722);
@@ -1459,6 +1580,34 @@ function agregarEstilosAnimeMejorado() {
             .boton-terciario:hover {
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            }
+            
+            /* PALABRAS FALLADAS INFO */
+            .palabras-falladas-info {
+                background: rgba(255, 107, 157, 0.1);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px 0;
+                border: 2px solid #ff6b9d;
+            }
+            
+            .palabras-falladas-info h4 {
+                color: #ff6b9d;
+                margin-bottom: 10px;
+            }
+            
+            .palabras-falladas-info p {
+                color: #cccccc;
+                margin: 5px 0;
+                font-size: 0.9em;
+            }
+            
+            /* CONTADOR DE FALLADAS EN QUIZ */
+            .contador-falladas {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.9em;
             }
             
             /* RESPONSIVE */
@@ -1479,6 +1628,16 @@ function agregarEstilosAnimeMejorado() {
                     flex-direction: column;
                     align-items: center;
                 }
+                
+                .anime-sistemas {
+                    gap: 5px;
+                }
+                
+                .sistema-badge {
+                    width: 20px;
+                    height: 20px;
+                    font-size: 0.8em;
+                }
             }
             
             @media (max-width: 480px) {
@@ -1490,6 +1649,10 @@ function agregarEstilosAnimeMejorado() {
                     width: 25px;
                     height: 25px;
                     font-size: 0.9em;
+                }
+                
+                .mazo-anime-recompensa {
+                    flex-wrap: wrap;
                 }
             }
         </style>
@@ -1521,6 +1684,10 @@ window.cambiarIdiomaVideo = cambiarIdiomaVideo;
 window.mostrarTimestampsAnime = mostrarTimestampsAnime;
 window.saltarATimestampAnime = saltarATimestampAnime;
 
+// Nuevas funciones para palabras falladas
+window.practicarPalabrasFalladasEspecial = practicarPalabrasFalladasEspecial;
+window.practicarPalabrasFalladasAnime = practicarPalabrasFalladasAnime;
+
 // NUEVAS funciones para testing
 window.verRecompensasAnime = function(porcentaje) {
     return animeRecompensas.calcularRecompensa(porcentaje);
@@ -1533,6 +1700,16 @@ window.simularQuizAnime = function(animeId, mazoId, porcentaje) {
     return recompensa;
 };
 
+window.verPalabrasFalladasTemporales = function() {
+    console.log(`📝 Palabras falladas temporales (${palabrasFalladasEnQuiz.length}):`);
+    palabrasFalladasEnQuiz.forEach((palabra, index) => {
+        console.log(`   ${index + 1}. ${palabra.japones} (${palabra.lectura})`);
+        console.log(`      Fallaste: ${palabra.respuestaSeleccionada}`);
+        console.log(`      Correcta: ${palabra.respuestaCorrecta}`);
+    });
+    return palabrasFalladasEnQuiz;
+};
+
 // ============================================================================
 // 14. CONSOLA DE AYUDA
 // ============================================================================
@@ -1543,7 +1720,12 @@ console.log("   - 💰 ECONOMÍA: Ganas dinero según tu porcentaje");
 console.log("   - 💕 RPG NAKANO: Tu novia gana experiencia");
 console.log("   - 🎯 EVENTOS DIARIOS: Progreso automático");
 console.log("   - 📋 MISIONES DIARIAS: Se completan con 80%+");
-console.log("   - 📝 PALABRAS FALLADAS: Registro automático");
+console.log("   - 📝 PALABRAS FALLADAS: Registro automático en cada quiz");
+console.log("");
+console.log("📝 SISTEMA DE PALABRAS FALLADAS INTEGRADO:");
+console.log("   - Cada palabra fallada se guarda automáticamente");
+console.log("   - Puedes practicarlas desde los resultados");
+console.log("   - Se registran en el sistema central de palabras falladas");
 console.log("");
 console.log("🎁 RECOMPENSAS POR PORCENTAJE:");
 console.log("   - 100%: +2 S/. +30 XP");
@@ -1560,5 +1742,6 @@ console.log("");
 console.log("🧪 FUNCIONES DE TESTING:");
 console.log("   - verRecompensasAnime(95) // Ver recompensa para 95%");
 console.log("   - simularQuizAnime('anime1', 'mazo1', 85) // Simular quiz");
+console.log("   - verPalabrasFalladasTemporales() // Ver palabras falladas del quiz actual");
 console.log("");
-console.log("💖 ¡Disfruta del sistema anime completamente integrado!");
+console.log("💖 ¡Disfruta del sistema anime completamente integrado con palabras falladas!");
