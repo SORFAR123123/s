@@ -79,19 +79,19 @@ const sistemaNakano = {
                 'utensilios_cocina': { 
                     costo: 20, 
                     experiencia: 45, 
-                    videoReciproco: 'videos/nino_cocinando.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: '¡Utensilios nuevos! Te cocinaré algo especial 👩‍🍳'
                 },
                 'delantal': { 
                     costo: 15, 
                     experiencia: 35, 
-                    videoReciproco: 'videos/nino_delantal.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: 'Con este delantal cocinaré sólo para ti 💖'
                 },
                 'libro_recetas': { 
                     costo: 25, 
                     experiencia: 55, 
-                    videoReciproco: 'videos/nino_recetas.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: '¡Nuevas recetas! Prepararemos algo juntos 📚'
                 }
             },
