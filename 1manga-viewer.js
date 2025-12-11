@@ -82,8 +82,22 @@ const mangaViewer = {
         'sub3_1': [
             'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small'
         ],
-        'sub3_2': [], 'sub3_3': [],
-        'sub4_1': [], 'sub4_2': [], 'sub4_3': [],
+        'sub3_2': [
+            
+        ], 'sub3_3': [
+            
+        ],
+        'sub4_1': [ 
+            'https://pbs.twimg.com/media/G75ku8eWYAA7KbL?format=png&name=large',
+              'https://pbs.twimg.com/media/G75kwJlWAAA5IAW?format=png&name=large',
+              'https://pbs.twimg.com/media/G75kxGIWYAAo2_f?format=png&name=large',
+              'https://pbs.twimg.com/media/G75lJM1X0AI6-Ka?format=png&name=large',
+              'https://pbs.twimg.com/media/G75lKoaXsAAGuI0?format=png&name=large',
+            'https://pbs.twimg.com/media/G75lL5JXwAERj0b?format=png&name=large'
+            
+        ], 'sub4_2': [
+            
+        ], 'sub4_3': [],
         'sub5_1': [], 'sub5_2': [], 'sub5_3': [],
         'sub6_1': [], 'sub6_2': [], 'sub6_3': [],
         'sub7_1': [], 'sub7_2': [], 'sub7_3': [],
