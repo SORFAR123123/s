@@ -31,19 +31,19 @@ const sistemaNakano = {
                 'microfono': { 
                     costo: 25, 
                     experiencia: 50, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/ichika_microfono.mp4',
                     mensaje: '¡Gracias por el micrófono! Te canto algo especial 🎤'
                 },
                 'maquillaje': { 
                     costo: 20, 
                     experiencia: 40, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/ichika_maquillaje.mp4',
                     mensaje: 'Con este maquillaje me veré hermosa para ti 💄'
                 },
                 'guion': { 
                     costo: 30, 
                     experiencia: 60, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/ichika_guion.mp4',
                     mensaje: '¡Un guion nuevo! Practicaremos juntos 📖'
                 }
             },
@@ -79,19 +79,19 @@ const sistemaNakano = {
                 'utensilios_cocina': { 
                     costo: 20, 
                     experiencia: 45, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/nino_cocinando.mp4',
                     mensaje: '¡Utensilios nuevos! Te cocinaré algo especial 👩‍🍳'
                 },
                 'delantal': { 
                     costo: 15, 
                     experiencia: 35, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/nino_delantal.mp4',
                     mensaje: 'Con este delantal cocinaré sólo para ti 💖'
                 },
                 'libro_recetas': { 
                     costo: 25, 
                     experiencia: 55, 
-                    videoReciproco: 'ninocaricia.mp4',
+                    videoReciproco: 'videos/regalos/nino_recetas.mp4',
                     mensaje: '¡Nuevas recetas! Prepararemos algo juntos 📚'
                 }
             },
@@ -127,19 +127,19 @@ const sistemaNakano = {
                 'audifonos': { 
                     costo: 30, 
                     experiencia: 65, 
-                    videoReciproco: 'videos/miku_audifonos.mp4',
+                    videoReciproco: 'videos/regalos/miku_audifonos.mp4',
                     mensaje: '¡Audífonos nuevos! Escucharemos juntos 🎧'
                 },
                 'libro_historia': { 
                     costo: 15, 
                     experiencia: 35, 
-                    videoReciproco: 'videos/miku_historia.mp4',
+                    videoReciproco: 'videos/regalos/miku_historia.mp4',
                     mensaje: '¡Un libro de historia! Te enseñaré algo 📖'
                 },
                 'daimyou': { 
                     costo: 40, 
                     experiencia: 80, 
-                    videoReciproco: 'videos/miku_daimyou.mp4',
+                    videoReciproco: 'videos/regalos/miku_daimyou.mp4',
                     mensaje: '¡Figura de daimyō! Hablaremos de historia japonesa 🏯'
                 }
             },
@@ -175,19 +175,19 @@ const sistemaNakano = {
                 'balon': { 
                     costo: 10, 
                     experiencia: 30, 
-                    videoReciproco: 'videos/yotsuba_balon.mp4',
+                    videoReciproco: 'videos/regalos/yotsuba_balon.mp4',
                     mensaje: '¡Un balón nuevo! Jugaremos juntos ⚽'
                 },
                 'zapatos_deportivos': { 
                     costo: 35, 
                     experiencia: 70, 
-                    videoReciproco: 'videos/yotsuba_corriendo.mp4',
+                    videoReciproco: 'videos/regalos/yotsuba_corriendo.mp4',
                     mensaje: '¡Zapatos deportivos! Correremos juntos 👟'
                 },
                 'medalla': { 
                     costo: 50, 
                     experiencia: 100, 
-                    videoReciproco: 'videos/yotsuba_medalla.mp4',
+                    videoReciproco: 'videos/regalos/yotsuba_medalla.mp4',
                     mensaje: '¡Una medalla! Ganaremos juntos 🥇'
                 }
             },
@@ -223,19 +223,19 @@ const sistemaNakano = {
                 'libro_cocina': { 
                     costo: 20, 
                     experiencia: 45, 
-                    videoReciproco: 'videos/itsuki_cocinando.mp4',
+                    videoReciproco: 'videos/regalos/itsuki_cocinando.mp4',
                     mensaje: '¡Libro de cocina! Cocinaré algo delicioso 📖'
                 },
                 'comida_gourmet': { 
                     costo: 25, 
                     experiencia: 55, 
-                    videoReciproco: 'videos/itsuki_comiendo.mp4',
+                    videoReciproco: 'videos/regalos/itsuki_comiendo.mp4',
                     mensaje: '¡Comida gourmet! La compartiremos 🍱'
                 },
                 'postre_especial': { 
                     costo: 15, 
                     experiencia: 35, 
-                    videoReciproco: 'videos/itsuki_postre.mp4',
+                    videoReciproco: 'videos/regalos/itsuki_postre.mp4',
                     mensaje: '¡Un postre especial! Para los dos 🍰'
                 }
             },
@@ -663,12 +663,14 @@ const sistemaNakano = {
         return true;
     },
     
-    // EJECUTAR MOMENTO ÍNTIMO
+    // EJECUTAR MOMENTO ÍNTIMO (VERSIÓN CORREGIDA)
     ejecutarMomentoIntimo: function(novia, momento) {
         const dialogoElement = document.getElementById('dialogo-nakano');
         
+        // CORRECCIÓN: Usar el ID de la novia actual
+        const videoKey = `${this.noviaSeleccionada}_${momento.id}`;
+        
         // Verificar si hay video para este momento
-        const videoKey = `${novia.id}_${momento.id}`;
         if (videosIntimosNakano && videosIntimosNakano[videoKey]) {
             // Mostrar video
             dialogoElement.innerHTML = `
@@ -732,7 +734,7 @@ const sistemaNakano = {
             };
             
             let mensajeCompleto = `<div class="escena-adulta">`;
-            mensajes[novia.id].forEach((mensaje, index) => {
+            mensajes[this.noviaSeleccionada].forEach((mensaje, index) => {
                 mensajeCompleto += `<div class="linea-escena">${mensaje}</div>`;
             });
             mensajeCompleto += `</div>`;
@@ -784,7 +786,7 @@ const sistemaNakano = {
         // 9. ACTUALIZAR BOTONES DE MOMENTOS ÍNTIMOS
         this.actualizarBotonesMomentos(novia);
         
-        // 10. ACTUALIZAR BOTONES DE REGALOS ESPECIALES
+        // 10. ACTUALIZAR BOTONES DE REGALOS ESPECIALES (VERSIÓN CORREGIDA)
         this.actualizarBotonesRegalosEspeciales(novia);
     },
     
@@ -934,9 +936,9 @@ const sistemaNakano = {
         });
     },
     
-    // ACTUALIZAR BOTONES DE REGALOS ESPECIALES
+    // ACTUALIZAR BOTONES DE REGALOS ESPECIALES (VERSIÓN CORREGIDA)
     actualizarBotonesRegalosEspeciales: function(novia) {
-        // Actualizar botones generales de regalos
+        // 1. ACTUALIZAR BOTONES GENERALES DE REGALOS (flores, chocolates, joyas)
         ['flores', 'chocolates', 'joyas'].forEach(tipo => {
             const boton = document.getElementById(`boton-regalo-${tipo}`);
             if (boton) {
@@ -948,7 +950,38 @@ const sistemaNakano = {
             }
         });
         
-        // Actualizar botones especiales (si existen en el HTML)
+        // 2. CREAR O ACTUALIZAR CONTENEDOR DE REGALOS ESPECIALES DINÁMICAMENTE
+        const contenedorRegalosEspeciales = document.getElementById('regalos-especiales-contenedor');
+        if (contenedorRegalosEspeciales) {
+            let html = '<div class="regalos-especiales-grid">';
+            
+            // Obtener los regalos especiales de la quintilliza actual
+            Object.entries(novia.regalosEspeciales).forEach(([tipo, regalo]) => {
+                const puedeComprar = this.economia.saldo >= regalo.costo;
+                
+                html += `
+                    <div class="regalo-especial-card">
+                        <div class="regalo-icono">${this.obtenerIconoRegalo(tipo)}</div>
+                        <div class="regalo-info">
+                            <div class="regalo-nombre">${this.formatearNombreRegalo(tipo)}</div>
+                            <div class="regalo-precio">${regalo.costo} ${this.economia.moneda}</div>
+                            <div class="regalo-xp">+${regalo.experiencia} XP</div>
+                        </div>
+                        <button class="boton-regalo-especial" 
+                                onclick="sistemaNakano.regalarItemEspecial('${tipo}')"
+                                ${!puedeComprar ? 'disabled' : ''}
+                                title="${regalo.mensaje}">
+                            ${puedeComprar ? 'Regalar' : 'Sin dinero'}
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            contenedorRegalosEspeciales.innerHTML = html;
+        }
+        
+        // 3. ACTUALIZAR BOTONES EXISTENTES (si los hay) para compatibilidad
         Object.keys(novia.regalosEspeciales).forEach(tipo => {
             const boton = document.getElementById(`boton-especial-${tipo}`);
             if (boton) {
