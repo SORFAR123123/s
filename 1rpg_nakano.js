@@ -31,19 +31,19 @@ const sistemaNakano = {
                 'microfono': { 
                     costo: 25, 
                     experiencia: 50, 
-                    videoReciproco: 'videos/ichika_microfono.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: '¡Gracias por el micrófono! Te canto algo especial 🎤'
                 },
                 'maquillaje': { 
                     costo: 20, 
                     experiencia: 40, 
-                    videoReciproco: 'videos/ichika_maquillaje.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: 'Con este maquillaje me veré hermosa para ti 💄'
                 },
                 'guion': { 
                     costo: 30, 
                     experiencia: 60, 
-                    videoReciproco: 'videos/ichika_guion.mp4',
+                    videoReciproco: 'ninocaricia.mp4',
                     mensaje: '¡Un guion nuevo! Practicaremos juntos 📖'
                 }
             },
