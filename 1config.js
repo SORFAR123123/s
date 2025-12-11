@@ -26,7 +26,7 @@ const configImagenes = {
         'sub3_1': 'https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small',
         'sub3_2': 'imagenes/sub3_2.jpg',
         'sub3_3': 'imagenes/sub3_3.jpg',
-        'sub4_1': 'imagenes/sub4_1.jpg',
+        'sub4_1': 'https://pbs.twimg.com/media/G75foT0XgAERE6s?format=jpg&name=small',
         'sub4_2': 'imagenes/sub4_2.jpg',
         'sub4_3': 'imagenes/sub4_3.jpg',
         'sub5_1': 'imagenes/sub5_1.jpg',
