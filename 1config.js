@@ -115,10 +115,10 @@ const videosIntimosNakano = {
     'ichika_maquillaje_intimo': 'Belinda.mp4',
     
     // Nino
-    'nino_beso_nino': 'Belinda.mp4',
-    'nino_cena_romantica': 'Belinda.mp4',
-    'nino_masaje_culinario': 'Belinda.mp4',
-    'nino_noche_especias': 'Belinda.mp4',
+    'nino_beso_nino': 'NinoIchika.mp4',
+    'nino_cena_romantica': 'NinoIchika.mp4',
+    'nino_masaje_culinario': 'NinoIchika.mp4',
+    'nino_noche_especias': 'NinoIchika.mp4',
     
     // Miku
     'miku_beso_miku': 'Belinda.mp4',
