@@ -109,34 +109,34 @@ const videosRecompensa = [
 
 const videosIntimosNakano = {
     // Ichika
-    'ichika_beso_ichika': 'videos/ichika_beso.mp4',
-    'ichika_escena_privada': 'videos/ichika_escena.mp4',
-    'ichika_noche_estrellas': 'videos/ichika_noche.mp4',
-    'ichika_maquillaje_intimo': 'videos/ichika_maquillaje.mp4',
+    'ichika_beso_ichika': 'Belinda.mp4',
+    'ichika_escena_privada': 'Belinda.mp4',
+    'ichika_noche_estrellas': 'Belinda.mp4',
+    'ichika_maquillaje_intimo': 'Belinda.mp4',
     
     // Nino
-    'nino_beso_nino': 'videos/nino_beso.mp4',
-    'nino_cena_romantica': 'videos/nino_cena.mp4',
-    'nino_masaje_culinario': 'videos/nino_masaje.mp4',
-    'nino_noche_especias': 'videos/nino_especias.mp4',
+    'nino_beso_nino': 'Belinda.mp4',
+    'nino_cena_romantica': 'Belinda.mp4',
+    'nino_masaje_culinario': 'Belinda.mp4',
+    'nino_noche_especias': 'Belinda.mp4',
     
     // Miku
-    'miku_beso_miku': 'videos/miku_beso.mp4',
-    'miku_leccion_historica': 'videos/miku_leccion.mp4',
-    'miku_musica_intima': 'videos/miku_musica.mp4',
-    'miku_noche_samurais': 'videos/miku_samurais.mp4',
+    'miku_beso_miku': 'Belinda.mp4',
+    'miku_leccion_historica': 'Belinda.mp4',
+    'miku_musica_intima': 'Belinda.mp4',
+    'miku_noche_samurais': 'Belinda.mp4',
     
     // Yotsuba
-    'yotsuba_beso_yotsuba': 'videos/yotsuba_beso.mp4',
-    'yotsuba_ducha_juntos': 'videos/yotsuba_ducha.mp4',
-    'yotsuba_masaje_deportivo': 'videos/yotsuba_masaje.mp4',
-    'yotsuba_noche_olimpica': 'videos/yotsuba_olimpica.mp4',
+    'yotsuba_beso_yotsuba': 'Belinda.mp4',
+    'yotsuba_ducha_juntos': 'Belinda.mp4',
+    'yotsuba_masaje_deportivo': 'Belinda.mp4',
+    'yotsuba_noche_olimpica': 'Belinda.mp4',
     
     // Itsuki
-    'itsuki_beso_itsuki': 'videos/itsuki_beso.mp4',
-    'itsuki_cena_romantica_itsuki': 'videos/itsuki_cena.mp4',
-    'itsuki_degustacion_intima': 'videos/itsuki_degustacion.mp4',
-    'itsuki_noche_chocolate': 'videos/itsuki_chocolate.mp4'
+    'itsuki_beso_itsuki': 'Belinda.mp4',
+    'itsuki_cena_romantica_itsuki': 'Belinda.mp4',
+    'itsuki_degustacion_intima': 'Belinda.mp4',
+    'itsuki_noche_chocolate': 'Belinda.mp4'
 };
 
 // ============================================================================
@@ -145,29 +145,29 @@ const videosIntimosNakano = {
 
 const videosRegalosNakano = {
     // Ichika
-    'ichika_microfono': 'videos/regalos/ichika_microfono.mp4',
-    'ichika_maquillaje': 'videos/regalos/ichika_maquillaje.mp4',
-    'ichika_guion': 'videos/regalos/ichika_guion.mp4',
+    'ichika_microfono': 'Belinda.mp4',
+    'ichika_maquillaje': 'Belinda.mp4',
+    'ichika_guion': 'Belinda.mp4',
     
     // Nino
-    'nino_utensilios_cocina': 'videos/regalos/nino_cocinando.mp4',
-    'nino_delantal': 'videos/regalos/nino_delantal.mp4',
-    'nino_libro_recetas': 'videos/regalos/nino_recetas.mp4',
+    'nino_utensilios_cocina': 'Belinda.mp4',
+    'nino_delantal': 'Belinda.mp4',
+    'nino_libro_recetas': 'Belinda.mp4',
     
     // Miku
-    'miku_audifonos': 'videos/regalos/miku_audifonos.mp4',
-    'miku_libro_historia': 'videos/regalos/miku_historia.mp4',
-    'miku_daimyou': 'videos/regalos/miku_daimyou.mp4',
+    'miku_audifonos': 'Belinda.mp4',
+    'miku_libro_historia': 'Belinda.mp4',
+    'miku_daimyou': 'Belinda.mp4',
     
     // Yotsuba
-    'yotsuba_balon': 'videos/regalos/yotsuba_balon.mp4',
-    'yotsuba_zapatos_deportivos': 'videos/regalos/yotsuba_corriendo.mp4',
-    'yotsuba_medalla': 'videos/regalos/yotsuba_medalla.mp4',
+    'yotsuba_balon': 'Belinda.mp4',
+    'yotsuba_zapatos_deportivos': 'Belinda.mp4',
+    'yotsuba_medalla': 'Belinda.mp4',
     
     // Itsuki
-    'itsuki_libro_cocina': 'videos/regalos/itsuki_cocinando.mp4',
-    'itsuki_comida_gourmet': 'videos/regalos/itsuki_comiendo.mp4',
-    'itsuki_postre_especial': 'videos/regalos/itsuki_postre.mp4'
+    'itsuki_libro_cocina': 'Belinda.mp4',
+    'itsuki_comida_gourmet': 'Belinda.mp4',
+    'itsuki_postre_especial': 'Belinda.mp4'
 };
 
 // ============================================================================
