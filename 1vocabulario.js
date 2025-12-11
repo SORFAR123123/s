@@ -675,67 +675,71 @@ const vocabularioDatabase = {
     
     // Sub-contenedor 4.1
     'sub4_1': {
-        1: [
-            { japones: '哲学', lectura: 'tetsugaku', opciones: ['Filosofía', 'Ciencia', 'Arte', 'Religión'], respuesta: 0 },
-            { japones: '思想', lectura: 'shisou', opciones: ['Pensamiento', 'Acción', 'Palabra', 'Emoción'], respuesta: 0 },
-            { japones: '真理', lectura: 'shinri', opciones: ['Verdad', 'Mentira', 'Error', 'Engaño'], respuesta: 0 },
-            { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
-            { japones: '理性', lectura: 'risei', opciones: ['Razón', 'Emoción', 'Instinto', 'Intuición'], respuesta: 0 },
-            { japones: '存在', lectura: 'sonzai', opciones: ['Existencia', 'Inexistencia', 'Nada', 'Vacío'], respuesta: 0 },
-            { japones: '意識', lectura: 'ishiki', opciones: ['Conciencia', 'Inconsciencia', 'Sueño', 'Desmayo'], respuesta: 0 },
-            { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 },
-            { japones: '正義', lectura: 'seigi', opciones: ['Justicia', 'Injusticia', 'Corrupción', 'Abuso'], respuesta: 0 },
-            { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Amoralidad', 'Corrupción'], respuesta: 0 }
-        ],
-        2: [
-            { japones: '宗教', lectura: 'shuukyou', opciones: ['Religión', 'Ciencia', 'Filosofía', 'Arte'], respuesta: 0 },
-            { japones: '信仰', lectura: 'shinkou', opciones: ['Creencia', 'Duda', 'Escepticismo', 'Agnosticismo'], respuesta: 0 },
-            { japones: '神', lectura: 'kami', opciones: ['Dios', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
-            { japones: '祈り', lectura: 'inori', opciones: ['Oración', 'Maldición', 'Bendición', 'Profecía'], respuesta: 0 },
-            { japones: '儀式', lectura: 'gishiki', opciones: ['Ceremonia', 'Informalidad', 'Espontaneidad', 'Improvisación'], respuesta: 0 },
-            { japones: '寺院', lectura: 'jiin', opciones: ['Templo', 'Casa', 'Escuela', 'Oficina'], respuesta: 0 },
-            { japones: '聖書', lectura: 'seisho', opciones: ['Biblia', 'Novela', 'Poesía', 'Ensayo'], respuesta: 0 },
-            { japones: '信仰心', lectura: 'shinkoushin', opciones: ['Devoción', 'Ateísmo', 'Agnosticismo', 'Indiferencia'], respuesta: 0 },
-            { japones: '来世', lectura: 'raise', opciones: ['Vida después de la muerte', 'Vida presente', 'Reencarnación', 'Nirvana'], respuesta: 0 },
-            { japones: '奇跡', lectura: 'kiseki', opciones: ['Milagro', 'Normalidad', 'Rutina', 'Cotidianidad'], respuesta: 0 }
-        ],
-        3: [
-            { japones: '言語', lectura: 'gengo', opciones: ['Lenguaje', 'Silencio', 'Gesto', 'Expresión'], respuesta: 0 },
-            { japones: '文法', lectura: 'bunpou', opciones: ['Gramática', 'Vocabulario', 'Pronunciación', 'Escritura'], respuesta: 0 },
-            { japones: '語彙', lectura: 'goi', opciones: ['Vocabulario', 'Gramática', 'Pronunciación', 'Escritura'], respuesta: 0 },
-            { japones: '発音', lectura: 'hatsuon', opciones: ['Pronunciación', 'Escritura', 'Lectura', 'Comprensión'], respuesta: 0 },
-            { japones: '意味', lectura: 'imi', opciones: ['Significado', 'Significante', 'Símbolo', 'Representación'], respuesta: 0 },
-            { japones: '翻訳', lectura: 'honyaku', opciones: ['Traducción', 'Interpretación', 'Adaptación', 'Modificación'], respuesta: 0 },
-            { japones: '通訳', lectura: 'tsuuyaku', opciones: ['Interpretación', 'Traducción', 'Explicación', 'Aclaración'], respuesta: 0 },
-            { japones: '方言', lectura: 'hougen', opciones: ['Dialecto', 'Lengua estándar', 'Idioma', 'Jerga'], respuesta: 0 },
-            { japones: '表現', lectura: 'hyougen', opciones: ['Expresión', 'Represión', 'Ocultamiento', 'Silencio'], respuesta: 0 },
-            { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Soledad'], respuesta: 0 }
-        ],
-        4: [
-            { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Arte', 'Filosofía'], respuesta: 0 },
-            { japones: '詩', lectura: 'shi', opciones: ['Poesía', 'Prosa', 'Ensayo', 'Novela'], respuesta: 0 },
-            { japones: '小説', lectura: 'shousetsu', opciones: ['Novela', 'Poesía', 'Ensayo', 'Teatro'], respuesta: 0 },
-            { japones: '物語', lectura: 'monogatari', opciones: ['Historia', 'Hecho', 'Realidad', 'Verdad'], respuesta: 0 },
-            { japones: '作者', lectura: 'sakusha', opciones: ['Autor', 'Lector', 'Crítico', 'Editor'], respuesta: 0 },
-            { japones: '主人公', lectura: 'shujinkou', opciones: ['Protagonista', 'Antagonista', 'Personaje secundario', 'Narrador'], respuesta: 0 },
-            { japones: '文体', lectura: 'buntai', opciones: ['Estilo', 'Contenido', 'Tema', 'Argumento'], respuesta: 0 },
-            { japones: '比喩', lectura: 'hiyu', opciones: ['Metáfora', 'Literalidad', 'Realismo', 'Naturalismo'], respuesta: 0 },
-            { japones: '象徴', lectura: 'shouchou', opciones: ['Símbolo', 'Realidad', 'Hecho', 'Verdad'], respuesta: 0 },
-            { japones: '感動', lectura: 'kandou', opciones: ['Emoción', 'Indiferencia', 'Frialdad', 'Desapego'], respuesta: 0 }
-        ],
-        5: [
-            { japones: '神話', lectura: 'shinwa', opciones: ['Mito', 'Historia', 'Ciencia', 'Filosofía'], respuesta: 0 },
-            { japones: '伝説', lectura: 'densetsu', opciones: ['Leyenda', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
-            { japones: '民話', lectura: 'minwa', opciones: ['Cuento popular', 'Historia oficial', 'Ciencia', 'Filosofía'], respuesta: 0 },
-            { japones: '寓話', lectura: 'guuwa', opciones: ['Fábula', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
-            { japones: '昔話', lectura: 'mukashibanashi', opciones: ['Cuento antiguo', 'Historia contemporánea', 'Noticia', 'Reportaje'], respuesta: 0 },
-            { japones: '英雄', lectura: 'eiyuu', opciones: ['Héroe', 'Villano', 'Personaje común', 'Antihéroe'], respuesta: 0 },
-            { japones: '怪物', lectura: 'kaibutsu', opciones: ['Monstruo', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
-            { japones: '魔法', lectura: 'mahou', opciones: ['Magia', 'Ciencia', 'Tecnología', 'Realidad'], respuesta: 0 },
-            { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 },
-            { japones: '運命', lectura: 'unmei', opciones: ['Destino', 'Azar', 'Elección', 'Libre albedrío'], respuesta: 0 }
-        ]
-    },
+    1: [
+        { japones: '今はちょうど', lectura: 'ima wa choudo', opciones: ['Justo ahora', 'Ya terminó', 'Hace mucho', 'Más tarde'], respuesta: 0 },
+        { japones: '芸能', lectura: 'geinou', opciones: ['Entretenimiento', 'Deporte', 'Política', 'Academia'], respuesta: 0 },
+        { japones: '活動', lectura: 'katsudou', opciones: ['Actividad', 'Descanso', 'Pausa', 'Inactividad'], respuesta: 0 },
+        { japones: '時期', lectura: 'jikan', opciones: ['Período/Época', 'Lugar', 'Persona', 'Razón'], respuesta: 0 },
+        { japones: 'せっかく 来れたのに', lectura: 'sekkaku korareta noni', opciones: ['Aunque vine con dificultad...', 'Porque fue fácil venir', 'Ya que no pude venir', 'Como no tenía planes'], respuesta: 0 },
+        { japones: '水の泡', lectura: 'mizu no awa', opciones: ['En vano/Agua pasada', 'Gran éxito', 'Sorpresa', 'Ceremonia'], respuesta: 0 },
+        { japones: 'そうなったら', lectura: 'sou nattara', opciones: ['Si eso sucede', 'Antes de que suceda', 'Aunque no suceda', 'Porque sucedió'], respuesta: 0 },
+        { japones: 'すればいい', lectura: 'sureba ii', opciones: ['Deberías hacer (sugerencia)', 'No deberías hacer', 'Es imposible hacer', 'Es obligatorio hacer'], respuesta: 0 },
+        { japones: '未来の明るい', lectura: 'mirai no akarui', opciones: ['Con un futuro brillante', 'Con un futuro oscuro', 'Sin futuro', 'Con un futuro incierto'], respuesta: 0 },
+        { japones: '元女優が', lectura: 'moto joyuu ga', opciones: ['Una ex actriz', 'Una actriz principiante', 'Una actriz famosa', 'Una directora'], respuesta: 0 }
+    ],
+    2: [
+        { japones: '引退になって', lectura: 'intai ni natte', opciones: ['Haberse retirado', 'Haberse unido', 'Haberse graduado', 'Haberse mudado'], respuesta: 0 },
+        { japones: 'しまいに', lectura: 'shimai ni', opciones: ['Al final/ Finalmente', 'Al principio', 'De repente', 'Raramente'], respuesta: 0 },
+        { japones: '業界', lectura: 'gyoukai', opciones: ['Industria/Rubio', 'País', 'Escuela', 'Familia'], respuesta: 0 },
+        { japones: '華麗', lectura: 'karei', opciones: ['Elegante/Espléndido', 'Simple', 'Ordinario', 'Feo'], respuesta: 0 },
+        { japones: 'これはいける', lectura: 'kore wa ikeru', opciones: ['Esto puede funcionar/Es prometedor', 'Esto es imposible', 'Esto es peligroso', 'Esto es aburrido'], respuesta: 0 },
+        { japones: '初出演', lectura: 'hatsu shutsuen', opciones: ['Primera aparición', 'Última aparición', 'Aparición especial', 'Aparición casual'], respuesta: 0 },
+        { japones: '元芸能人', lectura: 'moto geinoujin', opciones: ['Ex celebridad', 'Nueva celebridad', 'Periodista', 'Fan'], respuesta: 0 },
+        { japones: '世にも珍しい', lectura: 'yo ni mo mezurashii', opciones: ['Extraño en el mundo/Inaudito', 'Muy común', 'Muy aburrido', 'Muy caro'], respuesta: 0 },
+        { japones: '話題になる', lectura: 'wadai ni naru', opciones: ['Convertirse en tema de conversación', 'Ser olvidado', 'Ser criticado', 'Ser ignorado'], respuesta: 0 },
+        { japones: '革命', lectura: 'kakumei', opciones: ['Revolución', 'Evolución', 'Tradición', 'Estancamiento'], respuesta: 0 }
+    ],
+    3: [
+        { japones: '起こせる', lectura: 'okoseru', opciones: ['Poder causar/Lograr', 'Poder prevenir', 'Poder olvidar', 'Poder ignorar'], respuesta: 0 },
+        { japones: '活躍さえ', lectura: 'katsuyaku sae', opciones: ['Incluso la actividad exitosa', 'Fracaso constante', 'Primer intento', 'Sin esfuerzo'], respuesta: 0 },
+        { japones: '調理学校', lectura: 'chouri gakkou', opciones: ['Escuela de cocina', 'Escuela de arte', 'Escuela de negocios', 'Escuela de idiomas'], respuesta: 0 },
+        { japones: 'きつい', lectura: 'kitsui', opciones: ['Difícil/Duro', 'Fácil', 'Relajado', 'Lento'], respuesta: 0 },
+        { japones: '他の道を', lectura: 'hoka no michi wo', opciones: ['Otro camino', 'El mismo camino', 'Un atajo', 'Un callejón sin salida'], respuesta: 0 },
+        { japones: '毎日', lectura: 'mainichi', opciones: ['Todos los días', 'Rara vez', 'A veces', 'Nunca'], respuesta: 0 },
+        { japones: '試作', lectura: 'shisaku', opciones: ['Prototipo/Prueba de fabricación', 'Producto final', 'Venta', 'Consumo'], respuesta: 0 },
+        { japones: 'お菓子', lectura: 'okashi', opciones: ['Dulces/Golosinas', 'Plato principal', 'Bebida', 'Sopa'], respuesta: 0 },
+        { japones: 'お腹', lectura: 'onaka', opciones: ['Estómago', 'Cabeza', 'Mano', 'Corazón'], respuesta: 0 },
+        { japones: '試食', lectura: 'shishoku', opciones: ['Degustación', 'Cocción', 'Compra', 'Desperdicio'], respuesta: 0 }
+    ],
+    4: [
+        { japones: '将来', lectura: 'shourai', opciones: ['Futuro', 'Pasado', 'Presente', 'Ayer'], respuesta: 0 },
+        { japones: '喫茶店', lectura: 'kissaten', opciones: ['Cafetería', 'Hospital', 'Tienda', 'Estación'], respuesta: 0 },
+        { japones: '写真', lectura: 'shashin', opciones: ['Fotografía', 'Pintura', 'Escultura', 'Película'], respuesta: 0 },
+        { japones: '写っている', lectura: 'utsu tte iru', opciones: ['Estar salido (en una foto)', 'Estar escondido', 'Estar borrado', 'Estar pintado'], respuesta: 0 },
+        { japones: '報酬', lectura: 'houshuu', opciones: ['Recompensa/Pago', 'Castigo', 'Regalo', 'Deuda'], respuesta: 0 },
+        { japones: '今後', lectura: 'kongo', opciones: ['De ahora en adelante', 'Hasta ahora', 'Recientemente', 'En el pasado lejano'], respuesta: 0 },
+        { japones: '食レポ', lectura: 'shoku repo', opciones: ['Reportaje gastronómico', 'Reportaje deportivo', 'Reportaje político', 'Crítica literaria'], respuesta: 0 },
+        { japones: '代わって', lectura: 'kawatte', opciones: ['En lugar de/Como sustituto', 'Junto con', 'En contra de', 'A pesar de'], respuesta: 0 },
+        { japones: '真剣に', lectura: 'shinken ni', opciones: ['En serio', 'En broma', 'Despreocupadamente', 'Tristemente'], respuesta: 0 },
+        { japones: '大食い系', lectura: 'oogui kei', opciones: ['Tipo comedor abundante', 'Tipo que come poco', 'Vegetariano', 'Gourmet'], respuesta: 0 }
+    ],
+    5: [
+        { japones: '企画', lectura: 'kikaku', opciones: ['Plan/Proyecto', 'Accidente', 'Rutina', 'Error'], respuesta: 0 },
+        { japones: 'いい加減', lectura: 'ii kagen', opciones: ['Ya basta/De una vez', 'Con cuidado', 'Por primera vez', 'Sin prisa'], respuesta: 0 },
+        { japones: '傳説', lectura: 'densetsu', opciones: ['Leyenda', 'Historia real', 'Noticia', 'Chisme'], respuesta: 0 },
+        { japones: 'もんかな', lectura: 'mon ka na', opciones: ['¿De verdad? (coloquial, duda)', '¡Claro que sí!', 'Absolutamente no', 'Tal vez'], respuesta: 0 },
+        { japones: '今夜', lectura: 'kon\'ya', opciones: ['Esta noche', 'Esta mañana', 'Ayer', 'Mañana'], respuesta: 0 },
+        { japones: '完璧', lectura: 'kanpeki', opciones: ['Perfección', 'Desastre', 'Normalidad', 'Mediocridad'], respuesta: 0 },
+        { japones: '任務', lectura: 'ninmu', opciones: ['Misión/Tarea', 'Juego', 'Vacación', 'Sueño'], respuesta: 0 },
+        { japones: '遂行', lectura: 'suikou', opciones: ['Cumplimiento', 'Abandono', 'Retraso', 'Planificación'], respuesta: 0 },
+        { japones: '初体験と', lectura: 'hatsu taiken to', opciones: ['Con la primera experiencia', 'Con la última experiencia', 'Sin experiencia', 'Con mucha experiencia'], respuesta: 0 },
+        { japones: 'いうことで', lectura: 'iu koto de', opciones: ['Así que... / Por lo tanto', 'Sin embargo', 'Además', 'Por ejemplo'], respuesta: 0 }
+    ],
+    6: [
+        { japones: '最終日', lectura: 'saishuu bi', opciones: ['Día final', 'Primer día', 'Día festivo', 'Día ordinario'], respuesta: 0 },
+        { japones: '両等分', lectura: 'ryoutou bun', opciones: ['División en dos partes iguales', 'División desigual', 'Unificación', 'Multiplicación'], respuesta: 0 }
+    ]
+},
     
     
     // Sub-contenedor 4.2
