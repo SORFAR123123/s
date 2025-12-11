@@ -507,6 +507,13 @@ function mostrarResultados() {
         sistemaNakano.economia.saldo = sistemaEconomia.saldoTotal;
     }
     
+    // Registrar experiencia en SISTEMA KANA (NUEVO)
+    if (typeof sistemaKana !== 'undefined') {
+        sistemaKana.registrarMazoCompletado(porcentaje);
+        // Sincronizar dinero
+        sistemaKana.economia.saldo = sistemaEconomia.saldoTotal;
+    }
+    
     if (porcentaje === 100) {
         // Registrar mazo completado para misiones diarias
         misionesDiarias.registrarMazoCompletado();
@@ -735,7 +742,7 @@ function repetirFalladas() {
 }
 
 // ============================================================================
-// FUNCIÓN PARA INICIAR SISTEMA NAKANO (REEMPLAZA LA ANTERIOR)
+// FUNCIÓN PARA INICIAR SISTEMA NAKANO
 // ============================================================================
 
 function iniciarSistemaNakano() {
@@ -751,7 +758,91 @@ function iniciarSistemaNakano() {
 }
 
 // ============================================================================
-// INICIALIZACIÓN DEL SISTEMA - ACTUALIZADA PARA NAKANO
+// FUNCIÓN PARA INICIAR SISTEMA KANA (NUEVA)
+// ============================================================================
+
+function iniciarSistemaKana() {
+    console.log("👨‍👧 Iniciando sistema Kana...");
+    cambiarPantalla('pantalla-rpg-kana');
+    
+    // Inicializar sistema Kana si no está inicializado
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.inicializar) {
+        sistemaKana.inicializar();
+        console.log("✅ Sistema Kana inicializado");
+    } else {
+        console.error("⚠️ Sistema Kana no cargado");
+        mostrarNotificacion("Error: Sistema Kana no disponible");
+    }
+}
+
+// ============================================================================
+// FUNCIONES GLOBALES PARA KANA
+// ============================================================================
+
+// Función global para actividades
+function realizarActividadKana(actividadId) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.realizarActividad) {
+        sistemaKana.realizarActividad(actividadId);
+    }
+}
+
+// Función global para regalar items
+function regalarItemKana(tipo) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.regalarItem) {
+        sistemaKana.regalarItem(tipo);
+    }
+}
+
+// Función global para regalar items especiales
+function regalarItemEspecialKana(tipo) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.regalarItemEspecial) {
+        sistemaKana.regalarItemEspecial(tipo);
+    }
+}
+
+// Función global para comprar condones
+function comprarCondonesKana() {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.comprarCondones) {
+        sistemaKana.comprarCondones();
+    }
+}
+
+// Función global para momentos íntimos
+function usarMomentoIntimoKana(momentoId) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.usarMomentoIntimo) {
+        sistemaKana.usarMomentoIntimo(momentoId);
+    }
+}
+
+// Función global para completar mazo
+function completarMazoKana(porcentaje) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.registrarMazoCompletado) {
+        sistemaKana.registrarMazoCompletado(porcentaje);
+    }
+}
+
+// Función global para satisfacer necesidades
+function satisfacerNecesidadKana(tipo, cantidad) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.satisfacerNecesidad) {
+        sistemaKana.satisfacerNecesidad(tipo, cantidad);
+    }
+}
+
+// Función global para terminar momento íntimo
+function terminarMomentoIntimoKana() {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.actualizarInterfazKana) {
+        sistemaKana.actualizarInterfazKana();
+    }
+    
+    // Remover pantalla si existe
+    const pantalla = document.getElementById('pantalla-momento-intimo');
+    if (pantalla) {
+        pantalla.remove();
+    }
+}
+
+// ============================================================================
+// INICIALIZACIÓN DEL SISTEMA - ACTUALIZADA PARA NAKANO Y KANA
 // ============================================================================
 
 // Inicializar la aplicación cuando se carga la página
@@ -764,9 +855,14 @@ document.addEventListener('DOMContentLoaded', function() {
     eventosDiarios.inicializar();
     sistemaPalabrasFalladas.inicializar();
     
-    // Inicializar sistema NAKANO (reemplazó a rpgNovia)
+    // Inicializar sistema NAKANO
     if (typeof sistemaNakano !== 'undefined' && sistemaNakano.inicializar) {
         sistemaNakano.inicializar();
+    }
+    
+    // Inicializar sistema KANA (NUEVO)
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.inicializar) {
+        sistemaKana.inicializar();
     }
     
     console.log("✅ Sistemas inicializados correctamente");
@@ -780,7 +876,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================================================
-// FUNCIONES DE TESTING (ACTUALIZADAS PARA NAKANO)
+// FUNCIONES DE TESTING (ACTUALIZADAS PARA NAKANO Y KANA)
 // ============================================================================
 
 // Función para forzar la aparición del evento diario (para testing)
@@ -817,6 +913,21 @@ window.verEstadoSistemas = function() {
         console.log("- Quintillizas:", Object.keys(sistemaNakano.quintillizas).length);
     } else {
         console.log("❌ Sistema Nakano no cargado");
+    }
+    
+    // Estado Kana (NUEVO)
+    if (typeof sistemaKana !== 'undefined') {
+        console.log("👨‍👧 Sistema Kana:");
+        console.log("- Hija seleccionada:", sistemaKana.relacion.hijaSeleccionada);
+        console.log("- Saldo Kana:", sistemaKana.economia.saldo);
+        console.log("- Condones:", sistemaKana.economia.inventario.condones);
+        const kana = sistemaKana.obtenerKana();
+        if (kana) {
+            console.log("- Kana nivel:", kana.nivelRelacion);
+            console.log("- Kana experiencia:", kana.experiencia);
+        }
+    } else {
+        console.log("❌ Sistema Kana no cargado");
     }
 };
 
@@ -908,7 +1019,7 @@ window.agregarCondones = function(cantidad) {
         sistemaNakano.economia.inventario.condones += cantidad;
         sistemaNakano.guardarDatos();
         sistemaNakano.actualizarInterfazNakano();
-        console.log(`✅ ${cantidad} condones añadidos`);
+        console.log(`✅ ${cantidad} condones añadidos a Nakano`);
         return true;
     }
     return false;
@@ -933,6 +1044,61 @@ window.simularMazoCompletado = function(porcentaje) {
     }
     return false;
 };
+
+// Funciones de testing para SISTEMA KANA (NUEVAS)
+window.agregarExperienciaKana = function(cantidad) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.agregarExperiencia) {
+        sistemaKana.agregarExperiencia(cantidad, "Testing");
+    }
+};
+
+window.verEstadoKana = function() {
+    if (typeof sistemaKana !== 'undefined') {
+        const kana = sistemaKana.obtenerKana();
+        console.log("👨‍👧 Estado Kana:");
+        console.log("- Nombre:", kana.nombre);
+        console.log("- Edad:", kana.edad);
+        console.log("- Nivel Relación:", kana.nivelRelacion);
+        console.log("- Experiencia:", kana.experiencia);
+        console.log("- Experiencia Total:", kana.experienciaTotal);
+        console.log("- Humor:", kana.humorActual ? kana.humorActual.nombre : "N/A");
+        console.log("- Condones inventario:", sistemaKana.economia.inventario.condones);
+        console.log("- Necesidades:", kana.necesidades);
+    } else {
+        console.log("❌ Sistema Kana no disponible");
+    }
+};
+
+// Función para resetear sistema Kana
+window.resetearSistemaKana = function() {
+    if (confirm("¿Estás seguro de resetear TODO el sistema Kana?\nSe perderán niveles, experiencia y decoraciones.")) {
+        localStorage.removeItem('sistemaKana');
+        location.reload();
+    }
+};
+
+// Función para agregar condones a Kana
+window.agregarCondonesKana = function(cantidad) {
+    if (typeof sistemaKana !== 'undefined') {
+        sistemaKana.economia.inventario.condones += cantidad;
+        sistemaKana.guardarDatos();
+        sistemaKana.actualizarInterfazKana();
+        console.log(`✅ ${cantidad} condones añadidos a Kana`);
+        return true;
+    }
+    return false;
+};
+
+// Función para simular mazo completado para Kana
+window.simularMazoCompletadoKana = function(porcentaje) {
+    if (typeof sistemaKana !== 'undefined' && sistemaKana.registrarMazoCompletado) {
+        sistemaKana.registrarMazoCompletado(porcentaje);
+        console.log(`📊 Mazo simulado al ${porcentaje}% para ${sistemaKana.obtenerKana().nombre}`);
+        return true;
+    }
+    return false;
+};
+
 // ============================================================================
 // FUNCIÓN PARA INICIAR CALENDARIO FABRIZIO
 // ============================================================================
@@ -1001,9 +1167,6 @@ function iniciarSistemaAnime() {
         mostrarNotificacion("Error: Sistema anime no disponible");
     }
 }
-// ============================================================================
-// FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS
-// ============================================================================
 // ============================================================================
 // FUNCIÓN PARA INICIAR GALERÍA DE VIDEOS - VERSIÓN CORREGIDA
 // ============================================================================
