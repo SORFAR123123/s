@@ -675,12 +675,68 @@ const vocabularioDatabase = {
     
     // Sub-contenedor 4.1
     'sub4_1': {
-        1: generarPalabras(10),
-        2: generarPalabras(10),
-        3: generarPalabras(10),
-        4: generarPalabras(10),
-        5: generarPalabras(10)
+        1: [
+            { japones: '哲学', lectura: 'tetsugaku', opciones: ['Filosofía', 'Ciencia', 'Arte', 'Religión'], respuesta: 0 },
+            { japones: '思想', lectura: 'shisou', opciones: ['Pensamiento', 'Acción', 'Palabra', 'Emoción'], respuesta: 0 },
+            { japones: '真理', lectura: 'shinri', opciones: ['Verdad', 'Mentira', 'Error', 'Engaño'], respuesta: 0 },
+            { japones: '知識', lectura: 'chishiki', opciones: ['Conocimiento', 'Ignorancia', 'Duda', 'Incertidumbre'], respuesta: 0 },
+            { japones: '理性', lectura: 'risei', opciones: ['Razón', 'Emoción', 'Instinto', 'Intuición'], respuesta: 0 },
+            { japones: '存在', lectura: 'sonzai', opciones: ['Existencia', 'Inexistencia', 'Nada', 'Vacío'], respuesta: 0 },
+            { japones: '意識', lectura: 'ishiki', opciones: ['Conciencia', 'Inconsciencia', 'Sueño', 'Desmayo'], respuesta: 0 },
+            { japones: '自由', lectura: 'jiyuu', opciones: ['Libertad', 'Esclavitud', 'Opresión', 'Restricción'], respuesta: 0 },
+            { japones: '正義', lectura: 'seigi', opciones: ['Justicia', 'Injusticia', 'Corrupción', 'Abuso'], respuesta: 0 },
+            { japones: '道德', lectura: 'doutoku', opciones: ['Moral', 'Inmoralidad', 'Amoralidad', 'Corrupción'], respuesta: 0 }
+        ],
+        2: [
+            { japones: '宗教', lectura: 'shuukyou', opciones: ['Religión', 'Ciencia', 'Filosofía', 'Arte'], respuesta: 0 },
+            { japones: '信仰', lectura: 'shinkou', opciones: ['Creencia', 'Duda', 'Escepticismo', 'Agnosticismo'], respuesta: 0 },
+            { japones: '神', lectura: 'kami', opciones: ['Dios', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
+            { japones: '祈り', lectura: 'inori', opciones: ['Oración', 'Maldición', 'Bendición', 'Profecía'], respuesta: 0 },
+            { japones: '儀式', lectura: 'gishiki', opciones: ['Ceremonia', 'Informalidad', 'Espontaneidad', 'Improvisación'], respuesta: 0 },
+            { japones: '寺院', lectura: 'jiin', opciones: ['Templo', 'Casa', 'Escuela', 'Oficina'], respuesta: 0 },
+            { japones: '聖書', lectura: 'seisho', opciones: ['Biblia', 'Novela', 'Poesía', 'Ensayo'], respuesta: 0 },
+            { japones: '信仰心', lectura: 'shinkoushin', opciones: ['Devoción', 'Ateísmo', 'Agnosticismo', 'Indiferencia'], respuesta: 0 },
+            { japones: '来世', lectura: 'raise', opciones: ['Vida después de la muerte', 'Vida presente', 'Reencarnación', 'Nirvana'], respuesta: 0 },
+            { japones: '奇跡', lectura: 'kiseki', opciones: ['Milagro', 'Normalidad', 'Rutina', 'Cotidianidad'], respuesta: 0 }
+        ],
+        3: [
+            { japones: '言語', lectura: 'gengo', opciones: ['Lenguaje', 'Silencio', 'Gesto', 'Expresión'], respuesta: 0 },
+            { japones: '文法', lectura: 'bunpou', opciones: ['Gramática', 'Vocabulario', 'Pronunciación', 'Escritura'], respuesta: 0 },
+            { japones: '語彙', lectura: 'goi', opciones: ['Vocabulario', 'Gramática', 'Pronunciación', 'Escritura'], respuesta: 0 },
+            { japones: '発音', lectura: 'hatsuon', opciones: ['Pronunciación', 'Escritura', 'Lectura', 'Comprensión'], respuesta: 0 },
+            { japones: '意味', lectura: 'imi', opciones: ['Significado', 'Significante', 'Símbolo', 'Representación'], respuesta: 0 },
+            { japones: '翻訳', lectura: 'honyaku', opciones: ['Traducción', 'Interpretación', 'Adaptación', 'Modificación'], respuesta: 0 },
+            { japones: '通訳', lectura: 'tsuuyaku', opciones: ['Interpretación', 'Traducción', 'Explicación', 'Aclaración'], respuesta: 0 },
+            { japones: '方言', lectura: 'hougen', opciones: ['Dialecto', 'Lengua estándar', 'Idioma', 'Jerga'], respuesta: 0 },
+            { japones: '表現', lectura: 'hyougen', opciones: ['Expresión', 'Represión', 'Ocultamiento', 'Silencio'], respuesta: 0 },
+            { japones: 'コミュニケーション', lectura: 'komyunikeeshon', opciones: ['Comunicación', 'Incomunicación', 'Aislamiento', 'Soledad'], respuesta: 0 }
+        ],
+        4: [
+            { japones: '文学', lectura: 'bungaku', opciones: ['Literatura', 'Ciencia', 'Arte', 'Filosofía'], respuesta: 0 },
+            { japones: '詩', lectura: 'shi', opciones: ['Poesía', 'Prosa', 'Ensayo', 'Novela'], respuesta: 0 },
+            { japones: '小説', lectura: 'shousetsu', opciones: ['Novela', 'Poesía', 'Ensayo', 'Teatro'], respuesta: 0 },
+            { japones: '物語', lectura: 'monogatari', opciones: ['Historia', 'Hecho', 'Realidad', 'Verdad'], respuesta: 0 },
+            { japones: '作者', lectura: 'sakusha', opciones: ['Autor', 'Lector', 'Crítico', 'Editor'], respuesta: 0 },
+            { japones: '主人公', lectura: 'shujinkou', opciones: ['Protagonista', 'Antagonista', 'Personaje secundario', 'Narrador'], respuesta: 0 },
+            { japones: '文体', lectura: 'buntai', opciones: ['Estilo', 'Contenido', 'Tema', 'Argumento'], respuesta: 0 },
+            { japones: '比喩', lectura: 'hiyu', opciones: ['Metáfora', 'Literalidad', 'Realismo', 'Naturalismo'], respuesta: 0 },
+            { japones: '象徴', lectura: 'shouchou', opciones: ['Símbolo', 'Realidad', 'Hecho', 'Verdad'], respuesta: 0 },
+            { japones: '感動', lectura: 'kandou', opciones: ['Emoción', 'Indiferencia', 'Frialdad', 'Desapego'], respuesta: 0 }
+        ],
+        5: [
+            { japones: '神話', lectura: 'shinwa', opciones: ['Mito', 'Historia', 'Ciencia', 'Filosofía'], respuesta: 0 },
+            { japones: '伝説', lectura: 'densetsu', opciones: ['Leyenda', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
+            { japones: '民話', lectura: 'minwa', opciones: ['Cuento popular', 'Historia oficial', 'Ciencia', 'Filosofía'], respuesta: 0 },
+            { japones: '寓話', lectura: 'guuwa', opciones: ['Fábula', 'Historia', 'Realidad', 'Verdad'], respuesta: 0 },
+            { japones: '昔話', lectura: 'mukashibanashi', opciones: ['Cuento antiguo', 'Historia contemporánea', 'Noticia', 'Reportaje'], respuesta: 0 },
+            { japones: '英雄', lectura: 'eiyuu', opciones: ['Héroe', 'Villano', 'Personaje común', 'Antihéroe'], respuesta: 0 },
+            { japones: '怪物', lectura: 'kaibutsu', opciones: ['Monstruo', 'Humano', 'Animal', 'Objeto'], respuesta: 0 },
+            { japones: '魔法', lectura: 'mahou', opciones: ['Magia', 'Ciencia', 'Tecnología', 'Realidad'], respuesta: 0 },
+            { japones: '冒険', lectura: 'bouken', opciones: ['Aventura', 'Rutina', 'Seguridad', 'Estabilidad'], respuesta: 0 },
+            { japones: '運命', lectura: 'unmei', opciones: ['Destino', 'Azar', 'Elección', 'Libre albedrío'], respuesta: 0 }
+        ]
     },
+    
     
     // Sub-contenedor 4.2
     'sub4_2': {
